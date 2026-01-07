@@ -16,20 +16,13 @@ import java.util.List;
 public class Hl7InboundTranslator {
 
     public Object traduire(Message hl7) {
-
-        if (hl7 instanceof ORM_O01 orm) {
+        if ( hl7 instanceof ORM_O01 orm ) {
             return traduireOrm(orm);
         }
-
-        /*if (hl7 instanceof ORU_R01 oru) {
-            return traduireOru(oru);
-        }*/
-
         throw new IllegalArgumentException("Message HL7 non supporté");
     }
 
     private CreateOrdonnanceCmd traduireOrm(ORM_O01 orm) {
-
         PID pid = orm.getPATIENT().getPID();
         ORC orc = orm.getORDER().getORC();
 
@@ -39,4 +32,5 @@ public class Hl7InboundTranslator {
                 List.of() // RXE plus tard
         );
     }
+
 }

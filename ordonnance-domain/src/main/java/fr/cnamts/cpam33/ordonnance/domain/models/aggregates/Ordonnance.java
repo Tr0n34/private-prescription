@@ -159,7 +159,7 @@ public class Ordonnance implements DomainObject {
         if ( prescriptions == null || prescriptions.isEmpty()) {
             throw new OrdonnanceInvalideException(OrdonnanceExceptionCode.BS_ORDONNANCE_PRESCRIPTION_MISSING);
         }
-        prescriptions = new ArrayList<>(prescriptions);
+        prescriptions = new ArrayList<>(prescriptions); // copie mutable
         modifiedOn = LocalDate.now();
         return this;
     }

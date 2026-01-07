@@ -25,21 +25,29 @@ public class DatabaseErrorMessageResolver implements ErrorMessageDomainResolver,
 
     @Override
     public ErrorDescriptor resolve(ExceptionCode exceptionCode) {
-        return resolveByCode(exceptionCode.toString());
+        return resolveByCode(exceptionCode.toString(), null);
     }
 
     @Override
     public ErrorDescriptor resolve(InfraStructureExceptionCode code) {
-        return resolveByCode(code.toString());
+        return resolveByCode(code.toString(), null);
     }
 
-    public ErrorDescriptor resolveByCode(String exceptionCode) {
+    @Override
+    public ErrorDescriptor resolve(InfraStructureExceptionCode code, String[] placeHolders) {
+        return resolveByCode(code.toString(), placeHolders);
+    }
+
+    public ErrorDescriptor resolveByCode(String exceptionCode, String[] placeHolders) {
         ErrorCatalogEntity entity = errorCatalogJpaRepository.findByCodeAndActiveTrue(exceptionCode).orElseThrow(
                 () -> new IllegalStateException(String.format(UNRESOLVED_ERROR_MESSAGE, exceptionCode))
         );
+        String message = ( placeHolders == null || placeHolders.length == 0 )
+                ? entity.getMessage()
+                : String.format(entity.getMessage(), (Object[]) placeHolders);
         return ErrorDescriptor.of(
                 entity.getCode(),
-                entity.getMessage(),
+                message,
                 entity.getHttpStatus(),
                 LocalDateTime.now(),
                 entity.getBoundedContext());

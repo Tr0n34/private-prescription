@@ -6,4 +6,6 @@ public interface ErrorMessageInfrastructureResolver {
 
     ErrorDescriptor resolve(InfraStructureExceptionCode code);
 
+    ErrorDescriptor resolve(InfraStructureExceptionCode code, String[] placeHolders);
+
 }

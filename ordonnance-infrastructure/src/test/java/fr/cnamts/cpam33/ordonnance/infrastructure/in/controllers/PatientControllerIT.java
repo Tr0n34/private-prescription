@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.cnamts.cpam33.ordonnance.application.usecases.ProvidePatientUseCase;
 import fr.cnamts.cpam33.ordonnance.domain.fixtures.PatientFixtures;
 import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.ErrorMessageDomainResolver;
+import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.ErrorMessageInfrastructureResolver;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.controllers.PatientController;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.dto.patients.ExternalPatientDto;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.mappers.PatientApiMapper;
@@ -41,7 +42,10 @@ public class PatientControllerIT {
     private PatientApiMapper patientApiMapper;
 
     @MockBean
-    private ErrorMessageDomainResolver resolver;
+    private ErrorMessageDomainResolver domainResolver;
+
+    @MockBean
+    private ErrorMessageInfrastructureResolver infrastructureResolver;
 
     @Test
     void should_create_patient_when_payload_is_valid() throws Exception {

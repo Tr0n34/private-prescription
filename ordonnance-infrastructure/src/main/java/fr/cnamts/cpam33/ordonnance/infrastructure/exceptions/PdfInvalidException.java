@@ -1,0 +1,16 @@
+package fr.cnamts.cpam33.ordonnance.infrastructure.exceptions;
+
+import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.InfraStructureExceptionCode;
+import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.InfrastructureException;
+
+public class PdfInvalidException extends InfrastructureException {
+
+    public PdfInvalidException(InfraStructureExceptionCode code) {
+        super(code);
+    }
+
+    public PdfInvalidException(InfraStructureExceptionCode code, String[] placeHolders) {
+        super(code, placeHolders);
+    }
+
+}

@@ -1,5 +1,7 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.configurations;
 
+import fr.cnamts.cpam33.ordonnance.infrastructure.exceptions.PdfInvalidException;
+import fr.cnamts.cpam33.ordonnance.infrastructure.exceptions.enums.PdfExceptionCode;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,73 +20,65 @@ import java.nio.file.Paths;
 @Configuration
 public class PdfConfiguration {
 
-    private static final String CLASSPATH_PREFIX = "classpath:";
-    private static final String PATH_SEPARATOR = "/";
     public static final String TEMPLATE_EXTENSION = ".html";
     public static final String DEFAULT_TEMPLATE_DIRECTORY = "templates/";
+    public static final String FILE = "file:";
+    public static final String SEPARATOR = "/";
 
     @Value("${ordonnance.pdf.input-directory:classpath:templates}")
-    private String templateDirectory;
+    private final String templateDirectory;
+
+    public PdfConfiguration(String templateDirectory) {
+        this.templateDirectory = templateDirectory;
+    }
+
+    public String getTemplateDirectory() {
+        return templateDirectory;
+    }
 
     @Bean
     public SpringTemplateEngine templateEngine() {
         SpringTemplateEngine engine = new SpringTemplateEngine();
-        engine.setTemplateResolver(createTemplateResolver());
+        engine.addTemplateResolver(classpathTemplateResolver());
+        engine.addTemplateResolver(fileTemplateResolver());
         engine.addDialect(new SpringStandardDialect());
         return engine;
     }
 
-    private FileTemplateResolver createTemplateResolver() {
-        FileTemplateResolver resolver = new FileTemplateResolver();
-        resolver.setTemplateMode(TemplateMode.HTML);
-        resolver.setCacheable(false);
-        resolver.setCharacterEncoding(StandardCharsets.UTF_8.name());
-        resolver.setCheckExistence(true);
-        resolver.setPrefix(resolveTemplatePrefix());
+    @Bean
+    public org.thymeleaf.templateresolver.ClassLoaderTemplateResolver classpathTemplateResolver() {
+        org.thymeleaf.templateresolver.ClassLoaderTemplateResolver resolver = new org.thymeleaf.templateresolver.ClassLoaderTemplateResolver();
+        resolver.setPrefix(DEFAULT_TEMPLATE_DIRECTORY);
         resolver.setSuffix(TEMPLATE_EXTENSION);
+        resolver.setTemplateMode(TemplateMode.HTML);
+        resolver.setCharacterEncoding(StandardCharsets.UTF_8.name());
+        resolver.setCacheable(false);
         return resolver;
     }
 
-    private String resolveTemplatePrefix() {
-        String normalizedPath = normalizePath(templateDirectory);
-        if ( templateDirectory.startsWith(CLASSPATH_PREFIX) ) {
-            normalizedPath = resolveClasspathResource(templateDirectory);
-        } else if (templateDirectory.startsWith("file:")) {
-            normalizedPath = resolveFileResource(templateDirectory);
-        }
-        return normalizedPath;
+    @Bean
+    public FileTemplateResolver fileTemplateResolver() {
+        FileTemplateResolver resolver = new FileTemplateResolver();
+        resolver.setPrefix(resolveFileDirectory(templateDirectory));
+        resolver.setSuffix(TEMPLATE_EXTENSION);
+        resolver.setTemplateMode(TemplateMode.HTML);
+        resolver.setCharacterEncoding(StandardCharsets.UTF_8.name());
+        resolver.setCheckExistence(true);
+        resolver.setCacheable(false);
+        return resolver;
     }
 
-    private String normalizePath(String path) {
-        String normalized = path.replace("\\", PATH_SEPARATOR);
-        return normalized.endsWith(PATH_SEPARATOR)
-                ? normalized
-                : normalized + PATH_SEPARATOR;
-    }
-
-    private String resolveClasspathResource(String normalizedPath) {
-        String resourcePath = templateDirectory.substring(CLASSPATH_PREFIX.length());
-        if ( resourcePath.startsWith(PATH_SEPARATOR) ) {
-            resourcePath = resourcePath.substring(1);
-        }
-        URL resource = getClass().getClassLoader().getResource(resourcePath);
-        if ( resource == null ) {
-            throw new IllegalStateException(String.format("Template directory not found in classpath: '%s'", resourcePath));
-        }
-        return resource.getPath() + PATH_SEPARATOR;
-    }
-
-    private String resolveFileResource(String filePath) {
-        try {
-            String pathWithoutPrefix = filePath.substring("file:".length());
-            Path path = Paths.get(pathWithoutPrefix);
-            if ( !Files.exists(path )) {
-                throw new IllegalStateException(String.format("Template directory not found: '%s'", pathWithoutPrefix));
+    public String resolveFileDirectory(String dir) {
+        Path p = null;
+        if ( dir.startsWith(FILE) ) {
+            String path = dir.substring(FILE.length());
+            if (!path.endsWith(SEPARATOR)) path += SEPARATOR;
+            p = Paths.get(path);
+            if ( !Files.exists(p) ) {
+                throw new PdfInvalidException(PdfExceptionCode.TECH_PDF_DIRECTORY_NOT_FOUND);
             }
-            return path.toUri().getPath();
-        } catch (InvalidPathException e) {
-            throw new IllegalStateException(String.format("Invalid file path: '%s'", filePath), e);
         }
+        return (p != null) ? p.toAbsolutePath().toString() + SEPARATOR : null;
     }
 
 }

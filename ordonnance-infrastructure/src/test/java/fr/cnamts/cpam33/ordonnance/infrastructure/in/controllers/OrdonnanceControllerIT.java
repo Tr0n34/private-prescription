@@ -5,6 +5,7 @@ import fr.cnamts.cpam33.ordonnance.application.usecases.CreateOrdonnanceUseCase;
 import fr.cnamts.cpam33.ordonnance.domain.models.aggregates.Ordonnance;
 import fr.cnamts.cpam33.ordonnance.domain.models.commands.CreateOrdonnanceCmd;
 import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.ErrorMessageDomainResolver;
+import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.ErrorMessageInfrastructureResolver;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.controllers.OrdonnanceController;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.dto.OrdonnanceDto;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.dto.medecins.MedecinIdDto;
@@ -40,7 +41,10 @@ public class OrdonnanceControllerIT {
     private ObjectMapper objectMapper;
 
     @MockBean
-    private ErrorMessageDomainResolver resolver;
+    private ErrorMessageDomainResolver domainResolver;
+
+    @MockBean
+    ErrorMessageInfrastructureResolver infrastructureResolver;
 
     @Test
     void createOrdonnance_shouldReturn201() throws Exception {

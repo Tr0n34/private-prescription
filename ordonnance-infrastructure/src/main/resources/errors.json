@@ -173,5 +173,11 @@
     "boundedContext": "CESPATIENT",
     "httpStatus": 400,
     "message": "La longueur de l'id externe n'est pas correct"
+  },
+  {
+    "code": "TECH_PDF_DIRECTORY_NOT_FOUND",
+    "boundedContext": "PDF",
+    "httpStatus": 400,
+    "message": "Le repertoire %s n'a pas été trouvé"
   }
 ]
