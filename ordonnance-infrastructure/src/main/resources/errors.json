@@ -1,0 +1,177 @@
+[
+  {
+    "code": "BS_ORDONNANCE_IMMUTABLE_WHEN_SIGNED",
+    "boundedContext": "ORDONNANCE",
+    "httpStatus": 409,
+    "message": "Une ordonnance signée ne peut plus être modifiée",
+    "description": "Violation de l'invariant d'immuabilité"
+  },
+  {
+    "code": "BS_ORDONNANCE_ID_MISSING",
+    "boundedContext": "ORDONNANCE",
+    "httpStatus": 400,
+    "message": "Identifiants d'ordonnance manquants"
+  },
+  {
+    "code": "BS_MEDECIN_NOT_FOUND",
+    "boundedContext": "MEDECIN",
+    "httpStatus": 404,
+    "message": "Médecin introuvable"
+  },
+  {
+    "code": "BS_MEDECIN_INVALID",
+    "boundedContext": "MEDECIN",
+    "httpStatus": 400,
+    "message": "Médecin invalide"
+  },
+  {
+    "code": "BS_NOM_MISSING",
+    "boundedContext": "PATIENT",
+    "httpStatus": 400,
+    "message": "Nom manquant"
+  },
+  {
+    "code": "BS_NOM_LENGTH",
+    "boundedContext": "PATIENT",
+    "httpStatus": 400,
+    "message": "Nom trop long ou trop court"
+  },
+  {
+    "code": "BS_ORDONNANCE_ID_NUMERIC",
+    "boundedContext": "ORDONNANCE",
+    "httpStatus": 400,
+    "message": "L'identifiant d'ordonnance doit être numérique"
+  },
+  {
+    "code": "BS_ORDONNANCE_PATIENT_MISSING",
+    "boundedContext": "ORDONNANCE",
+    "httpStatus": 400,
+    "message": "Patient manquant"
+  },
+  {
+    "code": "BS_ORDONNANCE_MEDECIN_MISSING",
+    "boundedContext": "ORDONNANCE",
+    "httpStatus": 400,
+    "message": "Médecin manquant"
+  },
+  {
+    "code": "BS_ORDONNANCE_PRESCRIPTION_MISSING",
+    "boundedContext": "ORDONNANCE",
+    "httpStatus": 400,
+    "message": "Prescription manquante"
+  },
+  {
+    "code": "BS_ORDONNANCE_PRESCRIPTION_NOT_FOUND",
+    "boundedContext": "ORDONNANCE",
+    "httpStatus": 404,
+    "message": "Prescription introuvable"
+  },
+  {
+    "code": "BS_ORDONNANCE_PRESCRIPTION_DUPLICATE",
+    "boundedContext": "ORDONNANCE",
+    "httpStatus": 409,
+    "message": "Prescription en double"
+  },
+  {
+    "code": "BS_ORDONNANCE_ALREADY_SIGNED",
+    "boundedContext": "ORDONNANCE",
+    "httpStatus": 409,
+    "message": "Ordonnance déjà signée"
+  },
+  {
+    "code": "BS_ORDONNANCE_SNAPSHOT_MUST_BE_SIGNED",
+    "boundedContext": "ORDONNANCE",
+    "httpStatus": 400,
+    "message": "Le snapshot doit être signé"
+  },
+  {
+    "code": "BS_ORDONNANCE_SNAPSHOT_GENERATION_ERROR",
+    "boundedContext": "ORDONNANCE",
+    "httpStatus": 500,
+    "message": "Erreur lors de la génération du snapshot d'ordonnance"
+  },
+  {
+    "code": "BS_PATIENT_NOT_FOUND",
+    "boundedContext": "PATIENT",
+    "httpStatus": 404,
+    "message": "Patient introuvable"
+  },
+  {
+    "code": "BS_PATIENT_INVALID",
+    "boundedContext": "PATIENT",
+    "httpStatus": 400,
+    "message": "Patient invalide"
+  },
+  {
+    "code": "BS_PATIENT_DATE_NAISSANCE_INVALID",
+    "boundedContext": "PATIENT",
+    "httpStatus": 400,
+    "message": "Date de naissance invalide"
+  },
+  {
+    "code": "BS_POSOLOGIE_PHRASE_MISSING",
+    "boundedContext": "POSOLOGIE",
+    "httpStatus": 400,
+    "message": "Phrase de posologie manquante"
+  },
+  {
+    "code": "BS_PRENOM_MISSING",
+    "boundedContext": "PATIENT",
+    "httpStatus": 400,
+    "message": "Prénom manquant"
+  },
+  {
+    "code": "BS_PRENOM_LENGTH",
+    "boundedContext": "PATIENT",
+    "httpStatus": 400,
+    "message": "Prénom trop long ou trop court"
+  },
+  {
+    "code": "BS_MEDICAMENT_MISSING",
+    "boundedContext": "PRESCRIPTION",
+    "httpStatus": 400,
+    "message": "Médicament manquant"
+  },
+  {
+    "code": "BS_POSOLOGIE_MISSING",
+    "boundedContext": "PRESCRIPTION",
+    "httpStatus": 400,
+    "message": "Posologie manquante"
+  },
+  {
+    "code": "BS_PRESCRIPTION_ID_MISSING",
+    "boundedContext": "PRESCRIPTION",
+    "httpStatus": 400,
+    "message": "Identifiant de prescription manquant"
+  },
+  {
+    "code": "BS_RPPS_MISSING",
+    "boundedContext": "MEDECIN",
+    "httpStatus": 400,
+    "message": "RPPS manquant"
+  },
+  {
+    "code": "BS_RPPS_LENGTH",
+    "boundedContext": "MEDECIN",
+    "httpStatus": 400,
+    "message": "RPPS invalide"
+  },
+  {
+    "code": "NOT_FOUND",
+    "boundedContext": "USECASE",
+    "httpStatus": 404,
+    "message": "Ressource non trouvée"
+  },
+  {
+    "code": "TECH_CES_PATIENT_ID_CES_RATTACHEMENT_INVALID",
+    "boundedContext": "CESPATIENT",
+    "httpStatus": 400,
+    "message": "Le CES de rattachement n'est pas en adéquation avec l'id externe du patient"
+  },
+  {
+    "code": "TECH_CES_PATIENT_ID_NOT_LENGTH",
+    "boundedContext": "CESPATIENT",
+    "httpStatus": 400,
+    "message": "La longueur de l'id externe n'est pas correct"
+  }
+]

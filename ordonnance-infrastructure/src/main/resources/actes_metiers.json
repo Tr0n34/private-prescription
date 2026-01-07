@@ -1,0 +1,4 @@
+[
+  { "numero": "ACT-ORD-PRESCRIRE", "objet_metier" : "Ordonnance", "fonction": "Prescrire" },
+  { "numero": "ACT-ORD-VALIDER", "objet_metier" : "Ordonnance", "fonction": "Valider" }
+]

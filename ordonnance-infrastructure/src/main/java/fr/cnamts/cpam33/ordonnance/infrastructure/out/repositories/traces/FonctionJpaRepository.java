@@ -1,0 +1,12 @@
+package fr.cnamts.cpam33.ordonnance.infrastructure.out.repositories.traces;
+
+import fr.cnamts.cpam33.ordonnance.infrastructure.out.entities.traces.FonctionEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.Optional;
+
+public interface FonctionJpaRepository extends JpaRepository<FonctionEntity, Long> {
+
+    Optional<FonctionEntity> findByCode(String code);
+
+}
