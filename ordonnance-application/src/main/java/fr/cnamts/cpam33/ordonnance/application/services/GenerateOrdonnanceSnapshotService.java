@@ -15,8 +15,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class GenerateOrdonnanceSnapshotService implements OrdonnanceSnapshotGenerator {
 
-    private OrdonnanceRepository ordonnanceRepository;
-    private OrdonnanceSnapshotWriter ordonnanceSnapshotWriter;
+    private final OrdonnanceRepository ordonnanceRepository;
+    private final OrdonnanceSnapshotWriter ordonnanceSnapshotWriter;
 
     public GenerateOrdonnanceSnapshotService(OrdonnanceRepository ordonnanceRepository, OrdonnanceSnapshotWriter ordonnanceSnapshotWriter) {
         this.ordonnanceRepository = ordonnanceRepository;

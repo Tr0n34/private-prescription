@@ -2,6 +2,7 @@ package fr.cnamts.cpam33.ordonnance.domain.ports.out.traces;
 
 import fr.cnamts.cpam33.ordonnance.domain.abstracts.RepositoryPort;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.medecins.MedecinId;
+import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.ActeMetierId;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.Trace;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.TraceId;
 
@@ -10,5 +11,9 @@ import java.util.Optional;
 public interface TraceRepository extends RepositoryPort<Trace, TraceId> {
 
     Optional<Trace> findByMedecinId(MedecinId medecinId);
+
+    Optional<Trace> findByTraceId(TraceId traceId);
+
+    Optional<Trace> findByActeMetierId(ActeMetierId acteMetierId);
 
 }

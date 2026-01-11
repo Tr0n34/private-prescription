@@ -3,8 +3,9 @@ package fr.cnamts.cpam33.ordonnance.infrastructure.in.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.cnamts.cpam33.ordonnance.application.usecases.ProvidePatientUseCase;
 import fr.cnamts.cpam33.ordonnance.domain.fixtures.PatientFixtures;
-import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.ErrorMessageDomainResolver;
-import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.ErrorMessageInfrastructureResolver;
+import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors.ErrorMessageDomainResolver;
+import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors.ErrorMessageInfrastructureResolver;
+import fr.cnamts.cpam33.ordonnance.infrastructure.fixtures.ExternalPatientDtoFixtures;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.controllers.PatientController;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.dto.patients.ExternalPatientDto;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.mappers.PatientApiMapper;
@@ -16,8 +17,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.time.LocalDate;
-import java.time.Month;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -49,8 +48,7 @@ public class PatientControllerIT {
 
     @Test
     void should_create_patient_when_payload_is_valid() throws Exception {
-        ExternalPatientDto patientDto = new ExternalPatientDto("1234567891234",
-                "Dupont", "Jean", LocalDate.of(1980, Month.SEPTEMBER, 5));
+        ExternalPatientDto patientDto = ExternalPatientDtoFixtures.patientValide1();
         when(patientApiMapper.toDomain(any())).thenReturn(PatientFixtures.patientValide());
         when(patientService.providePatient(any())).thenReturn(PatientFixtures.patientValide());
         mockMvc.perform(post("/patients")
@@ -62,13 +60,11 @@ public class PatientControllerIT {
     @Test
     void should_create_patient_batch_when_payload_is_valid() throws Exception {
         List<ExternalPatientDto> dtos = List.of(
-                new ExternalPatientDto("EXT-123", "Dupont", "Jean", LocalDate.of(1980, Month.SEPTEMBER, 5)),
-                new ExternalPatientDto("EXT-456", "Martin", "Claire", LocalDate.of(1981, Month.SEPTEMBER, 6))
+                ExternalPatientDtoFixtures.patientValide1(),
+                ExternalPatientDtoFixtures.patientValide2()
         );
-
         when(patientApiMapper.toDomain(any())).thenReturn(PatientFixtures.patientValide());
         when(patientService.providePatient(any())).thenReturn(PatientFixtures.patientValide());
-
         mockMvc.perform(post("/patients/batch")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(dtos)))
@@ -77,11 +73,9 @@ public class PatientControllerIT {
 
     @Test
     void should_return_400_when_id_is_missing() throws Exception {
-        ExternalPatientDto invalid = new ExternalPatientDto(null, "Dupont", "Jean",
-                LocalDate.of(1980, Month.SEPTEMBER, 5));
         mockMvc.perform(post("/patients")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(invalid)))
+                        .content(objectMapper.writeValueAsString(ExternalPatientDtoFixtures.patientSansId())))
                 .andExpect(status().isBadRequest());
     }
 

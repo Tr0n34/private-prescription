@@ -47,7 +47,6 @@
 
     <dependencyManagement>
         <dependencies>
-
             <!-- Mapping -->
             <dependency>
                 <groupId>org.mapstruct</groupId>

@@ -12,6 +12,7 @@ import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses;
 public class InfrastructureRules {
 
     public static final String CONTEXT_ANNOTATION_CONFIGURATION = "org.springframework.context.annotation.Configuration";
+    public static final String SUFFIX_CONTROLLER = "Controller";
 
     public static ArchRule configurationShouldBeInInfrastructure() {
         return classes()
@@ -47,16 +48,17 @@ public class InfrastructureRules {
 
     public static ArchRule controllersShouldOnlyUseUseCases() {
         return classes()
-                .that().haveSimpleNameEndingWith("Controller")
+                .that().haveSimpleNameEndingWith(SUFFIX_CONTROLLER)
                 .should().onlyDependOnClassesThat(
                         resideInAPackage(Module.APPLICATION_USE_CASES.getArchPackage())
+                                .or(resideInAPackage(Module.APPLICATION_SERVICES.getArchPackage()))
                                 .or(resideInAPackage(Module.INFRASTRUCTURE.getArchPackage()))
                                 .or(resideInAPackage(TechPackage.JDK.getPackage()))               // JDK
-                                .or(resideInAPackage(TechPackage.SPRING.getPackage()))// Spring annotations/utilitaires
-                                .or(resideInAPackage(TechPackage.SLF_4J.getPackage()))         // logging
+                                .or(resideInAPackage(TechPackage.SPRING.getPackage()))            // Spring annotations/utilitaires
+                                .or(resideInAPackage(TechPackage.SLF_4J.getPackage()))            // logging
                                 .or(resideInAPackage(TechPackage.JAKARTA.getPackage()))           // validations, annotations
                 )
-                .as("Les controllers doivent uniquement utiliser les use cases de l'application");
+                .as("Les controllers doivent uniquement utiliser les use cases ou services de l'application (et des packages d'infrastructure)");
     }
 
     public static ArchRule controllersShouldNotAccessDomainDirectly() {

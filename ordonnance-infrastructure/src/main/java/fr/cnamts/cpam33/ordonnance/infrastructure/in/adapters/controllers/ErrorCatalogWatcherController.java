@@ -1,5 +1,6 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.controllers;
 
+import fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.controllers.routes.WatcherCommand;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.providers.ErrorCatalogWatchService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,21 +22,21 @@ public class ErrorCatalogWatcherController {
         this.watcher = watcher;
     }
 
-    @PostMapping("/start")
+    @PostMapping(WatcherCommand.START)
     public ResponseEntity<Void> start() {
         watcher.startWatching();
         logger.info("Watcher started via admin endpoint");
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/stop")
+    @PostMapping(WatcherCommand.STOP)
     public ResponseEntity<Void> stop() {
         watcher.stopWatching();
         logger.info("Watcher stopped via admin endpoint");
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/status")
+    @GetMapping(WatcherCommand.STATUS)
     public ResponseEntity<Boolean> status() {
         return ResponseEntity.ok(watcher.isRunning());
     }

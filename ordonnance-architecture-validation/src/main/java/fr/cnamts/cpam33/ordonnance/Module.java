@@ -15,6 +15,10 @@ public enum Module {
             "fr.cnamts.cpam33.ordonnance.application.usecases",
             "..application.usecases.."
     ),
+    APPLICATION_SERVICES(
+            "fr.cnamts.cpam33.ordonnance.application.services",
+            "..application.services.."
+    ),
     DOMAIN_MODELS(
             "fr.cnamts.cpam33.ordonnance.domain.models",
             "..domain.models.."

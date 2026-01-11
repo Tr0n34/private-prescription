@@ -7,7 +7,6 @@ import fr.cnamts.cpam33.ordonnance.domain.ports.out.ordonnances.OrdonnanceReposi
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class ListerOrdonnancesPatientUseCase implements QueryUseCase<ListerOrdonnancesPatientQuery, Ordonnance> {
@@ -25,7 +24,7 @@ public class ListerOrdonnancesPatientUseCase implements QueryUseCase<ListerOrdon
                 .filter(o -> !o.createdOn().isBefore(query.dateDebut())
                         && !o.createdOn().isAfter(query.dateFin()))
                 .toList();
-        if (query.isSigned()) {
+        if ( query.isSigned() ) {
             ordonnances = ordonnances.stream()
                     .filter(Ordonnance::isSigned)
                     .toList();

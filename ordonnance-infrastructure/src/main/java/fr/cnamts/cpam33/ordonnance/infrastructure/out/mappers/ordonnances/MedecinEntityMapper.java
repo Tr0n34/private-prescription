@@ -1,6 +1,8 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.out.mappers.ordonnances;
 
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.medecins.Medecin;
+import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.medecins.MedecinId;
+import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.medecins.Rpps;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.entities.ordonnances.MedecinEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -22,5 +24,21 @@ public interface MedecinEntityMapper {
     @Mapping(target = "nom", source = "nom", qualifiedByName = "stringToNom")
     @Mapping(target = "prenom", source = "prenom", qualifiedByName = "stringToPrenom")
     Medecin toDomain(MedecinEntity entity);
+
+    default MedecinEntity toEntity(MedecinId medecinId) {
+        if (medecinId == null) return null;
+        MedecinEntity entity = new MedecinEntity();
+        entity.setExternalId(medecinId.id());
+        entity.setRpps(medecinId.rpps().value());
+        return entity;
+    }
+
+    default MedecinId toMedecinId(MedecinEntity entity) {
+        if (entity == null) return null;
+        return new MedecinId(
+                entity.getExternalId(),
+                new Rpps(entity.getRpps())
+        );
+    }
 
 }

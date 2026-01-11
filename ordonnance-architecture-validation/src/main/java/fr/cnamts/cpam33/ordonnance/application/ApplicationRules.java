@@ -6,9 +6,10 @@ import com.tngtech.archunit.lang.ArchRule;
 import com.tngtech.archunit.lang.ConditionEvents;
 import com.tngtech.archunit.lang.SimpleConditionEvent;
 import fr.cnamts.cpam33.ordonnance.Module;
-import jakarta.transaction.Transactional;
+import fr.cnamts.cpam33.ordonnance.domain.models.events.ActeMetierEvent;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
 
@@ -48,7 +49,9 @@ public class ApplicationRules {
                             Class<?> annotationType = a.getRawType().reflect();
                             if (!(annotationType.equals(Service.class) ||
                                     annotationType.equals(Transactional.class) ||
-                                    annotationType.equals(Resource.class))) {
+                                    annotationType.equals(Resource.class) ||
+                                    annotationType.equals(ActeMetierEvent.class)
+                            )) {
                                 String message = String.format("%s utilise une annotation interdite : %s",
                                         item.getName(), annotationType.getName());
                                 events.add(SimpleConditionEvent.violated(a, message));
@@ -56,7 +59,7 @@ public class ApplicationRules {
                         });
                     }
                 })
-                .as("Les use cases ne peuvent utiliser que @Service, @Transactional et @Resource");
+                .as("Les use cases ne peuvent utiliser que @Service, @Transactional et @Resource et annotation ");
     }
 
 }

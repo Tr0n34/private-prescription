@@ -1,7 +1,7 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.exceptions;
 
-import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.InfraStructureExceptionCode;
-import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.InfrastructureException;
+import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors.InfraStructureExceptionCode;
+import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors.InfrastructureException;
 
 public class PdfInvalidException extends InfrastructureException {
 

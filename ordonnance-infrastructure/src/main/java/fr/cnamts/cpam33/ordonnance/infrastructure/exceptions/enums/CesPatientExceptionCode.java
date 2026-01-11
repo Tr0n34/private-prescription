@@ -1,7 +1,6 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.exceptions.enums;
 
-import fr.cnamts.cpam33.ordonnance.domain.abstracts.ExceptionCode;
-import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.InfraStructureExceptionCode;
+import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors.InfraStructureExceptionCode;
 
 public enum CesPatientExceptionCode implements InfraStructureExceptionCode {
 

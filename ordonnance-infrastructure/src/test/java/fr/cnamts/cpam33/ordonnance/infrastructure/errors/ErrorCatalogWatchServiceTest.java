@@ -1,5 +1,6 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.errors;
 
+import fr.cnamts.cpam33.ordonnance.infrastructure.configurations.batch.Batch;
 import fr.cnamts.cpam33.ordonnance.infrastructure.configurations.batch.DebouncedReloadExecutor;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.batch.ErrorCatalogLoader;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.providers.ErrorCatalogWatchService;
@@ -16,8 +17,6 @@ import org.springframework.test.util.ReflectionTestUtils;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.WatchEvent;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -66,7 +65,9 @@ class ErrorCatalogWatchServiceTest {
     void init_startsWatching_whenFileProtocol() {
         ReflectionTestUtils.setField(service, "errorFile", "file:/tmp/errors.json");
         doNothing().when(taskExecutor).execute(any(Runnable.class));
+
         service.init();
+
         assertTrue(service.isRunning());
         verify(taskExecutor).execute(service);
     }
@@ -98,7 +99,8 @@ class ErrorCatalogWatchServiceTest {
 
     @Test
     void startWatching_resetsRunning_whenTaskExecutorThrowsException() {
-        doThrow(new TaskRejectedException("Execution failed")).when(taskExecutor).execute(any(Runnable.class));
+        doThrow(new TaskRejectedException("Execution failed"))
+                .when(taskExecutor).execute(any(Runnable.class));
         assertThrows(IllegalStateException.class, () -> service.startWatching());
         assertFalse(service.isRunning());
     }
@@ -129,67 +131,103 @@ class ErrorCatalogWatchServiceTest {
     }
 
     @Test
-    void processWatchEvents_triggersDebounce_whenFilenameMatches() throws IOException {
-        Path errorFile = tempDir.resolve("errors.json");
-        Files.createFile(errorFile);
-
-        ReflectionTestUtils.setField(service, "errorFile", errorFile.toUri().toString());
-        // utilise AtomicReference
-        ReflectionTestUtils.setField(service, "watchedFilePathRef", new java.util.concurrent.atomic.AtomicReference<>(errorFile));
-        ReflectionTestUtils.setField(service, "reloadDelay", 5000);
-
-        @SuppressWarnings("unchecked")
-        WatchEvent<Path> event = mock(WatchEvent.class);
-        when(event.context()).thenReturn(errorFile.getFileName());
-
-        java.nio.file.WatchKey watchKey = mock(java.nio.file.WatchKey.class);
-        when(watchKey.pollEvents()).thenReturn(java.util.List.of(event));
-
-        ReflectionTestUtils.invokeMethod(service, "processWatchEvents", watchKey);
-        verify(debounce).trigger(anyString(), any(Runnable.class), eq(5000L));
+    void destroy_cancelsPendingReloads() {
+        when(debounce.cancel(Batch.ERROR.getName())).thenReturn(true);
+        service.destroy();
+        verify(debounce).cancel(Batch.ERROR.getName());
     }
 
     @Test
-    void processWatchEvents_doesNotTriggerDebounce_whenFilenameDifferent() throws IOException {
-        Path errorFile = tempDir.resolve("errors.json");
-        Path otherFile = tempDir.resolve("other.json");
-        Files.createFile(errorFile);
-
-        ReflectionTestUtils.setField(service, "watchedFilePathRef", new java.util.concurrent.atomic.AtomicReference<>(errorFile));
-
-        @SuppressWarnings("unchecked")
-        WatchEvent<Path> event = mock(WatchEvent.class);
-        when(event.context()).thenReturn(otherFile.getFileName());
-
-        java.nio.file.WatchKey watchKey = mock(java.nio.file.WatchKey.class);
-        when(watchKey.pollEvents()).thenReturn(java.util.List.of(event));
-
-        ReflectionTestUtils.invokeMethod(service, "processWatchEvents", watchKey);
-        verifyNoInteractions(debounce);
+    void hasPendingReload_returnsTrueWhenDebounceHasPendingTask() {
+        when(debounce.hasPendingTask(Batch.ERROR.getName())).thenReturn(true);
+        assertTrue(service.hasPendingReload());
+        verify(debounce).hasPendingTask(Batch.ERROR.getName());
     }
 
     @Test
-    void validateFilePath_throwsException_whenPathHasNoParent() {
-        Path path = Paths.get("errors.json");
+    void hasPendingReload_returnsFalseWhenNoDebounceTask() {
+        when(debounce.hasPendingTask(Batch.ERROR.getName())).thenReturn(false);
+        assertFalse(service.hasPendingReload());
+        verify(debounce).hasPendingTask(Batch.ERROR.getName());
+    }
+
+    @Test
+    void getServiceName_returnsErrorCatalog() {
+        String serviceName = ReflectionTestUtils.invokeMethod(service, "getServiceName");
+        assertEquals(Batch.ERROR.getName(), serviceName);
+    }
+
+    @Test
+    void getBatch_returnsErrorBatch() {
+        Batch batch = ReflectionTestUtils.invokeMethod(service, "getBatch");
+        assertEquals(Batch.ERROR, batch);
+    }
+
+    @Test
+    void getFilePath_returnsConfiguredPath() {
+        ReflectionTestUtils.setField(service, "errorFile", "file:/tmp/errors.json");
+        String filePath = ReflectionTestUtils.invokeMethod(service, "getFilePath");
+        assertEquals("file:/tmp/errors.json", filePath);
+    }
+
+    @Test
+    void getReloadDelay_returnsConfiguredDelay() {
+        ReflectionTestUtils.setField(service, "reloadDelay", 3000);
+        int delay = ReflectionTestUtils.invokeMethod(service, "getReloadDelay");
+        assertEquals(3000, delay);
+    }
+
+    @Test
+    void performReload_callsLoaderReload() {
+        doNothing().when(loader).reload();
+
+        ReflectionTestUtils.invokeMethod(service, "performReload");
+
+        verify(loader).reload();
+    }
+
+    @Test
+    void validateFilePath_throwsException_whenPathHasNoParent() throws IOException {
+        // Créer un fichier temporaire sans parent explicite
+        Path tempFile = Files.createTempFile("test", ".json");
+        Path relativeFile = tempFile.getFileName(); // Juste le nom, pas de parent
+
         IllegalStateException ex = assertThrows(
                 IllegalStateException.class,
-                () -> ReflectionTestUtils.invokeMethod(service, "validateFilePath", path)
+                () -> ReflectionTestUtils.invokeMethod(service, "validateFilePath", relativeFile)
         );
-        assertTrue(ex.getMessage().contains("Error file must be in a directory"));
+        assertTrue(ex.getMessage().contains("File must be in a directory"));
+
+        Files.deleteIfExists(tempFile);
     }
 
     @Test
     void validateFilePath_succeeds_whenPathHasParent() throws IOException {
         Path path = tempDir.resolve("errors.json");
         Files.createFile(path);
+
         assertDoesNotThrow(
                 () -> ReflectionTestUtils.invokeMethod(service, "validateFilePath", path)
         );
     }
 
     @Test
-    void resolveFilePath_throwsException_whenInvalidUri() {
-        ReflectionTestUtils.setField(service, "errorFile", "file:\0invalid"); // caractère nul
+    void resolveFilePath_removesFileProtocol() throws IOException {
+        Path errorFile = tempDir.resolve("errors.json");
+        Files.createFile(errorFile);
+
+        ReflectionTestUtils.setField(service, "errorFile", "file:" + errorFile.toString());
+
+        Path resolved = ReflectionTestUtils.invokeMethod(service, "resolveFilePath");
+        assertNotNull(resolved);
+        assertEquals(errorFile.toString(), resolved.toString());
+    }
+
+    @Test
+    void resolveFilePath_throwsException_whenInvalidPath() {
+        // Utiliser un chemin invalide avec des caractères non autorisés
+        ReflectionTestUtils.setField(service, "errorFile", "file:\u0000invalid");
+
         assertThrows(
                 IllegalStateException.class,
                 () -> ReflectionTestUtils.invokeMethod(service, "resolveFilePath")
@@ -209,7 +247,21 @@ class ErrorCatalogWatchServiceTest {
     @Test
     void isRunning_returnsTrue_afterStart() {
         doNothing().when(taskExecutor).execute(any(Runnable.class));
+
         service.startWatching();
+
         assertTrue(service.isRunning());
     }
+
+    @Test
+    void isRunning_returnsFalse_afterStop() {
+        doNothing().when(taskExecutor).execute(any(Runnable.class));
+
+        service.startWatching();
+        assertTrue(service.isRunning());
+
+        service.stopWatching();
+        assertFalse(service.isRunning());
+    }
+
 }

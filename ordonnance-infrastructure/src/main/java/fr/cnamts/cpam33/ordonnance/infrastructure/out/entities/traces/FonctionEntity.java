@@ -1,20 +1,20 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.out.entities.traces;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "fonction")
 public class FonctionEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     @Column(name = "code")
     private String code;
 
-    @Column(name = "name", nullable = false)
-    private String name;
+    @Column(name = "description", nullable = false)
+    private String description;
 
     public String getCode() {
         return code;
@@ -25,12 +25,12 @@ public class FonctionEntity {
         return this;
     }
 
-    public String getName() {
-        return name;
+    public String getDescription() {
+        return description;
     }
 
-    public FonctionEntity setName(String name) {
-        this.name = name;
+    public FonctionEntity setDescription(String description) {
+        this.description = description;
         return this;
     }
 

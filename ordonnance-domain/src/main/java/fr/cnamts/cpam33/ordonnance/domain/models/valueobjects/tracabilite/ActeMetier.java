@@ -6,7 +6,7 @@ import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.enums.ActeMetierExce
 
 public record ActeMetier(
         ActeMetierId acteMetierId,
-        DomainObject object,
+        String objetMetierName,
         Fonction fonction
 ) implements DomainObject {
 
@@ -14,7 +14,7 @@ public record ActeMetier(
         if ( acteMetierId == null ) {
             throw new ActeMetierInvalidException(ActeMetierExceptionCode.BS_ACTE_METIER_INVALID);
         }
-        if ( object == null ) {
+        if ( objetMetierName == null || objetMetierName.isEmpty() ) {
             throw new ActeMetierInvalidException(ActeMetierExceptionCode.BS_ACTE_METIER_OBJET_METIER_MISSING);
         }
         if ( fonction == null ) {

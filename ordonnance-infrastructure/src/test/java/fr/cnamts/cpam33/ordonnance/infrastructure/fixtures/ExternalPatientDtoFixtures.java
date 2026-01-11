@@ -9,7 +9,7 @@ public final class ExternalPatientDtoFixtures {
 
     private ExternalPatientDtoFixtures() {}
 
-    public static ExternalPatientDto patientValide() {
+    public static ExternalPatientDto patientValide1() {
         return new ExternalPatientDto(
                 "EXT-123",
                 "Dupont",
@@ -18,7 +18,22 @@ public final class ExternalPatientDtoFixtures {
         );
     }
 
-    public static String patientSansIdExterne() {
+    public static ExternalPatientDto patientValide2() {
+        return new ExternalPatientDto("EXT-456",
+                "Martin",
+                "Claire",
+                LocalDate.of(1981, Month.SEPTEMBER, 6));
+    }
+
+    public static ExternalPatientDto patientSansId() {
+        return new ExternalPatientDto(null,
+                "Martin",
+                "Claire",
+                LocalDate.of(1981, Month.SEPTEMBER, 6));
+    }
+
+
+    public static String patientSansIdExterneJson() {
         return """
             {
               "nom": "Dupont",
@@ -27,7 +42,7 @@ public final class ExternalPatientDtoFixtures {
             """;
     }
 
-    public static String patientSansNom() {
+    public static String patientSansNomJson() {
         return """
             {
               "id": "EXT-123",

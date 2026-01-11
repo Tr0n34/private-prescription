@@ -1,21 +1,25 @@
 package fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite;
 
 import fr.cnamts.cpam33.ordonnance.domain.abstracts.DomainObject;
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.DomainObjectId;
 import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.TraceInvalidException;
 import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.enums.TraceExceptionCode;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.medecins.MedecinId;
+import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.enums.ActeMetierCode;
 
 import java.time.Clock;
 import java.time.LocalDateTime;
+import java.util.Map;
 
 public record Trace(
-        ActeMetier acteMetier,
+        ActeMetierId acteMetierId,
         MedecinId medecinId,
-        LocalDateTime timestamp
+        LocalDateTime timestamp,
+        TraceContext context
 ) implements DomainObject {
 
     public Trace {
-        if ( acteMetier == null ) {
+        if ( acteMetierId == null ) {
             throw new TraceInvalidException(TraceExceptionCode.BS_TRACE_ACTE_METIER_MISSING);
         }
         if ( medecinId == null ) {
@@ -25,8 +29,17 @@ public record Trace(
             throw new TraceInvalidException(TraceExceptionCode.BS_TRACE_TIMESTAMP_MISSING);
         }
     }
-    public static Trace of(ActeMetier acteMetier, MedecinId medecinId, LocalDateTime timestamp, Clock clock) {
-        Trace trace = new Trace(acteMetier, medecinId, timestamp);
+
+    public static Trace of(ActeMetierId acteMetierId, MedecinId medecinId, TraceContext traceContext, LocalDateTime timestamp, Clock clock) {
+        Trace trace = new Trace(acteMetierId, medecinId, timestamp, traceContext);
+        if ( timestamp.isAfter(LocalDateTime.now(clock)) ) {
+            throw new TraceInvalidException(TraceExceptionCode.BS_TRACE_TIMESTAMP_INVALID);
+        }
+        return trace;
+    }
+
+    public static Trace of(ActeMetierCode acteMetierCode, MedecinId medecinId, TraceContext traceContext, LocalDateTime timestamp, Clock clock) {
+        Trace trace = new Trace(new ActeMetierId(acteMetierCode.name()), medecinId, timestamp, traceContext);
         if ( timestamp.isAfter(LocalDateTime.now(clock)) ) {
             throw new TraceInvalidException(TraceExceptionCode.BS_TRACE_TIMESTAMP_INVALID);
         }

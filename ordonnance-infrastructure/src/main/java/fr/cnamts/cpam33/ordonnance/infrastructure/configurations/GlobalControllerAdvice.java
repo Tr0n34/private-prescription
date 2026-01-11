@@ -2,9 +2,9 @@ package fr.cnamts.cpam33.ordonnance.infrastructure.configurations;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import fr.cnamts.cpam33.ordonnance.domain.abstracts.DomainException;
-import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.ErrorMessageDomainResolver;
-import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.ErrorMessageInfrastructureResolver;
-import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.InfrastructureException;
+import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors.ErrorMessageDomainResolver;
+import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors.ErrorMessageInfrastructureResolver;
+import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors.InfrastructureException;
 import fr.cnamts.cpam33.ordonnance.infrastructure.exceptions.ErrorDescriptor;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.dto.errors.ErrorResponseDto;
 import org.springframework.http.ResponseEntity;

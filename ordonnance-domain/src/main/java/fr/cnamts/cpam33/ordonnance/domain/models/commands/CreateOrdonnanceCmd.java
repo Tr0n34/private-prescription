@@ -2,6 +2,7 @@ package fr.cnamts.cpam33.ordonnance.domain.models.commands;
 
 import fr.cnamts.cpam33.ordonnance.domain.abstracts.Command;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.Prescription;
+import fr.cnamts.cpam33.ordonnance.domain.models.events.TraceCommand;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.medecins.MedecinId;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.patients.PatientId;
 
@@ -11,7 +12,7 @@ public record CreateOrdonnanceCmd(
         PatientId patientId,
         MedecinId medecinId,
         List<Prescription> prescriptions
-) implements Command {
+) implements TraceCommand {
 
     public CreateOrdonnanceCmd {
         if ( patientId == null || medecinId == null || prescriptions == null ) {

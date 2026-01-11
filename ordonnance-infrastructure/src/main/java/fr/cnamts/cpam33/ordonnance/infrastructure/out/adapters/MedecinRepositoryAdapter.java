@@ -7,7 +7,7 @@ import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.medecins.MedecinId
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.medecins.MedecinRepository;
 import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.Adapter;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.mappers.ordonnances.MedecinEntityMapper;
-import fr.cnamts.cpam33.ordonnance.infrastructure.out.repositories.ordonnances.MedecinJpaRepository;
+import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.repositories.ordonnances.MedecinJpaRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;

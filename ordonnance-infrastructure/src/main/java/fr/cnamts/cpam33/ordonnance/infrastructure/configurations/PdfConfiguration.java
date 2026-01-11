@@ -8,12 +8,11 @@ import org.springframework.context.annotation.Configuration;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 import org.thymeleaf.spring6.dialect.SpringStandardDialect;
 import org.thymeleaf.templatemode.TemplateMode;
+import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 import org.thymeleaf.templateresolver.FileTemplateResolver;
 
-import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -25,10 +24,9 @@ public class PdfConfiguration {
     public static final String FILE = "file:";
     public static final String SEPARATOR = "/";
 
-    @Value("${ordonnance.pdf.input-directory:classpath:templates}")
     private final String templateDirectory;
 
-    public PdfConfiguration(String templateDirectory) {
+    public PdfConfiguration(@Value("${ordonnance.pdf.input-directory:classpath:templates}") String templateDirectory) {
         this.templateDirectory = templateDirectory;
     }
 
@@ -46,8 +44,8 @@ public class PdfConfiguration {
     }
 
     @Bean
-    public org.thymeleaf.templateresolver.ClassLoaderTemplateResolver classpathTemplateResolver() {
-        org.thymeleaf.templateresolver.ClassLoaderTemplateResolver resolver = new org.thymeleaf.templateresolver.ClassLoaderTemplateResolver();
+    public ClassLoaderTemplateResolver classpathTemplateResolver() {
+        ClassLoaderTemplateResolver resolver = new org.thymeleaf.templateresolver.ClassLoaderTemplateResolver();
         resolver.setPrefix(DEFAULT_TEMPLATE_DIRECTORY);
         resolver.setSuffix(TEMPLATE_EXTENSION);
         resolver.setTemplateMode(TemplateMode.HTML);

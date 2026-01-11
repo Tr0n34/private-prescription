@@ -7,7 +7,7 @@ import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.Foncti
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.traces.FonctionRepository;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.entities.traces.FonctionEntity;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.mappers.traces.FonctionEntityMapper;
-import fr.cnamts.cpam33.ordonnance.infrastructure.out.repositories.traces.FonctionJpaRepository;
+import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.repositories.traces.FonctionJpaRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 

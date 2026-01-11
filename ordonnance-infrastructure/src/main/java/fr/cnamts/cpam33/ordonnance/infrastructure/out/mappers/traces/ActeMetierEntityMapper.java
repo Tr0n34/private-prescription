@@ -9,18 +9,17 @@ import org.mapstruct.Mapping;
         componentModel = "spring",
         uses = {
                 ActeMetierIdMapper.class,
-                FonctionEntityMapper.class,
-                ObjetMetierMapper.class
+                FonctionEntityMapper.class
         }
 )
 public interface ActeMetierEntityMapper {
 
     @Mapping(target = "code", source = "acteMetierId")
-    @Mapping(target = "objetMetier", source = "object")
+    @Mapping(target = "objetMetierName", source = "objetMetierName")
     ActeMetierEntity toEntity(ActeMetier acteMetier);
 
     @Mapping(target = "acteMetierId", source = "code")
-    @Mapping(target = "object", source = "objetMetier")
+    @Mapping(target = "objetMetierName", source = "objetMetierName")
     ActeMetier toDomain(ActeMetierEntity entity);
 
 }

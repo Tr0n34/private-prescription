@@ -6,11 +6,14 @@ import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.enums.FonctionExcept
 
 public record Fonction(
         FonctionId fonctionId,
-        String name
+        String description
 ) implements DomainObject {
 
     public Fonction {
-        if ( name == null || name.isEmpty() ) {
+        if ( fonctionId == null ) {
+            throw new FonctionInvalidException(FonctionExceptionCode.BS_FONCTION_NAME_MISSING);
+        }
+        if ( description == null || description.isEmpty() ) {
             throw new FonctionInvalidException(FonctionExceptionCode.BS_FONCTION_NAME_MISSING);
         }
     }

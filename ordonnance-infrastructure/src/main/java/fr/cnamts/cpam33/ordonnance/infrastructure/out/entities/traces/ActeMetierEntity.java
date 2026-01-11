@@ -4,7 +4,7 @@ package fr.cnamts.cpam33.ordonnance.infrastructure.out.entities.traces;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "actes_metier")
+@Table(name = "acte_metier")
 public class ActeMetierEntity {
 
     @Id
@@ -12,18 +12,18 @@ public class ActeMetierEntity {
     private String code;
 
     @Column(name = "objet_metier", nullable = false)
-    private String objetMetier;
+    private String objetMetierName;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fonction_code", nullable = false)
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "fonction_id", nullable = false)
     private FonctionEntity fonction;
 
     protected ActeMetierEntity() {
     }
 
-    public ActeMetierEntity(String code, String objetMetier, FonctionEntity fonction) {
+    public ActeMetierEntity(String code, String objetMetierName, FonctionEntity fonction) {
         this.code = code;
-        this.objetMetier = objetMetier;
+        this.objetMetierName = objetMetierName;
         this.fonction = fonction;
     }
 
@@ -31,12 +31,27 @@ public class ActeMetierEntity {
         return code;
     }
 
-    public String getObjetMetier() {
-        return objetMetier;
+    public ActeMetierEntity setCode(String code) {
+        this.code = code;
+        return this;
+    }
+
+    public String getObjetMetierName() {
+        return objetMetierName;
+    }
+
+    public ActeMetierEntity setObjetMetierName(String objetMetierName) {
+        this.objetMetierName = objetMetierName;
+        return this;
     }
 
     public FonctionEntity getFonction() {
         return fonction;
+    }
+
+    public ActeMetierEntity setFonction(FonctionEntity fonction) {
+        this.fonction = fonction;
+        return this;
     }
 
 }

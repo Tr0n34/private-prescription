@@ -1,6 +1,8 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.out.entities.traces;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import java.time.LocalDateTime;
 
@@ -12,47 +14,32 @@ public class TraceEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "acte_metier_id", nullable = false)
     private ActeMetierEntity acteMetier;
 
     @Column(name = "medecin_id", nullable = false)
     private String medecinId;
 
-    @Column(name = "medecin_rpps", nullable = false)
-    private String medecinRpps;
+    @Column(name = "context", columnDefinition = "jsonb", nullable = false)
+    @JdbcTypeCode(SqlTypes.JSON)
+    private String traceContext;
 
-    @Column(name = "timestamp", nullable = false)
-    private LocalDateTime timestamp;
+    @Column(name = "created_on", nullable = false)
+    private LocalDateTime createdOn;
 
     protected TraceEntity() {}
 
-    public TraceEntity(Long id, ActeMetierEntity acteMetier, String medecinId, String medecinRpps, LocalDateTime timestamp) {
+    public TraceEntity(Long id, ActeMetierEntity acteMetier, String medecinId, String traceContext, LocalDateTime createdOn) {
         this.id = id;
         this.acteMetier = acteMetier;
         this.medecinId = medecinId;
-        this.medecinRpps = medecinRpps;
-        this.timestamp = timestamp;
+        this.traceContext = traceContext;
+        this.createdOn = createdOn;
     }
 
-    public Long getId() {
+    public Long id() {
         return id;
-    }
-
-    public ActeMetierEntity getActeMetier() {
-        return acteMetier;
-    }
-
-    public String getMedecinId() {
-        return medecinId;
-    }
-
-    public String getMedecinRpps() {
-        return medecinRpps;
-    }
-
-    public LocalDateTime getTimestamp() {
-        return timestamp;
     }
 
     public TraceEntity setId(Long id) {
@@ -60,9 +47,17 @@ public class TraceEntity {
         return this;
     }
 
+    public ActeMetierEntity acteMetier() {
+        return acteMetier;
+    }
+
     public TraceEntity setActeMetier(ActeMetierEntity acteMetier) {
         this.acteMetier = acteMetier;
         return this;
+    }
+
+    public String medecinId() {
+        return medecinId;
     }
 
     public TraceEntity setMedecinId(String medecinId) {
@@ -70,13 +65,21 @@ public class TraceEntity {
         return this;
     }
 
-    public TraceEntity setMedecinRpps(String medecinRpps) {
-        this.medecinRpps = medecinRpps;
+    public String traceContext() {
+        return traceContext;
+    }
+
+    public TraceEntity setTraceContext(String traceContext) {
+        this.traceContext = traceContext;
         return this;
     }
 
-    public TraceEntity setTimestamp(LocalDateTime timestamp) {
-        this.timestamp = timestamp;
+    public LocalDateTime createdOn() {
+        return createdOn;
+    }
+
+    public TraceEntity setCreatedOn(LocalDateTime createdOn) {
+        this.createdOn = createdOn;
         return this;
     }
 

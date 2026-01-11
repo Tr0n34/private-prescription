@@ -2,7 +2,8 @@ package fr.cnamts.cpam33.ordonnance.infrastructure.configurations.batch;
 
 public enum Batch {
 
-    ERROR("errorCatalog");
+    ERROR("errorCatalog"),
+    ACTE_METIER("acteMetier"),;
 
     private String name;
 

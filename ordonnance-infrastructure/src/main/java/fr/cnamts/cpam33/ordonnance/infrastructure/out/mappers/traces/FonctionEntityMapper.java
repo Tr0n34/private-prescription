@@ -10,11 +10,11 @@ import org.mapstruct.Mapping;
 public interface FonctionEntityMapper {
 
     @Mapping(target = "code", source = "fonctionId.code")
-    @Mapping(target = "name", source = "name")
+    @Mapping(target = "description", source = "description")
     FonctionEntity toEntity(Fonction fonction);
 
     @Mapping(target = "fonctionId", source = "code")
-    @Mapping(target = "name", source = "name")
+    @Mapping(target = "description", source = "description")
     Fonction toDomain(FonctionEntity entity);
 
     default FonctionId mapCodeToFonctionId(String code) {
