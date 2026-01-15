@@ -99,8 +99,7 @@ class ErrorCatalogWatchServiceTest {
 
     @Test
     void startWatching_resetsRunning_whenTaskExecutorThrowsException() {
-        doThrow(new TaskRejectedException("Execution failed"))
-                .when(taskExecutor).execute(any(Runnable.class));
+        doThrow(new TaskRejectedException("Execution failed")).when(taskExecutor).execute(any(Runnable.class));
         assertThrows(IllegalStateException.class, () -> service.startWatching());
         assertFalse(service.isRunning());
     }

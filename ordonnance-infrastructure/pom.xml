@@ -21,6 +21,11 @@
 
         <dependency>
             <groupId>fr.cnamts.cpam33</groupId>
+            <artifactId>ordonnance-domain</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>fr.cnamts.cpam33</groupId>
             <artifactId>ordonnance-application</artifactId>
             <version>${project.version}</version>
         </dependency>
@@ -126,10 +131,6 @@
                         <phase>none</phase>
                     </execution>
                 </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
             </plugin>
             <plugin>
                 <groupId>org.jacoco</groupId>
