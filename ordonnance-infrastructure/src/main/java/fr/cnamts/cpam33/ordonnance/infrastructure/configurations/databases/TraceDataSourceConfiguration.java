@@ -1,9 +1,10 @@
-package fr.cnamts.cpam33.ordonnance.infrastructure.configurations.datasources;
+package fr.cnamts.cpam33.ordonnance.infrastructure.configurations.databases;
 
 import com.zaxxer.hikari.HikariDataSource;
 import jakarta.persistence.EntityManagerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.Bean;
@@ -14,6 +15,7 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
+import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
@@ -22,9 +24,13 @@ import java.util.Map;
         entityManagerFactoryRef = "traceEntityManagerFactory",
         transactionManagerRef = "traceTransactionManager"
 )
+@EnableConfigurationProperties(TraceDataSourceConfiguration.TraceJpaProperties.class)
 public class TraceDataSourceConfiguration {
 
-    @Bean
+    @ConfigurationProperties(prefix = "trace.jpa")
+    public static class TraceJpaProperties extends JpaUnitProperties { }
+
+    @Bean("traceDataSource")
     @ConfigurationProperties(prefix = "spring.datasource.traces.hikari")
     public HikariDataSource traceDataSource() {
         return DataSourceBuilder.create().type(HikariDataSource.class).build();
@@ -33,17 +39,13 @@ public class TraceDataSourceConfiguration {
     @Bean("traceEntityManagerFactory")
     public LocalContainerEntityManagerFactoryBean traceEntityManagerFactory(
             EntityManagerFactoryBuilder builder,
-            @Qualifier("traceDataSource") DataSource dataSource) {
+            @Qualifier("traceDataSource") DataSource dataSource,
+            TraceJpaProperties traceJpaProperties) {
         return builder
                 .dataSource(dataSource)
-                .packages("fr.cnamts.cpam33.ordonnance.infrastructure.out.entities.traces")
-                .persistenceUnit("tracePU")
-                .properties(Map.of(
-                        "hibernate.hbm2ddl.auto", "none",
-                        "hibernate.jdbc.batch_size", "500",
-                        "hibernate.order_inserts", "true",
-                        "hibernate.jdbc.batch_versioned_data", "true"
-                ))
+                .packages(traceJpaProperties.getPackages())
+                .persistenceUnit(traceJpaProperties.getPersistenceUnit())
+                .properties(new HashMap<>(traceJpaProperties.getProperties()))
                 .build();
     }
 

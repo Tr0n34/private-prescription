@@ -3,7 +3,6 @@ package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters;
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.patients.PatientRepository;
 import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.Adapter;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.mappers.ordonnances.PatientEntityMapper;
-import fr.cnamts.cpam33.ordonnance.infrastructure.out.providers.ExternalPatientApiClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;

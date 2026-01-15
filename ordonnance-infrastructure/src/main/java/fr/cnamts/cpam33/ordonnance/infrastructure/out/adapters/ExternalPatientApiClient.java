@@ -1,4 +1,4 @@
-package fr.cnamts.cpam33.ordonnance.infrastructure.out.providers;
+package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters;
 
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.dto.patients.ExternalPatientDto;
 import org.springframework.beans.factory.annotation.Value;
