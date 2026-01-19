@@ -7,11 +7,11 @@ import java.time.LocalDate;
 
 public class ListerOrdonnancePatientQueryFixtures {
 
-    public static ListerOrdonnancesPatientQuery valideNow() {
+    public static ListerOrdonnancesPatientQuery betweenYesterdayAndToday() {
         return new ListerOrdonnancesPatientQuery(
                 PatientFixtures.patientValide().patientId(),
-                LocalDate.now(),
-                LocalDate.now(),
+                LocalDate.now().minusDays(1),
+                LocalDate.now().plusDays(1),
                 false
         );
     }

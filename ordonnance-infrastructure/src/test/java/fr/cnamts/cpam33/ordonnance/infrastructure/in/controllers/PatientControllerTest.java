@@ -3,7 +3,7 @@ package fr.cnamts.cpam33.ordonnance.infrastructure.in.controllers;
 import fr.cnamts.cpam33.ordonnance.application.usecases.ProvidePatientUseCase;
 import fr.cnamts.cpam33.ordonnance.domain.fixtures.PatientFixtures;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.controllers.PatientController;
-import fr.cnamts.cpam33.ordonnance.infrastructure.in.dto.patients.ExternalPatientDto;
+import fr.cnamts.cpam33.ordonnance.infrastructure.out.dto.ExternalPatientDto;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.mappers.PatientApiMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

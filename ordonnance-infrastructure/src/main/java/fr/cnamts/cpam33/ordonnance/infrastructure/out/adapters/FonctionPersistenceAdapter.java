@@ -15,12 +15,12 @@ import java.util.Optional;
 
 @Service
 @Transactional
-public class FonctionPersistanceAdapter implements FonctionRepository {
+public class FonctionPersistenceAdapter implements FonctionRepository {
 
     private final FonctionJpaRepository fonctionJpaRepository;
     private final FonctionEntityMapper fonctionEntityMapper;
 
-    public FonctionPersistanceAdapter(FonctionJpaRepository fonctionJpaRepository, FonctionEntityMapper fonctionEntityMapper) {
+    public FonctionPersistenceAdapter(FonctionJpaRepository fonctionJpaRepository, FonctionEntityMapper fonctionEntityMapper) {
         this.fonctionJpaRepository = fonctionJpaRepository;
         this.fonctionEntityMapper = fonctionEntityMapper;
     }

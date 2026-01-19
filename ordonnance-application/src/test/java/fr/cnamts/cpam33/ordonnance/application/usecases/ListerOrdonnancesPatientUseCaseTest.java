@@ -34,10 +34,10 @@ class ListerOrdonnancesPatientUseCaseTest {
         Ordonnance o2 = OrdonnanceFixtures.ordonnanceValide("1234567");
         Ordonnance o3 = OrdonnanceFixtures.ordonnanceValide("12345678");
         when(ordonnanceRepository.findByPatientId(patientId)).thenReturn(Arrays.asList(o1, o2, o3));
-        ListerOrdonnancesPatientQuery query = ListerOrdonnancePatientQueryFixtures.valideNow();
+        ListerOrdonnancesPatientQuery query = ListerOrdonnancePatientQueryFixtures.betweenYesterdayAndToday();
         List<Ordonnance> result = useCase.execute(query);
         assertEquals(3, result.size());
-        assertEquals("123456", result.get(0).ordonnanceId().numero());
+        assertEquals("123456", result.getFirst().ordonnanceId().numero());
         verify(ordonnanceRepository, times(1)).findByPatientId(patientId);
     }
 

@@ -1,4 +1,4 @@
-package fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.controllers;
+package fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.controllers.admin;
 
 import fr.cnamts.cpam33.ordonnance.application.services.TraceService;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.TraceAttribute;

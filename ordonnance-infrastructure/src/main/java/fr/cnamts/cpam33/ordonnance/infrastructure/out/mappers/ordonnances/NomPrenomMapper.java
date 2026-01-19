@@ -27,4 +27,5 @@ public interface NomPrenomMapper {
     default Prenom stringToPrenom(String value) {
         return value != null ? new Prenom(value) : null;
     }
+
 }

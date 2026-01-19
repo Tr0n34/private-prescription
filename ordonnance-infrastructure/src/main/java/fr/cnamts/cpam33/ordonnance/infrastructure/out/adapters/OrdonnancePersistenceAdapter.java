@@ -14,12 +14,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
-public class OrdonnanceRepositoryAdapter implements OrdonnanceRepository {
+public class OrdonnancePersistenceAdapter implements OrdonnanceRepository {
 
     private final OrdonnanceJpaRepository ordonnanceJpaRepository;
     private final OrdonnanceEntityMapper ordonnanceEntityMapper;
 
-    public OrdonnanceRepositoryAdapter(OrdonnanceEntityMapper ordonnanceEntityMapper, OrdonnanceJpaRepository ordonnanceJpaRepository) {
+    public OrdonnancePersistenceAdapter(OrdonnanceEntityMapper ordonnanceEntityMapper, OrdonnanceJpaRepository ordonnanceJpaRepository) {
         this.ordonnanceEntityMapper = ordonnanceEntityMapper;
         this.ordonnanceJpaRepository = ordonnanceJpaRepository;
     }

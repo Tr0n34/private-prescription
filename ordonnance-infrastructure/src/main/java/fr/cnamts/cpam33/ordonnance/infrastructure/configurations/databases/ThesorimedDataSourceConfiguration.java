@@ -22,8 +22,14 @@ import java.util.Map;
 @Configuration
 public class ThesorimedDataSourceConfiguration {
 
-    @ConfigurationProperties(prefix = "thesorimed.jpa")
+
     public static class ThesorimedHibernateProperties extends JpaUnitProperties {}
+
+    @Bean
+    @ConfigurationProperties(prefix = "thesorimed.jpa")
+    public ThesorimedHibernateProperties thesorimedHibernateProperties() {
+        return new ThesorimedHibernateProperties();
+    }
 
     @Bean("thesorimedDataSource")
     @ConfigurationProperties(prefix = "spring.datasource.thesorimed.hikari")
@@ -37,14 +43,12 @@ public class ThesorimedDataSourceConfiguration {
     }
 
     @Bean("thesorimedRoutineExecutor")
-    public ThesorimedRoutineExecutor thesorimedRoutineExecutor(
-            @Qualifier("thesorimedJdbcTemplate") JdbcTemplate jdbcTemplate) {
+    public ThesorimedRoutineExecutor thesorimedRoutineExecutor(@Qualifier("thesorimedJdbcTemplate") JdbcTemplate jdbcTemplate) {
         return new ThesorimedRoutineExecutor(jdbcTemplate);
     }
 
     @Bean("thesorimedTransactionManager")
-    public PlatformTransactionManager thesorimedJdbcTransactionManager(
-            @Qualifier("thesorimedDataSource") DataSource ds) {
+    public PlatformTransactionManager thesorimedJdbcTransactionManager(@Qualifier("thesorimedDataSource") DataSource ds) {
         return new DataSourceTransactionManager(ds);
     }
 

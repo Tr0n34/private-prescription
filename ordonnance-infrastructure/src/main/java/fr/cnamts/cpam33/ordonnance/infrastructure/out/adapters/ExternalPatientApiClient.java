@@ -1,6 +1,6 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters;
 
-import fr.cnamts.cpam33.ordonnance.infrastructure.in.dto.patients.ExternalPatientDto;
+import fr.cnamts.cpam33.ordonnance.infrastructure.out.dto.ExternalPatientDto;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -20,4 +20,5 @@ public class ExternalPatientApiClient {
     public ExternalPatientDto fetchPatient(String patientId) {
         return restTemplate.getForObject(apiUrl, ExternalPatientDto.class, patientId);
     }
+
 }

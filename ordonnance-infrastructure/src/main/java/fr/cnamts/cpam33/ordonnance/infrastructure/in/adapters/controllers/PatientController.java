@@ -2,7 +2,7 @@ package fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.controllers;
 
 import fr.cnamts.cpam33.ordonnance.application.usecases.ProvidePatientUseCase;
 import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.Adapter;
-import fr.cnamts.cpam33.ordonnance.infrastructure.in.dto.patients.ExternalPatientDto;
+import fr.cnamts.cpam33.ordonnance.infrastructure.out.dto.ExternalPatientDto;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.mappers.PatientApiMapper;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;

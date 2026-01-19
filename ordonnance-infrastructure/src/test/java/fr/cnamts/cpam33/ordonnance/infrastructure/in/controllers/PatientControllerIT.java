@@ -7,7 +7,7 @@ import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors.ErrorMessageD
 import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors.ErrorMessageInfrastructureResolver;
 import fr.cnamts.cpam33.ordonnance.infrastructure.fixtures.ExternalPatientDtoFixtures;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.controllers.PatientController;
-import fr.cnamts.cpam33.ordonnance.infrastructure.in.dto.patients.ExternalPatientDto;
+import fr.cnamts.cpam33.ordonnance.infrastructure.out.dto.ExternalPatientDto;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.mappers.PatientApiMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

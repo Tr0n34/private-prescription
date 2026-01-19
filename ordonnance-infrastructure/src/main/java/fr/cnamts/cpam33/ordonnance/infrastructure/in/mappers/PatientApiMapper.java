@@ -4,7 +4,7 @@ import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identites.Nom;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identites.Prenom;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.patients.Patient;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.patients.PatientId;
-import fr.cnamts.cpam33.ordonnance.infrastructure.in.dto.patients.ExternalPatientDto;
+import fr.cnamts.cpam33.ordonnance.infrastructure.out.dto.ExternalPatientDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

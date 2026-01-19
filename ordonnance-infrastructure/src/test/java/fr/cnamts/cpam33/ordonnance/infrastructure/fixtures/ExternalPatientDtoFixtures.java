@@ -1,6 +1,6 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.fixtures;
 
-import fr.cnamts.cpam33.ordonnance.infrastructure.in.dto.patients.ExternalPatientDto;
+import fr.cnamts.cpam33.ordonnance.infrastructure.out.dto.ExternalPatientDto;
 
 import java.time.LocalDate;
 import java.time.Month;

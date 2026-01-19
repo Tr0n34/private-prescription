@@ -1,5 +1,6 @@
 package fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite;
 
+import com.google.common.base.MoreObjects;
 import fr.cnamts.cpam33.ordonnance.domain.abstracts.DomainObject;
 import fr.cnamts.cpam33.ordonnance.domain.abstracts.DomainObjectId;
 import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.TraceInvalidException;
@@ -44,6 +45,16 @@ public record Trace(
             throw new TraceInvalidException(TraceExceptionCode.BS_TRACE_TIMESTAMP_INVALID);
         }
         return trace;
+    }
+
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper(this)
+                .add("acteMetierId", acteMetierId)
+                .add("medecinId", medecinId)
+                .add("timestamp", timestamp)
+                .add("context", context)
+                .toString();
     }
 
 }

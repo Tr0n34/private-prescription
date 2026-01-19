@@ -1,4 +1,4 @@
-package fr.cnamts.cpam33.ordonnance.infrastructure.configurations.batch;
+package fr.cnamts.cpam33.ordonnance.infrastructure.technical;
 
 import jakarta.annotation.PreDestroy;
 import org.slf4j.Logger;
@@ -12,15 +12,18 @@ import java.util.concurrent.*;
 public class DebouncedReloadExecutor {
 
     private static final Logger logger = LoggerFactory.getLogger(DebouncedReloadExecutor.class);
+
     private static final long SHUTDOWN_TIMEOUT_SECONDS = 5;
+    public static final String DEFAULT_DEBOUNCED_RELOAD = "debounced-reload";
+    public static final boolean IS_DAEMON = true;
 
     private final ScheduledExecutorService scheduler;
     private final Map<String, ScheduledFuture<?>> pendingTasks;
 
     public DebouncedReloadExecutor() {
         this.scheduler = Executors.newSingleThreadScheduledExecutor(runnable -> {
-            Thread thread = new Thread(runnable, "debounced-reload");
-            thread.setDaemon(true);
+            Thread thread = new Thread(runnable, DEFAULT_DEBOUNCED_RELOAD);
+            thread.setDaemon(IS_DAEMON);
             return thread;
         });
         this.pendingTasks = new ConcurrentHashMap<>();

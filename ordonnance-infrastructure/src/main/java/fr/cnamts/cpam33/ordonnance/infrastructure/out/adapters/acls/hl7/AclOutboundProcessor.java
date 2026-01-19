@@ -19,9 +19,7 @@ public class AclOutboundProcessor implements Processor {
     public void process(Exchange exchange) throws Exception {
         ExportPatientDto patient = exchange.getIn().getHeader("patient", ExportPatientDto.class);
         ExportMedecinDto medecin = exchange.getIn().getHeader("medecin", ExportMedecinDto.class);
-
-        exchange.getIn().setBody(
-                mapper.buildMessage(patient, medecin)
-        );
+        exchange.getIn().setBody(mapper.buildMessage(patient, medecin));
     }
+
 }

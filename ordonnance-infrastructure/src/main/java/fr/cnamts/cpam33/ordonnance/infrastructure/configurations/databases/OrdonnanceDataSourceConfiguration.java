@@ -23,8 +23,13 @@ import org.springframework.transaction.PlatformTransactionManager;
 )
 public class OrdonnanceDataSourceConfiguration {
 
-    @ConfigurationProperties(prefix = "ordonnance.jpa")
     public static class OrdonnanceJpaProperties extends JpaUnitProperties {}
+
+    @Bean
+    @ConfigurationProperties(prefix = "ordonnance.jpa")
+    public OrdonnanceJpaProperties ordonnanceJpaProperties() {
+        return new OrdonnanceJpaProperties();
+    }
 
     @Bean("ordonnanceDataSource")
     @Primary
@@ -42,6 +47,7 @@ public class OrdonnanceDataSourceConfiguration {
                 .dataSource(ordonnanceDataSource())
                 .packages(ordonnanceJpaProperties.getPackages())
                 .persistenceUnit(ordonnanceJpaProperties.getPersistenceUnit())
+                .properties(ordonnanceJpaProperties.getProperties())
                 .build();
     }
 

@@ -27,8 +27,13 @@ import java.util.Map;
 @EnableConfigurationProperties(TraceDataSourceConfiguration.TraceJpaProperties.class)
 public class TraceDataSourceConfiguration {
 
+    public static class TraceJpaProperties extends JpaUnitProperties {}
+
+    @Bean
     @ConfigurationProperties(prefix = "trace.jpa")
-    public static class TraceJpaProperties extends JpaUnitProperties { }
+    public TraceJpaProperties traceJpaProperties() {
+        return new TraceJpaProperties();
+    }
 
     @Bean("traceDataSource")
     @ConfigurationProperties(prefix = "spring.datasource.traces.hikari")

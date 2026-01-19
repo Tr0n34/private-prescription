@@ -1,4 +1,4 @@
-package fr.cnamts.cpam33.ordonnance.infrastructure.in.dto.patients;
+package fr.cnamts.cpam33.ordonnance.infrastructure.out.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotBlank;

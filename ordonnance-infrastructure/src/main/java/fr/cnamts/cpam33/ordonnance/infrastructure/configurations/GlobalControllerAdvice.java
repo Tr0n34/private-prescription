@@ -7,6 +7,8 @@ import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors.ErrorMessageI
 import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors.InfrastructureException;
 import fr.cnamts.cpam33.ordonnance.infrastructure.exceptions.ErrorDescriptor;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.dto.errors.ErrorResponseDto;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -18,11 +20,14 @@ import java.util.Map;
 @RestControllerAdvice
 public class GlobalControllerAdvice {
 
+    private final static Logger logger = LoggerFactory.getLogger(GlobalControllerAdvice.class);
+
     private final ErrorMessageDomainResolver errorMessageResolver;
     private final ErrorMessageInfrastructureResolver errorMessageInfrastructureResolver;
 
+    public static final String DATE_NAISSANCE = "dateNaissance";
     public static final Map<String, String> errorMessages =  Map.of(
-            "field", "dateNaissance", "message", "Le format de date attendu est yyyy-MM-dd"
+            "field", DATE_NAISSANCE, "message", "Le format de date attendu est yyyy-MM-dd"
     );
 
     public GlobalControllerAdvice(ErrorMessageDomainResolver errorMessageResolver,
@@ -34,6 +39,7 @@ public class GlobalControllerAdvice {
     @ExceptionHandler(DomainException.class)
     public ResponseEntity<ErrorResponseDto> handle(DomainException ex) {
         ErrorDescriptor descriptor = errorMessageResolver.resolve(ex.getCode());
+        logger.error("{} : {}", ex.getMessage(), descriptor.toString());
         return ResponseEntity
                 .status(descriptor.httpStatus())
                 .body(ErrorResponseDto.from(descriptor));
@@ -44,6 +50,7 @@ public class GlobalControllerAdvice {
         ErrorDescriptor descriptor = ex.getPlaceHolders() == null
                 ? errorMessageInfrastructureResolver.resolve(ex.getCode())
                 : errorMessageInfrastructureResolver.resolve(ex.getCode(), ex.getPlaceHolders());
+        logger.error("{} : {}", ex.getMessage(), descriptor.toString());
         return ResponseEntity
                 .status(descriptor.httpStatus())
                 .body(ErrorResponseDto.from(descriptor));
@@ -52,13 +59,11 @@ public class GlobalControllerAdvice {
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<String> handleInvalidDate(HttpMessageNotReadableException ex) {
-        if ( ex.getCause() instanceof InvalidFormatException ife
-                && ife.getTargetType().equals(LocalDate.class) ) {
-            return ResponseEntity.badRequest().body(
-                errorMessages.get("dateNaissance")
-            );
+        ResponseEntity<String> response = ResponseEntity.badRequest().body("Requête invalide");
+        if ( ex.getCause() instanceof InvalidFormatException ife && ife.getTargetType().equals(LocalDate.class) ) {
+            response = ResponseEntity.badRequest().body(errorMessages.get(DATE_NAISSANCE));
         }
-        return ResponseEntity.badRequest().body("Requête invalide");
+        return response;
     }
 
 }

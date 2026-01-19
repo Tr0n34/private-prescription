@@ -1,8 +1,12 @@
 package fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite;
 
+import com.google.common.base.MoreObjects;
 import fr.cnamts.cpam33.ordonnance.domain.abstracts.DomainObject;
 import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.ActeMetierInvalidException;
 import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.enums.ActeMetierExceptionCode;
+import org.jspecify.annotations.NonNull;
+
+import java.util.StringJoiner;
 
 public record ActeMetier(
         ActeMetierId acteMetierId,
@@ -22,4 +26,12 @@ public record ActeMetier(
         }
     }
 
+    @Override
+    public String toString() {
+        return "ActeMetier{" +
+                "acteMetierId=" + acteMetierId +
+                ", objetMetierName=" + objetMetierName +
+                ", fonction=" + fonction +
+                '}';
+    }
 }

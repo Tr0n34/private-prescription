@@ -7,11 +7,10 @@ import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.ActeMe
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.Trace;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.TraceAttribute;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.TraceContext;
-import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.traces.ActeMetierCache;
+import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.traces.InMemoryActeMetierCache;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.entities.traces.ActeMetierEntity;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.entities.traces.TraceEntity;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.mappers.ordonnances.MedecinEntityMapper;
-import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.repositories.traces.ActeMetierJpaRepository;
 import org.mapstruct.Context;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -20,13 +19,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.util.List;
 
-@Mapper(
-        componentModel = "spring",
-        uses = {
-                ActeMetierEntityMapper.class,
-                MedecinEntityMapper.class
-        }
-)
+@Mapper(componentModel = "spring", uses = {
+        ActeMetierEntityMapper.class, MedecinEntityMapper.class
+})
 public interface TraceEntityMapper {
 
     TypeReference<List<TraceAttribute>> TYPE_REF = new TypeReference<>() {};
@@ -35,10 +30,10 @@ public interface TraceEntityMapper {
     @Mapping(target = "medecinId", source = "medecinId.id")
     @Mapping(target = "createdOn", source = "timestamp")
     @Mapping(target = "traceContext", source = "trace", qualifiedByName = "mapTraceContext")
-    TraceEntity toEntity(Trace trace, @Context ActeMetierCache acteMetierCache, @Context @Qualifier("traceObjectMapper") ObjectMapper traceObjectMapper);
+    TraceEntity toEntity(Trace trace, @Context InMemoryActeMetierCache acteMetierCache, @Context @Qualifier("traceObjectMapper") ObjectMapper traceObjectMapper);
 
     @Named("mapActeMetier")
-    default ActeMetierEntity mapActeMetier(ActeMetierId acteMetierId, @Context ActeMetierCache acteMetierCache) {
+    default ActeMetierEntity mapActeMetier(ActeMetierId acteMetierId, @Context InMemoryActeMetierCache acteMetierCache) {
         if ( acteMetierId == null ) return null;
         return acteMetierCache.getRequired(acteMetierId.code());
     }

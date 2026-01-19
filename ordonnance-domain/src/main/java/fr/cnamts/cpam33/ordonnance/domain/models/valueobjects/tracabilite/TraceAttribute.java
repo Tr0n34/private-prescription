@@ -1,5 +1,7 @@
 package fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite;
 
+import com.google.common.base.MoreObjects;
+
 public record TraceAttribute(
         String name,
         TraceValue value
@@ -13,5 +15,6 @@ public record TraceAttribute(
             throw new NullPointerException("value is null");
         }
     }
+
 
 }

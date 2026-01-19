@@ -13,12 +13,12 @@ import org.springframework.stereotype.Component;
 import java.util.Optional;
 
 @Component
-public class MedecinRepositoryAdapter implements MedecinRepository, Adapter {
+public class MedecinPersistenceAdapter implements MedecinRepository, Adapter {
 
     private final MedecinJpaRepository  medecinJpaRepository;
     private final MedecinEntityMapper medecinEntityMapper;
 
-    public MedecinRepositoryAdapter(MedecinJpaRepository medecinJpaRepository, MedecinEntityMapper medecinEntityMapper) {
+    public MedecinPersistenceAdapter(MedecinJpaRepository medecinJpaRepository, MedecinEntityMapper medecinEntityMapper) {
         this.medecinJpaRepository = medecinJpaRepository;
         this.medecinEntityMapper = medecinEntityMapper;
     }

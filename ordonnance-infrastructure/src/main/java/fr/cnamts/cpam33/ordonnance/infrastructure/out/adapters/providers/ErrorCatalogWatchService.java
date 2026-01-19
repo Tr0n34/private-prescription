@@ -1,8 +1,8 @@
-package fr.cnamts.cpam33.ordonnance.infrastructure.out.providers;
+package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.providers;
 
 import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.watchers.AbstractFileWatchService;
 import fr.cnamts.cpam33.ordonnance.infrastructure.configurations.batch.Batch;
-import fr.cnamts.cpam33.ordonnance.infrastructure.configurations.batch.DebouncedReloadExecutor;
+import fr.cnamts.cpam33.ordonnance.infrastructure.technical.DebouncedReloadExecutor;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.batch.ErrorCatalogLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,11 +12,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.stereotype.Component;
 
-import java.nio.file.Path;
-import java.nio.file.WatchService;
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Service de surveillance des modifications du fichier de catalogue d'erreurs.
@@ -41,18 +37,13 @@ public class ErrorCatalogWatchService extends AbstractFileWatchService implement
 
     private final ErrorCatalogLoader errorCatalogLoader;
 
-    private final AtomicBoolean running = new AtomicBoolean(false);
-    private final AtomicReference<WatchService> watchServiceRef = new AtomicReference<>();
-    private final AtomicReference<Path> watchedFilePathRef = new AtomicReference<>();
-
     public ErrorCatalogWatchService(
             ErrorCatalogLoader errorCatalogLoader,
             @Qualifier("errorCatalogDebounceExecutor") DebouncedReloadExecutor debouncedReloadExecutor,
-            TaskExecutor taskExecutor) {
+            @Qualifier("watcherTaskExecutor") TaskExecutor taskExecutor) {
         super(debouncedReloadExecutor, taskExecutor);
         this.errorCatalogLoader = Objects.requireNonNull(errorCatalogLoader);
     }
-
 
     @Override
     public String getFilePath() {

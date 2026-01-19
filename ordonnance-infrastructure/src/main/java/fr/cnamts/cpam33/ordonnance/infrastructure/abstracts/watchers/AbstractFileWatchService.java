@@ -1,7 +1,7 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.watchers;
 
 import fr.cnamts.cpam33.ordonnance.infrastructure.configurations.batch.Batch;
-import fr.cnamts.cpam33.ordonnance.infrastructure.configurations.batch.DebouncedReloadExecutor;
+import fr.cnamts.cpam33.ordonnance.infrastructure.technical.DebouncedReloadExecutor;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import org.slf4j.Logger;
@@ -33,7 +33,7 @@ public abstract class AbstractFileWatchService implements Runnable {
 
     protected AbstractFileWatchService(
             DebouncedReloadExecutor debouncedReloadExecutor,
-            @Qualifier("taskExecutor") TaskExecutor taskExecutor) {
+            @Qualifier("watcherTaskExecutor") TaskExecutor taskExecutor) {
         this.debouncedReloadExecutor = Objects.requireNonNull(debouncedReloadExecutor);
         this.taskExecutor = Objects.requireNonNull(taskExecutor);
     }
@@ -93,7 +93,7 @@ public abstract class AbstractFileWatchService implements Runnable {
     }
 
     public synchronized void stopWatching() {
-        if (running.getAndSet(false)) {
+        if ( running.getAndSet(false) ) {
             cancelPendingReloads();
             closeWatchService();
             logger.info("{} watcher stopped", getServiceName());

@@ -5,13 +5,10 @@ import fr.cnamts.cpam33.ordonnance.infrastructure.out.entities.traces.ActeMetier
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(
-        componentModel = "spring",
-        uses = {
-                ActeMetierIdMapper.class,
-                FonctionEntityMapper.class
-        }
-)
+@Mapper(componentModel = "spring", uses = {
+        ActeMetierIdMapper.class,
+        FonctionEntityMapper.class
+})
 public interface ActeMetierEntityMapper {
 
     @Mapping(target = "code", source = "acteMetierId")

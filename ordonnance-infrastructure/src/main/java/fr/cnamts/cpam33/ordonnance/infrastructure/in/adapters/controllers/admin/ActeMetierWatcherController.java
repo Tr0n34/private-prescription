@@ -1,7 +1,7 @@
-package fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.controllers;
+package fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.controllers.admin;
 
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.controllers.routes.WatcherCommand;
-import fr.cnamts.cpam33.ordonnance.infrastructure.out.providers.ErrorCatalogWatchService;
+import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.providers.ActeMetierWatchService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/admin/errors/watcher")
-public class ErrorCatalogWatcherController {
+@RequestMapping("/admin/actes_metiers/watcher")
+public class ActeMetierWatcherController {
 
-    private static final Logger logger = LoggerFactory.getLogger(ErrorCatalogWatcherController.class);
+    private static final Logger logger = LoggerFactory.getLogger(ActeMetierWatcherController.class);
 
-    private final ErrorCatalogWatchService watcher;
+    private final ActeMetierWatchService watcher;
 
-    public ErrorCatalogWatcherController(ErrorCatalogWatchService watcher) {
+    public ActeMetierWatcherController(ActeMetierWatchService watcher) {
         this.watcher = watcher;
     }
 
