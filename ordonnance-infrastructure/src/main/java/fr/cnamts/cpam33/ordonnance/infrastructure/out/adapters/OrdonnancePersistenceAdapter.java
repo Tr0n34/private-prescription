@@ -32,6 +32,11 @@ public class OrdonnancePersistenceAdapter implements OrdonnanceRepository {
     }
 
     @Override
+    public List<Ordonnance> findAll() {
+        return List.of();
+    }
+
+    @Override
     public List<Ordonnance> findByMedecinId(MedecinId medecin) {
         return List.of();
     }

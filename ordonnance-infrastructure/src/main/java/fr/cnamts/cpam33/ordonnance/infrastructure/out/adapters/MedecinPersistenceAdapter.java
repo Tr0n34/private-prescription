@@ -10,6 +10,7 @@ import fr.cnamts.cpam33.ordonnance.infrastructure.out.mappers.ordonnances.Medeci
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.repositories.ordonnances.MedecinJpaRepository;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -28,6 +29,11 @@ public class MedecinPersistenceAdapter implements MedecinRepository, Adapter {
         return Optional.of(medecinEntityMapper.toDomain(medecinJpaRepository.findByExternalId(medecinId.id()).orElseThrow(
                 () -> new DomainObjectNotFound(MedecinExceptionCode.BS_MEDECIN_NOT_FOUND)
         )));
+    }
+
+    @Override
+    public List<Medecin> findAll() {
+        return List.of();
     }
 
     @Override

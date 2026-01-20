@@ -2,7 +2,11 @@ package fr.cnamts.cpam33.ordonnance.infrastructure.technical;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.Trace;
+import fr.cnamts.cpam33.ordonnance.domain.ports.out.traces.ActeMetierRepository;
+import fr.cnamts.cpam33.ordonnance.domain.ports.out.traces.TraceRepository;
 import fr.cnamts.cpam33.ordonnance.infrastructure.configurations.traces.TraceWriterProperties;
+import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.repositories.traces.ActeMetierJpaRepository;
+import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.repositories.traces.TraceJpaRepository;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.traces.InMemoryActeMetierCache;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.entities.traces.TraceEntity;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.mappers.traces.TraceEntityMapper;
@@ -34,6 +38,7 @@ public class TraceWriterSupervisor implements SmartLifecycle {
     public static final int JPA_ENTITY_BEFORE_FLUSH = 200;
 
     private final TraceEntityMapper traceEntityMapper;
+    private final ActeMetierJpaRepository acteMetierJpaRepository;
     private final InMemoryActeMetierCache acteMetierCache;
     private final ObjectMapper traceObjectMapper;
     private final EntityManagerFactory traceEmf;
@@ -56,6 +61,7 @@ public class TraceWriterSupervisor implements SmartLifecycle {
 
     public TraceWriterSupervisor(
             TraceEntityMapper traceEntityMapper,
+            ActeMetierJpaRepository acteMetierJpaRepository,
             InMemoryActeMetierCache acteMetierCache,
             @Qualifier("traceContextMapper") ObjectMapper traceObjectMapper,
             @Qualifier("traceEntityManagerFactory") EntityManagerFactory traceEmf,
@@ -63,6 +69,7 @@ public class TraceWriterSupervisor implements SmartLifecycle {
             TraceWriterProperties props
     ) {
         this.traceEntityMapper = traceEntityMapper;
+        this.acteMetierJpaRepository = acteMetierJpaRepository;
         this.acteMetierCache = acteMetierCache;
         this.traceObjectMapper = traceObjectMapper;
         this.traceEmf = traceEmf;
@@ -155,7 +162,7 @@ public class TraceWriterSupervisor implements SmartLifecycle {
             tx.begin();
             int i = START;
             for (Trace t : traces) {
-                TraceEntity entity = traceEntityMapper.toEntity(t, acteMetierCache, traceObjectMapper);
+                TraceEntity entity = traceEntityMapper.toEntity(t, acteMetierJpaRepository, traceObjectMapper);
                 em.persist(entity);
                 i++;
                 if ( i % JPA_ENTITY_BEFORE_FLUSH == START ) {

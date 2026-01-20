@@ -12,14 +12,22 @@ public class CacheSelectorConfiguration {
 
     @Bean
     @ConditionalOnProperty(name = "ordonnance.cache.type", havingValue = "ignite")
-    InMemoryActeMetierCache acteMetierCacheIgnite() {
+    InMemoryActeMetierCache acteMetierCacheIgnite(ActeMetierRepository acteMetierRepository) {
         return null;
     }
 
     @Bean
-    @ConditionalOnMissingBean(InMemoryActeMetierCache.class)
+    @ConditionalOnProperty(name = "ordonnance.cache.type", havingValue = "inmemory")
     InMemoryActeMetierCache acteMetierCacheInMemory(ActeMetierRepository acteMetierRepository) {
         return new InMemoryActeMetierCache(acteMetierRepository);
     }
+
+    @Bean
+    @ConditionalOnMissingBean(name = "ordonnance.cache.type")
+    InMemoryActeMetierCache defaultActeMetierCache(ActeMetierRepository acteMetierRepository) {
+        return new InMemoryActeMetierCache(acteMetierRepository);
+    }
+
+
 
 }

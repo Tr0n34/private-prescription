@@ -7,6 +7,7 @@ import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.ActeMe
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.Trace;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.TraceAttribute;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.TraceContext;
+import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.repositories.traces.ActeMetierJpaRepository;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.traces.InMemoryActeMetierCache;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.entities.traces.ActeMetierEntity;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.entities.traces.TraceEntity;
@@ -30,12 +31,12 @@ public interface TraceEntityMapper {
     @Mapping(target = "medecinId", source = "medecinId.id")
     @Mapping(target = "createdOn", source = "timestamp")
     @Mapping(target = "traceContext", source = "trace", qualifiedByName = "mapTraceContext")
-    TraceEntity toEntity(Trace trace, @Context InMemoryActeMetierCache acteMetierCache, @Context @Qualifier("traceObjectMapper") ObjectMapper traceObjectMapper);
+    TraceEntity toEntity(Trace trace, @Context ActeMetierJpaRepository acteMetierJpaRepository, @Context @Qualifier("traceObjectMapper") ObjectMapper traceObjectMapper);
 
     @Named("mapActeMetier")
-    default ActeMetierEntity mapActeMetier(ActeMetierId acteMetierId, @Context InMemoryActeMetierCache acteMetierCache) {
+    default ActeMetierEntity mapActeMetier(ActeMetierId acteMetierId, @Context ActeMetierJpaRepository acteMetierJpaRepository) {
         if ( acteMetierId == null ) return null;
-        return acteMetierCache.getRequired(acteMetierId.code());
+        return acteMetierJpaRepository.findByCode(acteMetierId.code()).orElseThrow();
     }
 
     @Named("mapTraceContext")

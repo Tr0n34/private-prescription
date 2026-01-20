@@ -1,5 +1,6 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.traces;
 
+import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.ActeMetier;
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.traces.ActeMetierRepository;
 import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.caches.ActeMetierCache;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.repositories.traces.ActeMetierJpaRepository;
@@ -17,7 +18,7 @@ public class InMemoryActeMetierCache implements ActeMetierCache {
     private static final Logger logger = LoggerFactory.getLogger(InMemoryActeMetierCache.class.getName());
 
     private final ActeMetierRepository repository;
-    private final Map<String, ActeMetierEntity> cache = new ConcurrentHashMap<>();
+    private final Map<String, ActeMetier> cache = new ConcurrentHashMap<>();
     private final AtomicBoolean ready = new AtomicBoolean(false);
 
     public InMemoryActeMetierCache(ActeMetierRepository repository) {
@@ -31,10 +32,10 @@ public class InMemoryActeMetierCache implements ActeMetierCache {
 
     @Override
     public void refresh() {
-        Map<String, ActeMetierEntity> datas = new HashMap<>();
+        Map<String, ActeMetier> datas = new HashMap<>();
         repository.findAll().forEach(e -> {
-            logger.trace("{} has been added in cache", e.getCode());
-            datas.put(e.getCode(), e);
+            logger.trace("{} has been added in cache", e.acteMetierId().code());
+            datas.put(e.acteMetierId().code(), e);
         });
         cache.clear();
         cache.putAll(datas);
@@ -43,16 +44,16 @@ public class InMemoryActeMetierCache implements ActeMetierCache {
     }
 
     @Override
-    public ActeMetierEntity getRequired(String code) {
-        ActeMetierEntity entity = cache.get(code);
-        if ( entity == null ) {
+    public ActeMetier getRequired(String code) {
+        ActeMetier acteMetier = cache.get(code);
+        if ( acteMetier == null ) {
             throw new IllegalArgumentException("Acte métier inexistant : " + code);
         }
-        return entity;
+        return acteMetier;
     }
 
     @Override
-    public Map<String, ActeMetierEntity> snapshot() {
+    public Map<String, ActeMetier> snapshot() {
         logger.info("get cache. Cache is ready: {}", isReady());
         return Map.copyOf(cache);
     }

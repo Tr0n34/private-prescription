@@ -10,6 +10,7 @@ import fr.cnamts.cpam33.ordonnance.infrastructure.out.mappers.ordonnances.Patien
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.repositories.ordonnances.PatientJpaRepository;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -29,6 +30,11 @@ public class PatientPersistenceAdapter implements PatientRepository, Adapter {
         return Optional.of(patientEntityMapper.toDomain(patientJpaRepository.findByExternalId(patientId.externalId()).orElseThrow(
                 () -> new DomainObjectNotFound(PatientExceptionCode.BS_PATIENT_NOT_FOUND)
         )));
+    }
+
+    @Override
+    public List<Patient> findAll() {
+        return List.of();
     }
 
     @Override

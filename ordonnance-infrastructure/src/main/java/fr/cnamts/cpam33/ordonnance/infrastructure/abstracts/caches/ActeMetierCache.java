@@ -1,6 +1,6 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.caches;
 
-import fr.cnamts.cpam33.ordonnance.infrastructure.out.entities.traces.ActeMetierEntity;
+import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.ActeMetier;
 
 import java.util.Map;
 
@@ -10,9 +10,9 @@ public interface ActeMetierCache {
 
     void refresh();
 
-    Map<String, ActeMetierEntity> snapshot();
+    Map<String, ActeMetier> snapshot();
 
-    ActeMetierEntity getRequired(String code);
+    ActeMetier getRequired(String code);
 
     int size();
 

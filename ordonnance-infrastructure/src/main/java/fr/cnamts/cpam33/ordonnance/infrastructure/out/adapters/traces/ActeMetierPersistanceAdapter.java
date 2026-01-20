@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -36,6 +37,11 @@ public class ActeMetierPersistanceAdapter implements ActeMetierRepository {
     @Override
     public Optional<ActeMetier> findById(ActeMetierId id) throws DomainObjectNotFound {
         return acteMetierJpaRepository.findByCode(id.code()).map(acteMetierEntityMapper::toDomain);
+    }
+
+    @Override
+    public List<ActeMetier> findAll() {
+        return List.of();
     }
 
     @Transactional

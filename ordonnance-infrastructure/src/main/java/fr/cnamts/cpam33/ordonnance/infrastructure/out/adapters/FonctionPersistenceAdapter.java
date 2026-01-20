@@ -11,6 +11,7 @@ import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.repositories.trac
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -31,6 +32,11 @@ public class FonctionPersistenceAdapter implements FonctionRepository {
                 .orElseThrow(() -> new DomainObjectNotFound(
                         OrdonnanceExceptionCode.BS_ORDONNANCE_PRESCRIPTION_MISSING));
         return Optional.ofNullable(fonctionEntityMapper.toDomain(entity));
+    }
+
+    @Override
+    public List<Fonction> findAll() {
+        return List.of();
     }
 
     @Override
