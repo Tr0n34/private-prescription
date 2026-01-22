@@ -36,6 +36,7 @@ public class TraceWriterSupervisor implements SmartLifecycle {
     public static final int DELAY = 1;
     public static final boolean INITIAL_START = false;
     public static final int JPA_ENTITY_BEFORE_FLUSH = 200;
+    public static final String SUPERVISOR_THREAD_NAME = "trace-supervisor";
 
     private final TraceEntityMapper traceEntityMapper;
     private final ActeMetierJpaRepository acteMetierJpaRepository;
@@ -54,7 +55,7 @@ public class TraceWriterSupervisor implements SmartLifecycle {
     private volatile boolean running = INITIAL_START;
 
     private final ScheduledExecutorService supervisor = Executors.newSingleThreadScheduledExecutor(r -> {
-        Thread t = new Thread(r, "trace-supervisor");
+        Thread t = new Thread(r, SUPERVISOR_THREAD_NAME);
         t.setDaemon(true);
         return t;
     });
@@ -81,8 +82,6 @@ public class TraceWriterSupervisor implements SmartLifecycle {
         ThreadFactory virtualThreadFactory = Thread.ofVirtual().name(PREFIX_THREAD_TRACEWRITER, START).factory();
         this.workerPool = Executors.newThreadPerTaskExecutor(virtualThreadFactory);
     }
-
-
 
     private void startAllWorkers() {
         for ( int i = START; i < workers; i++ ) {

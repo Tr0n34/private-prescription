@@ -76,7 +76,7 @@ public class PdfConfiguration {
                 throw new PdfInvalidException(PdfExceptionCode.TECH_PDF_DIRECTORY_NOT_FOUND);
             }
         }
-        return (p != null) ? p.toAbsolutePath().toString() + SEPARATOR : null;
+        return ( p != null ) ? p.toAbsolutePath().toString() + SEPARATOR : null;
     }
 
 }

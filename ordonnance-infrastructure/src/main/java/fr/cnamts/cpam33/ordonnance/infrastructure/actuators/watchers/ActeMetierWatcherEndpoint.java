@@ -13,6 +13,4 @@ public class ActeMetierWatcherEndpoint extends AbstractWatcherEndpoint {
         super(watcher);
     }
 
-
-
 }

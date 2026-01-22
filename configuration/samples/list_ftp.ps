@@ -1,0 +1,14 @@
+$ftpDir   = "ftp://ftp.thesorimed.vifi.info/PG/THESORIMED_V13_00-2026-01-06-PG.backup"   # ou /un/dossier/
+$username = "sages2.production"
+$password = "5g#t6klc@vc"
+
+$request = [System.Net.FtpWebRequest]::Create($ftpDir)
+$request.Method = [System.Net.WebRequestMethods+Ftp]::ListDirectory
+$request.Credentials = New-Object System.Net.NetworkCredential($username, $password)
+
+$response = $request.GetResponse()
+$reader = New-Object IO.StreamReader($response.GetResponseStream())
+$reader.ReadToEnd()
+
+$reader.Close()
+$response.Close()

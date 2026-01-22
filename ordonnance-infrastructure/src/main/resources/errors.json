@@ -37,6 +37,18 @@
     "message": "Nom trop long ou trop court"
   },
   {
+    "code": "BS_INS_OID_MISSING",
+    "boundedContext": "PATIENT",
+    "httpStatus": 400,
+    "message": "oid du patient inexistant"
+  },
+  {
+    "code": "BS_INS_MATRICULE_MISSING",
+    "boundedContext": "PATIENT",
+    "httpStatus": 400,
+    "message": "matricule du patient absent"
+  },
+  {
     "code": "BS_ORDONNANCE_ID_NUMERIC",
     "boundedContext": "ORDONNANCE",
     "httpStatus": 400,
