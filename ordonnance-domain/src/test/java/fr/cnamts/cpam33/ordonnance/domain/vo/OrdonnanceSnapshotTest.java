@@ -4,7 +4,7 @@ package fr.cnamts.cpam33.ordonnance.domain.vo;
 import fr.cnamts.cpam33.ordonnance.domain.fixtures.OrdonnanceFixtures;
 import fr.cnamts.cpam33.ordonnance.domain.fixtures.SignatureFixtures;
 import fr.cnamts.cpam33.ordonnance.domain.models.aggregates.Ordonnance;
-import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.OrdonnanceInvalideException;
+import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.DomainException;
 import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.enums.OrdonnanceExceptionCode;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identites.Signature;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.snapshots.OrdonnanceSnapshot;
@@ -33,8 +33,8 @@ public class OrdonnanceSnapshotTest {
         Signature signature = SignatureFixtures.signature();
         LocalDateTime now = LocalDateTime.now();
 
-        OrdonnanceInvalideException ex = assertThrows(
-                OrdonnanceInvalideException.class,
+        DomainException ex = assertThrows(
+                DomainException.class,
                 () -> new OrdonnanceSnapshot(null, signature, now)
         );
         assertEquals(OrdonnanceExceptionCode.BS_ORDONNANCE_ID_MISSING, ex.getCode());
@@ -44,8 +44,8 @@ public class OrdonnanceSnapshotTest {
     void constructor_shouldThrowException_whenSignatureIsNull() {
         Ordonnance ordonnance = OrdonnanceFixtures.ordonnanceValide();
         LocalDateTime now = LocalDateTime.now();
-        OrdonnanceInvalideException ex = assertThrows(
-                OrdonnanceInvalideException.class,
+        DomainException ex = assertThrows(
+                DomainException.class,
                 () -> new OrdonnanceSnapshot(ordonnance, null, now)
         );
         assertEquals(OrdonnanceExceptionCode.BS_ORDONNANCE_SNAPSHOT_MUST_BE_SIGNED, ex.getCode());

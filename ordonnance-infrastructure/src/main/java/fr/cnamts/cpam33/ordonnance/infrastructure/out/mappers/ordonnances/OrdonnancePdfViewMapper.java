@@ -12,12 +12,19 @@ public class OrdonnancePdfViewMapper {
     public static final String SPACE_BETWEEN_NOM_PRENOM = " ";
 
     public static OrdonnancePdfView from(OrdonnanceSnapshot snapshot) {
+
         List<LigneOrdonnanceView> lignes =
                 snapshot.ordonnance().prescriptions().stream()
-                        .map(ligne -> new LigneOrdonnanceView(
-                                ligne.medicament().name(),
-                                ligne.posologie().phrase()
-                        ))
+                        .flatMap(prescription ->
+                                prescription.medicaments().stream()
+                                        .flatMap(medicament ->
+                                                medicament.posologies().stream()
+                                                        .map(posologie -> new LigneOrdonnanceView(
+                                                                medicament.nom(),
+                                                                posologie.phrase()
+                                                        ))
+                                        )
+                        )
                         .toList();
         return new OrdonnancePdfView(
                 snapshot.ordonnance().patient().nom().value()
@@ -28,4 +35,6 @@ public class OrdonnancePdfViewMapper {
                 lignes
         );
     }
+
+
 }

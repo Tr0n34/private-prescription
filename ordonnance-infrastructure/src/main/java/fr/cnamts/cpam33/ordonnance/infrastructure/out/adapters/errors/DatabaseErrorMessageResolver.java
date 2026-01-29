@@ -1,18 +1,21 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.errors;
 
-import fr.cnamts.cpam33.ordonnance.domain.abstracts.ExceptionCode;
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.exceptions.ExceptionCode;
 import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.Adapter;
 import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors.ErrorMessageDomainResolver;
 import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors.ErrorMessageInfrastructureResolver;
 import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors.InfraStructureExceptionCode;
 import fr.cnamts.cpam33.ordonnance.infrastructure.exceptions.ErrorDescriptor;
-import fr.cnamts.cpam33.ordonnance.infrastructure.out.entities.ordonnances.ErrorCatalogEntity;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.repositories.ordonnances.ErrorCatalogJpaRepository;
+import fr.cnamts.cpam33.ordonnance.infrastructure.out.entities.ordonnances.ErrorCatalogEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Component
 public class DatabaseErrorMessageResolver implements ErrorMessageDomainResolver, ErrorMessageInfrastructureResolver, Adapter {
@@ -20,8 +23,10 @@ public class DatabaseErrorMessageResolver implements ErrorMessageDomainResolver,
     private static final Logger logger = LoggerFactory.getLogger(DatabaseErrorMessageResolver.class);
 
     public static final String UNRESOLVED_ERROR_MESSAGE = "Error code not found : %s";
-    public static final int NO_PLACEHOLDERS = 0;
-    public static final String[] UNDEFINED_PLACEHOLDERS = null;
+
+    private static final Pattern TOKEN = Pattern.compile("\\{([a-zA-Z0-9_\\-.]+)\\}");
+    public static final String TEMPLATE_PLACEHOLDER_DEFAULT = "";
+    public static final int INITIAL_CAPACITY = 16;
 
     private final ErrorCatalogJpaRepository errorCatalogJpaRepository;
 
@@ -30,34 +35,59 @@ public class DatabaseErrorMessageResolver implements ErrorMessageDomainResolver,
     }
 
     @Override
-    public ErrorDescriptor resolve(ExceptionCode exceptionCode) {
-        return resolveByCode(exceptionCode.toString(), UNDEFINED_PLACEHOLDERS);
+    public ErrorDescriptor resolve(ExceptionCode exceptionCode, Map<String, ?> placeHolders) {
+        return resolveByCode(exceptionCode.toString(), placeHolders);
+    }
+
+    @Override
+    public ErrorDescriptor resolve(InfraStructureExceptionCode code, Map<String, ?> placeHolders) {
+        return resolveByCode(code.toString(), placeHolders);
     }
 
     @Override
     public ErrorDescriptor resolve(InfraStructureExceptionCode code) {
-        return resolveByCode(code.toString(), UNDEFINED_PLACEHOLDERS);
+        return resolveByCode(code.toString(), null);
     }
 
-    @Override
-    public ErrorDescriptor resolve(InfraStructureExceptionCode code, String[] placeHolders) {
-        return resolveByCode(code.toString(), placeHolders);
-    }
-
-    public ErrorDescriptor resolveByCode(String exceptionCode, String[] placeHolders) {
+    public ErrorDescriptor resolveByCode(String exceptionCode, Map<String, ?> placeHolders) {
         ErrorCatalogEntity entity = errorCatalogJpaRepository.findByCodeAndActiveTrue(exceptionCode).orElseThrow(
                 () -> new IllegalStateException(String.format(UNRESOLVED_ERROR_MESSAGE, exceptionCode))
         );
-        String message = ( placeHolders == null || placeHolders.length == NO_PLACEHOLDERS)
-                ? entity.getMessage()
-                : String.format(entity.getMessage(), (Object[]) placeHolders);
-        logger.debug("{} : {}", exceptionCode, message);
+        String rendered = renderTemplate(entity.getMessage(), placeHolders == null ? Map.of() : placeHolders);
+        logger.debug("{} : {}", exceptionCode, rendered);
         return ErrorDescriptor.of(
                 entity.getCode(),
-                message,
+                rendered,
                 entity.getHttpStatus(),
                 LocalDateTime.now(),
                 entity.getBoundedContext());
+    }
+
+    private String renderTemplate(String template, Map<String, ?> placeHolders) {
+        String result = TEMPLATE_PLACEHOLDER_DEFAULT;
+        if ( template != null && !template.isBlank() ) {
+            Matcher matcher = TOKEN.matcher(template);
+            if ( !matcher.find() ) {
+                result = template;
+            } else {
+                StringBuilder out = new StringBuilder(template.length() + INITIAL_CAPACITY);
+                int last = 0;
+                do {
+                    out.append(template, last, matcher.start());
+                    String key = matcher.group(1);
+                    Object value = placeHolders.get(key);
+                    if ( value == null ) {
+                        out.append('{').append(key).append('}');
+                    } else {
+                        out.append(value);
+                    }
+                    last = matcher.end();
+                } while ( matcher.find() );
+                out.append(template, last, template.length());
+                result = out.toString();
+            }
+        }
+        return result;
     }
 
 }

@@ -1,6 +1,6 @@
 package fr.cnamts.cpam33.ordonnance.domain.models.exceptions.enums;
 
-import fr.cnamts.cpam33.ordonnance.domain.abstracts.ExceptionCode;
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.exceptions.ExceptionCode;
 
 public enum OrdonnanceExceptionCode implements ExceptionCode {
 
@@ -15,6 +15,8 @@ public enum OrdonnanceExceptionCode implements ExceptionCode {
 
     BS_ORDONNANCE_IMMUTABLE_WHEN_SIGNED,
     BS_ORDONNANCE_ALREADY_SIGNED,
-    BS_ORDONNANCE_SNAPSHOT_MUST_BE_SIGNED
+    BS_ORDONNANCE_SNAPSHOT_MUST_BE_SIGNED,
+
+    BS_ORDONNANCE_SNAPSHOT_GENERATION_ERROR
 
 }

@@ -1,7 +1,7 @@
 package fr.cnamts.cpam33.ordonnance.domain.aggregates;
 
 import fr.cnamts.cpam33.ordonnance.domain.models.aggregates.OrdonnanceId;
-import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.OrdonnanceInvalideException;
+import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.DomainException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -21,7 +21,7 @@ public class OrdonnanceIdTest {
     @ValueSource(strings = {"", " ", "ABC123", "12-34"})
     void should_reject_invalid_numero(String numero) {
         assertThrows(
-                OrdonnanceInvalideException.class,
+                DomainException.class,
                 () -> new OrdonnanceId(numero)
         );
     }
@@ -29,7 +29,7 @@ public class OrdonnanceIdTest {
     @Test
     void should_reject_null_numero() {
         assertThrows(
-                OrdonnanceInvalideException.class,
+                DomainException.class,
                 () -> new OrdonnanceId(null)
         );
     }

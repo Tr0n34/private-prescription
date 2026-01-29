@@ -2,7 +2,7 @@ package fr.cnamts.cpam33.ordonnance.application.services;
 
 import fr.cnamts.cpam33.ordonnance.domain.models.aggregates.Ordonnance;
 import fr.cnamts.cpam33.ordonnance.domain.models.aggregates.OrdonnanceId;
-import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.OrdonnanceInvalideException;
+import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.DomainException;
 import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.enums.OrdonnanceExceptionCode;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identites.Signature;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.snapshots.OrdonnanceSnapshot;
@@ -26,7 +26,7 @@ public class GenerateOrdonnanceSnapshotService implements OrdonnanceSnapshotGene
     @Override
     public OrdonnanceSnapshot snapshotOf(OrdonnanceId ordonnanceId, Signature signature) {
         Ordonnance ordonnance = ordonnanceRepository.findById(ordonnanceId).orElseThrow(
-                () -> new OrdonnanceInvalideException(OrdonnanceExceptionCode.BS_ORDONNANCE_ID_MISSING)
+                () -> new DomainException(OrdonnanceExceptionCode.BS_ORDONNANCE_ID_MISSING)
         );
         OrdonnanceSnapshot snapshot = OrdonnanceSnapshotFactory.create(ordonnance, signature);
         ordonnanceSnapshotWriter.writeSnapshot(snapshot);

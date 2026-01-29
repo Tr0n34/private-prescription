@@ -13,10 +13,10 @@ public class PatientApiAdapter implements Adapter {
     private static final Logger logger = LoggerFactory.getLogger(PatientApiAdapter.class);
 
     private final PatientRepository patientRepository;
-    private final ExternalPatientApiClient externalPatientApiClient;
+    private final ImportPatientApiClient externalPatientApiClient;
     private final PatientEntityMapper pattientEntityMapper;
 
-    public PatientApiAdapter(PatientRepository patientRepository, ExternalPatientApiClient externalPatientApiClient, PatientEntityMapper pattientEntityMapper) {
+    public PatientApiAdapter(PatientRepository patientRepository, ImportPatientApiClient externalPatientApiClient, PatientEntityMapper pattientEntityMapper) {
         this.patientRepository = patientRepository;
         this.externalPatientApiClient = externalPatientApiClient;
         this.pattientEntityMapper = pattientEntityMapper;

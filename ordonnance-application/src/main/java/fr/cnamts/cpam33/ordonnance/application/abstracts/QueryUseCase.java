@@ -1,7 +1,7 @@
 package fr.cnamts.cpam33.ordonnance.application.abstracts;
 
-import fr.cnamts.cpam33.ordonnance.domain.abstracts.DomainObject;
-import fr.cnamts.cpam33.ordonnance.domain.abstracts.Query;
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.domain.DomainObject;
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.cqrs.Query;
 
 import java.util.List;
 

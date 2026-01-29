@@ -1,14 +1,13 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.traces;
 
-import fr.cnamts.cpam33.ordonnance.domain.abstracts.DomainObjectNotFound;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.ActeMetier;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.ActeMetierId;
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.traces.ActeMetierRepository;
+import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.repositories.traces.ActeMetierJpaRepository;
+import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.repositories.traces.FonctionJpaRepository;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.entities.traces.ActeMetierEntity;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.entities.traces.FonctionEntity;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.mappers.traces.ActeMetierEntityMapper;
-import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.repositories.traces.ActeMetierJpaRepository;
-import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.repositories.traces.FonctionJpaRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -35,7 +34,7 @@ public class ActeMetierPersistanceAdapter implements ActeMetierRepository {
     }
 
     @Override
-    public Optional<ActeMetier> findById(ActeMetierId id) throws DomainObjectNotFound {
+    public Optional<ActeMetier> findById(ActeMetierId id)  {
         return acteMetierJpaRepository.findByCode(id.code()).map(acteMetierEntityMapper::toDomain);
     }
 

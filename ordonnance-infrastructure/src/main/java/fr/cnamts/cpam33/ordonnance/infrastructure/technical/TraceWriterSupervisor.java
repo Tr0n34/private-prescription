@@ -2,11 +2,8 @@ package fr.cnamts.cpam33.ordonnance.infrastructure.technical;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.Trace;
-import fr.cnamts.cpam33.ordonnance.domain.ports.out.traces.ActeMetierRepository;
-import fr.cnamts.cpam33.ordonnance.domain.ports.out.traces.TraceRepository;
 import fr.cnamts.cpam33.ordonnance.infrastructure.configurations.traces.TraceWriterProperties;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.repositories.traces.ActeMetierJpaRepository;
-import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.repositories.traces.TraceJpaRepository;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.traces.InMemoryActeMetierCache;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.entities.traces.TraceEntity;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.mappers.traces.TraceEntityMapper;

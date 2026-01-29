@@ -6,10 +6,10 @@ import fr.cnamts.cpam33.ordonnance.domain.fixtures.PatientFixtures;
 import fr.cnamts.cpam33.ordonnance.domain.fixtures.PrescriptionFixtures;
 import fr.cnamts.cpam33.ordonnance.domain.models.aggregates.Ordonnance;
 import fr.cnamts.cpam33.ordonnance.domain.models.aggregates.OrdonnanceId;
-import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.Prescription;
-import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.OrdonnanceInvalideException;
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.medecins.Medecin;
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.patients.Patient;
+import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.LignePrescription;
+import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.Patient;
+import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.utilisateurs.Medecin;
+import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.DomainException;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -23,14 +23,14 @@ class OrdonnanceTest {
         Medecin medecin = MedecinFixtures.medecinValide();
         Patient patient = PatientFixtures.patientValide();
         OrdonnanceId ordonnanceId = OrdonnanceFixtures.ordonnanceId();
-        List<Prescription> prescriptions = List.of(
+        List<LignePrescription> lignePrescriptions = List.of(
                 PrescriptionFixtures.onePrescription()
         );
         Ordonnance ordonnance = Ordonnance.of(
                 ordonnanceId,
                 patient,
                 medecin,
-                prescriptions
+                lignePrescriptions
         );
         assertNotNull(ordonnance);
         assertEquals(1, ordonnance.prescriptions().size());
@@ -42,7 +42,7 @@ class OrdonnanceTest {
         Patient patient = PatientFixtures.patientValide();
         OrdonnanceId ordonnanceId = OrdonnanceFixtures.ordonnanceId();
         Ordonnance ordonnance = Ordonnance.of(ordonnanceId, patient, medecin, List.of());
-        assertThrows(OrdonnanceInvalideException.class, ordonnance::validate);
+        assertThrows(DomainException.class, ordonnance::validate);
     }
 
 

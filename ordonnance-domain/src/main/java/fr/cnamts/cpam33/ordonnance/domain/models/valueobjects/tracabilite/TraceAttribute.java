@@ -1,7 +1,5 @@
 package fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite;
 
-import com.google.common.base.MoreObjects;
-
 public record TraceAttribute(
         String name,
         TraceValue value

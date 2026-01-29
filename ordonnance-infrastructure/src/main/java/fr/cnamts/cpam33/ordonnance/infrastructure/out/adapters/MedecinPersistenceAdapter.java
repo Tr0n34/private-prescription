@@ -1,13 +1,13 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters;
 
-import fr.cnamts.cpam33.ordonnance.domain.abstracts.DomainObjectNotFound;
+import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.DomainException;
 import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.enums.MedecinExceptionCode;
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.medecins.Medecin;
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.medecins.MedecinId;
+import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.utilisateurs.Medecin;
+import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.utilisateurs.MedecinId;
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.medecins.MedecinRepository;
 import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.Adapter;
-import fr.cnamts.cpam33.ordonnance.infrastructure.out.mappers.ordonnances.MedecinEntityMapper;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.repositories.ordonnances.MedecinJpaRepository;
+import fr.cnamts.cpam33.ordonnance.infrastructure.out.mappers.ordonnances.MedecinEntityMapper;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -25,9 +25,9 @@ public class MedecinPersistenceAdapter implements MedecinRepository, Adapter {
     }
 
     @Override
-    public Optional<Medecin> findById(MedecinId medecinId) throws DomainObjectNotFound {
+    public Optional<Medecin> findById(MedecinId medecinId) {
         return Optional.of(medecinEntityMapper.toDomain(medecinJpaRepository.findByExternalId(medecinId.id()).orElseThrow(
-                () -> new DomainObjectNotFound(MedecinExceptionCode.BS_MEDECIN_NOT_FOUND)
+                () -> new DomainException(MedecinExceptionCode.BS_MEDECIN_NOT_FOUND)
         )));
     }
 

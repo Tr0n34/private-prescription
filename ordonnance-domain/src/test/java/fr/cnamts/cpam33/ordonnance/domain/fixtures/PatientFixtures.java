@@ -1,9 +1,9 @@
 package fr.cnamts.cpam33.ordonnance.domain.fixtures;
 
+import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.Patient;
+import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.PatientId;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identites.Nom;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identites.Prenom;
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.patients.Patient;
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.patients.PatientId;
 
 import java.time.LocalDate;
 import java.time.Month;

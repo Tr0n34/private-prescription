@@ -1,14 +1,15 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.in.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import fr.cnamts.cpam33.ordonnance.application.usecases.ProvidePatientUseCase;
+import fr.cnamts.cpam33.ordonnance.application.usecases.patients.RegisterPatientUseCase;
 import fr.cnamts.cpam33.ordonnance.domain.fixtures.PatientFixtures;
+import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.Patient;
 import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors.ErrorMessageDomainResolver;
 import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors.ErrorMessageInfrastructureResolver;
 import fr.cnamts.cpam33.ordonnance.infrastructure.fixtures.ExternalPatientDtoFixtures;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.controllers.PatientController;
-import fr.cnamts.cpam33.ordonnance.infrastructure.out.dto.ExternalPatientDto;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.mappers.PatientApiMapper;
+import fr.cnamts.cpam33.ordonnance.infrastructure.out.dto.ExternalPatientDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -35,7 +36,7 @@ public class PatientControllerIT {
     private ObjectMapper objectMapper;
 
     @MockBean
-    private ProvidePatientUseCase patientService;
+    private RegisterPatientUseCase patientService;
 
     @MockBean
     private PatientApiMapper patientApiMapper;
@@ -50,7 +51,7 @@ public class PatientControllerIT {
     void should_create_patient_when_payload_is_valid() throws Exception {
         ExternalPatientDto patientDto = ExternalPatientDtoFixtures.patientValide1();
         when(patientApiMapper.toDomain(any())).thenReturn(PatientFixtures.patientValide());
-        when(patientService.providePatient(any())).thenReturn(PatientFixtures.patientValide());
+        when(patientService.registerPatient(any(Patient.class))).thenReturn(PatientFixtures.patientValide());
         mockMvc.perform(post("/patients")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(patientDto)))
@@ -64,7 +65,7 @@ public class PatientControllerIT {
                 ExternalPatientDtoFixtures.patientValide2()
         );
         when(patientApiMapper.toDomain(any())).thenReturn(PatientFixtures.patientValide());
-        when(patientService.providePatient(any())).thenReturn(PatientFixtures.patientValide());
+        when(patientService.registerPatient(any(Patient.class))).thenReturn(PatientFixtures.patientValide());
         mockMvc.perform(post("/patients/batch")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(dtos)))

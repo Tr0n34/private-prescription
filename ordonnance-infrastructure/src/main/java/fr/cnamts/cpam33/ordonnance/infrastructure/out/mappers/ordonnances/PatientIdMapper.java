@@ -1,6 +1,6 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.out.mappers.ordonnances;
 
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.patients.PatientId;
+import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.PatientId;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")

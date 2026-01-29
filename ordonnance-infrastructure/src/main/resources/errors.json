@@ -191,5 +191,12 @@
     "boundedContext": "PDF",
     "httpStatus": 400,
     "message": "Le repertoire %s n'a pas été trouvé"
+  },
+  {
+    "code": "CMD_PARAMETRE_MANQUANT",
+    "boundedContext": "COMMAND",
+    "httpStatus": 400,
+    "message": "Paramètres manquants pour {command} : {missingParams}",
+    "description": "Des valeurs de champs de la commande sont manquants"
   }
 ]

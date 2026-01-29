@@ -2,8 +2,8 @@ package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lowagie.text.pdf.BaseFont;
-import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.OrdonnanceSnapshotException;
-import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.enums.OrdonnanceSnapshotExceptionCode;
+import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.DomainException;
+import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.enums.OrdonnanceExceptionCode;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.snapshots.OrdonnanceSnapshot;
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.ordonnances.OrdonnanceSnapshotWriter;
 import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.Adapter;
@@ -33,7 +33,7 @@ public class OrdonnanceSnapshotWriterAdapter implements Adapter, OrdonnanceSnaps
     }
 
     @Override
-    public void writeSnapshot(OrdonnanceSnapshot snapshot) throws OrdonnanceSnapshotException {
+    public void writeSnapshot(OrdonnanceSnapshot snapshot) {
         try {
             OrdonnancePdfView view = OrdonnancePdfViewMapper.from(snapshot);
             Context context = new Context();
@@ -54,7 +54,7 @@ public class OrdonnanceSnapshotWriterAdapter implements Adapter, OrdonnanceSnaps
             // fileStorage.save(snapshot.getId(), pdf);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
-            throw new OrdonnanceSnapshotException(OrdonnanceSnapshotExceptionCode.BS_ORDONNANCE_SNAPSHOT_GENERATION_ERROR);
+            throw new DomainException(OrdonnanceExceptionCode.BS_ORDONNANCE_SNAPSHOT_GENERATION_ERROR);
         }
     }
 

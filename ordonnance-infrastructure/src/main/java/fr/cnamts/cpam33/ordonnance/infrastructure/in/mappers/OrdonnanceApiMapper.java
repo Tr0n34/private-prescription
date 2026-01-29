@@ -1,9 +1,9 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.in.mappers;
 
-import fr.cnamts.cpam33.ordonnance.domain.models.commands.CreateOrdonnanceCmd;
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.medecins.MedecinId;
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.medecins.Rpps;
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.patients.PatientId;
+import fr.cnamts.cpam33.ordonnance.domain.models.commands.ordonnances.CreateOrdonnanceCmd;
+import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identites.Rpps;
+import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.PatientId;
+import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.utilisateurs.MedecinId;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.dto.OrdonnanceDto;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.dto.medecins.MedecinIdDto;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.dto.patients.PatientIdDto;
@@ -17,7 +17,7 @@ public interface OrdonnanceApiMapper {
 
     @Mapping(target = "patientId", source = "patientId", qualifiedByName = "toPatientId")
     @Mapping(target = "medecinId", source = "medecinId", qualifiedByName = "toMedecinId")
-    @Mapping(target = "prescriptions", ignore = true)
+    @Mapping(target = "lignePrescriptions", ignore = true)
     CreateOrdonnanceCmd toCommand(OrdonnanceDto dto);
 
     @Mapping(target = "patientId", source = "patientId")
@@ -47,7 +47,7 @@ public interface OrdonnanceApiMapper {
 
     default MedecinIdDto mapToMedecinIdDto(MedecinId medecinId) {
         if (medecinId == null) return null;
-        return new MedecinIdDto(medecinId.id(), medecinId.rpps().value());
+        return new MedecinIdDto(medecinId.id(), medecinId.rpps().numero());
     }
 
 }

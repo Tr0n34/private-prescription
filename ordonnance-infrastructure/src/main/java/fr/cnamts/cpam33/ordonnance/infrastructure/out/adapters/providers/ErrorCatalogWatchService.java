@@ -2,8 +2,8 @@ package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.providers;
 
 import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.watchers.AbstractFileWatchService;
 import fr.cnamts.cpam33.ordonnance.infrastructure.configurations.batch.Batch;
-import fr.cnamts.cpam33.ordonnance.infrastructure.technical.DebouncedReloadExecutor;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.batch.ErrorCatalogLoader;
+import fr.cnamts.cpam33.ordonnance.infrastructure.technical.DebouncedReloadExecutor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;

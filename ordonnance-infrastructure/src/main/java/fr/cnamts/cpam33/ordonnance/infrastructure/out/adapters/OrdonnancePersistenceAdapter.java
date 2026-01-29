@@ -2,12 +2,12 @@ package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters;
 
 import fr.cnamts.cpam33.ordonnance.domain.models.aggregates.Ordonnance;
 import fr.cnamts.cpam33.ordonnance.domain.models.aggregates.OrdonnanceId;
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.medecins.MedecinId;
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.patients.PatientId;
+import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.PatientId;
+import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.utilisateurs.MedecinId;
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.ordonnances.OrdonnanceRepository;
+import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.repositories.ordonnances.OrdonnanceJpaRepository;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.entities.ordonnances.OrdonnanceIdEntity;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.mappers.ordonnances.OrdonnanceEntityMapper;
-import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.repositories.ordonnances.OrdonnanceJpaRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

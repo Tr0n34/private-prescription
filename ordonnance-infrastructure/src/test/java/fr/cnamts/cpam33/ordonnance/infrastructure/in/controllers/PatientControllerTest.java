@@ -1,10 +1,11 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.in.controllers;
 
-import fr.cnamts.cpam33.ordonnance.application.usecases.ProvidePatientUseCase;
+import fr.cnamts.cpam33.ordonnance.application.usecases.patients.RegisterPatientUseCase;
 import fr.cnamts.cpam33.ordonnance.domain.fixtures.PatientFixtures;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.controllers.PatientController;
-import fr.cnamts.cpam33.ordonnance.infrastructure.out.dto.ExternalPatientDto;
+import fr.cnamts.cpam33.ordonnance.infrastructure.in.mappers.ImportPatientApiMapper;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.mappers.PatientApiMapper;
+import fr.cnamts.cpam33.ordonnance.infrastructure.out.dto.ExternalPatientDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.ResponseEntity;
@@ -17,13 +18,14 @@ import static org.mockito.Mockito.*;
 
 public class PatientControllerTest {
 
-    private ProvidePatientUseCase patientService;
+    private RegisterPatientUseCase patientService;
     private PatientApiMapper patientApiMapper;
+    private ImportPatientApiMapper importPatientApiMapper;
     private PatientController controller;
 
     @BeforeEach
     void setup() {
-        patientService = mock(ProvidePatientUseCase.class);
+        patientService = mock(RegisterPatientUseCase.class);
         patientApiMapper = mock(PatientApiMapper.class);
         controller = new PatientController(patientService, patientApiMapper);
     }
@@ -36,11 +38,11 @@ public class PatientControllerTest {
                 patientDomain.prenom().value(),
                 LocalDate.of(1980, Month.SEPTEMBER, 5));
         when(patientApiMapper.toDomain(dto)).thenReturn(patientDomain);
-        when(patientService.providePatient(patientDomain)).thenReturn(patientDomain);
+        when(patientService.registerPatient(patientDomain)).thenReturn(patientDomain);
         ResponseEntity<Void> result = controller.providePatient(dto);
         assertEquals(200, result.getStatusCode().value());
         verify(patientApiMapper, times(1)).toDomain(dto);
-        verify(patientService, times(1)).providePatient(patientDomain);
+        verify(patientService, times(1)).registerPatient(patientDomain);
     }
 
 }

@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/admin/traces")
@@ -43,7 +42,8 @@ public class TraceController {
     public ResponseEntity<?> createTrace(@RequestBody TraceDto trace) {
         logger.info("trace : {}", trace.toString());
         List<TraceAttribute> traceAttributes = new ArrayList<>();
-        traceService.trace(resolver.resolveByCode(trace.acteMetierCode()), traceApiMapper.mapMedecin(trace.medecinId()), new TraceContext(traceAttributes));
+        traceService.trace(resolver.resolveByCode(trace.acteMetierCode()),
+                traceApiMapper.mapMedecin(trace.medecinId()), new TraceContext(traceAttributes));
         return ResponseEntity.ok().build();
     }
 
@@ -53,13 +53,13 @@ public class TraceController {
     }
 
     @PatchMapping("/workers")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void setStatus(@RequestBody WorkerStatusDto workerStatusDto) {
+    public ResponseEntity<WorkerStatusDto> setStatus(@RequestBody WorkerStatusDto workerStatusDto) {
         if ( workerStatusDto.running() ) {
             traceWriterSupervisor.start();
         } else {
             traceWriterSupervisor.stop();
         }
+        return ResponseEntity.ok(new WorkerStatusDto(traceWriterSupervisor.isRunning()));
     }
 
 }

@@ -1,13 +1,13 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters;
 
-import fr.cnamts.cpam33.ordonnance.domain.abstracts.DomainObjectNotFound;
+import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.DomainException;
 import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.enums.OrdonnanceExceptionCode;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.Fonction;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.FonctionId;
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.traces.FonctionRepository;
+import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.repositories.traces.FonctionJpaRepository;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.entities.traces.FonctionEntity;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.mappers.traces.FonctionEntityMapper;
-import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.repositories.traces.FonctionJpaRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -27,10 +27,9 @@ public class FonctionPersistenceAdapter implements FonctionRepository {
     }
 
     @Override
-    public Optional<Fonction> findById(FonctionId id) throws DomainObjectNotFound {
+    public Optional<Fonction> findById(FonctionId id) {
         FonctionEntity entity = fonctionJpaRepository.findByCode(id.code())
-                .orElseThrow(() -> new DomainObjectNotFound(
-                        OrdonnanceExceptionCode.BS_ORDONNANCE_PRESCRIPTION_MISSING));
+                .orElseThrow(() -> new DomainException(OrdonnanceExceptionCode.BS_ORDONNANCE_PRESCRIPTION_MISSING));
         return Optional.ofNullable(fonctionEntityMapper.toDomain(entity));
     }
 

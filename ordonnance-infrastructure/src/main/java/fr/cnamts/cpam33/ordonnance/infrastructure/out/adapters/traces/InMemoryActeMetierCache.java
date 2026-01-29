@@ -3,8 +3,6 @@ package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.traces;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.ActeMetier;
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.traces.ActeMetierRepository;
 import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.caches.ActeMetierCache;
-import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.repositories.traces.ActeMetierJpaRepository;
-import fr.cnamts.cpam33.ordonnance.infrastructure.out.entities.traces.ActeMetierEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

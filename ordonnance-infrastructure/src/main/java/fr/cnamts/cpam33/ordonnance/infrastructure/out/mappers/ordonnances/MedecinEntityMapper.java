@@ -1,8 +1,8 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.out.mappers.ordonnances;
 
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.medecins.Medecin;
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.medecins.MedecinId;
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.medecins.Rpps;
+import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identites.Rpps;
+import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.utilisateurs.Medecin;
+import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.utilisateurs.MedecinId;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.entities.ordonnances.MedecinEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -15,7 +15,7 @@ import org.mapstruct.Mapping;
 public interface MedecinEntityMapper {
 
     @Mapping(target = "externalId", source = "medecinId.id")
-    @Mapping(target = "rpps", source = "medecinId.rpps.value")
+    @Mapping(target = "rpps", source = "medecinId.rpps.numero")
     @Mapping(target = "nom", source = "nom", qualifiedByName = "nomToString")
     @Mapping(target = "prenom", source = "prenom", qualifiedByName = "prenomToString")
     MedecinEntity toEntity(Medecin patient);
@@ -29,7 +29,7 @@ public interface MedecinEntityMapper {
         if (medecinId == null) return null;
         MedecinEntity entity = new MedecinEntity();
         entity.setExternalId(medecinId.id());
-        entity.setRpps(medecinId.rpps().value());
+        entity.setRpps(medecinId.rpps().numero());
         return entity;
     }
 
