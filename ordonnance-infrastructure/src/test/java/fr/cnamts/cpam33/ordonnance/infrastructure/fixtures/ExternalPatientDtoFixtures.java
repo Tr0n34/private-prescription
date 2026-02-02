@@ -1,6 +1,6 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.fixtures;
 
-import fr.cnamts.cpam33.ordonnance.infrastructure.out.dto.ExternalPatientDto;
+import fr.cnamts.cpam33.ordonnance.infrastructure.out.dto.PatientDto;
 
 import java.time.LocalDate;
 import java.time.Month;
@@ -9,8 +9,9 @@ public final class ExternalPatientDtoFixtures {
 
     private ExternalPatientDtoFixtures() {}
 
-    public static ExternalPatientDto patientValide1() {
-        return new ExternalPatientDto(
+    public static PatientDto patientValide1() {
+        return new PatientDto(
+                "uiid-rte6-45tY-12e3",
                 "EXT-123",
                 "Dupont",
                 "Jean",
@@ -18,15 +19,18 @@ public final class ExternalPatientDtoFixtures {
         );
     }
 
-    public static ExternalPatientDto patientValide2() {
-        return new ExternalPatientDto("EXT-456",
+    public static PatientDto patientValide2() {
+        return new PatientDto(
+                "uiid-nb47-45tY-456e",
+                "EXT-231",
                 "Martin",
                 "Claire",
                 LocalDate.of(1981, Month.SEPTEMBER, 6));
     }
 
-    public static ExternalPatientDto patientSansId() {
-        return new ExternalPatientDto(null,
+    public static PatientDto patientSansId() {
+        return new PatientDto(null,
+                null,
                 "Martin",
                 "Claire",
                 LocalDate.of(1981, Month.SEPTEMBER, 6));

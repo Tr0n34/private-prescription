@@ -8,7 +8,7 @@ public class InfrastructureException extends RuntimeException {
     private final transient InfraStructureExceptionCode code;
     private final transient Map<String, ?> placeHolders;
 
-    protected InfrastructureException(InfraStructureExceptionCode code) {
+    public InfrastructureException(InfraStructureExceptionCode code) {
         this.code = Objects.requireNonNull(code);
         this.placeHolders = null;
     }

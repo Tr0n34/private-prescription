@@ -1,19 +1,41 @@
-package fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.acls;
+package fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.acls.patients;
 
+import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.ExternalPatientId;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identites.Nom;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identites.Prenom;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.Patient;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.PatientId;
+import fr.cnamts.cpam33.ordonnance.domain.ports.out.patients.PatientNumGenerator;
 import fr.cnamts.cpam33.ordonnance.infrastructure.exceptions.CesPatientInvalidException;
 import fr.cnamts.cpam33.ordonnance.infrastructure.exceptions.enums.CesPatientExceptionCode;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.dto.patients.CesPatientDto;
+import fr.cnamts.cpam33.ordonnance.infrastructure.out.dto.PatientDto;
+import org.springframework.stereotype.Component;
 
-public class CesPatientACL {
+@Component
+public class PatientACL {
+
+    private final PatientNumGenerator patientNumGenerator;
+
+    public PatientACL(PatientNumGenerator patientNumGenerator) {
+        this.patientNumGenerator = patientNumGenerator;
+    }
+
+    public Patient toDomain(PatientDto dto) {
+        return new Patient(
+                new PatientId(patientNumGenerator.generate()),
+                new ExternalPatientId(dto.externalId()),
+                new Nom(dto.nom()),
+                new Prenom(dto.prenom()),
+                dto.dateNaissance()
+        );
+    }
 
     public Patient toDomain(CesPatientDto dto) {
         validate(dto);
         return new Patient(
-                new PatientId(dto.externalId()),
+                new PatientId(patientNumGenerator.generate()),
+                new ExternalPatientId(dto.externalId()),
                 new Nom(dto.nom()),
                 new Prenom(dto.prenom()),
                 dto.dateNaissance()

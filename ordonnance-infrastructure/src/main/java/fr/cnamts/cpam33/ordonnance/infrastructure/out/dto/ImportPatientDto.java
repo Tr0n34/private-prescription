@@ -8,9 +8,11 @@ import jakarta.validation.constraints.Past;
 import java.time.LocalDate;
 
 public record ImportPatientDto(
-        @NotNull String externalId,
+        @NotNull
+        String externalId,
         String nom,
-        @NotBlank String prenom,
+        @NotBlank
+        String prenom,
         @NotNull
         @Past
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")

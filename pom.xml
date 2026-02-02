@@ -21,6 +21,8 @@
         <module>ordonnance-application</module>
         <module>ordonnance-infrastructure</module>
         <module>ordonnance-architecture-validation</module>
+        <module>ordonnance-boot</module>
+        <module>ordonnance-db-migrator</module>
     </modules>
 
     <properties>
@@ -43,6 +45,7 @@
         <ignite.version>2.17.0</ignite.version>
         <ignite-spring.version>2.17.0</ignite-spring.version>
         <guava.version>33.5.0-jre</guava.version>
+        <flyway.version>12.0.0</flyway.version>
 
         <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
         <sonar.coverage.exclusions>ordonnance-architecture-validation/**</sonar.coverage.exclusions>
@@ -97,6 +100,20 @@
                 <groupId>org.postgresql</groupId>
                 <artifactId>postgresql</artifactId>
                 <version>${postgresql.driver.version}</version>
+            </dependency>
+
+            <!-- Flyway -->
+            <dependency>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-core</artifactId>
+                <version>${flyway.version}</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-database-postgresql</artifactId>
+                <version>${flyway.version}</version>
+                <scope>runtime</scope>
             </dependency>
 
             <!-- Cache -->

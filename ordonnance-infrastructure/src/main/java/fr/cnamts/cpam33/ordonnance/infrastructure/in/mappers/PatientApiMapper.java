@@ -1,50 +1,62 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.in.mappers;
 
+import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.ExternalPatientId;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identites.Nom;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identites.Prenom;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.Patient;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.PatientId;
-import fr.cnamts.cpam33.ordonnance.infrastructure.out.dto.ExternalPatientDto;
+import fr.cnamts.cpam33.ordonnance.infrastructure.out.dto.PatientDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface PatientApiMapper {
 
-    @Mapping(target = "patientId", source = "externalId")
+    @Mapping(target = "patientId", source = "numero")
+    @Mapping(target = "externalPatientId", source = "externalId")
     @Mapping(target = "nom", source = "nom")
     @Mapping(target = "prenom", source = "prenom")
-    Patient toDomain(ExternalPatientDto dto);
+    @Mapping(target = "dateNaissance", source = "dateNaissance")
+    Patient toDomain(PatientDto dto);
 
-    @Mapping(target = "externalId", source = "patientId")
+    @Mapping(target = "numero", source = "patientId")
+    @Mapping(target = "externalId", source = "externalPatientId")
     @Mapping(target = "nom", source = "nom")
     @Mapping(target = "prenom", source = "prenom")
-    ExternalPatientDto toDto(Patient patient);
+    @Mapping(target = "dateNaissance", source = "dateNaissance")
+    PatientDto toDto(Patient patient);
 
 
-    default PatientId mapPatientId(String externalId) {
-        return new PatientId(externalId);
+    default PatientId mapPatientId(String numero) {
+        return new PatientId(numero);
     }
 
     default String mapPatientId(PatientId patientId) {
-        return patientId.externalId();
+        return patientId.numero();
+    }
+
+    default ExternalPatientId mapExternalPatientId(String externalId) {
+        return externalId == null ? null : new ExternalPatientId(externalId);
+    }
+
+    default String mapExternalPatientId(ExternalPatientId externalPatientId) {
+        return externalPatientId == null ? null : externalPatientId.numero();
     }
 
     default Nom mapNom(String nom) {
-        return new Nom(nom);
+        return nom == null ? null : new Nom(nom);
     }
 
     default String mapNom(Nom nom) {
-        return nom.value();
+        return nom == null ? null : nom.value();
     }
 
     default Prenom mapPrenom(String prenom) {
-        return  new Prenom(prenom);
+        return prenom == null ? null : new Prenom(prenom);
     }
 
     default String mapPrenom(Prenom prenom) {
-        return prenom.value();
+        return prenom == null ? null : prenom.value();
     }
 
 }
-

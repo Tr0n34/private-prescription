@@ -67,12 +67,10 @@ public class GlobalControllerAdvice {
                 ex.getMessage(),
                 HttpStatus.INTERNAL_SERVER_ERROR.value(),
                 LocalDateTime.now(),
-                ex.getCause().getClass().getSimpleName()
+                ex.getClass().getSimpleName()
         );
-        logger.error(INTERNAL_EXCEPTION, ex);
         return ResponseEntity.status(descriptor.httpStatus()).body(ErrorResponseDto.from(descriptor));
     }
-
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<String> handleInvalidDate(HttpMessageNotReadableException ex) {

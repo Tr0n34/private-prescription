@@ -10,6 +10,7 @@ import java.time.LocalDate;
 
 public record Patient(
         PatientId patientId,
+        ExternalPatientId externalPatientId,
         Nom nom,
         Prenom prenom,
         LocalDate dateNaissance
@@ -24,8 +25,9 @@ public record Patient(
         }
     }
 
-    public static Patient of(PatientId patientId, Nom nom, Prenom prenom, LocalDate dateNaissance) {
-        return new Patient(patientId, nom, prenom, dateNaissance);
+    public static Patient of(PatientId patientId, ExternalPatientId externalPatientId,
+                             Nom nom, Prenom prenom, LocalDate dateNaissance) {
+        return new Patient(patientId, externalPatientId, nom, prenom, dateNaissance);
     }
 
 }

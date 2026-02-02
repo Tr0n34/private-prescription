@@ -12,7 +12,9 @@ public class PatientEntity implements IEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "external_id", nullable = false, unique = true)
+    @Column(name = "patient_id", nullable = false, unique = true)
+    private String patientId;
+    @Column(name = "external_id", nullable = true, unique = true)
     private String externalId;
     @Column(name = "nom")
     private String nom;
@@ -58,6 +60,15 @@ public class PatientEntity implements IEntity {
 
     public PatientEntity setDateNaissance(LocalDate dateNaissance) {
         this.dateNaissance = dateNaissance;
+        return this;
+    }
+
+    public String getPatientId() {
+        return patientId;
+    }
+
+    public PatientEntity setPatientId(String patientId) {
+        this.patientId = patientId;
         return this;
     }
 

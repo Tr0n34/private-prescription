@@ -44,7 +44,7 @@ public class CreateOrdonnanceUseCase implements CommandUseCase<CreateOrdonnanceC
         Ordonnance ordonnance = Ordonnance.of(
                 OrdonnanceIdFactory.withGenerator(ordonnanceNumGenerator).create(),
                 patientRepository.findById(command.patientId()).orElseThrow(
-                        () -> NotFound.of(Patient.class.getName(), command.patientId().externalId())),
+                        () -> NotFound.of(Patient.class.getName(), command.patientId().numero())),
                 medecinRepository.findById(command.medecinId()).orElseThrow(
                         () -> NotFound.of(Medecin.class.getName(), command.medecinId().rpps())),
                 List.of());

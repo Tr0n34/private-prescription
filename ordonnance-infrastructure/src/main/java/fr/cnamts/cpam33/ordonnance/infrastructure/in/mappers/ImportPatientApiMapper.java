@@ -1,49 +1,30 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.in.mappers;
 
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.Patient;
-import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.PatientId;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identites.Nom;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identites.Prenom;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.dto.ImportPatientDto;
+import fr.cnamts.cpam33.ordonnance.infrastructure.out.mappers.identites.NomPrenomMapper;
+import fr.cnamts.cpam33.ordonnance.infrastructure.out.mappers.patients.ExternalIdPatientMapper;
+import fr.cnamts.cpam33.ordonnance.infrastructure.out.mappers.patients.PatientIdMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {
+        PatientIdMapper.class,
+        ExternalIdPatientMapper.class,
+        NomPrenomMapper.class
+})
 public interface ImportPatientApiMapper {
 
-    @Mapping(target = "patientId", source = "externalId")
+    @Mapping(target = "externalPatientId", source = "externalId")
     @Mapping(target = "nom", source = "nom")
     @Mapping(target = "prenom", source = "prenom")
-    Patient toDomain(ImportPatientDto dto);
+    Patient toDomainWithoutId(ImportPatientDto dto);
 
-    @Mapping(target = "externalId", source = "patientId")
+    @Mapping(target = "externalId", source = "externalPatientId.numero")
     @Mapping(target = "nom", source = "nom")
     @Mapping(target = "prenom", source = "prenom")
     ImportPatientDto toDto(Patient patient);
-
-
-    default PatientId mapPatientId(String externalId) {
-        return new PatientId(externalId);
-    }
-
-    default String mapPatientId(PatientId patientId) {
-        return patientId.externalId();
-    }
-
-    default Nom mapNom(String nom) {
-        return new Nom(nom);
-    }
-
-    default String mapNom(Nom nom) {
-        return nom.value();
-    }
-
-    default Prenom mapPrenom(String prenom) {
-        return  new Prenom(prenom);
-    }
-
-    default String mapPrenom(Prenom prenom) {
-        return prenom.value();
-    }
 
 }

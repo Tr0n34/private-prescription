@@ -26,10 +26,10 @@ public interface OrdonnanceApiMapper {
 
     @Named("toPatientId")
     default PatientId mapToPatientId(PatientIdDto dto) {
-        if (dto == null || dto.externalId() == null || dto.externalId().isBlank()) {
+        if (dto == null || dto.numero() == null || dto.numero().isBlank()) {
             return null;
         }
-        return new PatientId(dto.externalId());
+        return new PatientId(dto.numero());
     }
 
     @Named("toMedecinId")
@@ -42,7 +42,7 @@ public interface OrdonnanceApiMapper {
 
     default PatientIdDto mapToPatientIdDto(PatientId patientId) {
         if (patientId == null) return null;
-        return new PatientIdDto(patientId.externalId());
+        return new PatientIdDto(patientId.numero());
     }
 
     default MedecinIdDto mapToMedecinIdDto(MedecinId medecinId) {

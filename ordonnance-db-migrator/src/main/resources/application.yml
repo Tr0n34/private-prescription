@@ -1,0 +1,23 @@
+server:
+    port: 8081
+
+spring:
+    main:
+        banner-mode: "off"
+
+migrator:
+    api:
+        enabled: true
+    ordonnance:
+        url: jdbc:postgresql://localhost:5432/ordonnance_db
+        username: postgres
+        password: ${DB_PASSWORD:123456789}
+        locations:
+            - filesystem:D:/DATA/ordonnance/configuration/postgresql/ordonnances/db/migration
+
+    trace:
+        url: jdbc:postgresql://localhost:5431/trace_db
+        username: postgres
+        password: ${DB_PASSWORD:123456789}
+        locations:
+            - filesystem:D:/DATA/ordonnance/configuration/postgresql/traces/db/migration

@@ -1,4 +1,4 @@
-package fr.cnamts.cpam33.ordonnance.infrastructure.out.mappers.ordonnances;
+package fr.cnamts.cpam33.ordonnance.infrastructure.out.mappers.medecins;
 
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identites.Rpps;
 import org.mapstruct.Mapper;

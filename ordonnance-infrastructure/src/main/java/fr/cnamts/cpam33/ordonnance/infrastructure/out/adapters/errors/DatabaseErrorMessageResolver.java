@@ -27,6 +27,8 @@ public class DatabaseErrorMessageResolver implements ErrorMessageDomainResolver,
     private static final Pattern TOKEN = Pattern.compile("\\{([a-zA-Z0-9_\\-.]+)\\}");
     public static final String TEMPLATE_PLACEHOLDER_DEFAULT = "";
     public static final int INITIAL_CAPACITY = 16;
+    public static final char OPEN_PARENTHESIS = '{';
+    public static final char CLOSED_PARENTHESIS = '}';
 
     private final ErrorCatalogJpaRepository errorCatalogJpaRepository;
 
@@ -77,7 +79,7 @@ public class DatabaseErrorMessageResolver implements ErrorMessageDomainResolver,
                     String key = matcher.group(1);
                     Object value = placeHolders.get(key);
                     if ( value == null ) {
-                        out.append('{').append(key).append('}');
+                        out.append(OPEN_PARENTHESIS).append(key).append(CLOSED_PARENTHESIS);
                     } else {
                         out.append(value);
                     }

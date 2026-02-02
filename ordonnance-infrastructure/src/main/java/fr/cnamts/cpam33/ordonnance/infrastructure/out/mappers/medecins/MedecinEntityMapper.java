@@ -1,9 +1,10 @@
-package fr.cnamts.cpam33.ordonnance.infrastructure.out.mappers.ordonnances;
+package fr.cnamts.cpam33.ordonnance.infrastructure.out.mappers.medecins;
 
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identites.Rpps;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.utilisateurs.Medecin;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.utilisateurs.MedecinId;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.entities.ordonnances.MedecinEntity;
+import fr.cnamts.cpam33.ordonnance.infrastructure.out.mappers.identites.NomPrenomMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -16,13 +17,13 @@ public interface MedecinEntityMapper {
 
     @Mapping(target = "externalId", source = "medecinId.id")
     @Mapping(target = "rpps", source = "medecinId.rpps.numero")
-    @Mapping(target = "nom", source = "nom", qualifiedByName = "nomToString")
-    @Mapping(target = "prenom", source = "prenom", qualifiedByName = "prenomToString")
+    @Mapping(target = "nom", source = "nom")
+    @Mapping(target = "prenom", source = "prenom")
     MedecinEntity toEntity(Medecin patient);
 
     @Mapping(target = "medecinId", source = "entity")
-    @Mapping(target = "nom", source = "nom", qualifiedByName = "stringToNom")
-    @Mapping(target = "prenom", source = "prenom", qualifiedByName = "stringToPrenom")
+    @Mapping(target = "nom", source = "nom")
+    @Mapping(target = "prenom", source = "prenom")
     Medecin toDomain(MedecinEntity entity);
 
     default MedecinEntity toEntity(MedecinId medecinId) {

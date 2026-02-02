@@ -1,5 +1,6 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.configurations;
 
+import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors.InfrastructureException;
 import fr.cnamts.cpam33.ordonnance.infrastructure.exceptions.PdfInvalidException;
 import fr.cnamts.cpam33.ordonnance.infrastructure.exceptions.enums.PdfExceptionCode;
 import org.springframework.beans.factory.annotation.Value;
@@ -73,7 +74,7 @@ public class PdfConfiguration {
             if (!path.endsWith(SEPARATOR)) path += SEPARATOR;
             p = Paths.get(path);
             if ( !Files.exists(p) ) {
-                throw new PdfInvalidException(PdfExceptionCode.TECH_PDF_DIRECTORY_NOT_FOUND);
+                throw new InfrastructureException(PdfExceptionCode.TECH_PDF_DIRECTORY_NOT_FOUND);
             }
         }
         return ( p != null ) ? p.toAbsolutePath().toString() + SEPARATOR : null;

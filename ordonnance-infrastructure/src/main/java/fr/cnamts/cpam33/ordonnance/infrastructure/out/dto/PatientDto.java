@@ -7,10 +7,13 @@ import jakarta.validation.constraints.Past;
 
 import java.time.LocalDate;
 
-public record ExternalPatientDto(
-        @NotNull String externalId,
+public record PatientDto(
+        String numero,
+        String externalId,
+        @NotBlank
         String nom,
-        @NotBlank String prenom,
+        @NotBlank
+        String prenom,
         @NotNull
         @Past
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")

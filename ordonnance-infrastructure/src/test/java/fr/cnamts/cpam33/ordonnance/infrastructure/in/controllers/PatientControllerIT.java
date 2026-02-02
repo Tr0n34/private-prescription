@@ -9,7 +9,7 @@ import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors.ErrorMessageI
 import fr.cnamts.cpam33.ordonnance.infrastructure.fixtures.ExternalPatientDtoFixtures;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.controllers.PatientController;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.mappers.PatientApiMapper;
-import fr.cnamts.cpam33.ordonnance.infrastructure.out.dto.ExternalPatientDto;
+import fr.cnamts.cpam33.ordonnance.infrastructure.out.dto.PatientDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -49,7 +49,7 @@ public class PatientControllerIT {
 
     @Test
     void should_create_patient_when_payload_is_valid() throws Exception {
-        ExternalPatientDto patientDto = ExternalPatientDtoFixtures.patientValide1();
+        PatientDto patientDto = ExternalPatientDtoFixtures.patientValide1();
         when(patientApiMapper.toDomain(any())).thenReturn(PatientFixtures.patientValide());
         when(patientService.registerPatient(any(Patient.class))).thenReturn(PatientFixtures.patientValide());
         mockMvc.perform(post("/patients")
@@ -60,7 +60,7 @@ public class PatientControllerIT {
 
     @Test
     void should_create_patient_batch_when_payload_is_valid() throws Exception {
-        List<ExternalPatientDto> dtos = List.of(
+        List<PatientDto> dtos = List.of(
                 ExternalPatientDtoFixtures.patientValide1(),
                 ExternalPatientDtoFixtures.patientValide2()
         );

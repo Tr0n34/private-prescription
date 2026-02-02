@@ -5,11 +5,11 @@ import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.DomainException;
 import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.enums.PatientExceptionCode;
 
 public record PatientId(
-        String externalId
+        String numero
 ) implements DomainObjectId {
 
     public PatientId {
-        checkId(externalId);
+        checkId(numero);
     }
 
     public static void checkId(String id)  {
