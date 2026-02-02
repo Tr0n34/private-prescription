@@ -29,6 +29,7 @@ class PatientJpaRepositoryIT {
     @Test
     void shouldSaveAndFindPatientByExternalId() {
         PatientEntity patient = new PatientEntity()
+                .setPatientId("uuid-uuid-uuid-123456")
                 .setExternalId("EXT-123")
                 .setNom("Dupont")
                 .setPrenom("Jean");

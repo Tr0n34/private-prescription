@@ -15,8 +15,8 @@ public class MigrationController {
     }
 
     @GetMapping
-    public ResponseEntity<?> status() {
-        return ResponseEntity.ok(flywayService.statusAll());
+    public ResponseEntity<?> status(@RequestParam(name = "onlyImportant", defaultValue = "false") boolean onlyImportant) {
+        return ResponseEntity.ok(flywayService.statusAll(onlyImportant));
     }
 
     @PostMapping("/validate")
@@ -25,18 +25,18 @@ public class MigrationController {
     }
 
     @PostMapping("/all")
-    public ResponseEntity<?> migrateAll() {
-        return ResponseEntity.ok(flywayService.migrateAll());
+    public ResponseEntity<?> migrateAll(@RequestParam(name = "onlyImportant", defaultValue = "false") boolean onlyImportant) {
+        return ResponseEntity.ok(flywayService.migrateAll(onlyImportant));
     }
 
     @PostMapping("/ordonnance/run")
-    public ResponseEntity<?> migrateOrdonnance() {
-        return ResponseEntity.ok(flywayService.migrateOrdonnance());
+    public ResponseEntity<?> migrateOrdonnance(@RequestParam(name = "onlyImportant", defaultValue = "false") boolean onlyImportant) {
+        return ResponseEntity.ok(flywayService.migrateOrdonnance(onlyImportant));
     }
 
     @PostMapping("/trace/run")
-    public ResponseEntity<?> migrateTrace() {
-        return ResponseEntity.ok(flywayService.migrateTrace());
+    public ResponseEntity<?> migrateTrace(@RequestParam(name = "onlyImportant", defaultValue = "false") boolean onlyImportant) {
+        return ResponseEntity.ok(flywayService.migrateTrace(onlyImportant));
     }
 
 }

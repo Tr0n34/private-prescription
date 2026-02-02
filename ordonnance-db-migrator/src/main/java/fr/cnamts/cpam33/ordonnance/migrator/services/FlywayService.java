@@ -27,6 +27,8 @@ public class FlywayService {
     private static final Logger log = LoggerFactory.getLogger(FlywayService.class);
 
     private static final Pattern MIGRATION_FILE_PATTERN = Pattern.compile("(V\\d+(?:\\.\\d+)*)__([^\\s]+?)(?:\\.sql)?");
+    public static final String ORDONNANCE_KEY = "ordonnance";
+    public static final String TRACE_KEY = "trace";
 
     private final Flyway ordonnance;
     private final Flyway trace;
@@ -42,36 +44,36 @@ public class FlywayService {
         this.mapper = mapper;
     }
 
-    public List<FlywayDatabaseStatus> statusAll() {
+    public List<FlywayDatabaseStatus> statusAll(boolean onlyImportant) {
         return List.of(
-                statusOne("ordonnance", ordonnance),
-                statusOne("trace", trace)
+                statusOne(ORDONNANCE_KEY, ordonnance, onlyImportant),
+                statusOne(TRACE_KEY, trace, onlyImportant)
         );
     }
 
     public List<FlywayValidateResult> validateAll() {
         return List.of(
-                validateOne("ordonnance", ordonnance),
-                validateOne("trace", trace)
+                validateOne(ORDONNANCE_KEY, ordonnance),
+                validateOne(TRACE_KEY, trace)
         );
     }
 
-    public List<FlywayActionResult> migrateAll() {
+    public List<FlywayActionResult> migrateAll(boolean onlyImportant) {
         return withMigrationLock(() -> List.of(
-                migrateOne("ordonnance", ordonnance),
-                migrateOne("trace", trace)
+                migrateOne(ORDONNANCE_KEY, ordonnance, onlyImportant),
+                migrateOne(TRACE_KEY, trace, onlyImportant)
         ));
     }
 
-    public FlywayActionResult migrateOrdonnance() {
-        return withMigrationLock(() -> migrateOne("ordonnance", ordonnance));
+    public FlywayActionResult migrateOrdonnance(boolean onlyImportant) {
+        return withMigrationLock(() -> migrateOne(ORDONNANCE_KEY, ordonnance, onlyImportant));
     }
 
-    public FlywayActionResult migrateTrace() {
-        return withMigrationLock(() -> migrateOne("trace", trace));
+    public FlywayActionResult migrateTrace(boolean onlyImportant) {
+        return withMigrationLock(() -> migrateOne(TRACE_KEY, trace, onlyImportant));
     }
 
-    private FlywayDatabaseStatus statusOne(String name, Flyway flyway) {
+    private FlywayDatabaseStatus statusOne(String name, Flyway flyway, boolean onlyImportant) {
         var current = flyway.info().current();
         MigrationInfo[] infos = flyway.info().all();
         int applied = 0;
@@ -93,7 +95,7 @@ public class FlywayService {
                 ? null
                 : current.getVersion().getVersion();
         String currentDescription = (current == null) ? null : current.getDescription();
-        List<FlywayMigrationFileStatus> migrations = mapper.toFileStatusList(infos, true);
+        List<FlywayMigrationFileStatus> migrations = mapper.toFileStatusList(infos, onlyImportant);
         return new FlywayDatabaseStatus(
                 name,
                 currentVersion,
@@ -125,7 +127,7 @@ public class FlywayService {
         return new FlywayValidateResult(name, false, msg, null, invalidVersion, invalidDesc);
     }
 
-    private FlywayActionResult migrateOne(String name, Flyway flyway) {
+    private FlywayActionResult migrateOne(String name, Flyway flyway, boolean onlyImportant) {
         long start = System.nanoTime();
         log.info("Starting Flyway migrate for {}", name);
         try {
@@ -133,7 +135,7 @@ public class FlywayService {
             long ms = nanosToMs(start);
             String target = (r.targetSchemaVersion == null) ? null : String.valueOf(r.targetSchemaVersion);
             MigrationInfo[] allAfter = flyway.info().all();
-            List<FlywayMigrationFileStatus> migrations = mapper.toFileStatusList(allAfter, false);
+            List<FlywayMigrationFileStatus> migrations = mapper.toFileStatusList(allAfter, onlyImportant);
             log.info("Flyway migrate for {} done: executed={}, target={}, durationMs={}, files={}",
                     name, r.migrationsExecuted, target, ms, migrations.size());
             return new FlywayActionResult(

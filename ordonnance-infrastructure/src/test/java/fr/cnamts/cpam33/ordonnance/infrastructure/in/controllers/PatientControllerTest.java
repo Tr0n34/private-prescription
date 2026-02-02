@@ -34,10 +34,9 @@ public class PatientControllerTest {
     @BeforeEach
     void setup() {
         patientService = mock(RegisterPatientUseCase.class);
-        patientApiMapper = mock(PatientApiMapper.class);
         locationBuilder = mock(LocationBuilder.class);
         patientACL = mock(PatientACL.class);
-        controller = new PatientController(locationBuilder, patientService, patientApiMapper, patientACL);
+        controller = new PatientController(locationBuilder, patientService, patientACL);
     }
 
     @Test

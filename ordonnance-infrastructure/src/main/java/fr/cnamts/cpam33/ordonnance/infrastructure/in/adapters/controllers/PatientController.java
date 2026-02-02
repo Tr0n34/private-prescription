@@ -20,17 +20,14 @@ import java.util.List;
 public class PatientController implements Adapter {
 
     private final LocationBuilder locationBuilder;
-    private final PatientApiMapper patientApiMapper;
     private final RegisterPatientUseCase registerPatientUseCase;
     private final PatientACL patientACL;
 
     public PatientController(LocationBuilder locationBuilder,
                              RegisterPatientUseCase registerPatientUseCase,
-                             PatientApiMapper patientApiMapper,
                              PatientACL patientACL) {
         this.locationBuilder = locationBuilder;
         this.registerPatientUseCase = registerPatientUseCase;
-        this.patientApiMapper = patientApiMapper;
         this.patientACL = patientACL;
     }
 

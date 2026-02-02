@@ -76,7 +76,7 @@ public class OrdonnanceControllerIT {
         mockMvc.perform(post("/ordonnances")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(invalidDto)))
-                .andExpect(status().isBadRequest()); //
+                .andExpect(status().isBadRequest());
     }
 
 }

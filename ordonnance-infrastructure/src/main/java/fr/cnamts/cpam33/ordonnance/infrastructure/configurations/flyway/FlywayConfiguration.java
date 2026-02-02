@@ -1,4 +1,4 @@
-package fr.cnamts.cpam33.ordonnance.infrastructure.configurations.databases;
+package fr.cnamts.cpam33.ordonnance.infrastructure.configurations.flyway;
 
 import org.flywaydb.core.Flyway;
 import org.springframework.beans.factory.annotation.Qualifier;

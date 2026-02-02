@@ -13,11 +13,11 @@ migrator:
         username: postgres
         password: ${DB_PASSWORD:123456789}
         locations:
-            - filesystem:D:/DATA/ordonnance/configuration/postgresql/ordonnances/db/migration
+            - filesystem:C:/DATA/prescription/configuration/postgresql/ordonnances/db/migration
 
     trace:
         url: jdbc:postgresql://localhost:5431/trace_db
         username: postgres
         password: ${DB_PASSWORD:123456789}
         locations:
-            - filesystem:D:/DATA/ordonnance/configuration/postgresql/traces/db/migration
+            - filesystem:C:/DATA/prescription/configuration/postgresql/traces/db/migration

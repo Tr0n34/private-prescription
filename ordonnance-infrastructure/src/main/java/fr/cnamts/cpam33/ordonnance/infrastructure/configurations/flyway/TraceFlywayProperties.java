@@ -1,11 +1,11 @@
-package fr.cnamts.cpam33.ordonnance.infrastructure.configurations.databases;
+package fr.cnamts.cpam33.ordonnance.infrastructure.configurations.flyway;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.util.List;
 
-@ConfigurationProperties(prefix = "flyway.ordonnance")
-public class OrdonnanceFlywayProperties {
+@ConfigurationProperties(prefix = "flyway.trace")
+public class TraceFlywayProperties {
 
     private List<String> locations = List.of();
 

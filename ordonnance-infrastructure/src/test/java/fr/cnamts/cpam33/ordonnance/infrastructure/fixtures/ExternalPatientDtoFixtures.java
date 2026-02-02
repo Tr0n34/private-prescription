@@ -1,5 +1,6 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.fixtures;
 
+import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.Patient;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.dto.PatientDto;
 
 import java.time.LocalDate;
@@ -32,6 +33,14 @@ public final class ExternalPatientDtoFixtures {
         return new PatientDto(null,
                 null,
                 "Martin",
+                "Claire",
+                LocalDate.of(1981, Month.SEPTEMBER, 6));
+    }
+
+    public static PatientDto patientInvalid() {
+        return new PatientDto(null,
+                null,
+                "",
                 "Claire",
                 LocalDate.of(1981, Month.SEPTEMBER, 6));
     }

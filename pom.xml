@@ -21,7 +21,6 @@
         <module>ordonnance-application</module>
         <module>ordonnance-infrastructure</module>
         <module>ordonnance-architecture-validation</module>
-        <module>ordonnance-boot</module>
         <module>ordonnance-db-migrator</module>
     </modules>
 
@@ -46,6 +45,7 @@
         <ignite-spring.version>2.17.0</ignite-spring.version>
         <guava.version>33.5.0-jre</guava.version>
         <flyway.version>12.0.0</flyway.version>
+        <spring-vault-core.version>4.0.0</spring-vault-core.version>
 
         <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
         <sonar.coverage.exclusions>ordonnance-architecture-validation/**</sonar.coverage.exclusions>
@@ -59,6 +59,14 @@
                 <groupId>org.mapstruct</groupId>
                 <artifactId>mapstruct</artifactId>
                 <version>${mapstruct.version}</version>
+            </dependency>
+
+            <!-- API Vault pour OpenBao -->
+            <dependency>
+                <groupId>org.springframework.vault</groupId>
+                <artifactId>spring-vault-core</artifactId>
+                <version>${spring-vault-core.version}</version>
+                <scope>compile</scope>
             </dependency>
 
             <!-- Translator -->
