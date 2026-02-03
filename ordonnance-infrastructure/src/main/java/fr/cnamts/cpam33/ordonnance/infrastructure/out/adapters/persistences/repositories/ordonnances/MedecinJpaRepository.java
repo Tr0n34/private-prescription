@@ -1,4 +1,4 @@
-package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.repositories.ordonnances;
+package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.persistences.repositories.ordonnances;
 
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.entities.ordonnances.MedecinEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

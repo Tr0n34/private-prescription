@@ -1,14 +1,11 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.errors;
 
-import fr.cnamts.cpam33.ordonnance.infrastructure.exceptions.ErrorDescriptor;
-import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.repositories.ordonnances.ErrorCatalogJpaRepository;
+import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.persistences.repositories.ordonnances.ErrorCatalogJpaRepository;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.entities.ordonnances.ErrorCatalogEntity;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @Transactional

@@ -16,19 +16,24 @@ public record OpenBaoConfigurationProperties(
     public record Paths(String ordonnance, String trace) {}
     public record Kv(String mount, int version) {}
 
-    public String ordonnanceReadPath() {
+    public String ordonnancePath() {
         return kvReadPath(paths.ordonnance());
     }
 
-    public String traceReadPath() {
+    public String tracePath() {
         return kvReadPath(paths.trace());
     }
 
-    private String kvReadPath(String subPath) {
-        if (kv != null && kv.version() == 2) {
-            return PathJoiner.join(kv.mount(), "data", namespace, subPath);
+    private String kvReadPath(String path) {
+        if ( kv == null ) {
+            throw new IllegalStateException("KV engine non initialisé");
         }
-        return PathJoiner.join(kv.mount(), namespace, subPath);
+        String[] parts = (kv.version() == 2)
+                ? new String[]{ kv.mount(), "data", namespace, path }
+                : new String[]{ kv.mount(), namespace, path };
+        return PathJoiner
+                .join(parts)
+                .orElseThrow(() -> new IllegalStateException("KV read path vide"));
     }
 
 }

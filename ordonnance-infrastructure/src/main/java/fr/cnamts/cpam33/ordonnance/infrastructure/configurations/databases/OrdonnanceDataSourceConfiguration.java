@@ -17,7 +17,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 
 @Configuration
 @EnableJpaRepositories(
-        basePackages = "fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.repositories.ordonnances",
+        basePackages = "fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.persistences.repositories.ordonnances",
         entityManagerFactoryRef = "ordonnanceEntityManagerFactory",
         transactionManagerRef = "ordonnanceTransactionManager"
 )

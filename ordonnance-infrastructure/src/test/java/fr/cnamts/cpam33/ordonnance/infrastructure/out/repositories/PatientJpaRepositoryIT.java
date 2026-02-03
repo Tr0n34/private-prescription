@@ -1,8 +1,7 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.out.repositories;
 
-import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.ExternalPatientId;
 import fr.cnamts.cpam33.ordonnance.infrastructure.TestJpaConfiguration;
-import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.repositories.ordonnances.PatientJpaRepository;
+import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.persistences.repositories.ordonnances.PatientJpaRepository;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.entities.ordonnances.PatientEntity;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

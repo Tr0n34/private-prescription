@@ -193,6 +193,30 @@
     "message": "Le repertoire %s n'a pas été trouvé"
   },
   {
+    "code": "TECH_PDF_READ_ERROR",
+    "boundedContext": "PDF",
+    "httpStatus": 400,
+    "message": "Erreur de lecture du PDF {pdf}"
+  },
+  {
+    "code": "TECH_PDF_WRITE_ERROR",
+    "boundedContext": "PDF",
+    "httpStatus": 400,
+    "message": "Erreur d'écriture du PDF {pdf}"
+  },
+  {
+    "code": "TECH_PDF_READ_ERROR",
+    "boundedContext": "PDF",
+    "httpStatus": 400,
+    "message": "Erreur de lecture du PDF {pdf}"
+  },
+  {
+    "code": "TECH_PDF_KEY_INVALID",
+    "boundedContext": "PDF",
+    "httpStatus": 400,
+    "message": "Clef invalide {pdf_key} du PDF {pdf}"
+  },
+  {
     "code": "CMD_PARAMETRE_MANQUANT",
     "boundedContext": "COMMAND",
     "httpStatus": 400,

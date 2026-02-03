@@ -6,7 +6,7 @@ import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors.ErrorMessageD
 import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors.ErrorMessageInfrastructureResolver;
 import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors.InfraStructureExceptionCode;
 import fr.cnamts.cpam33.ordonnance.infrastructure.exceptions.ErrorDescriptor;
-import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.repositories.ordonnances.ErrorCatalogJpaRepository;
+import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.persistences.repositories.ordonnances.ErrorCatalogJpaRepository;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.entities.ordonnances.ErrorCatalogEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

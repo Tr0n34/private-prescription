@@ -1,4 +1,3 @@
-// ---------- FlywayService.java ----------
 package fr.cnamts.cpam33.ordonnance.migrator.services;
 
 import fr.cnamts.cpam33.ordonnance.migrator.dto.FlywayActionResult;
@@ -26,7 +25,7 @@ public class FlywayService {
 
     private static final Logger log = LoggerFactory.getLogger(FlywayService.class);
 
-    private static final Pattern MIGRATION_FILE_PATTERN = Pattern.compile("(V\\d+(?:\\.\\d+)*)__([^\\s]+?)(?:\\.sql)?");
+    private static final Pattern MIGRATION_FILE_PATTERN = Pattern.compile("(V\\d+(?:\\.\\d+)*)__([^\\s]+?)(?:\\.sql)?(?=\\s|$)");
     public static final String ORDONNANCE_KEY = "ordonnance";
     public static final String TRACE_KEY = "trace";
 

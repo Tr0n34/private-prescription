@@ -7,7 +7,7 @@ import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.Trace;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.TraceAttribute;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.TraceContext;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.utilisateurs.MedecinId;
-import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.repositories.traces.ActeMetierJpaRepository;
+import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.persistences.repositories.traces.ActeMetierJpaRepository;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.entities.traces.ActeMetierEntity;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.entities.traces.TraceEntity;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.mappers.medecins.MedecinEntityMapper;

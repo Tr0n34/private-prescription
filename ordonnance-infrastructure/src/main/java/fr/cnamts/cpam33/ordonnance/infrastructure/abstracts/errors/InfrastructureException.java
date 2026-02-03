@@ -13,7 +13,7 @@ public class InfrastructureException extends RuntimeException {
         this.placeHolders = null;
     }
 
-    protected InfrastructureException(InfraStructureExceptionCode code, Map<String, ?> placeHolders) {
+    public InfrastructureException(InfraStructureExceptionCode code, Map<String, ?> placeHolders) {
         this.code = Objects.requireNonNull(code);
         this.placeHolders = Objects.requireNonNull(placeHolders);
     }

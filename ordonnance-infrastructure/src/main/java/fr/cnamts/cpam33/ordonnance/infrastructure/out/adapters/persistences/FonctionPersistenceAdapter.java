@@ -1,11 +1,11 @@
-package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters;
+package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.persistences;
 
 import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.DomainException;
 import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.enums.OrdonnanceExceptionCode;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.Fonction;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.FonctionId;
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.traces.FonctionRepository;
-import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.repositories.traces.FonctionJpaRepository;
+import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.persistences.repositories.traces.FonctionJpaRepository;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.entities.traces.FonctionEntity;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.mappers.traces.FonctionEntityMapper;
 import jakarta.transaction.Transactional;

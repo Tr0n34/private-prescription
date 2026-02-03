@@ -19,7 +19,7 @@ import java.util.HashMap;
 
 @Configuration
 @EnableJpaRepositories(
-        basePackages = "fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.repositories.traces",
+        basePackages = "fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.persistences.repositories.traces",
         entityManagerFactoryRef = "traceEntityManagerFactory",
         transactionManagerRef = "traceTransactionManager"
 )

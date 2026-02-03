@@ -1,4 +1,4 @@
-package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.repositories.thesorimed;
+package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.persistences.repositories.thesorimed;
 
 import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.routines.DataBaseRoutineExecutor;
 import org.slf4j.Logger;

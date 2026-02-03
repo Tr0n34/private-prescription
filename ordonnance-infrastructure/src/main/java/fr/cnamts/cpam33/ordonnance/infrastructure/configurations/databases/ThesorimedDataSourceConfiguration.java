@@ -1,7 +1,7 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.configurations.databases;
 
 import com.zaxxer.hikari.HikariDataSource;
-import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.repositories.thesorimed.ThesorimedRoutineExecutor;
+import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.persistences.repositories.thesorimed.ThesorimedRoutineExecutor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;

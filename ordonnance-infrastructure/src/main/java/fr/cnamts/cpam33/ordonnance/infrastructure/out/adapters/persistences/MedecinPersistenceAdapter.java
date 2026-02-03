@@ -1,4 +1,4 @@
-package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters;
+package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.persistences;
 
 import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.DomainException;
 import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.enums.MedecinExceptionCode;
@@ -6,7 +6,7 @@ import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.utilisateurs.Me
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.utilisateurs.MedecinId;
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.medecins.MedecinRepository;
 import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.Adapter;
-import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.repositories.ordonnances.MedecinJpaRepository;
+import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.persistences.repositories.ordonnances.MedecinJpaRepository;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.mappers.medecins.MedecinEntityMapper;
 import org.springframework.stereotype.Component;
 

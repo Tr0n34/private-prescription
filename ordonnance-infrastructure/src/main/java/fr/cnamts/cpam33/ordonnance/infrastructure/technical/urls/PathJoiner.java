@@ -1,32 +1,30 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.technical.urls;
 
-import java.nio.file.Path;
-import java.util.Objects;
+import java.util.Optional;
 
 public final class PathJoiner {
+
+    public static final char SLASH = '/';
+    public static final String DOUBLE_SLASH = "//";
+    public static final int DEFAULT_CAPACITY = 64;
 
     private PathJoiner() {
         throw new UnsupportedOperationException("utility class");
     }
 
-
-    public static String join(String... parts) {
-        if (parts == null || parts.length == 0) return "";
-
-        StringBuilder sb = new StringBuilder(64);
-        for (String part : parts) {
-            String seg = sanitizeSegment(part);
-            if (seg == null) continue;
-
-            if (sb.length() > 0) sb.append('/');
-            sb.append(seg);
+    public static Optional<String> join(String... parts) {
+        Optional<String> result = Optional.empty();
+        if ( parts != null ) {
+            StringBuilder sb = new StringBuilder(DEFAULT_CAPACITY);
+            for ( String part : parts ) {
+                Optional<String> opt = sanitizeSegment(part);
+                if ( opt.isEmpty() ) continue;
+                if ( !sb.isEmpty() ) sb.append(SLASH);
+                sb.append(opt.get());
+            }
+            result = Optional.of(sb.toString());
         }
-        return sb.toString();
-    }
-
-    public static String joinOrNull(String... parts) {
-        String res = join(parts);
-        return res.isEmpty() ? null : res;
+        return result;
     }
 
     public static String ensureLeadingSlash(String path) {
@@ -42,48 +40,37 @@ public final class PathJoiner {
         return s;
     }
 
-    private static String sanitizeSegment(String part) {
-        if (part == null) return null;
-
-        String s = part.trim();
-        if (s.isEmpty()) return null;
-
-        // Normalisation slash
-        s = s.replace('\\', '/');
-
-        // Trim des '/' en début/fin (sans substring en boucle)
-        int start = 0;
-        int end = s.length();
-
-        while (start < end && s.charAt(start) == '/') start++;
-        while (end > start && s.charAt(end - 1) == '/') end--;
-
-        if (start == end) return null; // segment = "/" ou "////"
-
-        // Optionnel : si tu veux compacter les doubles // internes au segment.
-        // (rarement nécessaire, mais safe)
-        // return compactSlashes(s.substring(start, end));
-
-        return s.substring(start, end);
+    static Optional<String> sanitizeSegment(String part) {
+        return Optional.ofNullable(part)
+                .map(String::trim)
+                .filter(s -> !s.isEmpty())
+                .map(s -> s.replace('\\', SLASH))
+                .map(s -> {
+                    int start = 0, end = s.length();
+                    while (start < end && s.charAt(start) == SLASH) start++;
+                    while (end > start && s.charAt(end - 1) == SLASH) end--;
+                    return start < end ? s.substring(start, end) : null;
+                });
     }
 
-    private static String compactSlashes(String s) {
-        Objects.requireNonNull(s);
-        if (!s.contains("//")) return s;
-
-        StringBuilder out = new StringBuilder(s.length());
-        boolean prevSlash = false;
-        for (int i = 0; i < s.length(); i++) {
-            char c = s.charAt(i);
-            if (c == '/') {
-                if (!prevSlash) out.append(c);
-                prevSlash = true;
-            } else {
-                out.append(c);
-                prevSlash = false;
-            }
-        }
-        return out.toString();
+    private static Optional<String> compactSlashesOpt(String input) {
+        return Optional.ofNullable(input)
+                .map(s -> {
+                    if (!s.contains(DOUBLE_SLASH)) return s;
+                    StringBuilder out = new StringBuilder(s.length());
+                    boolean prevSlash = false;
+                    for ( int i = 0, len = s.length(); i < len; i++ ) {
+                        char c = s.charAt(i);
+                        if (c == SLASH) {
+                            if ( !prevSlash ) out.append(c);
+                            prevSlash = true;
+                        } else {
+                            out.append(c);
+                            prevSlash = false;
+                        }
+                    }
+                    return out.toString();
+                });
     }
 
 }
