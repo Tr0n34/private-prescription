@@ -16,19 +16,23 @@ import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
 import java.util.HashMap;
-import java.util.Map;
 
 @Configuration
 @EnableJpaRepositories(
-        basePackages = "fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.repositories.traces",
+        basePackages = "fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.persistences.repositories.traces",
         entityManagerFactoryRef = "traceEntityManagerFactory",
         transactionManagerRef = "traceTransactionManager"
 )
 @EnableConfigurationProperties(TraceDataSourceConfiguration.TraceJpaProperties.class)
 public class TraceDataSourceConfiguration {
 
+    public static class TraceJpaProperties extends JpaUnitProperties {}
+
+    @Bean
     @ConfigurationProperties(prefix = "trace.jpa")
-    public static class TraceJpaProperties extends JpaUnitProperties { }
+    public TraceJpaProperties traceJpaProperties() {
+        return new TraceJpaProperties();
+    }
 
     @Bean("traceDataSource")
     @ConfigurationProperties(prefix = "spring.datasource.traces.hikari")

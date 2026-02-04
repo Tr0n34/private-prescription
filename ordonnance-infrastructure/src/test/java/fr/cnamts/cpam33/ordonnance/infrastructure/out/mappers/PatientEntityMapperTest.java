@@ -1,14 +1,15 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.out.mappers;
 
 import fr.cnamts.cpam33.ordonnance.domain.fixtures.PatientFixtures;
+import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.ExternalPatientId;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identites.Nom;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identites.Prenom;
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.patients.Patient;
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.patients.PatientId;
+import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.Patient;
+import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.PatientId;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.entities.ordonnances.PatientEntity;
-import fr.cnamts.cpam33.ordonnance.infrastructure.out.mappers.ordonnances.NomPrenomMapper;
-import fr.cnamts.cpam33.ordonnance.infrastructure.out.mappers.ordonnances.PatientEntityMapper;
-import fr.cnamts.cpam33.ordonnance.infrastructure.out.mappers.ordonnances.PatientIdMapper;
+import fr.cnamts.cpam33.ordonnance.infrastructure.out.mappers.identites.NomPrenomMapper;
+import fr.cnamts.cpam33.ordonnance.infrastructure.out.mappers.patients.PatientEntityMapper;
+import fr.cnamts.cpam33.ordonnance.infrastructure.out.mappers.patients.PatientIdMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -28,7 +29,7 @@ class PatientEntityMapperTest {
             @Override
             public PatientEntity toEntity(Patient patient) {
                 PatientEntity entity = new PatientEntity();
-                entity.setExternalId(patient.patientId().externalId());
+                entity.setExternalId(patient.externalPatientId().numero());
                 entity.setNom(patient.nom().value());
                 entity.setPrenom(patient.prenom().value());
                 return entity;
@@ -38,6 +39,7 @@ class PatientEntityMapperTest {
             public Patient toDomain(PatientEntity entity) {
                 return new Patient(
                         new PatientId(entity.getExternalId()),
+                        new ExternalPatientId(entity.getExternalId()),
                         new Nom(entity.getNom()),
                         new Prenom(entity.getPrenom()),
                         entity.getDateNaissance()
@@ -51,7 +53,7 @@ class PatientEntityMapperTest {
         Patient patient = PatientFixtures.patientValide();
         PatientEntity entity = mapper.toEntity(patient);
         assertThat(entity).isNotNull();
-        assertThat(entity.getExternalId()).isEqualTo(patient.patientId().externalId());
+        assertThat(entity.getExternalId()).isEqualTo(patient.externalPatientId().numero());
         assertThat(entity.getNom()).isEqualTo(patient.nom().value());
         assertThat(entity.getPrenom()).isEqualTo(patient.prenom().value());
     }
@@ -66,7 +68,7 @@ class PatientEntityMapperTest {
         entity.setDateNaissance(dateNaissance);
         Patient patient = mapper.toDomain(entity);
         assertThat(patient).isNotNull();
-        assertThat(patient.patientId().externalId()).isEqualTo("1234567890123");
+        assertThat(patient.externalPatientId().numero()).isEqualTo("1234567890123");
         assertThat(patient.nom().value()).isEqualTo("Dupont");
         assertThat(patient.prenom().value()).isEqualTo("Jean");
         assertThat(dateNaissance).isEqualTo(patient.dateNaissance());

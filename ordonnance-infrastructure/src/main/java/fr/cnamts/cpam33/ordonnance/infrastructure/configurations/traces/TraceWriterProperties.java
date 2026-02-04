@@ -13,18 +13,33 @@ public record TraceWriterProperties(
         Duration restartDelay
 ) {
 
-    public static final int QUEUE_CAPACITY = 50_000;
-    public static final int BATCH_SIZE = 500;
-    public static final int FLUSH_INTERVAL_IN_MILLIS = 50;
-    public static final int WORKERS = 2;
-    public static final int RESTART_DELAY_IN_MILLIS = 50;
+    public static final int DEFAULT_QUEUE_CAPACITY = 50_000;
+    public static final int DEFAULT_BATCH_SIZE = 500;
+    public static final int DEFAULT_FLUSH_INTERVAL_IN_MILLIS = 50;
+    public static final int DEFAULT_WORKERS = 2;
+    public static final int DEFAULT_RESTART_DELAY_IN_MILLIS = 5000;
+
+    public static final int MIN_QUEUE_CAPACITY = 0;
+    public static final int MIN_BATCH_SIZE = 0;
+    public static final int MIN_WORKER = 1;
+
 
     public TraceWriterProperties {
-        if ( queueCapacity <= 0 ) queueCapacity = QUEUE_CAPACITY;
-        if ( batchSize <= 0 ) batchSize = BATCH_SIZE;
-        if ( flushInterval == null ) flushInterval = Duration.ofMillis(FLUSH_INTERVAL_IN_MILLIS);
-        if  (workers <= 0 ) workers = WORKERS;
-        if ( restartDelay == null ) restartDelay = Duration.ofSeconds(RESTART_DELAY_IN_MILLIS);
+        if ( queueCapacity <= MIN_QUEUE_CAPACITY) {
+            queueCapacity = DEFAULT_QUEUE_CAPACITY;
+        }
+        if ( batchSize <= MIN_BATCH_SIZE) {
+            batchSize = DEFAULT_BATCH_SIZE;
+        }
+        if ( flushInterval == null || flushInterval.isZero() || flushInterval.isNegative() ) {
+            flushInterval = Duration.ofMillis(DEFAULT_FLUSH_INTERVAL_IN_MILLIS);
+        }
+        if ( workers < MIN_WORKER ) {
+            workers = DEFAULT_WORKERS;
+        }
+        if ( restartDelay == null ) {
+            restartDelay = Duration.ofMillis(DEFAULT_RESTART_DELAY_IN_MILLIS);
+        }
     }
 
 }

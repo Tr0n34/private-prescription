@@ -1,7 +1,7 @@
 package fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.snapshots;
 
 import fr.cnamts.cpam33.ordonnance.domain.models.aggregates.Ordonnance;
-import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.OrdonnanceInvalideException;
+import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.DomainException;
 import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.enums.OrdonnanceExceptionCode;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identites.Signature;
 
@@ -15,10 +15,10 @@ public record OrdonnanceSnapshot(
 
     public OrdonnanceSnapshot {
         if ( ordonnance == null ) {
-            throw new OrdonnanceInvalideException(OrdonnanceExceptionCode.BS_ORDONNANCE_ID_MISSING);
+            throw new DomainException(OrdonnanceExceptionCode.BS_ORDONNANCE_ID_MISSING);
         }
         if ( signature == null ) {
-            throw new OrdonnanceInvalideException(OrdonnanceExceptionCode.BS_ORDONNANCE_SNAPSHOT_MUST_BE_SIGNED);
+            throw new DomainException(OrdonnanceExceptionCode.BS_ORDONNANCE_SNAPSHOT_MUST_BE_SIGNED);
         }
     }
 

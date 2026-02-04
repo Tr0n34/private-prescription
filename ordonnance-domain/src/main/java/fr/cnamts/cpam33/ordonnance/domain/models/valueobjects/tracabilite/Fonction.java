@@ -1,8 +1,8 @@
 package fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite;
 
-import fr.cnamts.cpam33.ordonnance.domain.abstracts.DomainObject;
-import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.FonctionInvalidException;
-import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.enums.FonctionExceptionCode;
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.domain.DomainObject;
+import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.DomainException;
+import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.enums.ActeMetierExceptionCode;
 
 public record Fonction(
         FonctionId fonctionId,
@@ -11,10 +11,10 @@ public record Fonction(
 
     public Fonction {
         if ( fonctionId == null ) {
-            throw new FonctionInvalidException(FonctionExceptionCode.BS_FONCTION_NAME_MISSING);
+            throw new DomainException(ActeMetierExceptionCode.BS_FONCTION_NAME_MISSING);
         }
         if ( description == null || description.isEmpty() ) {
-            throw new FonctionInvalidException(FonctionExceptionCode.BS_FONCTION_NAME_MISSING);
+            throw new DomainException(ActeMetierExceptionCode.BS_FONCTION_NAME_MISSING);
         }
     }
 

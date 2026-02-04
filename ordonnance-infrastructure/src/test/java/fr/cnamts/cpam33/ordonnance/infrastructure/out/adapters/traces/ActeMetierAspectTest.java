@@ -1,13 +1,10 @@
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
-
 import fr.cnamts.cpam33.ordonnance.domain.models.events.ActeMetierEvent;
 import fr.cnamts.cpam33.ordonnance.domain.models.events.TraceCommand;
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.medecins.MedecinId;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.Trace;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.TraceAttribute;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.TraceContext;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.enums.ActeMetierCode;
+import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.utilisateurs.MedecinId;
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.traces.TracePublisher;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.traces.ActeMetierAspect;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -17,9 +14,11 @@ import org.mockito.ArgumentCaptor;
 
 import java.time.Clock;
 import java.time.Instant;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 class ActeMetierAspectTest {
 

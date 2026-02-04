@@ -1,8 +1,8 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.out.repositories;
 
 import fr.cnamts.cpam33.ordonnance.infrastructure.TestJpaConfiguration;
+import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.persistences.repositories.ordonnances.PatientJpaRepository;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.entities.ordonnances.PatientEntity;
-import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.repositories.ordonnances.PatientJpaRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -28,6 +28,7 @@ class PatientJpaRepositoryIT {
     @Test
     void shouldSaveAndFindPatientByExternalId() {
         PatientEntity patient = new PatientEntity()
+                .setPatientId("uuid-uuid-uuid-123456")
                 .setExternalId("EXT-123")
                 .setNom("Dupont")
                 .setPrenom("Jean");

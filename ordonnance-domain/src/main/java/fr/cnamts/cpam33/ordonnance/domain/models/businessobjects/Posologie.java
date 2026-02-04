@@ -1,8 +1,8 @@
 package fr.cnamts.cpam33.ordonnance.domain.models.businessobjects;
 
-import fr.cnamts.cpam33.ordonnance.domain.abstracts.DomainObject;
-import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.PosologieInvalidException;
-import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.enums.PosologieExceptionCode;
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.domain.DomainObject;
+import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.DomainException;
+import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.enums.MedecinExceptionCode;
 
 public record Posologie(
         String phrase
@@ -10,7 +10,7 @@ public record Posologie(
 
     public Posologie {
         if ( phrase == null || phrase.isEmpty() ) {
-            throw new PosologieInvalidException(PosologieExceptionCode.BS_POSOLOGIE_PHRASE_MISSING);
+            throw new DomainException(MedecinExceptionCode.BS_POSOLOGIE_PHRASE_MISSING);
         }
     }
 

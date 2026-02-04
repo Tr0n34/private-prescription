@@ -1,18 +1,19 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors;
 
+import java.util.Map;
 import java.util.Objects;
 
-public abstract class  InfrastructureException extends RuntimeException {
+public class InfrastructureException extends RuntimeException {
 
     private final transient InfraStructureExceptionCode code;
-    private final transient String[] placeHolders;
+    private final transient Map<String, ?> placeHolders;
 
-    protected InfrastructureException(InfraStructureExceptionCode code) {
+    public InfrastructureException(InfraStructureExceptionCode code) {
         this.code = Objects.requireNonNull(code);
         this.placeHolders = null;
     }
 
-    protected InfrastructureException(InfraStructureExceptionCode code, String[] placeHolders) {
+    public InfrastructureException(InfraStructureExceptionCode code, Map<String, ?> placeHolders) {
         this.code = Objects.requireNonNull(code);
         this.placeHolders = Objects.requireNonNull(placeHolders);
     }
@@ -21,12 +22,8 @@ public abstract class  InfrastructureException extends RuntimeException {
         return code;
     }
 
-    public String[] getPlaceHolders() {
+    public Map<String, ?> getPlaceHolders() {
         return placeHolders;
-    }
-
-    public String getPlaceHolder(int position) {
-        return placeHolders[position];
     }
 
     @Override

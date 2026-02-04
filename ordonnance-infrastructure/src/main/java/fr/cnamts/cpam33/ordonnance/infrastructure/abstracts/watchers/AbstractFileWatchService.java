@@ -1,7 +1,7 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.watchers;
 
 import fr.cnamts.cpam33.ordonnance.infrastructure.configurations.batch.Batch;
-import fr.cnamts.cpam33.ordonnance.infrastructure.configurations.batch.DebouncedReloadExecutor;
+import fr.cnamts.cpam33.ordonnance.infrastructure.technical.DebouncedReloadExecutor;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import org.slf4j.Logger;
@@ -23,17 +23,19 @@ public abstract class AbstractFileWatchService implements Runnable {
     private static final String FILE_PROTOCOL = "file:";
     private static final WatchService SERVICE_CLEAN_VALUE = null;
     private static final Path PATH_CLEAN_VALUE  = null;
+    public static final boolean STOPPED = false;
+    public static final boolean STARTED = true;
 
     private final DebouncedReloadExecutor debouncedReloadExecutor;
     private final TaskExecutor taskExecutor;
 
-    private final AtomicBoolean running = new AtomicBoolean(false);
+    private final AtomicBoolean running = new AtomicBoolean(STOPPED);
     private final AtomicReference<WatchService> watchServiceRef = new AtomicReference<>();
     private final AtomicReference<Path> watchedFilePathRef = new AtomicReference<>();
 
     protected AbstractFileWatchService(
             DebouncedReloadExecutor debouncedReloadExecutor,
-            @Qualifier("taskExecutor") TaskExecutor taskExecutor) {
+            @Qualifier("watcherTaskExecutor") TaskExecutor taskExecutor) {
         this.debouncedReloadExecutor = Objects.requireNonNull(debouncedReloadExecutor);
         this.taskExecutor = Objects.requireNonNull(taskExecutor);
     }
@@ -50,7 +52,7 @@ public abstract class AbstractFileWatchService implements Runnable {
 
     @PostConstruct
     public void init() {
-        if (isFileProtocol()) {
+        if ( isFileProtocol() ) {
             logger.info("Initializing file watcher for: {}", getFilePath());
             startWatching();
         }
@@ -80,7 +82,7 @@ public abstract class AbstractFileWatchService implements Runnable {
     }
 
     public synchronized void startWatching() {
-        if (running.compareAndSet(false, true)) {
+        if ( running.compareAndSet(STOPPED, STARTED) ) {
             try {
                 taskExecutor.execute(this);
                 logger.info("{} watcher started successfully", getServiceName());
@@ -93,7 +95,7 @@ public abstract class AbstractFileWatchService implements Runnable {
     }
 
     public synchronized void stopWatching() {
-        if (running.getAndSet(false)) {
+        if ( running.getAndSet(STOPPED) ) {
             cancelPendingReloads();
             closeWatchService();
             logger.info("{} watcher stopped", getServiceName());
@@ -113,10 +115,10 @@ public abstract class AbstractFileWatchService implements Runnable {
     }
 
     private void closeWatchService() {
-        WatchService ws = watchServiceRef.getAndSet(null);
-        if (ws != null) {
+        WatchService watchService = watchServiceRef.getAndSet(null);
+        if ( watchService != null ) {
             try {
-                ws.close();
+                watchService.close();
             } catch (IOException e) {
                 logger.warn("Error closing WatchService", e);
             }
@@ -124,7 +126,7 @@ public abstract class AbstractFileWatchService implements Runnable {
     }
 
     private void watchDirectory(Path directory) throws IOException, InterruptedException {
-        try (WatchService ws = FileSystems.getDefault().newWatchService()) {
+        try ( WatchService ws = FileSystems.getDefault().newWatchService() ) {
             watchServiceRef.set(ws);
             directory.register(ws,
                     StandardWatchEventKinds.ENTRY_MODIFY,

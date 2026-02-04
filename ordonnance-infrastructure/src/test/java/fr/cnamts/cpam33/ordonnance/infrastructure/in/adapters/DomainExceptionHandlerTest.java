@@ -1,7 +1,6 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters;
 
-import fr.cnamts.cpam33.ordonnance.domain.abstracts.DomainException;
-import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.OrdonnanceInvalideException;
+import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.DomainException;
 import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.enums.OrdonnanceExceptionCode;
 import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors.ErrorMessageDomainResolver;
 import fr.cnamts.cpam33.ordonnance.infrastructure.configurations.GlobalControllerAdvice;
@@ -39,8 +38,8 @@ class DomainExceptionHandlerTest {
                 LocalDateTime.now(),
                 "Ordonnance"
         );
-        when(resolver.resolve(any())).thenReturn(descriptor);
-        DomainException exception = new OrdonnanceInvalideException(OrdonnanceExceptionCode.BS_ORDONNANCE_IMMUTABLE_WHEN_SIGNED);
+        when(resolver.resolve(any(), any())).thenReturn(descriptor);
+        DomainException exception = new DomainException(OrdonnanceExceptionCode.BS_ORDONNANCE_IMMUTABLE_WHEN_SIGNED, null);
         ResponseEntity<ErrorResponseDto> response = globalControllerAdvice.handle(exception);
         assertThat(response).isNotNull();
         assertThat(response.getStatusCode()).isEqualTo(HttpStatusCode.valueOf(409));
@@ -49,7 +48,7 @@ class DomainExceptionHandlerTest {
         assertThat(body.code()).isEqualTo("BS_ORDONNANCE_IMMUTABLE_WHEN_SIGNED");
         assertThat(body.message()).isEqualTo("Une ordonnance signée ne peut plus être modifiée");
         assertThat(body.status()).isEqualTo(409);
-        verify(resolver).resolve(OrdonnanceExceptionCode.BS_ORDONNANCE_IMMUTABLE_WHEN_SIGNED);
+        verify(resolver).resolve(OrdonnanceExceptionCode.BS_ORDONNANCE_IMMUTABLE_WHEN_SIGNED, null);
         verifyNoMoreInteractions(resolver);
     }
 

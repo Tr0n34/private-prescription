@@ -21,13 +21,16 @@
         <module>ordonnance-application</module>
         <module>ordonnance-infrastructure</module>
         <module>ordonnance-architecture-validation</module>
+        <module>ordonnance-db-migrator</module>
     </modules>
 
     <properties>
         <java.version>21</java.version>
-        <maven.compiler.release>21</maven.compiler.release>
+        <maven.compiler.release>${java.version}</maven.compiler.release>
+        <project.default.encoding>UTF-8</project.default.encoding>
         <springboot.version>${project.parent.version}</springboot.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.build.sourceEncoding>${project.default.encoding}</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>${project.default.encoding}</project.reporting.outputEncoding>
 
         <mapstruct.version>1.6.3</mapstruct.version>
         <flying-saucer.version>9.1.22</flying-saucer.version>
@@ -38,6 +41,11 @@
         <micrometer-prometheus.version>1.16.1</micrometer-prometheus.version>
         <camel.version>4.16.0</camel.version>
         <hapi.version>2.6.0</hapi.version>
+        <ignite.version>2.17.0</ignite.version>
+        <ignite-spring.version>2.17.0</ignite-spring.version>
+        <guava.version>33.5.0-jre</guava.version>
+        <flyway.version>12.0.0</flyway.version>
+        <spring-vault-core.version>4.0.0</spring-vault-core.version>
 
         <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
         <sonar.coverage.exclusions>ordonnance-architecture-validation/**</sonar.coverage.exclusions>
@@ -51,6 +59,14 @@
                 <groupId>org.mapstruct</groupId>
                 <artifactId>mapstruct</artifactId>
                 <version>${mapstruct.version}</version>
+            </dependency>
+
+            <!-- API Vault pour OpenBao -->
+            <dependency>
+                <groupId>org.springframework.vault</groupId>
+                <artifactId>spring-vault-core</artifactId>
+                <version>${spring-vault-core.version}</version>
+                <scope>compile</scope>
             </dependency>
 
             <!-- Translator -->
@@ -94,6 +110,32 @@
                 <version>${postgresql.driver.version}</version>
             </dependency>
 
+            <!-- Flyway -->
+            <dependency>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-core</artifactId>
+                <version>${flyway.version}</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-database-postgresql</artifactId>
+                <version>${flyway.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+
+            <!-- Cache -->
+            <dependency>
+                <groupId>org.apache.ignite</groupId>
+                <artifactId>ignite-core</artifactId>
+                <version>${ignite.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.ignite</groupId>
+                <artifactId>ignite-spring</artifactId>
+                <version>${ignite-spring.version}</version>
+            </dependency>
+
             <!-- Editique PDF -->
             <dependency>
                 <groupId>org.xhtmlrenderer</groupId>
@@ -133,6 +175,12 @@
                 <groupId>com.tngtech.archunit</groupId>
                 <artifactId>archunit-junit5</artifactId>
                 <version>1.4.1</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
             </dependency>
 
         </dependencies>
@@ -198,14 +246,14 @@
                     <artifactId>maven-failsafe-plugin</artifactId>
                     <version>3.2.5</version>
                     <configuration>
-                        <argLine>${jacoco.argLine} -XX:+EnableDynamicAgentLoading</argLine>
+                        <argLine>${jacoco.argLine} -XX:+EnableDynamicAgentLoading -Dfile.encoding=UTF-8</argLine>
                     </configuration>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
                     <configuration>
-                        <argLine>${jacoco.argLine} -XX:+EnableDynamicAgentLoading</argLine>
+                        <argLine>${jacoco.argLine} -XX:+EnableDynamicAgentLoading -Dfile.encoding=UTF-8</argLine>
                         <excludes>
                             <exclude>**/*IT.java</exclude>
                         </excludes>

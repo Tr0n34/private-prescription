@@ -1,13 +1,14 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.in.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import fr.cnamts.cpam33.ordonnance.application.usecases.CreateOrdonnanceUseCase;
+import fr.cnamts.cpam33.ordonnance.application.usecases.ordonnances.CreateOrdonnanceUseCase;
 import fr.cnamts.cpam33.ordonnance.domain.models.aggregates.Ordonnance;
-import fr.cnamts.cpam33.ordonnance.domain.models.commands.CreateOrdonnanceCmd;
+import fr.cnamts.cpam33.ordonnance.domain.models.commands.ordonnances.CreateOrdonnanceCmd;
 import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors.ErrorMessageDomainResolver;
 import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors.ErrorMessageInfrastructureResolver;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.controllers.OrdonnanceController;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.dto.OrdonnanceDto;
+import fr.cnamts.cpam33.ordonnance.infrastructure.in.dto.PrescriptionDto;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.dto.medecins.MedecinIdDto;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.dto.patients.PatientIdDto;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.mappers.OrdonnanceApiMapper;
@@ -19,6 +20,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+
+import java.util.List;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -50,7 +53,8 @@ public class OrdonnanceControllerIT {
     void createOrdonnance_shouldReturn201() throws Exception {
         OrdonnanceDto dto = new OrdonnanceDto(
                 new PatientIdDto("1234567891234"),
-                new MedecinIdDto("1234567893214", "12365478936"));
+                new MedecinIdDto("1234567893214", "12365478936"),
+                List.of(new PrescriptionDto()));
         CreateOrdonnanceCmd cmd = Mockito.mock(CreateOrdonnanceCmd.class);
         Ordonnance ordonnance = Mockito.mock(Ordonnance.class);
         when(ordonnanceApiMapper.toCommand(Mockito.any(OrdonnanceDto.class))).thenReturn(cmd);
@@ -66,12 +70,13 @@ public class OrdonnanceControllerIT {
     void createOrdonnance_shouldReturn400_withInvalidDto() throws Exception {
         OrdonnanceDto invalidDto = new OrdonnanceDto(
                 new PatientIdDto(""),
-                new MedecinIdDto("", ""));
+                new MedecinIdDto("", ""),
+                List.of(new PrescriptionDto()));
 
         mockMvc.perform(post("/ordonnances")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(invalidDto)))
-                .andExpect(status().isBadRequest()); //
+                .andExpect(status().isBadRequest());
     }
 
 }

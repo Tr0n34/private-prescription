@@ -1,11 +1,11 @@
 package fr.cnamts.cpam33.ordonnance.domain.fixtures;
 
 import fr.cnamts.cpam33.ordonnance.domain.Fixtures;
+import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.utilisateurs.Medecin;
+import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.utilisateurs.MedecinId;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identites.Nom;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identites.Prenom;
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.medecins.Medecin;
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.medecins.MedecinId;
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.medecins.Rpps;
+import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identites.Rpps;
 
 public class MedecinFixtures extends Fixtures {
 

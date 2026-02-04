@@ -1,7 +1,7 @@
 [
   {
     "code": "BS_ORDONNANCE_IMMUTABLE_WHEN_SIGNED",
-    "boundedContext": "ORDONNANCE",
+    "boundedContext": "ORDONNANCES",
     "httpStatus": 409,
     "message": "Une ordonnance signée ne peut plus être modifiée",
     "description": "Violation de l'invariant d'immuabilité"
@@ -35,6 +35,18 @@
     "boundedContext": "PATIENT",
     "httpStatus": 400,
     "message": "Nom trop long ou trop court"
+  },
+  {
+    "code": "BS_INS_OID_MISSING",
+    "boundedContext": "PATIENT",
+    "httpStatus": 400,
+    "message": "oid du patient inexistant"
+  },
+  {
+    "code": "BS_INS_MATRICULE_MISSING",
+    "boundedContext": "PATIENT",
+    "httpStatus": 400,
+    "message": "matricule du patient absent"
   },
   {
     "code": "BS_ORDONNANCE_ID_NUMERIC",
@@ -178,6 +190,55 @@
     "code": "TECH_PDF_DIRECTORY_NOT_FOUND",
     "boundedContext": "PDF",
     "httpStatus": 400,
-    "message": "Le repertoire %s n'a pas été trouvé"
+    "message": "Le repertoire {pdf} n'a pas été trouvé"
+  },
+  {
+    "code": "TECH_PDF_READ_ERROR",
+    "boundedContext": "PDF",
+    "httpStatus": 400,
+    "message": "Erreur de lecture du PDF {pdf}"
+  },
+  {
+  "code": "TECH_PDF_EMPTY",
+  "boundedContext": "PDF",
+  "httpStatus": 400,
+  "message": "PDF vide"
+},
+  {
+    "code": "TECH_PDF_WRITE_ERROR",
+    "boundedContext": "PDF",
+    "httpStatus": 400,
+    "message": "Erreur d'écriture du PDF {pdf}"
+  },
+  {
+    "code": "TECH_PDF_READ_ERROR",
+    "boundedContext": "PDF",
+    "httpStatus": 400,
+    "message": "Erreur de lecture du PDF {pdf}"
+  },
+  {
+    "code": "TECH_PDF_KEY_INVALID",
+    "boundedContext": "PDF",
+    "httpStatus": 400,
+    "message": "Clef invalide {pdf_key} du PDF {pdf}"
+  },
+  {
+    "code": "TECH_PDF_BASE64_EMPTY",
+    "boundedContext": "PDF",
+    "httpStatus": 400,
+    "message": "PDF en base64 vide"
+  },
+  {
+    "code": "TECH_PDF_PATH_INVALID",
+    "boundedContext": "PDF",
+    "httpStatus": 400,
+    "message": "Chemin vers le PDF invalide {pdf}"
+  },
+  {
+    "code": "CMD_PARAMETRE_MANQUANT",
+    "boundedContext": "COMMAND",
+    "httpStatus": 400,
+    "message": "Paramètres manquants pour {command} : {missingParams}",
+    "description": "Des valeurs de champs de la commande sont manquants"
   }
 ]

@@ -1,6 +1,6 @@
 package fr.cnamts.cpam33.ordonnance.domain.objects;
 
-import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.NomMalFormedException;
+import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.DomainException;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identites.Nom;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +17,7 @@ public class NomTest {
 
     @Test
     void should_fail_when_nom_is_blank() {
-        assertThrows(NomMalFormedException.class, () -> new Nom(" "));
+        assertThrows(DomainException.class, () -> new Nom(" "));
     }
 
 }

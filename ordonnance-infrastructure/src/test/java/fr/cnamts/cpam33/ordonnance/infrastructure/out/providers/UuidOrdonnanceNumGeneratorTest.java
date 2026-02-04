@@ -1,5 +1,6 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.out.providers;
 
+import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.providers.UuidOrdonnanceNumGenerator;
 import org.junit.jupiter.api.Test;
 
 import java.util.UUID;

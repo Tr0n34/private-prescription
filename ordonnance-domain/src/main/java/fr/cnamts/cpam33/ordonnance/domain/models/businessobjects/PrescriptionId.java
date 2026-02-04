@@ -1,6 +1,6 @@
 package fr.cnamts.cpam33.ordonnance.domain.models.businessobjects;
 
-import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.PrescriptionInvalidException;
+import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.DomainException;
 import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.enums.PrescrptionExceptionCode;
 
 public record PrescriptionId (
@@ -9,7 +9,7 @@ public record PrescriptionId (
 
     public PrescriptionId {
         if ( numero == null || numero.isEmpty() ) {
-            throw new PrescriptionInvalidException(PrescrptionExceptionCode.BS_PRESCRIPTION_ID_MISSING);
+            throw new DomainException(PrescrptionExceptionCode.BS_PRESCRIPTION_ID_MISSING);
         }
     }
 

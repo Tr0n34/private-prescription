@@ -1,8 +1,6 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.traces;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.cnamts.cpam33.ordonnance.domain.models.events.ActeMetierEvent;
-import fr.cnamts.cpam33.ordonnance.domain.abstracts.Command;
 import fr.cnamts.cpam33.ordonnance.domain.models.events.TraceCommand;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.Trace;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.TraceAttribute;

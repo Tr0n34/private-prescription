@@ -18,8 +18,7 @@ public class BufferedJpaTracePublisher implements TracePublisher {
     private final BlockingQueue<Trace> traceQueue;
     private final TraceDropMetrics dropMetrics;
 
-    public BufferedJpaTracePublisher(BlockingQueue<Trace> traceQueue,
-                                     TraceDropMetrics dropMetrics) {
+    public BufferedJpaTracePublisher(BlockingQueue<Trace> traceQueue, TraceDropMetrics dropMetrics) {
         this.traceQueue = traceQueue;
         this.dropMetrics = dropMetrics;
     }
