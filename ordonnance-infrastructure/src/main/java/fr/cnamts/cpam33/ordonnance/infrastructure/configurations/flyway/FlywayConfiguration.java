@@ -1,6 +1,9 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.configurations.flyway;
 
 import org.flywaydb.core.Flyway;
+import org.flywaydb.core.api.output.MigrateResult;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -16,17 +19,20 @@ import javax.sql.DataSource;
 })
 public class FlywayConfiguration {
 
-    @Bean
+    private final static Logger logger = LoggerFactory.getLogger(FlywayConfiguration.class);
+
+    @Bean(initMethod = "migrate")
     @ConditionalOnProperty(prefix = "flyway.ordonnance", name = "enabled", havingValue = "true", matchIfMissing = true)
     public Flyway ordonnanceFlyway(@Qualifier("ordonnanceDataSource") DataSource ordonnanceDataSource,
-                                   OrdonnanceFlywayProperties properties) {
+                                          OrdonnanceFlywayProperties properties) {
+        logger.info("Loading flyway ordonnance...");
         return Flyway.configure()
                 .dataSource(ordonnanceDataSource)
                 .locations(properties.getLocations().toArray(String[]::new))
                 .load();
     }
 
-    @Bean
+    @Bean(initMethod = "migrate")
     @ConditionalOnProperty(prefix = "flyway.trace", name = "enabled", havingValue = "true", matchIfMissing = true)
     public Flyway traceFlyway(@Qualifier("traceDataSource") DataSource traceDataSource,
                               TraceFlywayProperties properties) {
