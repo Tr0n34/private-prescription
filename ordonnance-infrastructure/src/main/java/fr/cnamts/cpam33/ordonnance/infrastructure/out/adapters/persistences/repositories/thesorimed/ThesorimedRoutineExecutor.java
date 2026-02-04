@@ -74,8 +74,8 @@ public class ThesorimedRoutineExecutor implements DataBaseRoutineExecutor {
 
     private <T> List<T> fetchAll(Connection con, String cursorName, RowMapper<T> rowMapper) throws SQLException {
         String safeCursor = escapePgIdentifier(cursorName);
-        String sql = "fetch all in \"" + safeCursor + "\"";
-        logger.debug("Fetching all rows from cursor [{}]", cursorName);
+        String sql = fetchAllCursorSql(safeCursor);
+        logger.trace("Fetching all rows from cursor [{}]", cursorName);
         List<T> rows = new ArrayList<>();
         try ( Statement st = con.createStatement(); ResultSet rs = st.executeQuery(sql) ) {
             int rowNum = 0;
@@ -90,13 +90,21 @@ public class ThesorimedRoutineExecutor implements DataBaseRoutineExecutor {
 
     private void closeCursorQuietly(Connection con, String cursorName) {
         String safeCursor = escapePgIdentifier(cursorName);
-        String sql = "close \"" + safeCursor + "\"";
+        String sql = closeCursor(safeCursor);
         try ( Statement st = con.createStatement() ) {
             st.execute(sql);
             logger.debug("Refcursor [{}] closed", cursorName);
         } catch (SQLException e) {
             logger.warn("Failed to close refcursor [{}] (ignored): {}", cursorName, e.getMessage());
         }
+    }
+
+    private static String fetchAllCursorSql(String cursorName) {
+        return "FETCH ALL IN \"" + cursorName + "\"";
+    }
+
+    private static String closeCursor(String cursorName) {
+        return "close \"" + cursorName + "\"";
     }
 
     private String buildCallSql(String qualifiedName, int paramCount) {

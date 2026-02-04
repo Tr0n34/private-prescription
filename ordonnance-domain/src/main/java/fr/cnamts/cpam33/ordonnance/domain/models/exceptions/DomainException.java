@@ -9,14 +9,14 @@ import java.util.Objects;
 public class DomainException extends RuntimeException implements DomainObject {
 
     private final transient ExceptionCode code;
-    private final Map<String, ?> placeHolders;
+    private final transient Map<String, Object> placeHolders;
 
     public DomainException(ExceptionCode code) {
         this.code = code;
         this.placeHolders = null;
     }
 
-    public DomainException(ExceptionCode code, Map<String, ?> placeHolders) {
+    public DomainException(ExceptionCode code, Map<String, Object> placeHolders) {
         this.code = Objects.requireNonNull(code);
         this.placeHolders = placeHolders;
     }
@@ -30,7 +30,7 @@ public class DomainException extends RuntimeException implements DomainObject {
         return code.toString();
     }
 
-    public Map<String, ?> getPlaceHolders() {
+    public Map<String, Object> getPlaceHolders() {
         return placeHolders;
     }
 

@@ -32,7 +32,7 @@ public class AsyncTracePublisher implements TracePublisher {
 
     @Override
     public void publish(Trace trace) {
-
+        throw new UnsupportedOperationException("in development");
     }
 
 }

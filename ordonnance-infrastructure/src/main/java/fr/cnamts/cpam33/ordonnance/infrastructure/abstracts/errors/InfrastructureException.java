@@ -6,14 +6,14 @@ import java.util.Objects;
 public class InfrastructureException extends RuntimeException {
 
     private final transient InfraStructureExceptionCode code;
-    private final transient Map<String, ?> placeHolders;
+    private final transient Map<String, Object> placeHolders;
 
     public InfrastructureException(InfraStructureExceptionCode code) {
         this.code = Objects.requireNonNull(code);
         this.placeHolders = null;
     }
 
-    public InfrastructureException(InfraStructureExceptionCode code, Map<String, ?> placeHolders) {
+    public InfrastructureException(InfraStructureExceptionCode code, Map<String, Object> placeHolders) {
         this.code = Objects.requireNonNull(code);
         this.placeHolders = Objects.requireNonNull(placeHolders);
     }
@@ -22,7 +22,7 @@ public class InfrastructureException extends RuntimeException {
         return code;
     }
 
-    public Map<String, ?> getPlaceHolders() {
+    public Map<String, Object> getPlaceHolders() {
         return placeHolders;
     }
 

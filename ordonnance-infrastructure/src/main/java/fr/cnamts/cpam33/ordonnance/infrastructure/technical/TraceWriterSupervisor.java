@@ -27,13 +27,13 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class TraceWriterSupervisor implements SmartLifecycle {
 
     private static final Logger logger = LoggerFactory.getLogger(TraceWriterSupervisor.class);
-    public static final String PREFIX_THREAD_TRACEWRITER = "trace-writer-";
-    public static final int START = 0;
-    public static final int INITIAL_DELAY = 1;
-    public static final int DELAY = 1;
-    public static final boolean INITIAL_START = false;
-    public static final int JPA_ENTITY_BEFORE_FLUSH = 200;
-    public static final String SUPERVISOR_THREAD_NAME = "trace-supervisor";
+    private static final String PREFIX_THREAD_TRACEWRITER = "trace-writer-";
+    private static final int NUM_WORKER_DEFAULT = 0;
+    private static final int INITIAL_DELAY = 1;
+    private static final int DELAY = 1;
+    private static final boolean INITIAL_START = false;
+    private static final int JPA_ENTITY_BEFORE_FLUSH = 200;
+    private static final String SUPERVISOR_THREAD_NAME = "trace-supervisor";
 
     private final TraceEntityMapper traceEntityMapper;
     private final ActeMetierJpaRepository acteMetierJpaRepository;
@@ -76,12 +76,12 @@ public class TraceWriterSupervisor implements SmartLifecycle {
         this.flushInterval = props.flushInterval();
         this.workers = props.workers();
         this.restartDelay = props.restartDelay();
-        ThreadFactory virtualThreadFactory = Thread.ofVirtual().name(PREFIX_THREAD_TRACEWRITER, START).factory();
+        ThreadFactory virtualThreadFactory = Thread.ofVirtual().name(PREFIX_THREAD_TRACEWRITER, NUM_WORKER_DEFAULT).factory();
         this.workerPool = Executors.newThreadPerTaskExecutor(virtualThreadFactory);
     }
 
     private void startAllWorkers() {
-        for ( int i = START; i < workers; i++ ) {
+        for ( int i = NUM_WORKER_DEFAULT; i < workers; i++ ) {
             startWorker(i);
         }
     }
@@ -99,7 +99,7 @@ public class TraceWriterSupervisor implements SmartLifecycle {
 
     private void monitorWorkers() {
         if ( !running ) return;
-        for ( int i = START; i < workers; i++ ) {
+        for ( int i = NUM_WORKER_DEFAULT; i < workers; i++ ) {
             Future<?> f = runningWorkers.get(i);
             if ( f == null ) {
                 scheduleRestart(i, "missing-future");
@@ -156,12 +156,12 @@ public class TraceWriterSupervisor implements SmartLifecycle {
         try (em) {
             tx = em.getTransaction();
             tx.begin();
-            int i = START;
-            for (Trace t : traces) {
+            int i = NUM_WORKER_DEFAULT;
+            for ( Trace t : traces ) {
                 TraceEntity entity = traceEntityMapper.toEntity(t, acteMetierJpaRepository, traceObjectMapper);
                 em.persist(entity);
                 i++;
-                if ( i % JPA_ENTITY_BEFORE_FLUSH == START ) {
+                if ( i % JPA_ENTITY_BEFORE_FLUSH == NUM_WORKER_DEFAULT ) {
                     em.flush();
                     em.clear();
                 }
