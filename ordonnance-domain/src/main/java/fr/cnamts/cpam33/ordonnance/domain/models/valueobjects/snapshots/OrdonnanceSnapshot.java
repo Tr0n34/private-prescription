@@ -1,5 +1,6 @@
 package fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.snapshots;
 
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.domain.Document;
 import fr.cnamts.cpam33.ordonnance.domain.models.aggregates.Ordonnance;
 import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.DomainException;
 import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.enums.OrdonnanceExceptionCode;
@@ -11,7 +12,7 @@ public record OrdonnanceSnapshot(
         Ordonnance ordonnance,
         Signature signature,
         LocalDateTime emmittedOn
-) {
+) implements Document {
 
     public OrdonnanceSnapshot {
         if ( ordonnance == null ) {
