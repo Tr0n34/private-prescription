@@ -1,0 +1,9 @@
+# Récupérer la liste des métriques
+$response = Invoke-RestMethod -Uri "http://localhost:8080/actuator/metrics"
+$metrics = $response.names
+
+# Pour chaque métrique, récupérer sa valeur
+foreach ($metric in $metrics) {
+    Write-Host "`n--- $metric ---" -ForegroundColor Green
+    Invoke-RestMethod -Uri "http://localhost:8080/actuator/metrics/$metric" | ConvertTo-Json -Depth 10
+}

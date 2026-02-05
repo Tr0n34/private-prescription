@@ -1,0 +1,58 @@
+$ftpBase  = "ftp://ftp.thesorimed.vifi.info/PG"
+$username = "sages2.production"
+$password = "5g#t6klc@vc"
+
+$downloads = @(
+    @{
+        Remote = "THESORIMED_V13_00-2026-01-06-PG.backup"
+        Local  = "C:\Temp\thesorimed.backup"
+    },
+    @{
+        Remote = "THESO-postgres-1300-2_43.sql"
+        Local  = "C:\Temp\THESO-postgres-1300-2_43.sql"
+    }
+)
+
+function Download-FtpFile {
+    param (
+        [string]$FtpUrl,
+        [string]$LocalPath,
+        [string]$User,
+        [string]$Password
+    )
+
+    $localDir = Split-Path $LocalPath
+    if (!(Test-Path $localDir)) {
+        New-Item -ItemType Directory -Path $localDir | Out-Null
+    }
+
+    Write-Host "Téléchargement de $FtpUrl"
+
+    $request = [System.Net.FtpWebRequest]::Create($FtpUrl)
+    $request.Method = [System.Net.WebRequestMethods+Ftp]::DownloadFile
+    $request.Credentials = New-Object System.Net.NetworkCredential($User, $Password)
+    $request.UseBinary = $true
+    $request.KeepAlive = $false
+
+    $response = $request.GetResponse()
+    $stream = $response.GetResponseStream()
+    $fileStream = [System.IO.File]::Create($LocalPath)
+
+    try {
+        $stream.CopyTo($fileStream)
+    }
+    finally {
+        $fileStream.Close()
+        $stream.Close()
+        $response.Close()
+    }
+
+    Write-Host "Téléchargé vers $LocalPath"
+}
+
+foreach ($file in $downloads) {
+    $ftpUrl = "$ftpBase/$($file.Remote)"
+    Download-FtpFile -FtpUrl $ftpUrl -LocalPath $file.Local -User $username -Password $password
+}
+
+Write-Host "Tous les fichiers ont été téléchargés"

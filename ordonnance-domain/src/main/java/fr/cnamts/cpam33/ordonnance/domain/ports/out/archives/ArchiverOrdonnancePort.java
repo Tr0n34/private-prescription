@@ -1,0 +1,13 @@
+package fr.cnamts.cpam33.ordonnance.domain.ports.out.archives;
+
+import fr.cnamts.cpam33.ordonnance.domain.models.aggregates.OrdonnanceId;
+
+import java.util.List;
+
+public interface ArchiverOrdonnancePort {
+
+    void archiver(OrdonnanceId ordonnanceId);
+
+    void archiver(List<OrdonnanceId> ordonnanceIds);
+
+}
