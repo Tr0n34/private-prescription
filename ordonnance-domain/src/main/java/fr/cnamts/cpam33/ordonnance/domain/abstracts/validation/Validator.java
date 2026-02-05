@@ -13,6 +13,11 @@ public final class Validator {
         return this;
     }
 
+    public Validator notBlank(String value, String field) {
+        if ( value == null || value.isBlank()) errors.put(field, null);
+        return this;
+    }
+
     public Validator notEmpty(Collection<?> value, String field) {
         if ( value == null || value.isEmpty() ) errors.put(field, value);
         return this;

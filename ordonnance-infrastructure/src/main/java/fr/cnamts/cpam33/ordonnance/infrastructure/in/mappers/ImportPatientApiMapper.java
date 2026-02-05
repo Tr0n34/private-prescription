@@ -1,8 +1,6 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.in.mappers;
 
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.Patient;
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identites.Nom;
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identites.Prenom;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.dto.ImportPatientDto;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.mappers.identites.NomPrenomMapper;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.mappers.patients.ExternalIdPatientMapper;

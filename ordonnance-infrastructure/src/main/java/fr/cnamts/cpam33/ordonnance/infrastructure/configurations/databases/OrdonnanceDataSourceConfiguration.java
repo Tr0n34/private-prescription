@@ -2,7 +2,6 @@ package fr.cnamts.cpam33.ordonnance.infrastructure.configurations.databases;
 
 import com.zaxxer.hikari.HikariDataSource;
 import jakarta.persistence.EntityManagerFactory;
-import org.apache.camel.vault.VaultConfiguration;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;

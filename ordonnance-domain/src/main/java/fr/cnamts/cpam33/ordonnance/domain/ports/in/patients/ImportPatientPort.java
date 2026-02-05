@@ -6,6 +6,6 @@ import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.Patien
 
 public interface ImportPatientPort {
 
-    Patient importerPatient(PatientId patientId, ExternalPatientId externalPatientId);
+    Patient importerPatient(ExternalPatientId externalPatientId);
 
 }

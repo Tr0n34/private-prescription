@@ -159,7 +159,7 @@ public class Ordonnance implements DomainObject {
         if ( lignePrescriptions == null || lignePrescriptions.isEmpty()) {
             throw new DomainException(OrdonnanceExceptionCode.BS_ORDONNANCE_PRESCRIPTION_MISSING);
         }
-        lignePrescriptions = new ArrayList<>(lignePrescriptions); // copie mutable
+        this.lignePrescriptions = new ArrayList<>(lignePrescriptions); // copie mutable
         modifiedOn = LocalDate.now();
         return this;
     }
@@ -171,7 +171,7 @@ public class Ordonnance implements DomainObject {
         if ( !exists ) {
             throw new DomainException(OrdonnanceExceptionCode.BS_ORDONNANCE_PRESCRIPTION_NOT_FOUND);
         }
-        lignePrescriptions = new ArrayList<>(lignePrescriptions.stream()
+        this.lignePrescriptions = new ArrayList<>(lignePrescriptions.stream()
                 .map(p -> p.prescriptionId().equals(newLignePrescription.prescriptionId()) ? newLignePrescription : p)
                 .toList());
         modifiedOn = LocalDate.now();

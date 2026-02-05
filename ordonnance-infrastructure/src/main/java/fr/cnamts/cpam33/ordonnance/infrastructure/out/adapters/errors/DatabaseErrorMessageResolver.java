@@ -37,12 +37,12 @@ public class DatabaseErrorMessageResolver implements ErrorMessageDomainResolver,
     }
 
     @Override
-    public ErrorDescriptor resolve(ExceptionCode exceptionCode, Map<String, ?> placeHolders) {
+    public ErrorDescriptor resolve(ExceptionCode exceptionCode, Map<String, Object> placeHolders) {
         return resolveByCode(exceptionCode.toString(), placeHolders);
     }
 
     @Override
-    public ErrorDescriptor resolve(InfraStructureExceptionCode code, Map<String, ?> placeHolders) {
+    public ErrorDescriptor resolve(InfraStructureExceptionCode code, Map<String, Object> placeHolders) {
         return resolveByCode(code.toString(), placeHolders);
     }
 

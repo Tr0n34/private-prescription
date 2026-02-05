@@ -14,7 +14,7 @@ public abstract class AbstractWatcherEndpoint {
 
     private final AbstractFileWatchService fileWatchService;
 
-    public AbstractWatcherEndpoint(AbstractFileWatchService fileWatchService) {
+    protected AbstractWatcherEndpoint(AbstractFileWatchService fileWatchService) {
         this.fileWatchService = fileWatchService;
     }
 

@@ -24,11 +24,9 @@ public class OrdonnanceSnapshotWriterAdapter implements Adapter, OrdonnanceSnaps
 
     private static final Logger logger = LoggerFactory.getLogger(OrdonnanceSnapshotWriterAdapter.class);
 
-    private final ObjectMapper objectMapper;
     private final SpringTemplateEngine templateEngine;
 
-    public OrdonnanceSnapshotWriterAdapter(ObjectMapper objectMapper, SpringTemplateEngine templateEngine) {
-        this.objectMapper = objectMapper;
+    public OrdonnanceSnapshotWriterAdapter(SpringTemplateEngine templateEngine) {
         this.templateEngine = templateEngine;
     }
 
@@ -50,8 +48,6 @@ public class OrdonnanceSnapshotWriterAdapter implements Adapter, OrdonnanceSnaps
             renderer.setDocumentFromString(html);
             renderer.layout();
             renderer.createPDF(outputStream);
-            byte[] pdf = outputStream.toByteArray();
-            // fileStorage.save(snapshot.getId(), pdf);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
             throw new DomainException(OrdonnanceExceptionCode.BS_ORDONNANCE_SNAPSHOT_GENERATION_ERROR);

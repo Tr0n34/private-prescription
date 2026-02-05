@@ -6,7 +6,6 @@ import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.Adapter;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.acls.patients.PatientACL;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.controllers.routes.LocationBuilder;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.dto.patients.CesPatientDto;
-import fr.cnamts.cpam33.ordonnance.infrastructure.in.mappers.PatientApiMapper;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.dto.PatientDto;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;

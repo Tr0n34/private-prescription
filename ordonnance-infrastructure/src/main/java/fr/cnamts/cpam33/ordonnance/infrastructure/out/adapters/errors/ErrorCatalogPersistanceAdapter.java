@@ -7,6 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class ErrorCatalogPersistanceAdapter {
@@ -17,6 +19,10 @@ public class ErrorCatalogPersistanceAdapter {
 
     public ErrorCatalogPersistanceAdapter(ErrorCatalogJpaRepository errorCatalogJpaRepository) {
         this.errorCatalogJpaRepository = errorCatalogJpaRepository;
+    }
+
+    public List<ErrorCatalogEntity> findAll() {
+        return errorCatalogJpaRepository.findAll();
     }
 
     public void saveOrUpdate(ErrorCatalogEntity incoming) {

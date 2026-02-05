@@ -1,4 +1,7 @@
 package fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.medicaments;
 
-public class Forme {
+public record Forme(
+        String type
+) {
+
 }

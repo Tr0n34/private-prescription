@@ -235,10 +235,28 @@
     "message": "Chemin vers le PDF invalide {pdf}"
   },
   {
+    "code": "TECH_PDF_ROOT_DIR_EMPTY",
+    "boundedContext": "PDF",
+    "httpStatus": 400,
+    "message": "Chemin racine vide ou introuvable {pdf}"
+  },
+  {
     "code": "CMD_PARAMETRE_MANQUANT",
     "boundedContext": "COMMAND",
     "httpStatus": 400,
     "message": "Paramètres manquants pour {command} : {missingParams}",
     "description": "Des valeurs de champs de la commande sont manquants"
+  },
+  {
+    "code": "TECH_VAULT_KV_NOT_READY",
+    "boundedContext": "VAULT",
+    "httpStatus": 400,
+    "message": "KV engine non initialisé"
+  },
+  {
+    "code": "TECH_VAULT_KV_READ_PATH_EMPTY",
+    "boundedContext": "VAULT",
+    "httpStatus": 400,
+    "message": "KV read path vide"
   }
 ]

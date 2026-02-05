@@ -8,6 +8,6 @@ public interface ErrorMessageInfrastructureResolver {
 
     ErrorDescriptor resolve(InfraStructureExceptionCode code);
 
-    ErrorDescriptor resolve(InfraStructureExceptionCode code, Map<String, ?> params);
+    ErrorDescriptor resolve(InfraStructureExceptionCode code, Map<String, Object> params);
 
 }

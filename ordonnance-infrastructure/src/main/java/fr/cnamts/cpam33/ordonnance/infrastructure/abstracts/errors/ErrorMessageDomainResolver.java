@@ -7,7 +7,7 @@ import java.util.Map;
 
 public interface ErrorMessageDomainResolver {
 
-    ErrorDescriptor resolve(ExceptionCode code, Map<String, ?> params);
+    ErrorDescriptor resolve(ExceptionCode code, Map<String, Object> params);
 
 }
 

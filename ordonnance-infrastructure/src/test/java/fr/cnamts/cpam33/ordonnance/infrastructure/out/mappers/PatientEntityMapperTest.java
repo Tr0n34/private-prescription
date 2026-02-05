@@ -20,8 +20,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 class PatientEntityMapperTest {
 
     private PatientEntityMapper mapper;
-    private NomPrenomMapper nomPrenomMapper;
-    private PatientIdMapper patientIdMapper;
 
     @BeforeEach
     void setUp() {

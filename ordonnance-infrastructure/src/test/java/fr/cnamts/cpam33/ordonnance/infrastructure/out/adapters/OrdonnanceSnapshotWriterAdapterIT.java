@@ -46,13 +46,10 @@ class OrdonnanceSnapshotWriterAdapterIT {
     @Autowired
     private SpringTemplateEngine templateEngine;
 
-    @Autowired
-    private ObjectMapper objectMapper;
-
     @Test
     void should_generate_valid_pdf_from_ordonnance_snapshot() throws Exception {
         OrdonnanceSnapshot snapshot = fakeSnapshot();
-        OrdonnanceSnapshotWriterAdapter writer = new OrdonnanceSnapshotWriterAdapter(objectMapper, templateEngine);
+        OrdonnanceSnapshotWriterAdapter writer = new OrdonnanceSnapshotWriterAdapter(templateEngine);
         byte[] pdf = generatePdf(writer, snapshot);
         Path pdfFile = writePdf(pdf, "ordonnance-snapshot-valide");
         assertThat(pdf).isNotNull();

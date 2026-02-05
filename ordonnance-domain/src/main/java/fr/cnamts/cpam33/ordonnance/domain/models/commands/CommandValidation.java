@@ -13,6 +13,10 @@ public final class CommandValidation {
     private static final String COMMAND = "command";
     private static final String MISSING_PARAMS = "missingParams";
 
+    private CommandValidation() {
+        throw new UnsupportedOperationException("Utility class");
+    }
+
     public static void failFast(String commandName, ValidationResult result) {
         if ( result != null && !result.errors().isEmpty() ) {
             throw new DomainException(
@@ -26,12 +30,12 @@ public final class CommandValidation {
     }
 
     public static ValidationResult notNullArgs(Map<String, Object> args) {
-        Validator v = new Validator();
-        args.forEach((name, value) -> v.notNull(value, name));
-        return v.validate();
+        Validator validator = new Validator();
+        args.forEach((name, value) -> validator.notNull(value, name));
+        return validator.validate();
     }
 
-    private static String toJsonArray(Map<String, ?> invalid) {
+    private static String toJsonArray(Map<String, Object> invalid) {
         StringBuilder sb = new StringBuilder();
         sb.append('[');
         boolean first = true;

@@ -64,6 +64,7 @@ public class ActeMetierWatchService extends AbstractFileWatchService implements 
 
     @Override
     public void performReload() {
+        logger.debug("Performing reload");
         acteMetierLoader.reload();
     }
 

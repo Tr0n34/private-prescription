@@ -1,5 +1,6 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.persistences;
 
+import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.ExternalPatientId;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.Patient;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.PatientId;
 import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.Adapter;
@@ -17,14 +18,8 @@ public class ExternalPatientPersistenceAdapter implements Adapter {
         this.importPatientApiClient = importPatientApiClient;
     }
 
-    public Patient fetchById(PatientId patientId) {
-        return importPatientApiClient.fetchById(patientId);
-    }
-
-    public List<Patient> fetchByIds(List<PatientId> patientIds) {
-        return patientIds.stream()
-                .map(this::fetchById)
-                .toList();
+    public Patient fetchById(ExternalPatientId externalPatientId) {
+        return importPatientApiClient.fetchById(externalPatientId);
     }
 
 }

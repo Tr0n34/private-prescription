@@ -141,9 +141,9 @@ public class TraceWriterSupervisor implements SmartLifecycle {
                 Thread.currentThread().interrupt();
                 logger.warn("Trace writer {} interrupted", workerId);
                 return;
-            } catch (Throwable t) {
+            } catch (Exception e) {
                 // Throwable pour éviter qu'une Error tue silencieusement le worker
-                logger.error("Trace writer {} crashed", workerId, t);
+                logger.error("Trace writer {} crashed", workerId, e);
                 // On sort => Future.isDone() => monitor -> restart
                 return;
             }
@@ -191,7 +191,7 @@ public class TraceWriterSupervisor implements SmartLifecycle {
     @Override
     public void start() {
         if ( !acteMetierCache.isReady() ) {
-            System.err.println("TraceWriterSupervisor not started: acteMetierCache.isReady() = " + acteMetierCache.isReady());
+            logger.error("TraceWriterSupervisor not started: acteMetierCache.isReady() = {}", acteMetierCache.isReady());
             throw new IllegalStateException("TraceWriterSupervisor not started before no data in cache");
         }
         if ( !started.compareAndSet(INITIAL_START, true ) ) {

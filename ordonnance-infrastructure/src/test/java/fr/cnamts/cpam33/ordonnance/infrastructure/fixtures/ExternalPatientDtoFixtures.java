@@ -1,6 +1,5 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.fixtures;
 
-import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.Patient;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.dto.PatientDto;
 
 import java.time.LocalDate;

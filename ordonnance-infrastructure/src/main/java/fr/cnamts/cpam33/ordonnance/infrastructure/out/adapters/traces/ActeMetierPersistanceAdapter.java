@@ -56,6 +56,7 @@ public class ActeMetierPersistanceAdapter implements ActeMetierRepository {
                 })
                 .orElseGet(() -> fonctionJpaRepository.save(entity.getFonction()));
         entity.setFonction(fonctionEntity);
+        logger.debug("save ActeMetier : {}", entity.getCode());
         return acteMetierEntityMapper.toDomain(acteMetierJpaRepository.save(entity));
     }
 

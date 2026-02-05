@@ -27,7 +27,6 @@ import java.util.Objects;
 public class ErrorCatalogWatchService extends AbstractFileWatchService implements Runnable {
 
     private static final Logger logger = LoggerFactory.getLogger(ErrorCatalogWatchService.class);
-    private static final String FILE_PROTOCOL = "file:";
 
     @Value("${ordonnance.loaders.errors.file:classpath:errors.json}")
     private String errorFile;
@@ -67,6 +66,7 @@ public class ErrorCatalogWatchService extends AbstractFileWatchService implement
 
     @Override
     public void performReload() {
+        logger.debug("Performing reload");
         errorCatalogLoader.reload();
     }
 }

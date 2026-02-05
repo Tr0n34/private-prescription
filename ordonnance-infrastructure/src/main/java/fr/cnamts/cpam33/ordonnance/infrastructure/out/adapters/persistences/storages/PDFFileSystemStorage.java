@@ -8,18 +8,21 @@ import fr.cnamts.cpam33.ordonnance.infrastructure.exceptions.enums.PdfExceptionC
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Map;
-import java.util.Objects;
 
 public class PDFFileSystemStorage implements PDFStorage {
 
     public static final String ERROR_PDF_KEY = "pdf_key";
     public static final String ERROR_PDF = "pdf";
+    public static final char SLASH = '/';
+    public static final String PDF_EXTENSION = ".pdf";
 
     private final Path rootDir;
     private Map<String, Object> errorPlaceHolders;
 
     public PDFFileSystemStorage(Path rootDir, Map<String, Object> errorPlaceHolders) {
-        this.rootDir = Objects.requireNonNull(rootDir, "rootDir must not be null");
+        OpsError.requireNotNull(rootDir,
+                cause -> new InfrastructureException(PdfExceptionCode.TECH_PDF_ROOT_DIR_EMPTY, errorPlaceHolders));
+        this.rootDir = rootDir;
         errorPlaceHolders.put(ERROR_PDF, rootDir);
     }
 
@@ -28,7 +31,6 @@ public class PDFFileSystemStorage implements PDFStorage {
         errorPlaceHolders.put(ERROR_PDF_KEY, key);
         OpsError.requireNotBlank(key, cause -> new InfrastructureException(PdfExceptionCode.TECH_PDF_KEY_INVALID, errorPlaceHolders));
         OpsError.requireNotNull(pdfBytes, cause -> new InfrastructureException(PdfExceptionCode.TECH_PDF_KEY_INVALID, errorPlaceHolders));
-
         Path path = resolveKeyToPath(key);
         FileBytesWriter.write(
                 path,
@@ -63,12 +65,16 @@ public class PDFFileSystemStorage implements PDFStorage {
     }
 
     private Path resolveKeyToPath(String key) {
-        String safe = key.replace('\\', '/');
-        while (safe.startsWith("/")) safe = safe.substring(1);
-        if (safe.contains("..")) {
+        String safe = key.replace('\\', SLASH);
+        while ( safe.startsWith(String.valueOf(SLASH)) ) {
+            safe = safe.substring(1);
+        }
+        if ( safe.contains("..") ) {
             throw new IllegalArgumentException("Invalid key (path traversal): " + key);
         }
-        if (!safe.endsWith(".pdf")) safe = safe + ".pdf";
+        if ( !safe.endsWith(PDF_EXTENSION) ) {
+            safe = safe + PDF_EXTENSION;
+        }
         return rootDir.resolve(safe);
     }
 

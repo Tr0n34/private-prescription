@@ -26,8 +26,6 @@ public class PatientControllerTest {
 
     private LocationBuilder locationBuilder;
     private RegisterPatientUseCase patientService;
-    private PatientApiMapper patientApiMapper;
-    private ImportPatientApiMapper importPatientApiMapper;
     private PatientController controller;
     private PatientACL patientACL;
 

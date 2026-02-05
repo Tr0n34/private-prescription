@@ -11,6 +11,10 @@ public class OrdonnancePdfViewMapper {
 
     public static final String SPACE_BETWEEN_NOM_PRENOM = " ";
 
+    private OrdonnancePdfViewMapper() {
+        throw new UnsupportedOperationException("Utility class");
+    }
+
     public static OrdonnancePdfView from(OrdonnanceSnapshot snapshot) {
 
         List<LigneOrdonnanceView> lignes =

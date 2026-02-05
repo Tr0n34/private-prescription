@@ -1,4 +1,7 @@
 package fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.medicaments;
 
-public record SubstanceActive() {
+public record SubstanceActive(
+        String nom
+) {
+
 }

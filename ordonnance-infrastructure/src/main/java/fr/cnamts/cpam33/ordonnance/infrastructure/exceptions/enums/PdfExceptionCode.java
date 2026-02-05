@@ -11,6 +11,7 @@ public enum PdfExceptionCode implements InfraStructureExceptionCode {
     TECH_PDF_KEY_INVALID,
     TECH_PDF_BASE64_EMPTY,
     TECH_PDF_PATH_INVALID,
-    TECH_PDF_EMPTY
+    TECH_PDF_EMPTY,
+    TECH_PDF_ROOT_DIR_EMPTY
 
 }

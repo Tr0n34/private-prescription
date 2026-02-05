@@ -16,11 +16,9 @@ public class DatabaseActeMetierResolver {
     public static final String UNRESOLVED_ERROR_MESSAGE = "Error code not found : %s";
 
     private final ActeMetierJpaRepository acteMetierJpaRepository;
-    private final FonctionJpaRepository fonctionJpaRepository;
 
-    public DatabaseActeMetierResolver(ActeMetierJpaRepository acteMetierJpaRepository, FonctionJpaRepository fonctionJpaRepository) {
+    public DatabaseActeMetierResolver(ActeMetierJpaRepository acteMetierJpaRepository) {
         this.acteMetierJpaRepository = acteMetierJpaRepository;
-        this.fonctionJpaRepository = fonctionJpaRepository;
     }
 
     public ActeMetier resolve(ActeMetierCode acteMetierCode) {

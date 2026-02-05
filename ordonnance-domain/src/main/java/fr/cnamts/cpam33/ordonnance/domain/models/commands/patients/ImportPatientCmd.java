@@ -7,27 +7,28 @@ import fr.cnamts.cpam33.ordonnance.domain.abstracts.validation.Validator;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.ExternalPatientId;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.PatientId;
 import fr.cnamts.cpam33.ordonnance.domain.models.commands.CommandValidation;
+import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identites.Nom;
+import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identites.Prenom;
 
 public record ImportPatientCmd(
-        PatientId patientId,
         ExternalPatientId externalPatientId
 ) implements Command, ValidatableCommand {
 
     public ImportPatientCmd {
         CommandValidation.failFast(
                 getClass().getSimpleName(),
-                validateSelf(patientId)
+                validateSelf(externalPatientId)
         );
     }
 
     @Override
     public ValidationResult validate() {
-        return validateSelf(patientId);
+        return validateSelf(externalPatientId);
     }
 
-    public ValidationResult validateSelf(PatientId patientId) {
+    public ValidationResult validateSelf(ExternalPatientId externalPatientId) {
         return new Validator()
-                .notNull(patientId, "patientId")
+                .notBlank(externalPatientId.numero(), "externalPatientId.numero")
                 .validate();
     }
 

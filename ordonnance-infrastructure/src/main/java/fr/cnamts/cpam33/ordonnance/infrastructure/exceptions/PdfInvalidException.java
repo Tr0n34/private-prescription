@@ -11,7 +11,7 @@ public class PdfInvalidException extends InfrastructureException {
         super(code);
     }
 
-    public PdfInvalidException(InfraStructureExceptionCode code, Map<String, ?> placeHolders) {
+    public PdfInvalidException(InfraStructureExceptionCode code, Map<String, Object> placeHolders) {
         super(code, placeHolders);
     }
 
