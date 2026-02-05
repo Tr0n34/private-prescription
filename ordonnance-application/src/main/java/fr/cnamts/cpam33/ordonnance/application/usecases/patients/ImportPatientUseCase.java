@@ -21,16 +21,13 @@ public class ImportPatientUseCase implements ImportPatientPort, CommandUseCase<I
     private final RegisterPatientPort registerPatientPort;
     private final FetchPatientGateway fetchPatientGateway;
     private final PatientRepository patientRepository;
-    private final PatientNumGenerator patientNumGenerator;
 
     public ImportPatientUseCase(RegisterPatientPort registerPatientPort,
                                 FetchPatientGateway fetchPatientGateway,
-                                PatientRepository patientRepository,
-                                PatientNumGenerator patientNumGenerator) {
+                                PatientRepository patientRepository) {
         this.registerPatientPort = registerPatientPort;
         this.fetchPatientGateway = fetchPatientGateway;
         this.patientRepository = patientRepository;
-        this.patientNumGenerator = patientNumGenerator;
     }
 
     @Override
