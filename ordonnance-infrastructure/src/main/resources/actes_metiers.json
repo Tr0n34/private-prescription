@@ -4,5 +4,5 @@
   { "code": "ACT_ORD_SIGNER", "objetMetierName" : "Ordonnance", "fonction": { "code" : "SIGNER-003", "description" : "Signer" } },
   { "code": "ACT_ORD_SUPPRIMER", "objetMetierName" : "Ordonnance", "fonction": { "code" : "SUPPRIMER-004", "description" : "Supprimer" } },
   { "code": "ACT_ORD_CREER", "objetMetierName" : "Ordonnance", "fonction": { "code" : "CREER-003", "description" : "Créer" } },
-  { "code": "ACT_ORD_LISTER_PAR_PATIENT", "objetMetierName" : "Ordonnance", "fonction": { "code" : "LISTER-002", "description" : "Lister par patient" } }
+  { "code": "ACT_ORD_LISTER_PAR_PATIENT", "objetMetierName" : "Ordonnance", "fonction": { "code" : "LISTER-002", "description" : "Lister" } }
 ]
