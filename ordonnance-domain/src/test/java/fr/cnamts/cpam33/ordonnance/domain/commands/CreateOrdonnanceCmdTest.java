@@ -1,5 +1,6 @@
 package fr.cnamts.cpam33.ordonnance.domain.commands;
 
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.validation.ValidationResult;
 import fr.cnamts.cpam33.ordonnance.domain.fixtures.MedecinFixtures;
 import fr.cnamts.cpam33.ordonnance.domain.fixtures.PatientFixtures;
 import fr.cnamts.cpam33.ordonnance.domain.fixtures.PrescriptionFixtures;
@@ -28,6 +29,16 @@ class CreateOrdonnanceCmdTest {
         assertEquals(medecinId, cmd.medecinId());
         assertEquals(1, cmd.lignePrescriptions().size());
         assertEquals(lignePrescription, cmd.lignePrescriptions().getFirst());
+    }
+
+    @Test
+    void debug_validation_errors() {
+        var patientId = PatientFixtures.patientValide().patientId();
+        var medecinId = MedecinFixtures.medecinValide().medecinId();
+        var lp = PrescriptionFixtures.onePrescription();
+
+        var vr = CreateOrdonnanceCmd.validateSelf(patientId, medecinId, List.of(lp));
+        System.out.println(vr.errors());
     }
 
     @Test

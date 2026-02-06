@@ -12,7 +12,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.5.8</version>
+        <version>3.5.10</version>
         <relativePath/>
     </parent>
 
@@ -59,6 +59,12 @@
                 <groupId>org.mapstruct</groupId>
                 <artifactId>mapstruct</artifactId>
                 <version>${mapstruct.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct-processor</artifactId>
+                <version>${mapstruct.version}</version>
+                <scope>provided</scope>
             </dependency>
 
             <!-- API Vault pour OpenBao -->
@@ -194,14 +200,42 @@
                     <artifactId>maven-compiler-plugin</artifactId>
                     <configuration>
                         <release>${maven.compiler.release}</release>
-                        <annotationProcessorPaths>
-                            <path>
-                                <groupId>org.mapstruct</groupId>
-                                <artifactId>mapstruct-processor</artifactId>
-                                <version>${mapstruct.version}</version>
-                            </path>
-                        </annotationProcessorPaths>
                     </configuration>
+                    <executions>
+
+                        <!-- 1) Compiler le provider SPI AVANT MapStruct -->
+                        <execution>
+                            <id>precompile-ddd-accessor-strategy</id>
+                            <phase>generate-sources</phase>
+                            <goals>
+                                <goal>compile</goal>
+                            </goals>
+                            <configuration>
+                                <release>${maven.compiler.release}</release>
+                                <proc>none</proc>
+                                <includes>
+                                    <include>**/DDDAccessorNamingStrategy.java</include>
+                                </includes>
+                            </configuration>
+                        </execution>
+
+                        <!-- 2) Compile normal (c’est CELUI-CI qui remplace le compile du lifecycle) -->
+                        <execution>
+                            <id>default-compile</id>
+                            <phase>compile</phase>
+                            <goals>
+                                <goal>compile</goal>
+                            </goals>
+                            <configuration>
+                                <release>${maven.compiler.release}</release>
+                                <proc>full</proc>
+                                <excludes>
+                                    <exclude>**/DDDAccessorNamingStrategy.java</exclude>
+                                </excludes>
+                            </configuration>
+                        </execution>
+
+                    </executions>
                 </plugin>
                 <plugin>
                     <groupId>org.jacoco</groupId>

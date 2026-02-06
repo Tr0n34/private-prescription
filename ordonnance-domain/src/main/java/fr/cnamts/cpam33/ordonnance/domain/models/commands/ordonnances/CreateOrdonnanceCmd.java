@@ -29,7 +29,7 @@ public record CreateOrdonnanceCmd(
         return validateSelf(patientId, medecinId, lignePrescriptions);
     }
 
-    public ValidationResult validateSelf(
+    public static ValidationResult validateSelf(
             PatientId patientId,
             MedecinId medecinId,
             List<LignePrescription> lignePrescriptions) {

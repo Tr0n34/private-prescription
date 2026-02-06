@@ -7,7 +7,7 @@ import fr.cnamts.cpam33.ordonnance.infrastructure.in.dto.traces.TraceDto;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.dto.traces.WorkerStatusDto;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.mappers.TraceApiMapper;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.traces.DatabaseActeMetierResolver;
-import fr.cnamts.cpam33.ordonnance.infrastructure.technical.TraceWriterSupervisor;
+import fr.cnamts.cpam33.ordonnance.infrastructure.configurations.traces.TraceWriterSupervisor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
