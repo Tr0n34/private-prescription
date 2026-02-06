@@ -1,5 +1,6 @@
 package fr.cnamts.cpam33.ordonnance.application.services;
 
+import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.utilisateurs.UtilisateurId;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.ActeMetier;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.Trace;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.TraceContext;
@@ -22,12 +23,12 @@ public class TraceService {
         this.tracePublisher = tracePublisher;
     }
 
-    public void trace(ActeMetierCode acteMetierCode, MedecinId medecinId, TraceContext traceContext) {
-        tracePublisher.publish(Trace.of(acteMetierCode, medecinId, traceContext, LocalDateTime.now(clock), clock));
+    public void trace(ActeMetierCode acteMetierCode, UtilisateurId utilisateurId, TraceContext traceContext) {
+        tracePublisher.publish(Trace.of(acteMetierCode, utilisateurId, traceContext, LocalDateTime.now(clock), clock));
     }
 
-    public void trace(ActeMetier acteMetier, MedecinId medecinId, TraceContext traceContext) {
-        tracePublisher.publish(Trace.of(acteMetier.acteMetierId(), medecinId, traceContext, LocalDateTime.now(clock), clock));
+    public void trace(ActeMetier acteMetier, UtilisateurId utilisateurId, TraceContext traceContext) {
+        tracePublisher.publish(Trace.of(acteMetier.acteMetierId(), utilisateurId, traceContext, LocalDateTime.now(clock), clock));
     }
 
 }

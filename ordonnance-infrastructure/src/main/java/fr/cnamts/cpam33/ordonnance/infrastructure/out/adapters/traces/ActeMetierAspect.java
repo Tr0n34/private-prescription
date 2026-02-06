@@ -10,6 +10,8 @@ import fr.cnamts.cpam33.ordonnance.domain.ports.out.traces.TracePublisher;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.time.Clock;
@@ -21,6 +23,8 @@ import java.util.List;
 @Component
 public class ActeMetierAspect {
 
+    private static final Logger logger = LoggerFactory.getLogger(ActeMetierAspect.class);
+
     private final TracePublisher publisher;
     private final Clock  clock;
 
@@ -30,13 +34,14 @@ public class ActeMetierAspect {
     }
 
     @Around("@within(acteMetier)")
-    public Object around(ProceedingJoinPoint pjp, ActeMetierEvent event) throws Throwable {
+    public Object around(ProceedingJoinPoint pjp, ActeMetierEvent acteMetier) throws Throwable {
+        logger.trace("Entering around(ProceedingJoinPoint,ActeMetierEvent)");
         Object result = pjp.proceed();
         Object[] args = pjp.getArgs();
         if ( args.length > 0 && args[0] instanceof TraceCommand traceCommand ) {
             Trace trace = Trace.of(
-                    event.value(),
-                    traceCommand.medecinId(),
+                    acteMetier.value(),
+                    traceCommand.utilisateurId(),
                     buildTraceContext(args, result),
                     LocalDateTime.now(clock),
                     clock
@@ -57,6 +62,7 @@ public class ActeMetierAspect {
         if ( result != null ) {
             attributes.add(new TraceAttribute("result", new TraceValue(result)));
         }
+        logger.trace("TraceContext build complete");
         return new TraceContext(attributes);
     }
 

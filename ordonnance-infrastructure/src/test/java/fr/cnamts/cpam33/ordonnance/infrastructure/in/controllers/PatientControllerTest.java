@@ -2,6 +2,8 @@ package fr.cnamts.cpam33.ordonnance.infrastructure.in.controllers;
 
 import fr.cnamts.cpam33.ordonnance.application.usecases.patients.RegisterPatientUseCase;
 import fr.cnamts.cpam33.ordonnance.domain.fixtures.PatientFixtures;
+import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.utilisateurs.UtilisateurId;
+import fr.cnamts.cpam33.ordonnance.domain.models.commands.patients.RegisterPatientCmd;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.acls.patients.PatientACL;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.controllers.routes.LocationBuilder;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.controllers.PatientController;
@@ -25,16 +27,16 @@ public class PatientControllerTest {
     public static final String URL = "http://localhost/patients/";
 
     private LocationBuilder locationBuilder;
-    private RegisterPatientUseCase patientService;
+    private RegisterPatientUseCase registerPatientUseCase;
     private PatientController controller;
     private PatientACL patientACL;
 
     @BeforeEach
     void setup() {
-        patientService = mock(RegisterPatientUseCase.class);
+        registerPatientUseCase = mock(RegisterPatientUseCase.class);
         locationBuilder = mock(LocationBuilder.class);
         patientACL = mock(PatientACL.class);
-        controller = new PatientController(locationBuilder, patientService, patientACL);
+        controller = new PatientController(locationBuilder, registerPatientUseCase, patientACL);
     }
 
     @Test
@@ -47,11 +49,18 @@ public class PatientControllerTest {
                 LocalDate.of(1980, Month.SEPTEMBER, 5));
         URI fakeLocation = URI.create(URL + patientDomain.patientId().numero());
         when(locationBuilder.buildCreatedLocation(patientDomain.patientId().numero())).thenReturn(fakeLocation);
-        when(patientService.registerPatient(patientDomain)).thenReturn(patientDomain);
-        when(patientACL.toDomain(dto)).thenReturn(patientDomain);
-        ResponseEntity<Void> result = controller.createPatient(dto);
+        RegisterPatientCmd registerPatientCmd = new RegisterPatientCmd(
+                patientDomain.externalPatientId(),
+                patientDomain.nom(),
+                patientDomain.prenom(),
+                patientDomain.dateNaissance(),
+                new UtilisateurId("123456", "")
+        );
+        when(patientACL.toDomain(dto, "123456")).thenReturn(registerPatientCmd);
+        when(registerPatientUseCase.registerPatient(registerPatientCmd)).thenReturn(patientDomain);
+        ResponseEntity<Void> result = controller.createPatient(dto, "123456");
         assertEquals(HttpStatus.CREATED.value(), result.getStatusCode().value());
-        verify(patientService, times(1)).registerPatient(patientDomain);
+        verify(registerPatientUseCase, times(1)).registerPatient(registerPatientCmd);
     }
 
 }

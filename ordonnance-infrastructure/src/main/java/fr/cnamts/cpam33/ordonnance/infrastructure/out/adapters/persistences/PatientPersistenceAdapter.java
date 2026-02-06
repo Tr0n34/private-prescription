@@ -44,9 +44,15 @@ public class PatientPersistenceAdapter implements PatientRepository, Adapter {
     }
 
     @Override
-    public Optional<Patient> findByExternalId(ExternalPatientId externalPatientId) {
+    public Optional<Patient> findByExternalIdOrThrow(ExternalPatientId externalPatientId) {
         return Optional.of(patientEntityMapper.toDomain(patientJpaRepository.findByExternalId(externalPatientId.numero())
                 .orElseThrow(() -> new DomainException(PatientExceptionCode.BS_PATIENT_NOT_FOUND))));
+    }
+
+    @Override
+    public Optional<Patient> findByExternalId(ExternalPatientId externalPatientId) {
+        return patientJpaRepository.findByExternalId(externalPatientId.numero())
+                .map(patientEntityMapper::toDomain);
     }
 
 }

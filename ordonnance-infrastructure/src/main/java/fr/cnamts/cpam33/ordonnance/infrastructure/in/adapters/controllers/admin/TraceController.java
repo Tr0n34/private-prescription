@@ -38,11 +38,11 @@ public class TraceController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createTrace(@RequestBody TraceDto trace) {
+    public ResponseEntity<?> createTrace(@RequestBody TraceDto trace, @RequestHeader("userId") String userId) {
         logger.info("trace : {}", trace.toString());
         List<TraceAttribute> traceAttributes = new ArrayList<>();
         traceService.trace(resolver.resolveByCode(trace.acteMetierCode()),
-                traceApiMapper.mapMedecin(trace.medecinId()), new TraceContext(traceAttributes));
+                traceApiMapper.mapUtilisateur(userId), new TraceContext(traceAttributes));
         return ResponseEntity.ok().build();
     }
 

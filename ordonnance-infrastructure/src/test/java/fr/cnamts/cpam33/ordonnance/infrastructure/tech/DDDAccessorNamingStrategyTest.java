@@ -178,7 +178,7 @@ class DDDAccessorNamingStrategyTest {
     }
 
     // ---------------------------
-    // getPropertyName() faux positifs
+    // Faux positifs
     // ---------------------------
 
     @Test

@@ -1,3 +1,4 @@
+import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.utilisateurs.UtilisateurId;
 import fr.cnamts.cpam33.ordonnance.domain.models.events.ActeMetierEvent;
 import fr.cnamts.cpam33.ordonnance.domain.models.events.TraceCommand;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.Trace;
@@ -37,7 +38,7 @@ class ActeMetierAspectTest {
     void should_publish_trace_with_context() throws Throwable {
         // GIVEN
         TraceCommand command = mock(TraceCommand.class);
-        when(command.medecinId()).thenReturn(new MedecinId("123456789", null));
+        when(command.utilisateurId()).thenReturn(new UtilisateurId("123456789", null));
 
         ProceedingJoinPoint pjp = mock(ProceedingJoinPoint.class);
         when(pjp.proceed()).thenReturn("RESULT_OK");
@@ -57,7 +58,7 @@ class ActeMetierAspectTest {
 
         Trace captured = traceCaptor.getValue();
         assertEquals(ActeMetierCode.ACT_ORD_CREER.name(), captured.acteMetierId().code());
-        assertEquals("123456789", captured.medecinId().id());
+        assertEquals("123456789", captured.utilisateurId().id());
 
         // Vérifier le TraceContext
         TraceContext context = captured.context();

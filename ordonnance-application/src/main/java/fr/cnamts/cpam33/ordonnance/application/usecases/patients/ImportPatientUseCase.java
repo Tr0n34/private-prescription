@@ -5,6 +5,7 @@ import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.Extern
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.Patient;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.PatientId;
 import fr.cnamts.cpam33.ordonnance.domain.models.commands.patients.ImportPatientCmd;
+import fr.cnamts.cpam33.ordonnance.domain.models.commands.patients.RegisterPatientCmd;
 import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.DomainException;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identites.Nom;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identites.Prenom;
@@ -37,9 +38,7 @@ public class ImportPatientUseCase implements ImportPatientPort, CommandUseCase<I
 
     @Override
     public Patient execute(ImportPatientCmd command) throws DomainException {
-        return patientRepository.findByExternalId(command.externalPatientId())
-                .orElseGet(() -> registerPatientPort.registerPatient(fetchPatientGateway.fetchById(command.externalPatientId())
-                ));
+        return null;
     }
 
 }
