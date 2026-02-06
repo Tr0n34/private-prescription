@@ -1,262 +1,54 @@
 [
-  {
-    "code": "BS_ORDONNANCE_IMMUTABLE_WHEN_SIGNED",
-    "boundedContext": "ORDONNANCES",
-    "httpStatus": 409,
-    "message": "Une ordonnance signée ne peut plus être modifiée",
-    "description": "Violation de l'invariant d'immuabilité"
-  },
-  {
-    "code": "BS_ORDONNANCE_ID_MISSING",
-    "boundedContext": "ORDONNANCE",
-    "httpStatus": 400,
-    "message": "Identifiants d'ordonnance manquants"
-  },
-  {
-    "code": "BS_MEDECIN_NOT_FOUND",
-    "boundedContext": "MEDECIN",
-    "httpStatus": 404,
-    "message": "Médecin introuvable"
-  },
-  {
-    "code": "BS_MEDECIN_INVALID",
-    "boundedContext": "MEDECIN",
-    "httpStatus": 400,
-    "message": "Médecin invalide"
-  },
-  {
-    "code": "BS_NOM_MISSING",
-    "boundedContext": "PATIENT",
-    "httpStatus": 400,
-    "message": "Nom manquant"
-  },
-  {
-    "code": "BS_NOM_LENGTH",
-    "boundedContext": "PATIENT",
-    "httpStatus": 400,
-    "message": "Nom trop long ou trop court"
-  },
-  {
-    "code": "BS_INS_OID_MISSING",
-    "boundedContext": "PATIENT",
-    "httpStatus": 400,
-    "message": "oid du patient inexistant"
-  },
-  {
-    "code": "BS_INS_MATRICULE_MISSING",
-    "boundedContext": "PATIENT",
-    "httpStatus": 400,
-    "message": "matricule du patient absent"
-  },
-  {
-    "code": "BS_ORDONNANCE_ID_NUMERIC",
-    "boundedContext": "ORDONNANCE",
-    "httpStatus": 400,
-    "message": "L'identifiant d'ordonnance doit être numérique"
-  },
-  {
-    "code": "BS_ORDONNANCE_PATIENT_MISSING",
-    "boundedContext": "ORDONNANCE",
-    "httpStatus": 400,
-    "message": "Patient manquant"
-  },
-  {
-    "code": "BS_ORDONNANCE_MEDECIN_MISSING",
-    "boundedContext": "ORDONNANCE",
-    "httpStatus": 400,
-    "message": "Médecin manquant"
-  },
-  {
-    "code": "BS_ORDONNANCE_PRESCRIPTION_MISSING",
-    "boundedContext": "ORDONNANCE",
-    "httpStatus": 400,
-    "message": "Prescription manquante"
-  },
-  {
-    "code": "BS_ORDONNANCE_PRESCRIPTION_NOT_FOUND",
-    "boundedContext": "ORDONNANCE",
-    "httpStatus": 404,
-    "message": "Prescription introuvable"
-  },
-  {
-    "code": "BS_ORDONNANCE_PRESCRIPTION_DUPLICATE",
-    "boundedContext": "ORDONNANCE",
-    "httpStatus": 409,
-    "message": "Prescription en double"
-  },
-  {
-    "code": "BS_ORDONNANCE_ALREADY_SIGNED",
-    "boundedContext": "ORDONNANCE",
-    "httpStatus": 409,
-    "message": "Ordonnance déjà signée"
-  },
-  {
-    "code": "BS_ORDONNANCE_SNAPSHOT_MUST_BE_SIGNED",
-    "boundedContext": "ORDONNANCE",
-    "httpStatus": 400,
-    "message": "Le snapshot doit être signé"
-  },
-  {
-    "code": "BS_ORDONNANCE_SNAPSHOT_GENERATION_ERROR",
-    "boundedContext": "ORDONNANCE",
-    "httpStatus": 500,
-    "message": "Erreur lors de la génération du snapshot d'ordonnance"
-  },
-  {
-    "code": "BS_PATIENT_NOT_FOUND",
-    "boundedContext": "PATIENT",
-    "httpStatus": 404,
-    "message": "Patient introuvable"
-  },
-  {
-    "code": "BS_PATIENT_INVALID",
-    "boundedContext": "PATIENT",
-    "httpStatus": 400,
-    "message": "Patient invalide"
-  },
-  {
-    "code": "BS_PATIENT_DATE_NAISSANCE_INVALID",
-    "boundedContext": "PATIENT",
-    "httpStatus": 400,
-    "message": "Date de naissance invalide"
-  },
-  {
-    "code": "BS_POSOLOGIE_PHRASE_MISSING",
-    "boundedContext": "POSOLOGIE",
-    "httpStatus": 400,
-    "message": "Phrase de posologie manquante"
-  },
-  {
-    "code": "BS_PRENOM_MISSING",
-    "boundedContext": "PATIENT",
-    "httpStatus": 400,
-    "message": "Prénom manquant"
-  },
-  {
-    "code": "BS_PRENOM_LENGTH",
-    "boundedContext": "PATIENT",
-    "httpStatus": 400,
-    "message": "Prénom trop long ou trop court"
-  },
-  {
-    "code": "BS_MEDICAMENT_MISSING",
-    "boundedContext": "PRESCRIPTION",
-    "httpStatus": 400,
-    "message": "Médicament manquant"
-  },
-  {
-    "code": "BS_POSOLOGIE_MISSING",
-    "boundedContext": "PRESCRIPTION",
-    "httpStatus": 400,
-    "message": "Posologie manquante"
-  },
-  {
-    "code": "BS_PRESCRIPTION_ID_MISSING",
-    "boundedContext": "PRESCRIPTION",
-    "httpStatus": 400,
-    "message": "Identifiant de prescription manquant"
-  },
-  {
-    "code": "BS_RPPS_MISSING",
-    "boundedContext": "MEDECIN",
-    "httpStatus": 400,
-    "message": "RPPS manquant"
-  },
-  {
-    "code": "BS_RPPS_LENGTH",
-    "boundedContext": "MEDECIN",
-    "httpStatus": 400,
-    "message": "RPPS invalide"
-  },
-  {
-    "code": "NOT_FOUND",
-    "boundedContext": "USECASE",
-    "httpStatus": 404,
-    "message": "Ressource non trouvée"
-  },
-  {
-    "code": "TECH_CES_PATIENT_ID_CES_RATTACHEMENT_INVALID",
-    "boundedContext": "CESPATIENT",
-    "httpStatus": 400,
-    "message": "Le CES de rattachement n'est pas en adéquation avec l'id externe du patient"
-  },
-  {
-    "code": "TECH_CES_PATIENT_ID_NOT_LENGTH",
-    "boundedContext": "CESPATIENT",
-    "httpStatus": 400,
-    "message": "La longueur de l'id externe n'est pas correct"
-  },
-  {
-    "code": "TECH_PDF_DIRECTORY_NOT_FOUND",
-    "boundedContext": "PDF",
-    "httpStatus": 400,
-    "message": "Le repertoire {pdf} n'a pas été trouvé"
-  },
-  {
-    "code": "TECH_PDF_READ_ERROR",
-    "boundedContext": "PDF",
-    "httpStatus": 400,
-    "message": "Erreur de lecture du PDF {pdf}"
-  },
-  {
-  "code": "TECH_PDF_EMPTY",
-  "boundedContext": "PDF",
-  "httpStatus": 400,
-  "message": "PDF vide"
-},
-  {
-    "code": "TECH_PDF_WRITE_ERROR",
-    "boundedContext": "PDF",
-    "httpStatus": 400,
-    "message": "Erreur d'écriture du PDF {pdf}"
-  },
-  {
-    "code": "TECH_PDF_READ_ERROR",
-    "boundedContext": "PDF",
-    "httpStatus": 400,
-    "message": "Erreur de lecture du PDF {pdf}"
-  },
-  {
-    "code": "TECH_PDF_KEY_INVALID",
-    "boundedContext": "PDF",
-    "httpStatus": 400,
-    "message": "Clef invalide {pdf_key} du PDF {pdf}"
-  },
-  {
-    "code": "TECH_PDF_BASE64_EMPTY",
-    "boundedContext": "PDF",
-    "httpStatus": 400,
-    "message": "PDF en base64 vide"
-  },
-  {
-    "code": "TECH_PDF_PATH_INVALID",
-    "boundedContext": "PDF",
-    "httpStatus": 400,
-    "message": "Chemin vers le PDF invalide {pdf}"
-  },
-  {
-    "code": "TECH_PDF_ROOT_DIR_EMPTY",
-    "boundedContext": "PDF",
-    "httpStatus": 400,
-    "message": "Chemin racine vide ou introuvable {pdf}"
-  },
-  {
-    "code": "CMD_PARAMETRE_MANQUANT",
-    "boundedContext": "COMMAND",
-    "httpStatus": 400,
-    "message": "Paramètres manquants pour {command} : {missingParams}",
-    "description": "Des valeurs de champs de la commande sont manquants"
-  },
-  {
-    "code": "TECH_VAULT_KV_NOT_READY",
-    "boundedContext": "VAULT",
-    "httpStatus": 400,
-    "message": "KV engine non initialisé"
-  },
-  {
-    "code": "TECH_VAULT_KV_READ_PATH_EMPTY",
-    "boundedContext": "VAULT",
-    "httpStatus": 400,
-    "message": "KV read path vide"
-  }
+  { "code": "BS_ORDONNANCE_IMMUTABLE_WHEN_SIGNED", "boundedContext": "ORDONNANCES", "httpStatus": 409, "message": "Une ordonnance signée ne peut plus être modifiée", "description": "Violation de l'invariant d'immuabilité" },
+  { "code": "BS_ORDONNANCE_ID_MISSING", "boundedContext": "ORDONNANCE", "httpStatus": 400, "message": "Identifiants d'ordonnance manquants" },
+  { "code": "BS_ORDONNANCE_ID_NUMERIC", "boundedContext": "ORDONNANCE", "httpStatus": 400, "message": "L'identifiant d'ordonnance doit être numérique" },
+  { "code": "BS_ORDONNANCE_PATIENT_MISSING", "boundedContext": "ORDONNANCE", "httpStatus": 400, "message": "Patient manquant" },
+  { "code": "BS_ORDONNANCE_MEDECIN_MISSING", "boundedContext": "ORDONNANCE", "httpStatus": 400, "message": "Médecin manquant" },
+  { "code": "BS_ORDONNANCE_PRESCRIPTION_MISSING", "boundedContext": "ORDONNANCE", "httpStatus": 400, "message": "Prescription manquante" },
+  { "code": "BS_ORDONNANCE_PRESCRIPTION_NOT_FOUND", "boundedContext": "ORDONNANCE", "httpStatus": 404, "message": "Prescription introuvable" },
+  { "code": "BS_ORDONNANCE_PRESCRIPTION_DUPLICATE", "boundedContext": "ORDONNANCE", "httpStatus": 409, "message": "Prescription en double" },
+  { "code": "BS_ORDONNANCE_ALREADY_SIGNED", "boundedContext": "ORDONNANCE", "httpStatus": 409, "message": "Ordonnance déjà signée" },
+  { "code": "BS_ORDONNANCE_SNAPSHOT_MUST_BE_SIGNED", "boundedContext": "ORDONNANCE", "httpStatus": 400, "message": "Le snapshot doit être signé" },
+  { "code": "BS_ORDONNANCE_SNAPSHOT_GENERATION_ERROR", "boundedContext": "ORDONNANCE", "httpStatus": 500, "message": "Erreur lors de la génération du snapshot d'ordonnance" },
+
+  { "code": "BS_NOM_MISSING", "boundedContext": "PATIENT", "httpStatus": 400, "message": "Nom manquant" },
+  { "code": "BS_NOM_LENGTH", "boundedContext": "PATIENT", "httpStatus": 400, "message": "Nom trop long ou trop court" },
+  { "code": "BS_INS_OID_MISSING", "boundedContext": "PATIENT", "httpStatus": 400, "message": "oid du patient inexistant" },
+  { "code": "BS_INS_MATRICULE_MISSING", "boundedContext": "PATIENT", "httpStatus": 400, "message": "matricule du patient absent" },
+  { "code": "BS_PATIENT_NOT_FOUND", "boundedContext": "PATIENT", "httpStatus": 404, "message": "Patient introuvable" },
+  { "code": "BS_PATIENT_INVALID", "boundedContext": "PATIENT", "httpStatus": 400, "message": "Patient invalide" },
+  { "code": "BS_PATIENT_DATE_NAISSANCE_INVALID", "boundedContext": "PATIENT", "httpStatus": 400, "message": "Date de naissance invalide" },
+  { "code": "BS_PRENOM_MISSING", "boundedContext": "PATIENT", "httpStatus": 400, "message": "Prénom manquant" },
+  { "code": "BS_PRENOM_LENGTH", "boundedContext": "PATIENT", "httpStatus": 400, "message": "Prénom trop long ou trop court" },
+
+  { "code": "BS_MEDICAMENT_MISSING", "boundedContext": "PRESCRIPTION", "httpStatus": 400, "message": "Médicament manquant" },
+  { "code": "BS_POSOLOGIE_MISSING", "boundedContext": "PRESCRIPTION", "httpStatus": 400, "message": "Posologie manquante" },
+  { "code": "BS_PRESCRIPTION_ID_MISSING", "boundedContext": "PRESCRIPTION", "httpStatus": 400, "message": "Identifiant de prescription manquant" },
+
+  { "code": "BS_MEDECIN_NOT_FOUND", "boundedContext": "MEDECIN", "httpStatus": 404, "message": "Médecin introuvable" },
+  { "code": "BS_MEDECIN_INVALID", "boundedContext": "MEDECIN", "httpStatus": 400, "message": "Médecin invalide" },
+  { "code": "BS_RPPS_MISSING", "boundedContext": "MEDECIN", "httpStatus": 400, "message": "RPPS manquant" },
+  { "code": "BS_RPPS_LENGTH", "boundedContext": "MEDECIN", "httpStatus": 400, "message": "RPPS invalide" },
+
+  { "code": "BS_POSOLOGIE_PHRASE_MISSING", "boundedContext": "POSOLOGIE", "httpStatus": 400, "message": "Phrase de posologie manquante" },
+
+  { "code": "NOT_FOUND", "boundedContext": "USECASE", "httpStatus": 404, "message": "Ressource non trouvée" },
+
+  { "code": "TECH_CES_PATIENT_ID_CES_RATTACHEMENT_INVALID", "boundedContext": "CESPATIENT", "httpStatus": 400, "message": "Le CES de rattachement n'est pas en adéquation avec l'id externe du patient" },
+  { "code": "TECH_CES_PATIENT_ID_NOT_LENGTH", "boundedContext": "CESPATIENT", "httpStatus": 400, "message": "La longueur de l'id externe n'est pas correct" },
+  { "code": "TECH_PDF_DIRECTORY_NOT_FOUND", "boundedContext": "PDF", "httpStatus": 400, "message": "Le repertoire {pdf} n'a pas été trouvé" },
+  { "code": "TECH_PDF_READ_ERROR", "boundedContext": "PDF", "httpStatus": 400, "message": "Erreur de lecture du PDF {pdf}" },
+  { "code": "TECH_PDF_EMPTY", "boundedContext": "PDF", "httpStatus": 400, "message": "PDF vide" },
+  { "code": "TECH_PDF_WRITE_ERROR", "boundedContext": "PDF", "httpStatus": 400, "message": "Erreur d'écriture du PDF {pdf}" },
+  { "code": "TECH_PDF_READ_ERROR", "boundedContext": "PDF", "httpStatus": 400, "message": "Erreur de lecture du PDF {pdf}" },
+  { "code": "TECH_PDF_KEY_INVALID", "boundedContext": "PDF", "httpStatus": 400, "message": "Clef invalide {pdf_key} du PDF {pdf}" },
+  { "code": "TECH_PDF_BASE64_EMPTY", "boundedContext": "PDF", "httpStatus": 400, "message": "PDF en base64 vide" },
+  { "code": "TECH_PDF_PATH_INVALID", "boundedContext": "PDF", "httpStatus": 400, "message": "Chemin vers le PDF invalide {pdf}" },
+  { "code": "TECH_PDF_ROOT_DIR_EMPTY", "boundedContext": "PDF", "httpStatus": 400, "message": "Chemin racine vide ou introuvable {pdf}" },
+
+  { "code": "CMD_PARAMETRE_MANQUANT", "boundedContext": "COMMAND", "httpStatus": 400, "message": "Paramètres manquants pour {command} : {missingParams}", "description": "Des valeurs de champs de la commande sont manquants" },
+
+  { "code": "TECH_VAULT_KV_NOT_READY", "boundedContext": "VAULT", "httpStatus": 400, "message": "KV engine non initialisé" },
+  { "code": "TECH_VAULT_KV_READ_PATH_EMPTY", "boundedContext": "VAULT", "httpStatus": 400, "message": "KV read path vide" }
+
 ]

@@ -12,7 +12,7 @@ import java.time.Month;
 public class PatientFixtures {
 
     public static Patient patientValide() {
-        return new Patient(
+        return Patient.of(
                 new PatientId("1234567891234"),
                 new ExternalPatientId("123"),
                 new Nom("Dupont"),
@@ -21,7 +21,7 @@ public class PatientFixtures {
     }
 
     public static Patient patientValideWithIdAndCes(String numero, String externalId) {
-        return new Patient(
+        return Patient.of(
                 new PatientId(numero),
                 new ExternalPatientId(externalId),
                 new Nom("Dupont"),

@@ -58,4 +58,5 @@ public final class PDFBase64Codec {
         }
         return s;
     }
+
 }
