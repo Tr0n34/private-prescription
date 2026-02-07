@@ -35,23 +35,47 @@ public class ActeMetierAspect {
 
     @Around("@within(acteMetier)")
     public Object around(ProceedingJoinPoint pjp, ActeMetierEvent acteMetier) throws Throwable {
-        logger.trace("Entering around(ProceedingJoinPoint,ActeMetierEvent)");
-        Object result = pjp.proceed();
-        Object[] args = pjp.getArgs();
-        if ( args.length > 0 && args[0] instanceof TraceCommand traceCommand ) {
-            Trace trace = Trace.of(
-                    acteMetier.value(),
-                    traceCommand.utilisateurId(),
-                    buildTraceContext(args, result),
-                    LocalDateTime.now(clock),
-                    clock
-            );
-            publisher.publish(trace);
+        Object result = null;
+        Throwable error = null;
+        try {
+            result = pjp.proceed();
+        } catch (Throwable t) {
+            error = t;
+        }
+        publishTrace(pjp.getArgs(), result, error, acteMetier);
+        if ( error != null ) {
+            throw error;
         }
         return result;
     }
 
-    private TraceContext buildTraceContext(Object[] args, Object result) {
+    private void publishTrace(Object[] args, Object result, Throwable error, ActeMetierEvent event) {
+        boolean hasToBePublish = true;
+        Trace trace = null;
+        if ( args == null || args.length == 0) {
+            hasToBePublish = false;
+        } else if ( !(args[0] instanceof TraceCommand traceCommand )) {
+            hasToBePublish = false;
+        } else {
+            trace = Trace.of(
+                    event.value(),
+                    traceCommand.utilisateurId(),
+                    buildTraceContext(args, result, error),
+                    LocalDateTime.now(clock),
+                    clock
+            );
+        }
+        if ( hasToBePublish ) {
+            try {
+                publisher.publish(trace);
+            } catch (Exception ex) {
+                // volontairement ignoré : la traçabilité ne doit jamais casser le métier
+                logger.warn("Unable to publish trace", ex);
+            }
+        }
+    }
+
+    private TraceContext buildTraceContext(Object[] args, Object result, Throwable error) {
         List<TraceAttribute> attributes = new ArrayList<>();
         for ( int i = 0; i < args.length; i++ ) {
             Object arg = args[i];
@@ -61,6 +85,13 @@ public class ActeMetierAspect {
         }
         if ( result != null ) {
             attributes.add(new TraceAttribute("result", new TraceValue(result)));
+        }
+        if ( error != null ) {
+            attributes.add(new TraceAttribute("status", new TraceValue("ERROR")));
+            attributes.add(new TraceAttribute("errorType", new TraceValue(error.getClass().getName())));
+            attributes.add(new TraceAttribute("errorMessage", new TraceValue(String.valueOf(error.getMessage()))));
+        } else {
+            attributes.add(new TraceAttribute("status", new TraceValue("SUCCESS")));
         }
         logger.trace("TraceContext build complete");
         return new TraceContext(attributes);

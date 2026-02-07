@@ -39,8 +39,7 @@ public class RegisterPatientUseCase implements RegisterPatientPort, CommandUseCa
                 command.prenom(),
                 command.dateNaissance()
         );
-        return patientRepository.findByExternalId(command.externalPatientId())
-                .orElseGet(() -> patientRepository.save(patientToRegister));
+        return patientRepository.save(patientToRegister);
     }
 
 }
