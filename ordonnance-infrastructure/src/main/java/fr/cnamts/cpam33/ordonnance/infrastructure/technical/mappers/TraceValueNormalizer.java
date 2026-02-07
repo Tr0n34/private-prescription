@@ -225,7 +225,7 @@ public final class TraceValueNormalizer {
 
     private static Map<String, Object> summary(Object value, String reason) {
         Map<String, Object> m = new LinkedHashMap<>();
-        m.put("_type", value == null ? "null" : value.getClass().getName());
+        m.put("_type", value == null ? "null" : value.getClass().getSimpleName());
         m.put("_reason", reason);
         m.put("_value", truncate(String.valueOf(value)));
         return m;

@@ -129,7 +129,7 @@ class TraceValueNormalizerTest {
         assertInstanceOf(Map.class, out);
         Map<?, ?> summary = (Map<?, ?>) out;
         assertEquals("toString", summary.get("_reason"));
-        assertTrue(((String) summary.get("_type")).contains(SelfRefPojo.class.getName()));
+        assertTrue(((String) summary.get("_type")).contains(SelfRefPojo.class.getSimpleName()));
         assertNotNull(summary.get("_value"));
     }
 

@@ -39,7 +39,7 @@ public class TraceController {
 
     @PostMapping
     public ResponseEntity<?> createTrace(@RequestBody TraceDto trace, @RequestHeader("userId") String userId) {
-        logger.info("trace : {}", trace.toString());
+        logger.debug("trace : {}", trace.toString());
         List<TraceAttribute> traceAttributes = new ArrayList<>();
         traceService.trace(resolver.resolveByCode(trace.acteMetierCode()),
                 traceApiMapper.mapUtilisateur(userId), new TraceContext(traceAttributes));

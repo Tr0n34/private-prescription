@@ -57,7 +57,7 @@ public class ActeMetierAspectIT {
         assertEquals("123456789", captured.utilisateurId().id());
         assertNotNull(captured.context());
         assertTrue(captured.context().attributes().stream()
-                .anyMatch(attr -> attr.name().equals("arg0") && attr.value().value() instanceof TraceCommand)
+                .anyMatch(attr -> attr.name().contains("TraceCommand") && attr.value().value() instanceof TraceCommand)
         );
         assertTrue(captured.context().attributes().stream()
                 .anyMatch(attr -> attr.name().equals("result") && "RESULT_OK".equals(attr.value().value()))

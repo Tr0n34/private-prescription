@@ -77,10 +77,9 @@ public class ActeMetierAspect {
 
     private TraceContext buildTraceContext(Object[] args, Object result, Throwable error) {
         List<TraceAttribute> attributes = new ArrayList<>();
-        for ( int i = 0; i < args.length; i++ ) {
-            Object arg = args[i];
-            if ( arg != null ) {
-                attributes.add(new TraceAttribute("arg" + i, new TraceValue(arg)));
+        for ( Object arg : args ) {
+            if (arg != null) {
+                attributes.add(new TraceAttribute(arg.getClass().getSimpleName(), new TraceValue(arg)));
             }
         }
         if ( result != null ) {
