@@ -5,7 +5,6 @@ import fr.cnamts.cpam33.ordonnance.domain.models.events.ActeMetierEvent;
 import fr.cnamts.cpam33.ordonnance.domain.models.events.TraceCommand;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.Trace;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.enums.ActeMetierCode;
-import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.utilisateurs.MedecinId;
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.traces.TracePublisher;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,7 +13,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.springframework.context.annotation.Profile;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.xhtmlrenderer.util.Util;
 
 import java.time.Clock;
 import java.time.Instant;

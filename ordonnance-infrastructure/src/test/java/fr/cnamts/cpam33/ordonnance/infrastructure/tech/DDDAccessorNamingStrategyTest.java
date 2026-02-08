@@ -13,9 +13,6 @@ import javax.lang.model.type.TypeKind;
 import java.util.List;
 
 import static fr.cnamts.cpam33.ordonnance.infrastructure.fixtures.DDDAccessorNamingStrategyHelper.*;
-import static fr.cnamts.cpam33.ordonnance.infrastructure.fixtures.DDDAccessorNamingStrategyHelper.methodBasic;
-import static fr.cnamts.cpam33.ordonnance.infrastructure.fixtures.DDDAccessorNamingStrategyHelper.methodFieldBackedGetter;
-import static fr.cnamts.cpam33.ordonnance.infrastructure.fixtures.DDDAccessorNamingStrategyHelper.typeElementWithFields;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockitoExtension.class)

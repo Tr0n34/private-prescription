@@ -3,16 +3,11 @@ package fr.cnamts.cpam33.ordonnance.application.usecases.patients;
 import fr.cnamts.cpam33.ordonnance.application.abstracts.CommandUseCase;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.ExternalPatientId;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.Patient;
-import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.PatientId;
 import fr.cnamts.cpam33.ordonnance.domain.models.commands.patients.ImportPatientCmd;
-import fr.cnamts.cpam33.ordonnance.domain.models.commands.patients.RegisterPatientCmd;
 import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.DomainException;
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identites.Nom;
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identites.Prenom;
 import fr.cnamts.cpam33.ordonnance.domain.ports.in.patients.ImportPatientPort;
 import fr.cnamts.cpam33.ordonnance.domain.ports.in.patients.RegisterPatientPort;
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.patients.FetchPatientGateway;
-import fr.cnamts.cpam33.ordonnance.domain.ports.out.patients.PatientNumGenerator;
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.patients.PatientRepository;
 import org.springframework.stereotype.Service;
 

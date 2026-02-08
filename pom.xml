@@ -46,6 +46,7 @@
         <guava.version>33.5.0-jre</guava.version>
         <flyway.version>12.0.0</flyway.version>
         <spring-vault-core.version>4.0.0</spring-vault-core.version>
+        <test-container.version>1.21.4</test-container.version>
 
         <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
         <sonar.coverage.exclusions>ordonnance-architecture-validation/**</sonar.coverage.exclusions>
@@ -166,6 +167,18 @@
                 <groupId>org.mockito</groupId>
                 <artifactId>mockito-core</artifactId>
                 <version>5.21.0</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>${test-container.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>junit-jupiter</artifactId>
+                <version>${test-container.version}</version>
                 <scope>test</scope>
             </dependency>
 

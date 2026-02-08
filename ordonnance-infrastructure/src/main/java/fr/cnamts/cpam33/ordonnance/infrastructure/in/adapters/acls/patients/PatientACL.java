@@ -1,14 +1,12 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.acls.patients;
 
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.ExternalPatientId;
-import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.utilisateurs.MedecinId;
+import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.Patient;
+import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.PatientId;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.utilisateurs.UtilisateurId;
 import fr.cnamts.cpam33.ordonnance.domain.models.commands.patients.RegisterPatientCmd;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identites.Nom;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identites.Prenom;
-import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.Patient;
-import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.PatientId;
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identites.Rpps;
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.patients.PatientNumGenerator;
 import fr.cnamts.cpam33.ordonnance.infrastructure.exceptions.CesPatientInvalidException;
 import fr.cnamts.cpam33.ordonnance.infrastructure.exceptions.enums.CesPatientExceptionCode;

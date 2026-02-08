@@ -1,8 +1,8 @@
 package fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite;
 
 import com.google.common.base.MoreObjects;
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.domain.Document;
 import fr.cnamts.cpam33.ordonnance.domain.abstracts.domain.DomainObject;
-import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.utilisateurs.MedecinId;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.utilisateurs.UtilisateurId;
 import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.DomainException;
 import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.enums.TraceExceptionCode;
@@ -16,7 +16,7 @@ public record Trace(
         UtilisateurId utilisateurId,
         LocalDateTime timestamp,
         TraceContext context
-) implements DomainObject {
+) implements DomainObject, Document {
 
     public Trace {
         if ( acteMetierId == null ) {

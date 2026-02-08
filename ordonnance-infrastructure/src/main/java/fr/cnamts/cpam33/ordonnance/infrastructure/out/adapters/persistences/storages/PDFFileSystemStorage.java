@@ -16,7 +16,7 @@ public class PDFFileSystemStorage implements PDFStorage {
     public static final char SLASH = '/';
     public static final String PDF_EXTENSION = ".pdf";
 
-    private final Path rootDir;
+    private Path rootDir;
     private Map<String, Object> errorPlaceHolders;
 
     public PDFFileSystemStorage(Path rootDir, Map<String, Object> errorPlaceHolders) {
