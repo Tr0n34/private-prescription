@@ -1,10 +1,12 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.acls.patients;
 
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.ExternalPatientId;
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identites.Nom;
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identites.Prenom;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.Patient;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.PatientId;
+import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.utilisateurs.UtilisateurId;
+import fr.cnamts.cpam33.ordonnance.domain.models.commands.patients.RegisterPatientCmd;
+import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identites.Nom;
+import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identites.Prenom;
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.patients.PatientNumGenerator;
 import fr.cnamts.cpam33.ordonnance.infrastructure.exceptions.CesPatientInvalidException;
 import fr.cnamts.cpam33.ordonnance.infrastructure.exceptions.enums.CesPatientExceptionCode;
@@ -21,13 +23,14 @@ public class PatientACL {
         this.patientNumGenerator = patientNumGenerator;
     }
 
-    public Patient toDomain(PatientDto dto) {
-        return new Patient(
-                new PatientId(patientNumGenerator.generate()),
+    public RegisterPatientCmd toDomain(PatientDto dto, String userId) {
+        return new RegisterPatientCmd(
                 new ExternalPatientId(dto.externalId()),
                 new Nom(dto.nom()),
                 new Prenom(dto.prenom()),
-                dto.dateNaissance()
+                dto.dateNaissance(),
+                new UtilisateurId(userId, dto.externalId())
+
         );
     }
 

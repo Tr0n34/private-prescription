@@ -7,7 +7,7 @@ import fr.cnamts.cpam33.ordonnance.infrastructure.in.dto.traces.TraceDto;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.dto.traces.WorkerStatusDto;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.mappers.TraceApiMapper;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.traces.DatabaseActeMetierResolver;
-import fr.cnamts.cpam33.ordonnance.infrastructure.configurations.traces.TraceWriterSupervisor;
+import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.traces.TraceWriterSupervisor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -38,11 +38,11 @@ public class TraceController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createTrace(@RequestBody TraceDto trace) {
-        logger.info("trace : {}", trace.toString());
+    public ResponseEntity<?> createTrace(@RequestBody TraceDto trace, @RequestHeader("userId") String userId) {
+        logger.debug("trace : {}", trace.toString());
         List<TraceAttribute> traceAttributes = new ArrayList<>();
         traceService.trace(resolver.resolveByCode(trace.acteMetierCode()),
-                traceApiMapper.mapMedecin(trace.medecinId()), new TraceContext(traceAttributes));
+                traceApiMapper.mapUtilisateur(userId), new TraceContext(traceAttributes));
         return ResponseEntity.ok().build();
     }
 

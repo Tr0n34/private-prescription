@@ -1,10 +1,10 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.traces;
 
+import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.utilisateurs.UtilisateurId;
 import fr.cnamts.cpam33.ordonnance.domain.models.events.ActeMetierEvent;
 import fr.cnamts.cpam33.ordonnance.domain.models.events.TraceCommand;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.Trace;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.enums.ActeMetierCode;
-import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.utilisateurs.MedecinId;
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.traces.TracePublisher;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.junit.jupiter.api.BeforeEach;
@@ -40,7 +40,7 @@ public class ActeMetierAspectIT {
     @Test
     void should_publish_trace_with_context() throws Throwable {
         TraceCommand command = mock(TraceCommand.class);
-        when(command.medecinId()).thenReturn(new MedecinId("123456789", null));
+        when(command.utilisateurId()).thenReturn(new UtilisateurId("123456789", null));
         ProceedingJoinPoint pjp = mock(ProceedingJoinPoint.class);
         when(pjp.proceed()).thenReturn("RESULT_OK");
         when(pjp.getArgs()).thenReturn(new Object[]{command});
@@ -52,10 +52,10 @@ public class ActeMetierAspectIT {
         verify(publisher, times(1)).publish(traceCaptor.capture());
         var captured = traceCaptor.getValue();
         assertEquals(ActeMetierCode.ACT_ORD_CREER.name(), captured.acteMetierId().code());
-        assertEquals("123456789", captured.medecinId().id());
+        assertEquals("123456789", captured.utilisateurId().id());
         assertNotNull(captured.context());
         assertTrue(captured.context().attributes().stream()
-                .anyMatch(attr -> attr.name().equals("arg0") && attr.value().value() instanceof TraceCommand)
+                .anyMatch(attr -> attr.name().contains("TraceCommand") && attr.value().value() instanceof TraceCommand)
         );
         assertTrue(captured.context().attributes().stream()
                 .anyMatch(attr -> attr.name().equals("result") && "RESULT_OK".equals(attr.value().value()))

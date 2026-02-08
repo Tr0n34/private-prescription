@@ -16,7 +16,9 @@ import java.util.concurrent.BlockingQueue;
 @Configuration
 @EnableConfigurationProperties({
         TraceEnqueueExecutorProperties.class,
-        TraceWriterProperties.class
+        TraceWriterProperties.class,
+        TraceBackpressureProperties.class,
+        TraceOutboxProperties.class
 })
 @EnableAsync
 public class TraceConfiguration {
@@ -42,6 +44,7 @@ public class TraceConfiguration {
         pool.setQueueCapacity(props.queueCapacity());
         pool.setThreadNamePrefix(props.threadNamePrefix());
         pool.setWaitForTasksToCompleteOnShutdown(props.waitForTasksToCompleteOnShutdown());
+        pool.setRejectedExecutionHandler((r, executor) -> r.run());
         pool.initialize();
         return pool;
     }

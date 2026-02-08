@@ -11,4 +11,6 @@ public interface PatientRepository extends RepositoryPort<Patient, PatientId> {
 
     Optional<Patient> findByExternalId(ExternalPatientId externalPatientId);
 
+    Optional<Patient> findByExternalIdOrThrow(ExternalPatientId externalPatientId);
+
 }

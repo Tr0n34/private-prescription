@@ -6,7 +6,6 @@ import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.Foncti
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.FonctionId;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.enums.ActeMetierCode;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.persistences.repositories.traces.ActeMetierJpaRepository;
-import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.persistences.repositories.traces.FonctionJpaRepository;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.entities.traces.ActeMetierEntity;
 import org.springframework.stereotype.Component;
 

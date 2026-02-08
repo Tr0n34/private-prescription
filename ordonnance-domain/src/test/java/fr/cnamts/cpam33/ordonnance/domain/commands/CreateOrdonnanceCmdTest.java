@@ -1,6 +1,5 @@
 package fr.cnamts.cpam33.ordonnance.domain.commands;
 
-import fr.cnamts.cpam33.ordonnance.domain.abstracts.validation.ValidationResult;
 import fr.cnamts.cpam33.ordonnance.domain.fixtures.MedecinFixtures;
 import fr.cnamts.cpam33.ordonnance.domain.fixtures.PatientFixtures;
 import fr.cnamts.cpam33.ordonnance.domain.fixtures.PrescriptionFixtures;

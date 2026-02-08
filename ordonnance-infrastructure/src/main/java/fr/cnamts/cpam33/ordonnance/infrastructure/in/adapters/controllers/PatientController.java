@@ -8,6 +8,8 @@ import fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.controllers.routes
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.dto.patients.CesPatientDto;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.dto.PatientDto;
 import jakarta.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +19,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/patients")
 public class PatientController implements Adapter {
+
+    private final static Logger logger = LoggerFactory.getLogger(PatientController.class.getName());
 
     private final LocationBuilder locationBuilder;
     private final RegisterPatientUseCase registerPatientUseCase;
@@ -31,16 +35,20 @@ public class PatientController implements Adapter {
     }
 
     @PostMapping
-    public ResponseEntity<Void> createPatient(@Valid @RequestBody PatientDto patientDto) {
-        Patient patient = registerPatientUseCase.registerPatient(patientACL.toDomain(patientDto));
+    public ResponseEntity<Void> createPatient(
+            @Valid @RequestBody PatientDto patientDto,
+            @RequestHeader("userId")  String userId) {
+        Patient patient = registerPatientUseCase.registerPatient(patientACL.toDomain(patientDto, userId));
         URI location = locationBuilder.buildCreatedLocation(patient.patientId().numero());
         return ResponseEntity.created(location).build();
     }
 
     @PostMapping(path = "/batch")
-    public ResponseEntity<Void> createPatients(@RequestBody List<PatientDto> patientDtos) {
+    public ResponseEntity<Void> createPatients(
+            @RequestBody List<PatientDto> patientDtos,
+            @RequestHeader("userId")  String userId) {
         patientDtos.forEach(patientDto -> {
-            registerPatientUseCase.registerPatient(patientACL.toDomain(patientDto));
+            registerPatientUseCase.registerPatient(patientACL.toDomain(patientDto, userId));
         });
         return ResponseEntity.ok().build();
     }

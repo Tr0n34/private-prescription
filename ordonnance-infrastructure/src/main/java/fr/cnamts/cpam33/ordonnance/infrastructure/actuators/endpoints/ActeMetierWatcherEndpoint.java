@@ -1,4 +1,4 @@
-package fr.cnamts.cpam33.ordonnance.infrastructure.actuators.watchers;
+package fr.cnamts.cpam33.ordonnance.infrastructure.actuators.endpoints;
 
 import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.watchers.AbstractWatcherEndpoint;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.providers.ActeMetierWatchService;

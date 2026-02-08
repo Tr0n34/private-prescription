@@ -1,10 +1,10 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.persistences;
 
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.ExternalPatientId;
-import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.DomainException;
-import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.enums.PatientExceptionCode;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.Patient;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.PatientId;
+import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.DomainException;
+import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.enums.PatientExceptionCode;
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.patients.PatientRepository;
 import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.Adapter;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.persistences.repositories.ordonnances.PatientJpaRepository;
@@ -44,9 +44,15 @@ public class PatientPersistenceAdapter implements PatientRepository, Adapter {
     }
 
     @Override
-    public Optional<Patient> findByExternalId(ExternalPatientId externalPatientId) {
+    public Optional<Patient> findByExternalIdOrThrow(ExternalPatientId externalPatientId) {
         return Optional.of(patientEntityMapper.toDomain(patientJpaRepository.findByExternalId(externalPatientId.numero())
                 .orElseThrow(() -> new DomainException(PatientExceptionCode.BS_PATIENT_NOT_FOUND))));
+    }
+
+    @Override
+    public Optional<Patient> findByExternalId(ExternalPatientId externalPatientId) {
+        return patientJpaRepository.findByExternalId(externalPatientId.numero())
+                .map(patientEntityMapper::toDomain);
     }
 
 }
