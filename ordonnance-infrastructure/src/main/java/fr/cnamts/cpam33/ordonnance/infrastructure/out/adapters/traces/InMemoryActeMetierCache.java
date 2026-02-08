@@ -3,6 +3,8 @@ package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.traces;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.ActeMetier;
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.traces.ActeMetierRepository;
 import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.caches.ActeMetierCache;
+import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors.InfrastructureException;
+import fr.cnamts.cpam33.ordonnance.infrastructure.exceptions.enums.CacheExceptionCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,9 +33,9 @@ public class InMemoryActeMetierCache implements ActeMetierCache {
     @Override
     public void refresh() {
         Map<String, ActeMetier> datas = new HashMap<>();
-        repository.findAll().forEach(e -> {
-            logger.trace("{} has been added in cache", e.acteMetierId().code());
-            datas.put(e.acteMetierId().code(), e);
+        repository.findAll().forEach(acteMetier -> {
+            logger.trace("{} has been added in cache", acteMetier.acteMetierId().code());
+            datas.put(acteMetier.acteMetierId().code(), acteMetier);
         });
         cache.clear();
         cache.putAll(datas);
@@ -45,7 +47,7 @@ public class InMemoryActeMetierCache implements ActeMetierCache {
     public ActeMetier getRequired(String code) {
         ActeMetier acteMetier = cache.get(code);
         if ( acteMetier == null ) {
-            throw new IllegalArgumentException("Acte métier inexistant : " + code);
+            throw new InfrastructureException(CacheExceptionCode.TECH_CACHE_ACTE_METIER_INEXISTANT, Map.of("acteMetier", code));
         }
         return acteMetier;
     }

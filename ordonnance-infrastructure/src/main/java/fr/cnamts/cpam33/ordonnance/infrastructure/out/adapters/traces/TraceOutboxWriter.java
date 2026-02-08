@@ -2,6 +2,8 @@ package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.traces;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.Trace;
+import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors.InfrastructureException;
+import fr.cnamts.cpam33.ordonnance.infrastructure.exceptions.enums.TraceExceptionCode;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.entities.traces.TraceOutboxEntity;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -28,23 +30,23 @@ public class TraceOutboxWriter {
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void write(Trace trace) {
         EntityManager em = traceEmf.createEntityManager();
-        EntityTransaction tx = null;
+        EntityTransaction transaction = null;
         try (em) {
-            tx = em.getTransaction();
-            tx.begin();
+            transaction = em.getTransaction();
+            transaction.begin();
             String payload = mapper.writeValueAsString(trace);
-            TraceOutboxEntity e = new TraceOutboxEntity()
+            TraceOutboxEntity traceOutboxEntity = new TraceOutboxEntity()
                     .setPayloadJson(payload)
                     .setCreatedAt(LocalDateTime.now())
                     .setAttempts(0)
                     .setLastError(null);
-            em.persist(e);
+            em.persist(traceOutboxEntity);
             em.flush();
-            tx.commit();
+            transaction.commit();
         } catch (Exception ex) {
-            if (tx != null && tx.isActive()) tx.rollback();
-            if (ex instanceof RuntimeException re) throw re;
-            throw new IllegalStateException(ex);
+            if ( transaction != null && transaction.isActive() ) transaction.rollback();
+            if ( ex instanceof RuntimeException re ) throw re;
+            throw new InfrastructureException(TraceExceptionCode.TECH_TRACE_OUTBOX_WRITE_CRASH);
         }
     }
 

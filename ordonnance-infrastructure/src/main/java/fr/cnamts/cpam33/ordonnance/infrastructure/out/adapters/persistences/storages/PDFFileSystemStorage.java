@@ -1,7 +1,7 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.persistences.storages;
 
 import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors.InfrastructureException;
-import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors.OpsError;
+import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors.InfrastructureError;
 import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.pdf.PDFStorage;
 import fr.cnamts.cpam33.ordonnance.infrastructure.exceptions.enums.PdfExceptionCode;
 
@@ -20,7 +20,7 @@ public class PDFFileSystemStorage implements PDFStorage {
     private Map<String, Object> errorPlaceHolders;
 
     public PDFFileSystemStorage(Path rootDir, Map<String, Object> errorPlaceHolders) {
-        OpsError.requireNotNull(rootDir,
+        InfrastructureError.requireNotNull(rootDir,
                 cause -> new InfrastructureException(PdfExceptionCode.TECH_PDF_ROOT_DIR_EMPTY, errorPlaceHolders));
         this.rootDir = rootDir;
         errorPlaceHolders.put(ERROR_PDF, rootDir);
@@ -29,8 +29,8 @@ public class PDFFileSystemStorage implements PDFStorage {
     @Override
     public void save(String key, byte[] pdfBytes) throws InfrastructureException {
         errorPlaceHolders.put(ERROR_PDF_KEY, key);
-        OpsError.requireNotBlank(key, cause -> new InfrastructureException(PdfExceptionCode.TECH_PDF_KEY_INVALID, errorPlaceHolders));
-        OpsError.requireNotNull(pdfBytes, cause -> new InfrastructureException(PdfExceptionCode.TECH_PDF_KEY_INVALID, errorPlaceHolders));
+        InfrastructureError.requireNotBlank(key, cause -> new InfrastructureException(PdfExceptionCode.TECH_PDF_KEY_INVALID, errorPlaceHolders));
+        InfrastructureError.requireNotNull(pdfBytes, cause -> new InfrastructureException(PdfExceptionCode.TECH_PDF_KEY_INVALID, errorPlaceHolders));
         Path path = resolveKeyToPath(key);
         FileBytesWriter.write(
                 path,
@@ -43,12 +43,12 @@ public class PDFFileSystemStorage implements PDFStorage {
     @Override
     public byte[] load(String key) throws InfrastructureException {
         errorPlaceHolders.put(ERROR_PDF_KEY, key);
-        String safeKey = OpsError.requireNotBlank(
+        String safeKey = InfrastructureError.requireNotBlank(
                 key,
                 cause -> new InfrastructureException(PdfExceptionCode.TECH_PDF_KEY_INVALID, errorPlaceHolders)
         );
         Path path = resolveKeyToPath(safeKey);
-        return OpsError.io(
+        return InfrastructureError.io(
                 () -> Files.readAllBytes(path),
                 cause -> new InfrastructureException(PdfExceptionCode.TECH_PDF_READ_ERROR, errorPlaceHolders)
         );
@@ -57,7 +57,7 @@ public class PDFFileSystemStorage implements PDFStorage {
     @Override
     public boolean exists(String key) throws InfrastructureException {
         errorPlaceHolders.put(ERROR_PDF_KEY, key);
-        String safeKey = OpsError.requireNotBlank(
+        String safeKey = InfrastructureError.requireNotBlank(
                 key,
                 cause -> new InfrastructureException(PdfExceptionCode.TECH_PDF_KEY_INVALID)
         );

@@ -118,7 +118,7 @@ public class DDDAccessorNamingStrategy implements AccessorNamingStrategy {
                 && type.getEnclosedElements().stream()
                 .filter(VariableElement.class::isInstance)
                 .map(VariableElement.class::cast)
-                .anyMatch(ve -> ve.getSimpleName().contentEquals(propertyName));
+                .anyMatch(variableElement -> variableElement.getSimpleName().contentEquals(propertyName));
     }
 
     private static String decapitalize(String s) {

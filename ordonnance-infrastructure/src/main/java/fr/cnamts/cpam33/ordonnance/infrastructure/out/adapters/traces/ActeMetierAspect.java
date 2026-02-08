@@ -49,18 +49,18 @@ public class ActeMetierAspect {
         return result;
     }
 
-    private void publishTrace(Object[] args, Object result, Throwable error, ActeMetierEvent event) {
+    private void publishTrace(Object[] arguments, Object result, Throwable error, ActeMetierEvent event) {
         boolean hasToBePublish = true;
         Trace trace = null;
-        if ( args == null || args.length == 0) {
+        if ( arguments == null || arguments.length == 0) {
             hasToBePublish = false;
-        } else if ( !(args[0] instanceof TraceCommand traceCommand )) {
+        } else if ( !(arguments[0] instanceof TraceCommand traceCommand )) {
             hasToBePublish = false;
         } else {
             trace = Trace.of(
                     event.value(),
                     traceCommand.utilisateurId(),
-                    buildTraceContext(args, result, error),
+                    buildTraceContext(arguments, result, error),
                     LocalDateTime.now(clock),
                     clock
             );
@@ -75,11 +75,11 @@ public class ActeMetierAspect {
         }
     }
 
-    private TraceContext buildTraceContext(Object[] args, Object result, Throwable error) {
+    private TraceContext buildTraceContext(Object[] arguments, Object result, Throwable error) {
         List<TraceAttribute> attributes = new ArrayList<>();
-        for ( Object arg : args ) {
-            if (arg != null) {
-                attributes.add(new TraceAttribute(arg.getClass().getSimpleName(), new TraceValue(arg)));
+        for ( Object argument : arguments ) {
+            if ( argument != null ) {
+                attributes.add(new TraceAttribute(argument.getClass().getSimpleName(), new TraceValue(argument)));
             }
         }
         if ( result != null ) {
