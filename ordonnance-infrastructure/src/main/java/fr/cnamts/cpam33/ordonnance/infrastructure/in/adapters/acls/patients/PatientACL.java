@@ -29,7 +29,7 @@ public class PatientACL {
                 new Nom(dto.nom()),
                 new Prenom(dto.prenom()),
                 dto.dateNaissance(),
-                new UtilisateurId(userId, dto.externalId())
+                new UtilisateurId(userId)
 
         );
     }

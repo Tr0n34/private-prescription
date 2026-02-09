@@ -69,7 +69,7 @@ class PatientControllerIT {
                 patientDomain.nom(),
                 patientDomain.prenom(),
                 patientDomain.dateNaissance(),
-                new UtilisateurId("123456", "")
+                new UtilisateurId("123456")
         );
 
         when(patientACL.toDomain(any(PatientDto.class), anyString())).thenReturn(registerPatientCmd);

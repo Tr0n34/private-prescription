@@ -52,7 +52,7 @@ public class PatientControllerTest {
                 patientDomain.nom(),
                 patientDomain.prenom(),
                 patientDomain.dateNaissance(),
-                new UtilisateurId("123456", "")
+                new UtilisateurId("123456")
         );
         when(patientACL.toDomain(dto, "123456")).thenReturn(registerPatientCmd);
         when(registerPatientUseCase.registerPatient(registerPatientCmd)).thenReturn(patientDomain);

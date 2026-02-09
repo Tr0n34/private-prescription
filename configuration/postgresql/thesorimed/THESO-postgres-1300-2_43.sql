@@ -215,10 +215,10 @@
 -- >
 -- >
 -- >     V2.24
--- >        2019-10-21 : GET_THE_DURE_PRESC_REST_STUP : Médicaments à durée de lignePrescription restreinte par rapport au statut stupéfiant ou non.
+-- >        2019-10-21 : GET_THE_DURE_PRESC_REST_STUP : Médicaments à durée de traitement restreinte par rapport au statut stupéfiant ou non.
 -- >
 -- >     V2.24a
--- >        2019-11-14 : GET_THE_DURE_PRESC_REST_STUP : Médicaments à durée de lignePrescription restreinte par rapport au statut stupéfiant ou non. Ajout exclusion spécialités sans CIP.
+-- >        2019-11-14 : GET_THE_DURE_PRESC_REST_STUP : Médicaments à durée de traitement restreinte par rapport au statut stupéfiant ou non. Ajout exclusion spécialités sans CIP.
 -- >
 -- >     V2.25
 -- >        2019-12-12 : GET_THE_NONSUB_MTE : Médicaments Non substituables.
@@ -5471,7 +5471,7 @@ SELECT DISTINCT SP.SP_GSP_CODE_FK AS CODE_GSP,
 ' LANGUAGE plpgsql;
 
 
--- API Médicaments à durée de lignePrescription restreinte par rapport au statut stupéfiant ou non
+-- API Médicaments à durée de traitement restreinte par rapport au statut stupéfiant ou non
 -- EXEMPLE : select GET_THE_DURE_PRESC_REST_STUP ('''26690'',''7330'',''16414''','''3400930171073'',''3400930137864'',''3400894059165''', 1);
 CREATE
 OR REPLACE FUNCTION GET_THE_DURE_PRESC_REST_STUP(VARCHAR, VARCHAR, NUMERIC) RETURNS REFCURSOR AS

@@ -17,7 +17,7 @@ public interface OrdonnanceApiMapper {
 
     @Mapping(target = "patientId", source = "patientId", qualifiedByName = "toPatientId")
     @Mapping(target = "medecinId", source = "medecinId", qualifiedByName = "toMedecinId")
-    @Mapping(target = "lignePrescriptions", ignore = true)
+    @Mapping(target = "traitements", ignore = true)
     CreateOrdonnanceCmd toCommand(OrdonnanceDto dto);
 
     @Mapping(target = "patientId", source = "patientId")
@@ -26,10 +26,11 @@ public interface OrdonnanceApiMapper {
 
     @Named("toPatientId")
     default PatientId mapToPatientId(PatientIdDto dto) {
-        if (dto == null || dto.numero() == null || dto.numero().isBlank()) {
-            return null;
+        PatientId patientId = null;
+        if ( dto != null && dto.numero() != null && !dto.numero().isBlank() ) {
+            patientId = new PatientId(dto.numero());
         }
-        return new PatientId(dto.numero());
+        return patientId;
     }
 
     @Named("toMedecinId")
