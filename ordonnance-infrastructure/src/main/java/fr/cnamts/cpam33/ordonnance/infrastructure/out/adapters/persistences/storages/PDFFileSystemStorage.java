@@ -1,34 +1,43 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.persistences.storages;
 
-import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors.InfrastructureException;
 import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors.InfrastructureError;
+import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors.InfrastructureException;
 import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.pdf.PDFStorage;
 import fr.cnamts.cpam33.ordonnance.infrastructure.exceptions.enums.PdfExceptionCode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.HashMap;
 import java.util.Map;
 
-public class PDFFileSystemStorage implements PDFStorage {
+@Component
+public class PDFFileSystemStorage implements PDFStorage{
+
+    private final static Logger logger = LoggerFactory.getLogger(PDFFileSystemStorage.class);
 
     public static final String ERROR_PDF_KEY = "pdf_key";
-    public static final String ERROR_PDF = "pdf";
     public static final char SLASH = '/';
     public static final String PDF_EXTENSION = ".pdf";
 
-    private Path rootDir;
+    private final Path rootDirectory;
     private Map<String, Object> errorPlaceHolders;
 
-    public PDFFileSystemStorage(Path rootDir, Map<String, Object> errorPlaceHolders) {
-        InfrastructureError.requireNotNull(rootDir,
+    public PDFFileSystemStorage(@Value("ordonnance.repositories.storage") String rootDirectory) {
+        InfrastructureError.requireNotNull(rootDirectory,
                 cause -> new InfrastructureException(PdfExceptionCode.TECH_PDF_ROOT_DIR_EMPTY, errorPlaceHolders));
-        this.rootDir = rootDir;
-        errorPlaceHolders.put(ERROR_PDF, rootDir);
+        this.rootDirectory = Path.of(rootDirectory);
+        logger.debug("PDF storage root directory: {}", this.rootDirectory);
+        errorPlaceHolders = new HashMap<>();
+        errorPlaceHolders.put(ERROR_PDF_KEY, new HashMap<>());
     }
 
     @Override
     public void save(String key, byte[] pdfBytes) throws InfrastructureException {
-        errorPlaceHolders.put(ERROR_PDF_KEY, key);
+        this.errorPlaceHolders.put(ERROR_PDF_KEY, key);
         InfrastructureError.requireNotBlank(key, cause -> new InfrastructureException(PdfExceptionCode.TECH_PDF_KEY_INVALID, errorPlaceHolders));
         InfrastructureError.requireNotNull(pdfBytes, cause -> new InfrastructureException(PdfExceptionCode.TECH_PDF_KEY_INVALID, errorPlaceHolders));
         Path path = resolveKeyToPath(key);
@@ -42,7 +51,7 @@ public class PDFFileSystemStorage implements PDFStorage {
 
     @Override
     public byte[] load(String key) throws InfrastructureException {
-        errorPlaceHolders.put(ERROR_PDF_KEY, key);
+        this.errorPlaceHolders.put(ERROR_PDF_KEY, key);
         String safeKey = InfrastructureError.requireNotBlank(
                 key,
                 cause -> new InfrastructureException(PdfExceptionCode.TECH_PDF_KEY_INVALID, errorPlaceHolders)
@@ -56,7 +65,7 @@ public class PDFFileSystemStorage implements PDFStorage {
 
     @Override
     public boolean exists(String key) throws InfrastructureException {
-        errorPlaceHolders.put(ERROR_PDF_KEY, key);
+        this.errorPlaceHolders.put(ERROR_PDF_KEY, key);
         String safeKey = InfrastructureError.requireNotBlank(
                 key,
                 cause -> new InfrastructureException(PdfExceptionCode.TECH_PDF_KEY_INVALID)
@@ -75,7 +84,7 @@ public class PDFFileSystemStorage implements PDFStorage {
         if ( !safe.endsWith(PDF_EXTENSION) ) {
             safe = safe + PDF_EXTENSION;
         }
-        return rootDir.resolve(safe);
+        return rootDirectory.resolve(safe);
     }
 
 }

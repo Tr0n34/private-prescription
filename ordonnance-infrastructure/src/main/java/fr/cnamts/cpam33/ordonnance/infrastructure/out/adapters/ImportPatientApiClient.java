@@ -26,7 +26,7 @@ public class ImportPatientApiClient implements FetchPatientGateway {
     @Override
     public Patient fetchById(ExternalPatientId externalPatientId) {
         return restClient.get()
-                .uri("/patients/{id}", externalPatientId.numero())
+                .uri(this.apiUrl, externalPatientId.numero())
                 .retrieve()
                 .body(Patient.class);
     }
