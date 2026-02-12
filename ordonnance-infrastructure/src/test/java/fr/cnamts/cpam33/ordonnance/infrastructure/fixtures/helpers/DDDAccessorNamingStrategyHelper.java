@@ -1,4 +1,4 @@
-package fr.cnamts.cpam33.ordonnance.infrastructure.fixtures;
+package fr.cnamts.cpam33.ordonnance.infrastructure.fixtures.helpers;
 
 import javax.lang.model.element.*;
 import javax.lang.model.type.TypeKind;

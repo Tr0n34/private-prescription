@@ -1,6 +1,6 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.tech;
 
-import fr.cnamts.cpam33.ordonnance.infrastructure.fixtures.DDDAccessorNamingStrategyHelper;
+import fr.cnamts.cpam33.ordonnance.infrastructure.fixtures.helpers.DDDAccessorNamingStrategyHelper;
 import fr.cnamts.cpam33.ordonnance.infrastructure.technical.mappers.DDDAccessorNamingStrategy;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,7 +12,7 @@ import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.TypeKind;
 import java.util.List;
 
-import static fr.cnamts.cpam33.ordonnance.infrastructure.fixtures.DDDAccessorNamingStrategyHelper.*;
+import static fr.cnamts.cpam33.ordonnance.infrastructure.fixtures.helpers.DDDAccessorNamingStrategyHelper.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockitoExtension.class)

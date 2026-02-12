@@ -35,7 +35,6 @@ class ErrorCatalogWatchServiceIT {
     @Test
     void default_properties_are_injected() {
         assertThat(service.getReloadDelay()).isEqualTo(5000);
-
         String filePath = service.getFilePath();
         assertThat(filePath).isNotBlank();
         assertThat(filePath).contains("errors.json");

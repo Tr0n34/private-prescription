@@ -10,4 +10,8 @@ public record Medecin(
         Prenom prenom
 ) implements DomainObject {
 
+    public static Medecin of(MedecinId medecinId, Nom nom, Prenom prenom) {
+        return new Medecin(medecinId, nom, prenom);
+    }
+
 }
