@@ -2,9 +2,9 @@ package fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors;
 
 import java.io.IOException;
 
-public final class OpsError {
+public final class InfrastructureError {
 
-    private OpsError() {}
+    private InfrastructureError() {}
 
     @FunctionalInterface
     public interface IoSupplier<T> {

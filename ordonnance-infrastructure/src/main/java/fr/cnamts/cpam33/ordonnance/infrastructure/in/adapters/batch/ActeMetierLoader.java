@@ -64,7 +64,6 @@ public class ActeMetierLoader {
                 logger.info("Acte Metier reloaded from {}", actesMetiersFile);
                 acteMetierCache.refresh();
                 applicationEventPublisher.publishEvent(new ActeMetierLoadedEvent());
-
             } catch (Exception e) {
                 logger.error("Failed to reload Acte Metier", e);
             }

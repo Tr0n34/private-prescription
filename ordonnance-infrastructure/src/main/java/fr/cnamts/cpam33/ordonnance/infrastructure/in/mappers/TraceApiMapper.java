@@ -26,7 +26,7 @@ public interface TraceApiMapper {
     @Named("toUtilisateurId")
     default UtilisateurId mapUtilisateur(String utilisateurId) {
         if (utilisateurId == null) return null;
-        return new UtilisateurId(utilisateurId, null);
+        return new UtilisateurId(utilisateurId);
     }
 
 }

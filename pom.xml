@@ -213,10 +213,12 @@
                     <artifactId>maven-compiler-plugin</artifactId>
                     <configuration>
                         <release>${maven.compiler.release}</release>
+                        <!-- WARNING désactive les warnings de compilation -->
+                        <compilerArgs>
+                            <arg>-Xlint:-options</arg>
+                        </compilerArgs>
                     </configuration>
                     <executions>
-
-                        <!-- 1) Compiler le provider SPI AVANT MapStruct -->
                         <execution>
                             <id>precompile-ddd-accessor-strategy</id>
                             <phase>generate-sources</phase>
@@ -231,8 +233,6 @@
                                 </includes>
                             </configuration>
                         </execution>
-
-                        <!-- 2) Compile normal (c’est CELUI-CI qui remplace le compile du lifecycle) -->
                         <execution>
                             <id>default-compile</id>
                             <phase>compile</phase>
@@ -247,7 +247,6 @@
                                 </excludes>
                             </configuration>
                         </execution>
-
                     </executions>
                 </plugin>
                 <plugin>

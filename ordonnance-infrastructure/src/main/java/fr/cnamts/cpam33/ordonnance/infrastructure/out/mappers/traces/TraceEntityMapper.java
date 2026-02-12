@@ -28,7 +28,7 @@ public interface TraceEntityMapper {
             new TypeReference<>() {};
 
     @Mapping(target = "acteMetier", source = "acteMetierId", qualifiedByName = "mapActeMetier")
-    @Mapping(target = "utilisateurId", source = "utilisateurId.id")
+    @Mapping(target = "utilisateurId", source = "utilisateurId.numero")
     @Mapping(target = "createdOn", source = "timestamp")
     @Mapping(target = "traceContext", source = "trace", qualifiedByName = "mapTraceContext")
     TraceEntity toEntity(Trace trace,
@@ -76,7 +76,7 @@ public interface TraceEntityMapper {
 
         return new Trace(
                 new ActeMetierId(entity.acteMetier().getCode()),
-                new UtilisateurId(entity.utilisateurId(), null),
+                new UtilisateurId(entity.utilisateurId()),
                 entity.createdOn(),
                 new TraceContext(attributes)
         );

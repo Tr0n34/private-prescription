@@ -6,6 +6,8 @@ import java.util.Objects;
 
 public final class PDFPayloadMapper {
 
+    public static final String APPLICATION_PDF = "application/pdf";
+
     private PDFPayloadMapper() {
         throw new UnsupportedOperationException("utility class");
     }
@@ -18,7 +20,7 @@ public final class PDFPayloadMapper {
     public static PDFPayload fromBytes(String filename, byte[] pdfBytes) {
         Objects.requireNonNull(filename, "filename must not be null");
         Objects.requireNonNull(pdfBytes, "pdfBytes must not be null");
-        return new PDFPayload(filename, "application/pdf", PDFBase64Codec.encode(pdfBytes));
+        return new PDFPayload(filename, APPLICATION_PDF, PDFBase64Codec.encode(pdfBytes));
     }
 
 }

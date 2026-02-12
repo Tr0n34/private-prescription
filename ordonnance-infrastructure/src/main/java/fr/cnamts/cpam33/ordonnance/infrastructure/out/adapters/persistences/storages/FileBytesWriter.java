@@ -1,7 +1,7 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.persistences.storages;
 
 import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors.InfrastructureException;
-import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors.OpsError;
+import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors.InfrastructureError;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -15,13 +15,13 @@ public final class FileBytesWriter {
     public static <E extends InfrastructureException> void write(
             Path path,
             byte[] bytes,
-            OpsError.ExceptionFactory<E> dirError,
-            OpsError.ExceptionFactory<E> writeError) {
+            InfrastructureError.ExceptionFactory<E> dirError,
+            InfrastructureError.ExceptionFactory<E> writeError) {
         Path parent = path.getParent();
         if ( parent != null ) {
-            OpsError.io(() -> Files.createDirectories(parent), dirError);
+            InfrastructureError.io(() -> Files.createDirectories(parent), dirError);
         }
-        OpsError.io(() -> Files.write(path, bytes, CREATE, TRUNCATE_EXISTING, WRITE), writeError);
+        InfrastructureError.io(() -> Files.write(path, bytes, CREATE, TRUNCATE_EXISTING, WRITE), writeError);
     }
 
 }

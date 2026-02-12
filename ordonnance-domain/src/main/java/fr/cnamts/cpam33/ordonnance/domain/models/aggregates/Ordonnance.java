@@ -1,7 +1,7 @@
 package fr.cnamts.cpam33.ordonnance.domain.models.aggregates;
 
 import fr.cnamts.cpam33.ordonnance.domain.abstracts.domain.DomainObject;
-import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.LignePrescription;
+import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.Traitement;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.PrescriptionId;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.Patient;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.utilisateurs.Medecin;
@@ -20,7 +20,7 @@ public class Ordonnance implements DomainObject {
     private final OrdonnanceId ordonnanceId;
     private Patient patient;
     private Medecin medecin;
-    private List<LignePrescription> lignePrescriptions;
+    private List<Traitement> traitements;
     private int version;
     private OrdonnanceStatus status;
     private final LocalDate createdOn;
@@ -31,7 +31,7 @@ public class Ordonnance implements DomainObject {
             OrdonnanceId ordonnanceId,
             Patient patient,
             Medecin medecin,
-            List<LignePrescription> lignePrescriptions,
+            List<Traitement> traitements,
             OrdonnanceStatus status,
             int version,
             LocalDate createdOn,
@@ -41,7 +41,7 @@ public class Ordonnance implements DomainObject {
         this.ordonnanceId = ordonnanceId;
         this.patient = patient;
         this.medecin = medecin;
-        this.lignePrescriptions = new ArrayList<>(lignePrescriptions);
+        this.traitements = new ArrayList<>(traitements);
         this.status = status;
         this.version = version;
         this.createdOn = createdOn;
@@ -54,8 +54,8 @@ public class Ordonnance implements DomainObject {
             OrdonnanceId ordonnanceId,
             Patient patient,
             Medecin medecin,
-            List<LignePrescription> lignePrescriptions) {
-        return new Ordonnance(ordonnanceId, patient, medecin, lignePrescriptions,
+            List<Traitement> traitements) {
+        return new Ordonnance(ordonnanceId, patient, medecin, traitements,
                 OrdonnanceStatus.CREATED, VERSION_INITIALE, LocalDate.now(), LocalDate.now(), null);
     }
 
@@ -64,8 +64,8 @@ public class Ordonnance implements DomainObject {
         status = OrdonnanceStatus.VALIDATED;
     }
 
-    public List<LignePrescription> prescriptions() {
-        return List.copyOf(lignePrescriptions); /* Copie défensive */
+    public List<Traitement> prescriptions() {
+        return List.copyOf(traitements); /* Copie défensive */
     }
 
     public OrdonnanceId ordonnanceId() {
@@ -113,7 +113,7 @@ public class Ordonnance implements DomainObject {
     }
 
     public void checkPrescriptionState() {
-        if ( lignePrescriptions == null || lignePrescriptions.isEmpty() ) {
+        if ( traitements == null || traitements.isEmpty() ) {
             throw new DomainException(OrdonnanceExceptionCode.BS_ORDONNANCE_PRESCRIPTION_MISSING);
         }
     }
@@ -153,48 +153,48 @@ public class Ordonnance implements DomainObject {
         this.version++;
     }
 
-    public Ordonnance replacePrescriptions(List<LignePrescription> lignePrescriptions) {
+    public Ordonnance replacePrescriptions(List<Traitement> traitements) {
         ensureOrdonnanceCantBeChanged();
         incrementVersion();
-        if ( lignePrescriptions == null || lignePrescriptions.isEmpty()) {
+        if ( traitements == null || traitements.isEmpty()) {
             throw new DomainException(OrdonnanceExceptionCode.BS_ORDONNANCE_PRESCRIPTION_MISSING);
         }
-        this.lignePrescriptions = new ArrayList<>(lignePrescriptions); // copie mutable
+        this.traitements = new ArrayList<>(traitements); // copie mutable
         modifiedOn = LocalDate.now();
         return this;
     }
 
-    public Ordonnance replacePrescription(LignePrescription newLignePrescription) {
+    public Ordonnance replacePrescription(Traitement newTraitement) {
         ensureOrdonnanceCantBeChanged();
         incrementVersion();
-        boolean exists = lignePrescriptions.stream().anyMatch(p -> p.prescriptionId().equals(newLignePrescription.prescriptionId()));
+        boolean exists = traitements.stream().anyMatch(p -> p.prescriptionId().equals(newTraitement.prescriptionId()));
         if ( !exists ) {
             throw new DomainException(OrdonnanceExceptionCode.BS_ORDONNANCE_PRESCRIPTION_NOT_FOUND);
         }
-        this.lignePrescriptions = new ArrayList<>(lignePrescriptions.stream()
-                .map(p -> p.prescriptionId().equals(newLignePrescription.prescriptionId()) ? newLignePrescription : p)
+        this.traitements = new ArrayList<>(traitements.stream()
+                .map(p -> p.prescriptionId().equals(newTraitement.prescriptionId()) ? newTraitement : p)
                 .toList());
         modifiedOn = LocalDate.now();
         return this;
     }
 
-    public Ordonnance addPrescription(LignePrescription newLignePrescription) {
+    public Ordonnance addPrescription(Traitement newTraitement) {
         ensureOrdonnanceCantBeChanged();
         incrementVersion();
-        boolean exists = lignePrescriptions.stream().anyMatch(p -> p.prescriptionId().equals(newLignePrescription.prescriptionId()));
+        boolean exists = traitements.stream().anyMatch(p -> p.prescriptionId().equals(newTraitement.prescriptionId()));
         if ( exists ) {
             throw new DomainException(OrdonnanceExceptionCode.BS_ORDONNANCE_PRESCRIPTION_DUPLICATE);
         }
-        List<LignePrescription> updated = new ArrayList<>(lignePrescriptions); // copie mutable
-        updated.add(newLignePrescription);
-        lignePrescriptions = updated;
+        List<Traitement> updated = new ArrayList<>(traitements); // copie mutable
+        updated.add(newTraitement);
+        traitements = updated;
         modifiedOn = LocalDate.now();
         return this;
     }
 
     public Ordonnance removePrescription(PrescriptionId prescriptionId) {
         incrementVersion();
-        boolean removed = lignePrescriptions.removeIf(p -> p.prescriptionId().equals(prescriptionId));
+        boolean removed = traitements.removeIf(p -> p.prescriptionId().equals(prescriptionId));
         if ( !removed ) {
             throw new DomainException(OrdonnanceExceptionCode.BS_ORDONNANCE_PRESCRIPTION_NOT_FOUND);
         }

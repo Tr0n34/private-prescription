@@ -49,6 +49,10 @@
   { "code": "CMD_PARAMETRE_MANQUANT", "boundedContext": "COMMAND", "httpStatus": 400, "message": "Paramètres manquants pour {command} : {missingParams}", "description": "Des valeurs de champs de la commande sont manquants" },
 
   { "code": "TECH_VAULT_KV_NOT_READY", "boundedContext": "VAULT", "httpStatus": 400, "message": "KV engine non initialisé" },
-  { "code": "TECH_VAULT_KV_READ_PATH_EMPTY", "boundedContext": "VAULT", "httpStatus": 400, "message": "KV read path vide" }
+  { "code": "TECH_VAULT_KV_READ_PATH_EMPTY", "boundedContext": "VAULT", "httpStatus": 400, "message": "KV read path vide" },
 
+  { "code": "TECH_TRACE_OUTBOX_WRITE_CRASH", "boundedContext": "TRACE", "httpStatus": 400, "message": "Erreur d'enregistrement en trace outbox" },
+
+  { "code": "TECH_CACHE_ACTE_METIER_INEXISTANT", "boundedContext": "ACTE_METIER", "httpStatus": 400, "message": "Acte métier inexistant : {acteMetier}" },
+  { "code" : "TECH_RESOLVER_ACTE_METIER_CODE_INEXISTANT", "boundedContext": "ACTE_METIER", "httpStatus":  400, "message":  "Code d'erreur non trouvé : {acteMetier}"}
 ]

@@ -40,7 +40,7 @@ public class ActeMetierAspectIT {
     @Test
     void should_publish_trace_with_context() throws Throwable {
         TraceCommand command = mock(TraceCommand.class);
-        when(command.utilisateurId()).thenReturn(new UtilisateurId("123456789", null));
+        when(command.utilisateurId()).thenReturn(new UtilisateurId("123456789"));
         ProceedingJoinPoint pjp = mock(ProceedingJoinPoint.class);
         when(pjp.proceed()).thenReturn("RESULT_OK");
         when(pjp.getArgs()).thenReturn(new Object[]{command});
@@ -52,7 +52,7 @@ public class ActeMetierAspectIT {
         verify(publisher, times(1)).publish(traceCaptor.capture());
         var captured = traceCaptor.getValue();
         assertEquals(ActeMetierCode.ACT_ORD_CREER.name(), captured.acteMetierId().code());
-        assertEquals("123456789", captured.utilisateurId().id());
+        assertEquals("123456789", captured.utilisateurId().numero());
         assertNotNull(captured.context());
         assertTrue(captured.context().attributes().stream()
                 .anyMatch(attr -> attr.name().contains("TraceCommand") && attr.value().value() instanceof TraceCommand)
