@@ -18,8 +18,8 @@ public class TraceEntity {
     @JoinColumn(name = "acte_metier_id", nullable = false)
     private ActeMetierEntity acteMetier;
 
-    @Column(name = "medecin_id", nullable = false)
-    private String medecinId;
+    @Column(name = "utilisateur_id", nullable = false)
+    private String utilisateurId;
 
     @Column(name = "context", columnDefinition = "jsonb", nullable = false)
     @JdbcTypeCode(SqlTypes.JSON)
@@ -30,10 +30,10 @@ public class TraceEntity {
 
     protected TraceEntity() {}
 
-    public TraceEntity(Long id, ActeMetierEntity acteMetier, String medecinId, String traceContext, LocalDateTime createdOn) {
+    public TraceEntity(Long id, ActeMetierEntity acteMetier, String utilisateurId, String traceContext, LocalDateTime createdOn) {
         this.id = id;
         this.acteMetier = acteMetier;
-        this.medecinId = medecinId;
+        this.utilisateurId = utilisateurId;
         this.traceContext = traceContext;
         this.createdOn = createdOn;
     }
@@ -47,21 +47,12 @@ public class TraceEntity {
         return this;
     }
 
-    public ActeMetierEntity acteMetier() {
-        return acteMetier;
+    public LocalDateTime createdOn() {
+        return createdOn;
     }
 
-    public TraceEntity setActeMetier(ActeMetierEntity acteMetier) {
-        this.acteMetier = acteMetier;
-        return this;
-    }
-
-    public String medecinId() {
-        return medecinId;
-    }
-
-    public TraceEntity setMedecinId(String medecinId) {
-        this.medecinId = medecinId;
+    public TraceEntity setCreatedOn(LocalDateTime createdOn) {
+        this.createdOn = createdOn;
         return this;
     }
 
@@ -74,12 +65,21 @@ public class TraceEntity {
         return this;
     }
 
-    public LocalDateTime createdOn() {
-        return createdOn;
+    public String utilisateurId() {
+        return utilisateurId;
     }
 
-    public TraceEntity setCreatedOn(LocalDateTime createdOn) {
-        this.createdOn = createdOn;
+    public TraceEntity setUtilisateurId(String utilisateurId) {
+        this.utilisateurId = utilisateurId;
+        return this;
+    }
+
+    public ActeMetierEntity acteMetier() {
+        return acteMetier;
+    }
+
+    public TraceEntity setActeMetier(ActeMetierEntity acteMetier) {
+        this.acteMetier = acteMetier;
         return this;
     }
 

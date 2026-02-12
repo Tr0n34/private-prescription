@@ -1,0 +1,12 @@
+{
+  "request": {
+    "method": "GET",
+    "urlPathPattern": "/patients/([0-9A-Za-z_-]+)"
+  },
+  "response": {
+    "status": 200,
+    "headers": { "Content-Type": "application/json" },
+    "transformers": ["response-template"],
+    "body": "{ \"externalId\": \"{{request.path.[1]}}\", \"nom\": \"DUPONT\", \"prenom\": \"Alice\" }"
+  }
+}

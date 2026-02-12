@@ -46,6 +46,7 @@
         <guava.version>33.5.0-jre</guava.version>
         <flyway.version>12.0.0</flyway.version>
         <spring-vault-core.version>4.0.0</spring-vault-core.version>
+        <test-container.version>1.21.4</test-container.version>
 
         <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
         <sonar.coverage.exclusions>ordonnance-architecture-validation/**</sonar.coverage.exclusions>
@@ -168,6 +169,18 @@
                 <version>5.21.0</version>
                 <scope>test</scope>
             </dependency>
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>${test-container.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>junit-jupiter</artifactId>
+                <version>${test-container.version}</version>
+                <scope>test</scope>
+            </dependency>
 
             <!-- Métriques -->
             <dependency>
@@ -200,10 +213,12 @@
                     <artifactId>maven-compiler-plugin</artifactId>
                     <configuration>
                         <release>${maven.compiler.release}</release>
+                        <!-- WARNING désactive les warnings de compilation -->
+                        <compilerArgs>
+                            <arg>-Xlint:-options</arg>
+                        </compilerArgs>
                     </configuration>
                     <executions>
-
-                        <!-- 1) Compiler le provider SPI AVANT MapStruct -->
                         <execution>
                             <id>precompile-ddd-accessor-strategy</id>
                             <phase>generate-sources</phase>
@@ -218,8 +233,6 @@
                                 </includes>
                             </configuration>
                         </execution>
-
-                        <!-- 2) Compile normal (c’est CELUI-CI qui remplace le compile du lifecycle) -->
                         <execution>
                             <id>default-compile</id>
                             <phase>compile</phase>
@@ -234,7 +247,6 @@
                                 </excludes>
                             </configuration>
                         </execution>
-
                     </executions>
                 </plugin>
                 <plugin>

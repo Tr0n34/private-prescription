@@ -90,4 +90,15 @@ public class Patient implements DomainObject {
         return this;
     }
 
+    @Override
+    public String toString() {
+        return "Patient{" +
+                "patientId=" + patientId +
+                ", externalPatientId=" + externalPatientId +
+                ", nom=" + nom +
+                ", prenom=" + prenom +
+                ", dateNaissance=" + dateNaissance +
+                '}';
+    }
+
 }

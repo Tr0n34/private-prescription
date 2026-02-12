@@ -1,10 +1,9 @@
 package fr.cnamts.cpam33.ordonnance.domain.commands;
 
-import fr.cnamts.cpam33.ordonnance.domain.abstracts.validation.ValidationResult;
 import fr.cnamts.cpam33.ordonnance.domain.fixtures.MedecinFixtures;
 import fr.cnamts.cpam33.ordonnance.domain.fixtures.PatientFixtures;
 import fr.cnamts.cpam33.ordonnance.domain.fixtures.PrescriptionFixtures;
-import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.LignePrescription;
+import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.Traitement;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.PatientId;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.utilisateurs.MedecinId;
 import fr.cnamts.cpam33.ordonnance.domain.models.commands.ordonnances.CreateOrdonnanceCmd;
@@ -22,13 +21,13 @@ class CreateOrdonnanceCmdTest {
     void constructor_shouldCreateSuccessfully_whenAllParametersProvided() {
         PatientId patientId = PatientFixtures.patientValide().patientId();
         MedecinId medecinId = MedecinFixtures.medecinValide().medecinId();
-        LignePrescription lignePrescription = PrescriptionFixtures.onePrescription();
-        CreateOrdonnanceCmd cmd = new CreateOrdonnanceCmd(patientId, medecinId, List.of(lignePrescription));
+        Traitement traitement = PrescriptionFixtures.onePrescription();
+        CreateOrdonnanceCmd cmd = new CreateOrdonnanceCmd(patientId, medecinId, List.of(traitement));
         assertNotNull(cmd);
         assertEquals(patientId, cmd.patientId());
         assertEquals(medecinId, cmd.medecinId());
-        assertEquals(1, cmd.lignePrescriptions().size());
-        assertEquals(lignePrescription, cmd.lignePrescriptions().getFirst());
+        assertEquals(1, cmd.traitements().size());
+        assertEquals(traitement, cmd.traitements().getFirst());
     }
 
     @Test
@@ -44,10 +43,10 @@ class CreateOrdonnanceCmdTest {
     @Test
     void constructor_shouldThrowException_whenPatientIdIsNull() {
         MedecinId medecinId = MedecinFixtures.medecinValide().medecinId();
-        LignePrescription lignePrescription = PrescriptionFixtures.onePrescription();
+        Traitement traitement = PrescriptionFixtures.onePrescription();
         DomainException ex = assertThrows(
                 DomainException.class,
-                () -> new CreateOrdonnanceCmd(null, medecinId, List.of(lignePrescription))
+                () -> new CreateOrdonnanceCmd(null, medecinId, List.of(traitement))
         );
         assertEquals(CommandCodeException.CMD_PARAMETRE_MANQUANT, ex.getCode());
     }
@@ -55,10 +54,10 @@ class CreateOrdonnanceCmdTest {
     @Test
     void constructor_shouldThrowException_whenMedecinIdIsNull() {
         PatientId patientId = PatientFixtures.patientValide().patientId();
-        LignePrescription lignePrescription = PrescriptionFixtures.onePrescription();
+        Traitement traitement = PrescriptionFixtures.onePrescription();
         DomainException ex = assertThrows(
                 DomainException.class,
-                () -> new CreateOrdonnanceCmd(patientId, null, List.of(lignePrescription))
+                () -> new CreateOrdonnanceCmd(patientId, null, List.of(traitement))
         );
         assertEquals(CommandCodeException.CMD_PARAMETRE_MANQUANT, ex.getCode());
     }

@@ -5,10 +5,7 @@ import fr.cnamts.cpam33.ordonnance.domain.abstracts.validation.ValidatableComman
 import fr.cnamts.cpam33.ordonnance.domain.abstracts.validation.ValidationResult;
 import fr.cnamts.cpam33.ordonnance.domain.abstracts.validation.Validator;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.ExternalPatientId;
-import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.PatientId;
 import fr.cnamts.cpam33.ordonnance.domain.models.commands.CommandValidation;
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identites.Nom;
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identites.Prenom;
 
 public record ImportPatientCmd(
         ExternalPatientId externalPatientId

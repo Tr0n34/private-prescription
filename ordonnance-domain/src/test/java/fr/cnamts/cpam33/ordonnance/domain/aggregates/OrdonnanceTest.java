@@ -6,7 +6,7 @@ import fr.cnamts.cpam33.ordonnance.domain.fixtures.PatientFixtures;
 import fr.cnamts.cpam33.ordonnance.domain.fixtures.PrescriptionFixtures;
 import fr.cnamts.cpam33.ordonnance.domain.models.aggregates.Ordonnance;
 import fr.cnamts.cpam33.ordonnance.domain.models.aggregates.OrdonnanceId;
-import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.LignePrescription;
+import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.Traitement;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.Patient;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.utilisateurs.Medecin;
 import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.DomainException;
@@ -23,14 +23,14 @@ class OrdonnanceTest {
         Medecin medecin = MedecinFixtures.medecinValide();
         Patient patient = PatientFixtures.patientValide();
         OrdonnanceId ordonnanceId = OrdonnanceFixtures.ordonnanceId();
-        List<LignePrescription> lignePrescriptions = List.of(
+        List<Traitement> traitements = List.of(
                 PrescriptionFixtures.onePrescription()
         );
         Ordonnance ordonnance = Ordonnance.of(
                 ordonnanceId,
                 patient,
                 medecin,
-                lignePrescriptions
+                traitements
         );
         assertNotNull(ordonnance);
         assertEquals(1, ordonnance.prescriptions().size());
