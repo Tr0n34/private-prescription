@@ -12,7 +12,7 @@ public class DomainException extends RuntimeException implements DomainObject {
     private final transient Map<String, Object> placeHolders;
 
     public DomainException(ExceptionCode code) {
-        this.code = code;
+        this.code = Objects.requireNonNull(code);
         this.placeHolders = null;
     }
 

@@ -20,7 +20,7 @@ import java.util.List;
 @RequestMapping("/patients")
 public class PatientController implements Adapter {
 
-    private final static Logger logger = LoggerFactory.getLogger(PatientController.class.getName());
+    private static final Logger logger = LoggerFactory.getLogger(PatientController.class.getName());
 
     private final LocationBuilder locationBuilder;
     private final RegisterPatientUseCase registerPatientUseCase;
@@ -47,9 +47,10 @@ public class PatientController implements Adapter {
     public ResponseEntity<Void> createPatients(
             @RequestBody List<PatientDto> patientDtos,
             @RequestHeader("userId")  String userId) {
-        patientDtos.forEach(patientDto -> {
-            registerPatientUseCase.registerPatient(patientACL.toDomain(patientDto, userId));
-        });
+        logger.trace("createPatients mode Batch");
+        patientDtos.forEach(
+                patientDto -> registerPatientUseCase.registerPatient(patientACL.toDomain(patientDto, userId))
+        );
         return ResponseEntity.ok().build();
     }
 

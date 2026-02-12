@@ -20,7 +20,7 @@ public record OpenBaoConfigurationProperties(
         @NotNull Kv kv
 ) {
 
-    private final static Logger logger = LoggerFactory.getLogger(OpenBaoConfigurationProperties.class.getName());
+    private static final Logger logger = LoggerFactory.getLogger(OpenBaoConfigurationProperties.class.getName());
 
     public static final int KV_VERSION_1 = 1;
     public static final int KV_VERSION_2 = 2;

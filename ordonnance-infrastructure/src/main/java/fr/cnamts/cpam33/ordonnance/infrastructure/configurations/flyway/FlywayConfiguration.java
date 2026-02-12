@@ -18,7 +18,7 @@ import javax.sql.DataSource;
 })
 public class FlywayConfiguration {
 
-    private final static Logger logger = LoggerFactory.getLogger(FlywayConfiguration.class);
+    private static final Logger logger = LoggerFactory.getLogger(FlywayConfiguration.class);
 
     @Bean(initMethod = "migrate")
     @ConditionalOnProperty(prefix = "flyway.ordonnance", name = "enabled", havingValue = "true", matchIfMissing = true)

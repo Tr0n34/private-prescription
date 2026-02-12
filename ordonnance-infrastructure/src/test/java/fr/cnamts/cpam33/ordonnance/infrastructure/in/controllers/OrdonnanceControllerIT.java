@@ -54,7 +54,7 @@ public class OrdonnanceControllerIT {
         OrdonnanceDto dto = new OrdonnanceDto(
                 new PatientIdDto("1234567891234"),
                 new MedecinIdDto("1234567893214", "12365478936"),
-                List.of(new PrescriptionDto()));
+                List.of(new PrescriptionDto("test")));
         CreateOrdonnanceCmd cmd = Mockito.mock(CreateOrdonnanceCmd.class);
         Ordonnance ordonnance = Mockito.mock(Ordonnance.class);
         when(ordonnanceApiMapper.toCommand(Mockito.any(OrdonnanceDto.class))).thenReturn(cmd);
@@ -71,7 +71,7 @@ public class OrdonnanceControllerIT {
         OrdonnanceDto invalidDto = new OrdonnanceDto(
                 new PatientIdDto(""),
                 new MedecinIdDto("", ""),
-                List.of(new PrescriptionDto()));
+                List.of(new PrescriptionDto("test")));
 
         mockMvc.perform(post("/ordonnances")
                         .contentType(MediaType.APPLICATION_JSON)

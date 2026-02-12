@@ -12,7 +12,6 @@ public final class TraceValueNormalizer {
     private static final int MAX_DEPTH = 4;
     private static final int MAX_COLLECTION = 50;
     private static final int MAX_STRING = 2000;
-    private static final TypeReference<Map<String, Object>> MAP_REF = new TypeReference<>() {};
     private static final Object NO_MATCH = new Object();
 
     private TraceValueNormalizer() {}
@@ -113,13 +112,7 @@ public final class TraceValueNormalizer {
     }
 
     private static boolean isCycle(Object value, IdentityHashMap<Object, Boolean> seen) {
-        boolean cycle = false;
-        if (isComplex(value)) {
-            if (seen.put(value, Boolean.TRUE) != null) {
-                cycle = true;
-            }
-        }
-        return cycle;
+        return isComplex(value) && seen.put(value, Boolean.TRUE) != null;
     }
 
     private static boolean isArray(Object value) {

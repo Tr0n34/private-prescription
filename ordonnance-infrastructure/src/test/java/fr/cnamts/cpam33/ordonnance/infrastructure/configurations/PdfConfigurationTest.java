@@ -51,10 +51,8 @@ class PdfConfigurationTest {
     void testTemplateEngineCreation() {
         SpringTemplateEngine engine = pdfConfiguration.templateEngine();
         assertNotNull(engine, "SpringTemplateEngine should not be null");
-        boolean hasClassLoader = engine.getTemplateResolvers().stream()
-                .anyMatch(r -> r instanceof ClassLoaderTemplateResolver);
-        boolean hasFile = engine.getTemplateResolvers().stream()
-                .anyMatch(r -> r instanceof FileTemplateResolver);
+        boolean hasClassLoader = engine.getTemplateResolvers().stream().anyMatch(ClassLoaderTemplateResolver.class::isInstance);
+        boolean hasFile = engine.getTemplateResolvers().stream().anyMatch(FileTemplateResolver.class::isInstance);
         assertTrue(hasClassLoader, "Template engine should have ClassLoaderTemplateResolver");
         assertTrue(hasFile, "Template engine should have FileTemplateResolver");
     }

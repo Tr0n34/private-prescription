@@ -23,7 +23,7 @@ import java.util.Map;
 @RestControllerAdvice
 public class GlobalControllerAdvice {
 
-    private final static Logger logger = LoggerFactory.getLogger(GlobalControllerAdvice.class);
+    private static final Logger logger = LoggerFactory.getLogger(GlobalControllerAdvice.class);
 
     public static final String INTERNAL_EXCEPTION = "INTERNAL_EXCEPTION";
 

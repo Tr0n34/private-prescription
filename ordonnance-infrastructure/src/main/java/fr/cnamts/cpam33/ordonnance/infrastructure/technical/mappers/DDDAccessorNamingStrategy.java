@@ -27,7 +27,7 @@ public class DDDAccessorNamingStrategy implements AccessorNamingStrategy {
             boolean noParams = hasNoParameters(method);
             boolean oneParam = hasOneParameter(method);
             boolean returnsVoid = returnsVoid(method);
-            if ( isStandardGetter(method, name, noParams, returnsVoid)
+            if ( isStandardGetter(name, noParams, returnsVoid)
                     || isFieldBackedGetter(method, name, noParams, returnsVoid) ) {
                 result = MethodType.GETTER;
             } else if ( isStandardSetter(method, name, oneParam, returnsVoid) ) {
@@ -53,16 +53,13 @@ public class DDDAccessorNamingStrategy implements AccessorNamingStrategy {
         return method.getReturnType().getKind() == TypeKind.VOID;
     }
 
-    private boolean isStandardGetter(ExecutableElement method, String name, boolean noParams, boolean returnsVoid) {
-        boolean getter = false;
+    private boolean isStandardGetter(String name, boolean noParams, boolean returnsVoid) {
+        boolean isAGetter = false;
         if ( noParams && !returnsVoid ) {
-            if ( name.startsWith(GET_PREFIX) && name.length() > 3 ) {
-                getter = true;
-            } else if (name.startsWith(IS_PREFIX) && name.length() > 2 ) {
-                getter = true;
-            }
+            isAGetter = (name.startsWith(GET_PREFIX) && name.length() > 3)
+                    || (name.startsWith(IS_PREFIX)  && name.length() > 2);
         }
-        return getter;
+        return isAGetter;
     }
 
     private boolean isFieldBackedGetter(ExecutableElement method, String name, boolean noParams, boolean returnsVoid) {
@@ -70,13 +67,10 @@ public class DDDAccessorNamingStrategy implements AccessorNamingStrategy {
     }
 
     private boolean isStandardSetter(ExecutableElement method, String name, boolean oneParam, boolean returnsVoid) {
-        boolean setter = false;
-        if ( oneParam && name.startsWith(SET_PREFIX) && name.length() > 3 ) {
-            if (returnsVoid || returnsEnclosingType(method)) {
-                setter = true;
-            }
-        }
-        return setter;
+        return oneParam
+                && name.startsWith(SET_PREFIX)
+                && name.length() > 3
+                && (returnsVoid || returnsEnclosingType(method));
     }
 
     @Override

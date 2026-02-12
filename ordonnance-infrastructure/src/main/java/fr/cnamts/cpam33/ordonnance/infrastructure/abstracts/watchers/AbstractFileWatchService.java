@@ -133,13 +133,16 @@ public abstract class AbstractFileWatchService implements Runnable {
                     StandardWatchEventKinds.ENTRY_CREATE,
                     StandardWatchEventKinds.ENTRY_DELETE);
             logger.info("Watch service registered successfully for: {}", directory);
-            while (running.get() && !Thread.currentThread().isInterrupted()) {
+            while ( running.get() && !Thread.currentThread().isInterrupted() ) {
                 WatchKey key = waitForWatchKey(ws);
-                if ( key == null ) break;
-                processWatchEvents(key);
-                if ( !key.reset() ) {
-                    logger.warn("Watch key no longer valid, stopping watcher");
-                    break;
+                if ( key != null ) {
+                    processWatchEvents(key);
+                    if ( !key.reset() ) {
+                        logger.warn("Watch key no longer valid, stopping watcher");
+                        running.set(false);
+                    }
+                } else {
+                    running.set(false);
                 }
             }
         } catch (ClosedWatchServiceException e) {
