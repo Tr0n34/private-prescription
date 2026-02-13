@@ -17,7 +17,9 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
 
 import java.io.InputStream;
+import java.time.Instant;
 import java.util.List;
+import java.util.UUID;
 
 @Component
 public class ActeMetierLoader {
@@ -63,7 +65,10 @@ public class ActeMetierLoader {
                 }
                 logger.info("Acte Metier reloaded from {}", actesMetiersFile);
                 acteMetierCache.refresh();
-                applicationEventPublisher.publishEvent(new ActeMetierLoadedEvent());
+                applicationEventPublisher.publishEvent(new ActeMetierLoadedEvent(
+                        UUID.randomUUID(),
+                        Instant.now()
+                ));
             } catch (Exception e) {
                 logger.error("Failed to reload Acte Metier", e);
             }

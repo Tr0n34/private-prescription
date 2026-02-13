@@ -32,7 +32,8 @@ public final class PathJoiner {
                 .filter(s -> !s.isEmpty())
                 .map(s -> s.replace('\\', SLASH))
                 .map(s -> {
-                    int start = 0, end = s.length();
+                    int start = 0;
+                    int end = s.length();
                     while (start < end && s.charAt(start) == SLASH) start++;
                     while (end > start && s.charAt(end - 1) == SLASH) end--;
                     return start < end ? s.substring(start, end) : null;

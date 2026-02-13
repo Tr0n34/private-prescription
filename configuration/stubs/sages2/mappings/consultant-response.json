@@ -1,7 +1,7 @@
 {
   "request": {
     "method": "GET",
-    "urlPathPattern": "/patients/([0-9A-Za-z_-]+)"
+    "urlPathPattern": "/consultants/([0-9A-Za-z_-]+)"
   },
   "response": {
     "status": 200,
