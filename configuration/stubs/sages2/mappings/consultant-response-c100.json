@@ -1,8 +1,8 @@
 {
-  "priority": 100,
+  "priority": 10,
   "request": {
     "method": "GET",
-    "urlPathPattern": "/consultants/([0-9A-Za-z_-]{1,10})"
+    "urlPathPattern": "/consultants/100"
   },
   "response": {
     "status": 200,
@@ -10,6 +10,6 @@
       "Content-Type": "application/json; charset=utf-8"
     },
     "transformers": ["response-template"],
-    "bodyFileName": "consultant-200.json.hbs"
+    "bodyFileName": "consultant-id100.json"
   }
 }

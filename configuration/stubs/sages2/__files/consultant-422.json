@@ -1,0 +1,5 @@
+{
+  "code": "ERREUR_FORMAT_001",
+  "message": "Format incorrect",
+  "detail": "Format attendu pour une Id Externe: max(10)"
+}
