@@ -45,13 +45,7 @@ public interface TraceEntityMapper {
     default String mapTraceContext(Trace trace, @Context ObjectMapper traceObjectMapper) {
         try {
             var safeAttrs = trace.context().attributes().stream()
-                    .map(traceAttribute -> new LinkedHashMap<String, Object>() {{
-                        put("name", traceAttribute.name());
-                        put("value", TraceValueNormalizer.normalize(
-                                traceAttribute.value() == null ? null : traceAttribute.value().value(),
-                                traceObjectMapper
-                        ));
-                    }})
+                    .map(traceAttribute -> toTraceAttributeMap(traceAttribute, traceObjectMapper))
                     .toList();
             return traceObjectMapper.writeValueAsString(safeAttrs);
         } catch (Exception e) {
@@ -80,6 +74,15 @@ public interface TraceEntityMapper {
                 entity.createdOn(),
                 new TraceContext(attributes)
         );
+    }
+
+    private Map<String, Object> toTraceAttributeMap(TraceAttribute traceAttribute, ObjectMapper traceObjectMapper) {
+        Map<String, Object> map = new LinkedHashMap<>();
+        map.put("name", traceAttribute.name());
+        map.put("value", TraceValueNormalizer.normalize(
+                traceAttribute.value() == null ? null : traceAttribute.value().value(),
+                traceObjectMapper));
+        return map;
     }
 
 }

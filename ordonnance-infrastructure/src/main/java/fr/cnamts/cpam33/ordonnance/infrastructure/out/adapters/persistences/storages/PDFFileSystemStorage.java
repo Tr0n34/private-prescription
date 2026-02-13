@@ -17,7 +17,7 @@ import java.util.Map;
 @Component
 public class PDFFileSystemStorage implements PDFStorage{
 
-    private final static Logger logger = LoggerFactory.getLogger(PDFFileSystemStorage.class);
+    private static final Logger logger = LoggerFactory.getLogger(PDFFileSystemStorage.class);
 
     public static final String ERROR_PDF_KEY = "pdf_key";
     public static final char SLASH = '/';

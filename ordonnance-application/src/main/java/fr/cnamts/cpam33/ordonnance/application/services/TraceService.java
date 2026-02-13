@@ -23,14 +23,11 @@ public class TraceService implements ArchiverTracePort, TracePort {
 
     private final Clock clock;
     private final TracePublisher tracePublisher;
-    private final DocumentStoragePort documentStoragePort;
-    private final TraceRepository traceRepository;
 
-    public TraceService(Clock clock, TracePublisher tracePublisher, DocumentStoragePort documentStoragePort, TraceRepository traceRepository) {
+    public TraceService(Clock clock,
+                        TracePublisher tracePublisher) {
         this.clock = clock;
         this.tracePublisher = tracePublisher;
-        this.documentStoragePort = documentStoragePort;
-        this.traceRepository = traceRepository;
     }
 
     @Override
@@ -45,7 +42,7 @@ public class TraceService implements ArchiverTracePort, TracePort {
 
     @Override
     public void archiver(TraceId traceId) {
-        traceRepository.findByTraceId(traceId).ifPresent(documentStoragePort::store);
+        throw new UnsupportedOperationException("not supported yet");
     }
 
     @Override
