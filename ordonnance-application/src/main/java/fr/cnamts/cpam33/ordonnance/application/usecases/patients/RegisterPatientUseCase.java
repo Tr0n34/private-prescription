@@ -12,6 +12,8 @@ import fr.cnamts.cpam33.ordonnance.domain.ports.out.patients.PatientNumGenerator
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.patients.PatientRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.Clock;
+
 @Service
 @ActeMetierEvent(ActeMetierCode.ACT_PATIENT_CREER)
 public class RegisterPatientUseCase implements RegisterPatientPort, CommandUseCase<RegisterPatientCmd, Patient> {
@@ -32,6 +34,7 @@ public class RegisterPatientUseCase implements RegisterPatientPort, CommandUseCa
 
     @Override
     public Patient execute(RegisterPatientCmd command) throws DomainException {
+
         Patient patientToRegister = Patient.of(
                 new PatientId(patientNumGenerator.generate()),
                 command.externalPatientId(),

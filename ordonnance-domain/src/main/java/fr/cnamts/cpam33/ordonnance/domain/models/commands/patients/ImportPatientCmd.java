@@ -11,22 +11,14 @@ public record ImportPatientCmd(
         ExternalPatientId externalPatientId
 ) implements Command, ValidatableCommand {
 
-    public ImportPatientCmd {
-        CommandValidation.failFast(
-                getClass().getSimpleName(),
-                validateSelf(externalPatientId)
-        );
-    }
-
     @Override
     public ValidationResult validate() {
-        return validateSelf(externalPatientId);
-    }
-
-    public ValidationResult validateSelf(ExternalPatientId externalPatientId) {
-        return new Validator()
-                .notBlank(externalPatientId.numero(), "externalPatientId.numero")
-                .validate();
+        Validator validator = new Validator();
+        validator.notNull(externalPatientId, "externalPatientId");
+        if ( externalPatientId != null ) {
+            validator.notBlank(externalPatientId.numero(), "externalPatientId.numero");
+        }
+        return validator.validate();
     }
 
 }

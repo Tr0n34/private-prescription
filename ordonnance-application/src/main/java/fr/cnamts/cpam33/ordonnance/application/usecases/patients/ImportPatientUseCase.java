@@ -3,9 +3,11 @@ package fr.cnamts.cpam33.ordonnance.application.usecases.patients;
 import fr.cnamts.cpam33.ordonnance.application.abstracts.CommandUseCase;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.ExternalPatientId;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.Patient;
+import fr.cnamts.cpam33.ordonnance.domain.models.commands.CommandValidation;
 import fr.cnamts.cpam33.ordonnance.domain.models.commands.patients.ImportPatientCmd;
 import fr.cnamts.cpam33.ordonnance.domain.models.commands.patients.RegisterPatientCmd;
 import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.DomainException;
+import fr.cnamts.cpam33.ordonnance.domain.policies.PatientRules;
 import fr.cnamts.cpam33.ordonnance.domain.ports.in.patients.ImportPatientPort;
 import fr.cnamts.cpam33.ordonnance.domain.ports.in.patients.RegisterPatientPort;
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.patients.FetchPatientGateway;
@@ -34,7 +36,9 @@ public class ImportPatientUseCase implements ImportPatientPort, CommandUseCase<I
      */
     @Override
     public Patient execute(ImportPatientCmd command) throws DomainException {
-        fetchPatientGateway.fetchById(command.externalPatientId());
+        CommandValidation.ensureValid(command);
+        Patient patient = fetchPatientGateway.fetchById(command.externalPatientId());
+        PatientRules.forImport().check(patient);
         return null;
     }
 

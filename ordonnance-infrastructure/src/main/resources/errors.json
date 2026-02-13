@@ -18,6 +18,7 @@
   { "code": "BS_PATIENT_NOT_FOUND", "boundedContext": "PATIENT", "httpStatus": 404, "message": "Patient introuvable" },
   { "code": "BS_PATIENT_INVALID", "boundedContext": "PATIENT", "httpStatus": 400, "message": "Patient invalide" },
   { "code": "BS_PATIENT_DATE_NAISSANCE_INVALID", "boundedContext": "PATIENT", "httpStatus": 400, "message": "Date de naissance invalide" },
+  { "code": "BS_PATIENT_EXTERNAL_ID_MISSING", "boundedContext": "PATIENT", "httpStatus": 400, "message": "Import : Patient id externe obligatoire"  },
   { "code": "BS_PRENOM_MISSING", "boundedContext": "PATIENT", "httpStatus": 400, "message": "Prénom manquant" },
   { "code": "BS_PRENOM_LENGTH", "boundedContext": "PATIENT", "httpStatus": 400, "message": "Prénom trop long ou trop court" },
 
@@ -54,5 +55,5 @@
   { "code": "TECH_TRACE_OUTBOX_WRITE_CRASH", "boundedContext": "TRACE", "httpStatus": 400, "message": "Erreur d'enregistrement en trace outbox" },
 
   { "code": "TECH_CACHE_ACTE_METIER_INEXISTANT", "boundedContext": "ACTE_METIER", "httpStatus": 400, "message": "Acte métier inexistant : {acteMetier}" },
-  { "code" : "TECH_RESOLVER_ACTE_METIER_CODE_INEXISTANT", "boundedContext": "ACTE_METIER", "httpStatus":  400, "message":  "Code d'erreur non trouvé : {acteMetier}"}
+  { "code": "TECH_RESOLVER_ACTE_METIER_CODE_INEXISTANT", "boundedContext": "ACTE_METIER", "httpStatus":  400, "message":  "Code d'erreur non trouvé : {acteMetier}"}
 ]

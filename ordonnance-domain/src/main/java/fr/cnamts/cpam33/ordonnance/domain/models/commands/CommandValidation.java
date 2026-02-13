@@ -1,5 +1,6 @@
 package fr.cnamts.cpam33.ordonnance.domain.models.commands;
 
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.validation.ValidatableCommand;
 import fr.cnamts.cpam33.ordonnance.domain.abstracts.validation.ValidationResult;
 import fr.cnamts.cpam33.ordonnance.domain.abstracts.validation.Validator;
 import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.DomainException;
@@ -27,6 +28,14 @@ public final class CommandValidation {
                     )
             );
         }
+    }
+
+    public static void ensureValid(String commandName, ValidatableCommand cmd) {
+        failFast(commandName, cmd.validate());
+    }
+
+    public static void ensureValid(ValidatableCommand cmd) {
+        ensureValid(cmd.getClass().getSimpleName(), cmd);
     }
 
     public static ValidationResult notNullArgs(Map<String, Object> args) {

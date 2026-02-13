@@ -19,7 +19,7 @@ public record CreateOrdonnanceCmd(
 
     public CreateOrdonnanceCmd {
         CommandValidation.failFast(
-                getClass().getSimpleName(),
+                CreateOrdonnanceCmd.class.getSimpleName(),
                 validateSelf(patientId, medecinId, traitements)
         );
     }

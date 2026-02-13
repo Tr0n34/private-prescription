@@ -17,7 +17,8 @@ public class PatientFixtures {
                 new ExternalPatientId("123"),
                 new Nom("Dupont"),
                 new Prenom("Jean"),
-                LocalDate.of(1980, Month.SEPTEMBER, 5));
+                LocalDate.of(1980, Month.SEPTEMBER, 5)
+                );
     }
 
     public static Patient patientValideWithIdAndCes(String numero, String externalId) {
