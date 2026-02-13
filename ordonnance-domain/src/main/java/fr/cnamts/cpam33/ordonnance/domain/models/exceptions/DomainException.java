@@ -3,10 +3,14 @@ package fr.cnamts.cpam33.ordonnance.domain.models.exceptions;
 import fr.cnamts.cpam33.ordonnance.domain.abstracts.domain.DomainObject;
 import fr.cnamts.cpam33.ordonnance.domain.abstracts.exceptions.ExceptionCode;
 
+import java.io.Serial;
 import java.util.Map;
 import java.util.Objects;
 
 public class DomainException extends RuntimeException implements DomainObject {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     private final transient ExceptionCode code;
     private final transient Map<String, Object> placeHolders;
