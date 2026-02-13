@@ -47,6 +47,7 @@
         <flyway.version>12.0.0</flyway.version>
         <spring-vault-core.version>4.0.0</spring-vault-core.version>
         <test-container.version>1.21.4</test-container.version>
+        <springdoc-openapi.version>2.8.15</springdoc-openapi.version>
 
         <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
         <sonar.coverage.exclusions>ordonnance-architecture-validation/**</sonar.coverage.exclusions>
@@ -187,6 +188,11 @@
                 <groupId>io.micrometer</groupId>
                 <artifactId>micrometer-registry-prometheus</artifactId>
                 <version>${micrometer-prometheus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+                <version>${springdoc-openapi.version}</version>
             </dependency>
 
             <!-- Validation Architecture -->
