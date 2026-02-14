@@ -27,6 +27,9 @@ public record Patient(
         if ( prenom == null ) {
             throw new DomainException(PatientExceptionCode.BS_PATIENT_PRENOM_IS_MISSING);
         }
+        if ( dateNaissance.isAfter(LocalDate.now())) {
+            throw new DomainException(PatientExceptionCode.BS_PATIENT_DATE_NAISSANCE_INVALID);
+        }
     }
 
     public static Patient of(PatientId patientId,
@@ -34,24 +37,19 @@ public record Patient(
                              Nom nom,
                              Prenom prenom,
                              LocalDate dateNaissance) {
-        if ( dateNaissance == null ) {
-            throw new DomainException(PatientExceptionCode.BS_PATIENT_INVALID);
-        }
-        if ( dateNaissance.isAfter(LocalDate.now()) ) {
-            throw new DomainException(PatientExceptionCode.BS_PATIENT_DATE_NAISSANCE_INVALID);
-        }
         return new Patient(patientId, externalPatientId, nom, prenom, dateNaissance);
     }
 
-    public Patient renommer(Nom newNom, Prenom newPrenom) {
+
+    public Patient rename(Nom newNom, Prenom newPrenom) {
         return copy(this.patientId, this.externalPatientId, newNom, newPrenom, this.dateNaissance);
     }
 
-    public Patient attacherExternalId(ExternalPatientId newExternalId) {
+    public Patient attachExternalId(ExternalPatientId newExternalId) {
         return copy(this.patientId, newExternalId, this.nom, this.prenom, this.dateNaissance);
     }
 
-    public Patient changerDateNaissance(LocalDate newDateNaissance, Clock clock) {
+    public Patient changeDateNaissance(LocalDate newDateNaissance, Clock clock) {
         if ( newDateNaissance == null ) {
             throw new DomainException(PatientExceptionCode.BS_PATIENT_INVALID);
         }

@@ -30,4 +30,13 @@ public class PatientFixtures {
                 LocalDate.of(1980, Month.SEPTEMBER, 5));
     }
 
+    public static Patient patientValideWitExternalId(ExternalPatientId externalId) {
+        return Patient.of(
+                new PatientId("123456798"),
+                externalId,
+                new Nom("Dupont"),
+                new Prenom("Jean"),
+                LocalDate.of(1980, Month.SEPTEMBER, 5));
+    }
+
 }

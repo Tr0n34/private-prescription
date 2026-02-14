@@ -3,16 +3,16 @@ package fr.cnamts.cpam33.ordonnance.application.usecases.patients;
 import fr.cnamts.cpam33.ordonnance.application.abstracts.CommandUseCase;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.Patient;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.PatientId;
+import fr.cnamts.cpam33.ordonnance.domain.models.commands.CommandValidation;
 import fr.cnamts.cpam33.ordonnance.domain.models.commands.patients.RegisterPatientCmd;
 import fr.cnamts.cpam33.ordonnance.domain.models.events.ActeMetierEvent;
 import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.DomainException;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.enums.ActeMetierCode;
+import fr.cnamts.cpam33.ordonnance.domain.policies.PatientPolicies;
 import fr.cnamts.cpam33.ordonnance.domain.ports.in.patients.RegisterPatientPort;
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.patients.PatientNumGenerator;
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.patients.PatientRepository;
 import org.springframework.stereotype.Service;
-
-import java.time.Clock;
 
 @Service
 @ActeMetierEvent(ActeMetierCode.ACT_PATIENT_CREER)
@@ -27,14 +27,13 @@ public class RegisterPatientUseCase implements RegisterPatientPort, CommandUseCa
         this.patientNumGenerator = patientNumGenerator;
     }
 
-
     public Patient registerPatient(RegisterPatientCmd registerPatientCmd) {
         return execute(registerPatientCmd);
     }
 
     @Override
     public Patient execute(RegisterPatientCmd command) throws DomainException {
-
+        CommandValidation.ensureValid(command);
         Patient patientToRegister = Patient.of(
                 new PatientId(patientNumGenerator.generate()),
                 command.externalPatientId(),
@@ -42,6 +41,7 @@ public class RegisterPatientUseCase implements RegisterPatientPort, CommandUseCa
                 command.prenom(),
                 command.dateNaissance()
         );
+        PatientPolicies.forCreation().enforce(patientToRegister);
         return patientRepository.save(patientToRegister);
     }
 

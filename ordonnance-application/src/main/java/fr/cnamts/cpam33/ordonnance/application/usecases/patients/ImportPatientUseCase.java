@@ -5,13 +5,10 @@ import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.Extern
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.Patient;
 import fr.cnamts.cpam33.ordonnance.domain.models.commands.CommandValidation;
 import fr.cnamts.cpam33.ordonnance.domain.models.commands.patients.ImportPatientCmd;
-import fr.cnamts.cpam33.ordonnance.domain.models.commands.patients.RegisterPatientCmd;
 import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.DomainException;
-import fr.cnamts.cpam33.ordonnance.domain.policies.PatientRules;
+import fr.cnamts.cpam33.ordonnance.domain.policies.PatientPolicies;
 import fr.cnamts.cpam33.ordonnance.domain.ports.in.patients.ImportPatientPort;
-import fr.cnamts.cpam33.ordonnance.domain.ports.in.patients.RegisterPatientPort;
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.patients.FetchPatientGateway;
-import fr.cnamts.cpam33.ordonnance.domain.ports.out.patients.PatientRepository;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -38,8 +35,8 @@ public class ImportPatientUseCase implements ImportPatientPort, CommandUseCase<I
     public Patient execute(ImportPatientCmd command) throws DomainException {
         CommandValidation.ensureValid(command);
         Patient patient = fetchPatientGateway.fetchById(command.externalPatientId());
-        PatientRules.forImport().check(patient);
-        return null;
+        PatientPolicies.forImport().enforce(patient);
+        return patient;
     }
 
 }
