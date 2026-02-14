@@ -1,8 +1,8 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.controllers.admin;
 
 import fr.cnamts.cpam33.ordonnance.application.services.TraceService;
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.TraceAttribute;
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.TraceContext;
+import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.TraceAttribute;
+import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.TraceContext;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.dto.traces.TraceDto;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.dto.traces.WorkerStatusDto;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.mappers.TraceApiMapper;

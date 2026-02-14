@@ -2,14 +2,11 @@ package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters;
 
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.ExternalPatientId;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.Patient;
-import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.DomainException;
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.patients.FetchPatientGateway;
-import fr.cnamts.cpam33.ordonnance.infrastructure.out.dto.PatientDto;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
-import org.springframework.web.client.RestTemplate;
 
 @Component
 public class ImportPatientApiClient implements FetchPatientGateway {

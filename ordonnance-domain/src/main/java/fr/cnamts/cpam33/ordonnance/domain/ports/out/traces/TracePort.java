@@ -1,9 +1,9 @@
 package fr.cnamts.cpam33.ordonnance.domain.ports.out.traces;
 
-import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.utilisateurs.UtilisateurId;
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.ActeMetier;
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.TraceContext;
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.enums.ActeMetierCode;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.ids.UtilisateurId;
+import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.ActeMetier;
+import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.TraceContext;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.domain.enums.ActeMetierCode;
 
 public interface TracePort {
 

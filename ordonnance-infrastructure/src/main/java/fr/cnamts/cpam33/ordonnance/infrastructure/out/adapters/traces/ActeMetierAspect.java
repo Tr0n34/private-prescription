@@ -1,11 +1,11 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.traces;
 
-import fr.cnamts.cpam33.ordonnance.domain.models.events.ActeMetierEvent;
-import fr.cnamts.cpam33.ordonnance.domain.models.events.TraceCommand;
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.Trace;
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.TraceAttribute;
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.TraceContext;
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.TraceValue;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.events.ActeMetierEvent;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.events.TraceCommand;
+import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.Trace;
+import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.TraceAttribute;
+import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.TraceContext;
+import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.TraceValue;
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.traces.TracePublisher;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;

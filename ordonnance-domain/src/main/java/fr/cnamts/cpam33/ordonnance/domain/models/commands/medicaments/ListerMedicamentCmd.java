@@ -1,7 +1,7 @@
 package fr.cnamts.cpam33.ordonnance.domain.models.commands.medicaments;
 
-import fr.cnamts.cpam33.ordonnance.domain.abstracts.cqrs.Command;
-import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.utilisateurs.UtilisateurId;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.cqrs.Command;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.ids.UtilisateurId;
 
 public record ListerMedicamentCmd(
         String nom,

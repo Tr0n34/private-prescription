@@ -5,9 +5,9 @@ import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.Patien
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.PatientId;
 import fr.cnamts.cpam33.ordonnance.domain.models.commands.CommandValidation;
 import fr.cnamts.cpam33.ordonnance.domain.models.commands.patients.RegisterPatientCmd;
-import fr.cnamts.cpam33.ordonnance.domain.models.events.ActeMetierEvent;
-import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.DomainException;
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.enums.ActeMetierCode;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.events.ActeMetierEvent;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.DomainException;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.domain.enums.ActeMetierCode;
 import fr.cnamts.cpam33.ordonnance.domain.policies.PatientPolicies;
 import fr.cnamts.cpam33.ordonnance.domain.ports.in.patients.RegisterPatientPort;
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.patients.PatientNumGenerator;
@@ -15,7 +15,7 @@ import fr.cnamts.cpam33.ordonnance.domain.ports.out.patients.PatientRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-@ActeMetierEvent(ActeMetierCode.ACT_PATIENT_CREER)
+@ActeMetierEvent(ActeMetierCode.PATIENT_CREER)
 public class RegisterPatientUseCase implements RegisterPatientPort, CommandUseCase<RegisterPatientCmd, Patient> {
 
     private final PatientRepository patientRepository;
@@ -34,15 +34,15 @@ public class RegisterPatientUseCase implements RegisterPatientPort, CommandUseCa
     @Override
     public Patient execute(RegisterPatientCmd command) throws DomainException {
         CommandValidation.ensureValid(command);
-        Patient patientToRegister = Patient.of(
+        Patient newPatient = Patient.of(
                 new PatientId(patientNumGenerator.generate()),
                 command.externalPatientId(),
                 command.nom(),
                 command.prenom(),
                 command.dateNaissance()
         );
-        PatientPolicies.forCreation().enforce(patientToRegister);
-        return patientRepository.save(patientToRegister);
+        PatientPolicies.forCreate().enforce(newPatient);
+        return patientRepository.save(newPatient);
     }
 
 }

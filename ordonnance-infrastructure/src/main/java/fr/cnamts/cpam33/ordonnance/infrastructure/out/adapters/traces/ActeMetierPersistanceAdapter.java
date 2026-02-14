@@ -1,7 +1,7 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.traces;
 
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.ActeMetier;
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.ActeMetierId;
+import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.ActeMetier;
+import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.ActeMetierId;
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.traces.ActeMetierRepository;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.persistences.repositories.traces.ActeMetierJpaRepository;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.persistences.repositories.traces.FonctionJpaRepository;

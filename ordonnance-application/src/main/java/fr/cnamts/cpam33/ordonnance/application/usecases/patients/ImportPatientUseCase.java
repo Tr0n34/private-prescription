@@ -5,7 +5,7 @@ import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.Extern
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.Patient;
 import fr.cnamts.cpam33.ordonnance.domain.models.commands.CommandValidation;
 import fr.cnamts.cpam33.ordonnance.domain.models.commands.patients.ImportPatientCmd;
-import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.DomainException;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.DomainException;
 import fr.cnamts.cpam33.ordonnance.domain.policies.PatientPolicies;
 import fr.cnamts.cpam33.ordonnance.domain.ports.in.patients.ImportPatientPort;
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.patients.FetchPatientGateway;

@@ -1,8 +1,8 @@
 package fr.cnamts.cpam33.ordonnance.domain.models.aggregates;
 
-import fr.cnamts.cpam33.ordonnance.domain.abstracts.domain.DomainObjectId;
-import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.DomainException;
-import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.enums.OrdonnanceExceptionCode;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.domain.DomainObjectId;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.DomainException;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.enums.OrdonnanceExceptionCode;
 
 public record OrdonnanceId(
         String numero

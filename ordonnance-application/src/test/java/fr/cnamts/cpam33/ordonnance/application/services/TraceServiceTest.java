@@ -1,11 +1,11 @@
 package fr.cnamts.cpam33.ordonnance.application.services;
 
-import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.utilisateurs.UtilisateurId;
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.ActeMetier;
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.ActeMetierId;
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.TraceContext;
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.TraceId;
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.enums.ActeMetierCode;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.ids.UtilisateurId;
+import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.ActeMetier;
+import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.ActeMetierId;
+import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.TraceContext;
+import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.TraceId;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.domain.enums.ActeMetierCode;
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.traces.TracePublisher;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -35,7 +35,7 @@ class TraceServiceTest {
 
     @Test
     void should_publish_trace_with_acteMetierCode() {
-        ActeMetierCode code = ActeMetierCode.ACT_ORD_CREER;
+        ActeMetierCode code = ActeMetierCode.ORD_CREER;
         UtilisateurId utilisateurId = new UtilisateurId("u-123");
         TraceContext context = mock(TraceContext.class);
         service.trace(code, utilisateurId, context);
@@ -52,7 +52,7 @@ class TraceServiceTest {
     @Test
     void should_publish_trace_with_acteMetier() {
         ActeMetier acteMetier = mock(ActeMetier.class);
-        ActeMetierCode code = ActeMetierCode.ACT_ORD_CREER;
+        ActeMetierCode code = ActeMetierCode.ORD_CREER;
         ActeMetierId expectedId = new ActeMetierId(code.name());
         when(acteMetier.acteMetierId()).thenReturn(expectedId);
         UtilisateurId utilisateurId = new UtilisateurId("u-999");

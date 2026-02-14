@@ -1,63 +1,49 @@
 package fr.cnamts.cpam33.ordonnance.domain.policies;
 
+import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.enums.PatientExceptionCode;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.policies.Policies;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.policies.Policy;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.policies.Rule;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.Patient;
-import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.DomainException;
-import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.enums.PatientExceptionCode;
 
 public final class PatientPolicies {
 
-    @FunctionalInterface
-    public interface PatientPolicy {
-        void enforce(Patient patient);
-    }
+    private PatientPolicies() { throw new UnsupportedOperationException("Policy factory"); }
 
-    public record Rule(String name, PatientPolicy patientPolicy) implements PatientPolicy {
-
-        @Override
-        public void enforce(Patient patient) {
-            patientPolicy.enforce(patient);
-        }
-    }
-
-    private PatientPolicies() {
-        throw new UnsupportedOperationException("Policy factory");
-    }
-
-    public static final Rule PATIENT_NOT_NULL =
-            new Rule("PATIENT_NOT_NULL", patient -> {
-                if ( patient == null ) {
-                    throw new DomainException(PatientExceptionCode.BS_PATIENT_INVALID);
-                }
+    public static final Rule<Patient, PatientExceptionCode> PATIENT_NOT_NULL =
+            Policies.rule(PatientExceptionCode.BS_PATIENT_INVALID, (patient, fail) -> {
+                Policies.require(patient != null, () -> fail.of("patient", "null"));
             });
 
-    public static final Rule EXTERNAL_ID_REQUIRED =
-            new Rule("EXTERNAL_ID_REQUIRED", patient -> {
-                if ( patient.externalPatientId() == null
-                        || patient.externalPatientId().numero() == null
-                        || patient.externalPatientId().numero().isBlank() ) {
-                    throw new DomainException(PatientExceptionCode.BS_PATIENT_EXTERNAL_ID_MISSING);
-                }
+    public static final Rule<Patient, PatientExceptionCode> EXTERNAL_ID_REQUIRED =
+            Policies.rule(PatientExceptionCode.BS_PATIENT_EXTERNAL_ID_MISSING, (patient, fail) -> {
+                Policies.require(patient.externalPatientId() != null, () -> fail.of("externalPatientId", "null"));
+                String numero = patient.externalPatientId().numero();
+                Policies.require(numero != null && !numero.isBlank(), () -> fail.of("externalPatientId.numero", "blank"));
             });
 
-    public static PatientPolicy forImport() {
-        return allOf(PATIENT_NOT_NULL, EXTERNAL_ID_REQUIRED);
+    public static Policy<Patient> forImport() {
+        return Policies.forOperation(
+                "Patient",
+                "IMPORT",
+                Policies.allOf(PATIENT_NOT_NULL, EXTERNAL_ID_REQUIRED)
+        );
     }
 
-    public static PatientPolicy forCreation() {
-        return allOf(PATIENT_NOT_NULL);
+    public static Policy<Patient> forCreate() {
+        return Policies.forOperation(
+                "Patient",
+                "CREATE",
+                Policies.allOf(PATIENT_NOT_NULL)
+        );
     }
 
-    public static PatientPolicy forUpdate() {
-        return allOf(PATIENT_NOT_NULL);
-    }
-
-    private static PatientPolicy allOf(Rule... rules) {
-        return patient -> {
-            for (Rule rule : rules) {
-                rule.enforce(patient);
-            }
-        };
+    public static Policy<Patient> forUpdate() {
+        return Policies.forOperation(
+                "Patient",
+                "UPDATE",
+                Policies.allOf(PATIENT_NOT_NULL)
+        );
     }
 
 }
-

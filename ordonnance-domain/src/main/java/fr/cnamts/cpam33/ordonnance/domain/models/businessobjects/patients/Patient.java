@@ -1,8 +1,8 @@
 package fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients;
 
-import fr.cnamts.cpam33.ordonnance.domain.abstracts.domain.DomainObject;
-import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.DomainException;
-import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.enums.PatientExceptionCode;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.domain.DomainObject;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.DomainException;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.enums.PatientExceptionCode;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identites.Nom;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identites.Prenom;
 

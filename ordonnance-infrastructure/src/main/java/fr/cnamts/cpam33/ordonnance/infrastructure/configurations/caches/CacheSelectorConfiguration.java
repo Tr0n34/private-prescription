@@ -2,6 +2,7 @@ package fr.cnamts.cpam33.ordonnance.infrastructure.configurations.caches;
 
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.traces.ActeMetierRepository;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.traces.InMemoryActeMetierCache;
+import org.apache.commons.lang3.NotImplementedException;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
@@ -13,7 +14,7 @@ public class CacheSelectorConfiguration {
     @Bean
     @ConditionalOnProperty(name = "ordonnance.cache.type", havingValue = "ignite")
     InMemoryActeMetierCache acteMetierCacheIgnite(ActeMetierRepository acteMetierRepository) {
-        return null;
+        throw new NotImplementedException("Not implemented yet");
     }
 
     @Bean

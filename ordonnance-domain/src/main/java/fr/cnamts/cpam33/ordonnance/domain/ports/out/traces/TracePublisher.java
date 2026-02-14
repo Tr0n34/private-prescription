@@ -1,6 +1,6 @@
 package fr.cnamts.cpam33.ordonnance.domain.ports.out.traces;
 
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.Trace;
+import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.Trace;
 
 public interface TracePublisher {
 

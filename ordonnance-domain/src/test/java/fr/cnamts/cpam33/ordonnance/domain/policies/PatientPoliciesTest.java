@@ -2,8 +2,8 @@ package fr.cnamts.cpam33.ordonnance.domain.policies;
 
 import fr.cnamts.cpam33.ordonnance.domain.fixtures.PatientFixtures;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.Patient;
-import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.DomainException;
-import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.enums.PatientExceptionCode;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.DomainException;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.enums.PatientExceptionCode;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Constructor;
@@ -68,7 +68,7 @@ class PatientPoliciesTest {
     @Test
     void for_creation_should_only_require_patient_not_null() {
         Patient patient = PatientFixtures.patientValideWitExternalId(null);
-        assertDoesNotThrow(() -> PatientPolicies.forCreation().enforce(patient));
+        assertDoesNotThrow(() -> PatientPolicies.forCreate().enforce(patient));
     }
 
     @Test

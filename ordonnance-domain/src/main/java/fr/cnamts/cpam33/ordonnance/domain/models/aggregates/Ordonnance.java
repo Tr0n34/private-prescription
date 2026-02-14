@@ -1,12 +1,12 @@
 package fr.cnamts.cpam33.ordonnance.domain.models.aggregates;
 
-import fr.cnamts.cpam33.ordonnance.domain.abstracts.domain.DomainObject;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.domain.DomainObject;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.Traitement;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.PrescriptionId;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.Patient;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.utilisateurs.Medecin;
-import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.DomainException;
-import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.enums.OrdonnanceExceptionCode;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.DomainException;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.enums.OrdonnanceExceptionCode;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

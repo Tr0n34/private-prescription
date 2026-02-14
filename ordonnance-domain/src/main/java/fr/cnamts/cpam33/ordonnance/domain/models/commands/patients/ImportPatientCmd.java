@@ -1,11 +1,10 @@
 package fr.cnamts.cpam33.ordonnance.domain.models.commands.patients;
 
-import fr.cnamts.cpam33.ordonnance.domain.abstracts.cqrs.Command;
-import fr.cnamts.cpam33.ordonnance.domain.abstracts.validation.ValidatableCommand;
-import fr.cnamts.cpam33.ordonnance.domain.abstracts.validation.ValidationResult;
-import fr.cnamts.cpam33.ordonnance.domain.abstracts.validation.Validator;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.cqrs.Command;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.validation.ValidatableCommand;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.validation.ValidationResult;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.validation.Validator;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.ExternalPatientId;
-import fr.cnamts.cpam33.ordonnance.domain.models.commands.CommandValidation;
 
 public record ImportPatientCmd(
         ExternalPatientId externalPatientId
