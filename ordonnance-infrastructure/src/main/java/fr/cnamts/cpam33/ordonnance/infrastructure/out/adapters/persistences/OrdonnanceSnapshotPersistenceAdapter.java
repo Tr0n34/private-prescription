@@ -1,7 +1,7 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.persistences;
 
-import fr.cnamts.cpam33.ordonnance.domain.abstracts.domain.Document;
-import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.DomainException;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.domain.Document;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.DomainException;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.snapshots.OrdonnanceSnapshot;
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.documents.DocumentStoragePort;
 import org.springframework.stereotype.Component;

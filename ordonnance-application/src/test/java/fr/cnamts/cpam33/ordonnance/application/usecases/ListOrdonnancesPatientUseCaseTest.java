@@ -10,6 +10,7 @@ import fr.cnamts.cpam33.ordonnance.domain.models.queries.ListerOrdonnancesPatien
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.ordonnances.OrdonnanceRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.Arrays;
 import java.util.List;

@@ -1,32 +1,23 @@
 package fr.cnamts.cpam33.ordonnance.domain.models.commands.patients;
 
-import fr.cnamts.cpam33.ordonnance.domain.abstracts.cqrs.Command;
-import fr.cnamts.cpam33.ordonnance.domain.abstracts.validation.ValidatableCommand;
-import fr.cnamts.cpam33.ordonnance.domain.abstracts.validation.ValidationResult;
-import fr.cnamts.cpam33.ordonnance.domain.abstracts.validation.Validator;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.cqrs.Command;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.validation.ValidatableCommand;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.validation.ValidationResult;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.validation.Validator;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.ExternalPatientId;
-import fr.cnamts.cpam33.ordonnance.domain.models.commands.CommandValidation;
 
 public record ImportPatientCmd(
         ExternalPatientId externalPatientId
 ) implements Command, ValidatableCommand {
 
-    public ImportPatientCmd {
-        CommandValidation.failFast(
-                getClass().getSimpleName(),
-                validateSelf(externalPatientId)
-        );
-    }
-
     @Override
     public ValidationResult validate() {
-        return validateSelf(externalPatientId);
-    }
-
-    public ValidationResult validateSelf(ExternalPatientId externalPatientId) {
-        return new Validator()
-                .notBlank(externalPatientId.numero(), "externalPatientId.numero")
-                .validate();
+        Validator validator = new Validator();
+        validator.notNull(externalPatientId, "externalPatientId");
+        if ( externalPatientId != null ) {
+            validator.notBlank(externalPatientId.numero(), "externalPatientId.numero");
+        }
+        return validator.validate();
     }
 
 }

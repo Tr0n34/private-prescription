@@ -1,12 +1,13 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.controllers;
 
+import fr.cnamts.cpam33.ordonnance.application.usecases.patients.ImportPatientUseCase;
 import fr.cnamts.cpam33.ordonnance.application.usecases.patients.RegisterPatientUseCase;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.Patient;
 import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.Adapter;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.acls.patients.PatientACL;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.controllers.routes.LocationBuilder;
-import fr.cnamts.cpam33.ordonnance.infrastructure.in.dto.patients.CesPatientDto;
-import fr.cnamts.cpam33.ordonnance.infrastructure.out.dto.PatientDto;
+import fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.controllers.routes.Routes;
+import fr.cnamts.cpam33.ordonnance.infrastructure.out.dto.patients.PatientDto;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,13 +25,16 @@ public class PatientController implements Adapter {
 
     private final LocationBuilder locationBuilder;
     private final RegisterPatientUseCase registerPatientUseCase;
+    private final ImportPatientUseCase importPatientUseCase;
     private final PatientACL patientACL;
 
     public PatientController(LocationBuilder locationBuilder,
                              RegisterPatientUseCase registerPatientUseCase,
+                             ImportPatientUseCase importPatientUseCase,
                              PatientACL patientACL) {
         this.locationBuilder = locationBuilder;
         this.registerPatientUseCase = registerPatientUseCase;
+        this.importPatientUseCase = importPatientUseCase;
         this.patientACL = patientACL;
     }
 
@@ -54,10 +58,11 @@ public class PatientController implements Adapter {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/import")
-    public ResponseEntity<Void> importFromExternal(CesPatientDto cesPatientDto) {
-        patientACL.toDomain(cesPatientDto);
-        return ResponseEntity.ok().build();
+    @PostMapping(Routes.Patient.IMPORT_BY_EXTERNAL_ID)
+    public ResponseEntity<Void> importFromExternal(@PathVariable("externalId") String externalId) {
+        Patient importedPatient = importPatientUseCase.execute(patientACL.toDomain(externalId));
+        URI location = locationBuilder.buildCreatedLocation(importedPatient.patientId().numero());
+        return ResponseEntity.created(location).build();
     }
 
 }

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.cnamts.cpam33.ordonnance.application.usecases.patients.RegisterPatientUseCase;
 import fr.cnamts.cpam33.ordonnance.domain.fixtures.PatientFixtures;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.Patient;
-import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.utilisateurs.UtilisateurId;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.ids.UtilisateurId;
 import fr.cnamts.cpam33.ordonnance.domain.models.commands.patients.RegisterPatientCmd;
 import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors.ErrorMessageDomainResolver;
 import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors.ErrorMessageInfrastructureResolver;
@@ -13,7 +13,7 @@ import fr.cnamts.cpam33.ordonnance.infrastructure.fixtures.ExternalPatientDtoFix
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.acls.patients.PatientACL;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.controllers.PatientController;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.controllers.routes.LocationBuilder;
-import fr.cnamts.cpam33.ordonnance.infrastructure.out.dto.PatientDto;
+import fr.cnamts.cpam33.ordonnance.infrastructure.out.dto.patients.PatientDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;

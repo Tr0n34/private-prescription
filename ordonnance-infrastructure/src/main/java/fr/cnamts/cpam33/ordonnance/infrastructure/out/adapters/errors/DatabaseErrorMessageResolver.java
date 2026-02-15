@@ -1,6 +1,6 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.errors;
 
-import fr.cnamts.cpam33.ordonnance.domain.abstracts.exceptions.ExceptionCode;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.ExceptionCode;
 import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.Adapter;
 import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors.ErrorMessageDomainResolver;
 import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors.ErrorMessageInfrastructureResolver;

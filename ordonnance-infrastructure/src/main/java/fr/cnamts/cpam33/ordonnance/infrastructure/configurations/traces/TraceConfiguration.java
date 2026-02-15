@@ -2,7 +2,7 @@ package fr.cnamts.cpam33.ordonnance.infrastructure.configurations.traces;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.Trace;
+import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.Trace;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;

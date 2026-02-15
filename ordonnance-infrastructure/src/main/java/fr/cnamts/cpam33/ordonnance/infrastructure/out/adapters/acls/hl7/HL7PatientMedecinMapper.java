@@ -7,7 +7,7 @@ import ca.uhn.hl7v2.model.v25.segment.ORC;
 import ca.uhn.hl7v2.model.v25.segment.PID;
 import ca.uhn.hl7v2.model.v25.segment.PV1;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.dto.ExportMedecinDto;
-import fr.cnamts.cpam33.ordonnance.infrastructure.out.dto.ExportPatientDto;
+import fr.cnamts.cpam33.ordonnance.infrastructure.out.dto.patients.ExportPatientDto;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
