@@ -1,10 +1,11 @@
 package fr.cnamts.cpam33.ordonnance.domain.models.commands;
 
-import fr.cnamts.cpam33.ordonnance.domain.abstracts.validation.ValidationResult;
-import fr.cnamts.cpam33.ordonnance.domain.abstracts.validation.Validator;
-import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.DomainException;
-import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.ErrorPlaceHolders;
-import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.enums.CommandCodeException;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.validation.ValidatableCommand;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.validation.ValidationResult;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.validation.Validator;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.DomainException;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.ErrorPlaceHolders;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.enums.CommandCodeException;
 
 import java.util.Map;
 
@@ -27,6 +28,14 @@ public final class CommandValidation {
                     )
             );
         }
+    }
+
+    public static void ensureValid(String commandName, ValidatableCommand cmd) {
+        failFast(commandName, cmd.validate());
+    }
+
+    public static void ensureValid(ValidatableCommand cmd) {
+        ensureValid(cmd.getClass().getSimpleName(), cmd);
     }
 
     public static ValidationResult notNullArgs(Map<String, Object> args) {

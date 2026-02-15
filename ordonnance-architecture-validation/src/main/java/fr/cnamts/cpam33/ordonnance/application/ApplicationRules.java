@@ -6,7 +6,7 @@ import com.tngtech.archunit.lang.ArchRule;
 import com.tngtech.archunit.lang.ConditionEvents;
 import com.tngtech.archunit.lang.SimpleConditionEvent;
 import fr.cnamts.cpam33.ordonnance.Module;
-import fr.cnamts.cpam33.ordonnance.domain.models.events.ActeMetierEvent;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.events.ActeMetierEvent;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

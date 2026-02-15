@@ -1,16 +1,14 @@
 package fr.cnamts.cpam33.ordonnance.application.services;
 
-import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.utilisateurs.UtilisateurId;
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.ActeMetier;
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.Trace;
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.TraceContext;
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.TraceId;
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.enums.ActeMetierCode;
-import fr.cnamts.cpam33.ordonnance.domain.ports.out.documents.DocumentStoragePort;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.ids.UtilisateurId;
+import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.ActeMetier;
+import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.Trace;
+import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.TraceContext;
+import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.TraceId;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.domain.enums.ActeMetierCode;
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.traces.ArchiverTracePort;
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.traces.TracePort;
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.traces.TracePublisher;
-import fr.cnamts.cpam33.ordonnance.domain.ports.out.traces.TraceRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.Clock;

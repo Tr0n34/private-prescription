@@ -1,7 +1,7 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.acls.hl7;
 
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.dto.ExportMedecinDto;
-import fr.cnamts.cpam33.ordonnance.infrastructure.out.dto.ExportPatientDto;
+import fr.cnamts.cpam33.ordonnance.infrastructure.out.dto.patients.ExportPatientDto;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.springframework.stereotype.Component;

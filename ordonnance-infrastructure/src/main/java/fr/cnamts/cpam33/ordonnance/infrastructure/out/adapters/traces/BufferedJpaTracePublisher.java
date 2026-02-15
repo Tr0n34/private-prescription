@@ -1,6 +1,6 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.traces;
 
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.Trace;
+import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.Trace;
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.traces.TracePublisher;
 import fr.cnamts.cpam33.ordonnance.infrastructure.actuators.metrics.TraceMetrics;
 import fr.cnamts.cpam33.ordonnance.infrastructure.configurations.traces.TraceBackpressureProperties;

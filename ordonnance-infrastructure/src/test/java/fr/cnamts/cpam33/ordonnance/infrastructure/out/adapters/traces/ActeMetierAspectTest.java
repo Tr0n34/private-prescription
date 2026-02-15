@@ -1,14 +1,13 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.traces;
 
-import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.utilisateurs.UtilisateurId;
-import fr.cnamts.cpam33.ordonnance.domain.models.events.ActeMetierEvent;
-import fr.cnamts.cpam33.ordonnance.domain.models.events.TraceCommand;
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.Trace;
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.TraceAttribute;
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.TraceContext;
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.enums.ActeMetierCode;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.ids.UtilisateurId;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.events.ActeMetierEvent;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.events.TraceCommand;
+import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.Trace;
+import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.TraceAttribute;
+import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.TraceContext;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.domain.enums.ActeMetierCode;
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.traces.TracePublisher;
-import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.traces.ActeMetierAspect;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -43,14 +42,14 @@ class ActeMetierAspectTest {
         when(pjp.proceed()).thenReturn("RESULT_OK");
         when(pjp.getArgs()).thenReturn(new Object[]{command});
         ActeMetierEvent event = mock(ActeMetierEvent.class);
-        when(event.value()).thenReturn(ActeMetierCode.ACT_ORD_CREER);
+        when(event.value()).thenReturn(ActeMetierCode.ORD_CREER);
         Object result = aspect.around(pjp, event);
 
         assertEquals("RESULT_OK", result);
         ArgumentCaptor<Trace> traceCaptor = ArgumentCaptor.forClass(Trace.class);
         verify(publisher, times(1)).publish(traceCaptor.capture());
         Trace captured = traceCaptor.getValue();
-        assertEquals(ActeMetierCode.ACT_ORD_CREER.name(), captured.acteMetierId().code());
+        assertEquals(ActeMetierCode.ORD_CREER.name(), captured.acteMetierId().code());
         assertEquals("123456789", captured.utilisateurId().numero());
         TraceContext context = captured.context();
         assertNotNull(context);

@@ -1,8 +1,8 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.in.mappers;
 
-import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.utilisateurs.UtilisateurId;
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.ActeMetierId;
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.Trace;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.ids.UtilisateurId;
+import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.ActeMetierId;
+import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.Trace;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.dto.traces.TraceDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

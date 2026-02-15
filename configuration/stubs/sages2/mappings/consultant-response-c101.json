@@ -1,0 +1,15 @@
+{
+  "priority": 10,
+  "request": {
+    "method": "GET",
+    "urlPathPattern": "/consultants/1010000000000"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json; charset=utf-8"
+    },
+    "transformers": ["response-template"],
+    "bodyFileName": "consultant-id101.json"
+  }
+}

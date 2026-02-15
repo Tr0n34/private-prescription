@@ -1,6 +1,6 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.caches;
 
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.tracabilite.ActeMetier;
+import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.ActeMetier;
 
 import java.util.Map;
 

@@ -1,12 +1,15 @@
 {
+  "priority": 100,
   "request": {
     "method": "GET",
-    "urlPathPattern": "/consultants/([0-9A-Za-z_-]+)"
+    "urlPathPattern": "/consultants/([0-9A-Za-z_-]{1,10})"
   },
   "response": {
     "status": 200,
-    "headers": { "Content-Type": "application/json" },
+    "headers": {
+      "Content-Type": "application/json; charset=utf-8"
+    },
     "transformers": ["response-template"],
-    "body": "{ \"externalId\": \"{{request.path.[1]}}\", \"nom\": \"DUPONT\", \"prenom\": \"Alice\" }"
+    "bodyFileName": "consultant-200.json.hbs"
   }
 }

@@ -1,8 +1,8 @@
 package fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients;
 
-import fr.cnamts.cpam33.ordonnance.domain.abstracts.domain.DomainObjectId;
-import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.DomainException;
-import fr.cnamts.cpam33.ordonnance.domain.models.exceptions.enums.PatientExceptionCode;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.domain.DomainObjectId;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.DomainException;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.enums.PatientExceptionCode;
 
 public record PatientId(
         String numero

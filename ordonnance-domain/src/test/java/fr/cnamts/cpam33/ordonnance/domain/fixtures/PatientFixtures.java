@@ -17,13 +17,23 @@ public class PatientFixtures {
                 new ExternalPatientId("123"),
                 new Nom("Dupont"),
                 new Prenom("Jean"),
-                LocalDate.of(1980, Month.SEPTEMBER, 5));
+                LocalDate.of(1980, Month.SEPTEMBER, 5)
+                );
     }
 
     public static Patient patientValideWithIdAndCes(String numero, String externalId) {
         return Patient.of(
                 new PatientId(numero),
                 new ExternalPatientId(externalId),
+                new Nom("Dupont"),
+                new Prenom("Jean"),
+                LocalDate.of(1980, Month.SEPTEMBER, 5));
+    }
+
+    public static Patient patientValideWitExternalId(ExternalPatientId externalId) {
+        return Patient.of(
+                new PatientId("123456798"),
+                externalId,
                 new Nom("Dupont"),
                 new Prenom("Jean"),
                 LocalDate.of(1980, Month.SEPTEMBER, 5));
