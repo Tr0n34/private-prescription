@@ -1,6 +1,7 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.in.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import fr.cnamts.cpam33.ordonnance.application.usecases.patients.ImportPatientUseCase;
 import fr.cnamts.cpam33.ordonnance.application.usecases.patients.RegisterPatientUseCase;
 import fr.cnamts.cpam33.ordonnance.domain.fixtures.PatientFixtures;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.Patient;
@@ -47,12 +48,14 @@ class PatientControllerIT {
     private RegisterPatientUseCase registerPatientUseCase;
 
     @MockBean
+    private ImportPatientUseCase importPatientUseCase;
+
+    @MockBean
     private PatientACL patientACL;
 
     @MockBean
     private LocationBuilder locationBuilder;
 
-    // Garde-les si ton contexte MVC les demande (ControllerAdvice, etc.)
     @MockBean
     private ErrorMessageDomainResolver domainResolver;
 
