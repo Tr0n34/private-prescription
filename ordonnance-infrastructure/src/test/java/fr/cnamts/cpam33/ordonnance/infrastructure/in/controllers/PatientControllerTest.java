@@ -1,5 +1,6 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.in.controllers;
 
+import fr.cnamts.cpam33.ordonnance.application.usecases.patients.ImportPatientUseCase;
 import fr.cnamts.cpam33.ordonnance.application.usecases.patients.RegisterPatientUseCase;
 import fr.cnamts.cpam33.ordonnance.domain.fixtures.PatientFixtures;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.ids.UtilisateurId;
@@ -7,7 +8,7 @@ import fr.cnamts.cpam33.ordonnance.domain.models.commands.patients.RegisterPatie
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.acls.patients.PatientACL;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.controllers.PatientController;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.controllers.routes.LocationBuilder;
-import fr.cnamts.cpam33.ordonnance.infrastructure.out.dto.PatientDto;
+import fr.cnamts.cpam33.ordonnance.infrastructure.out.dto.patients.PatientDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
@@ -26,6 +27,7 @@ public class PatientControllerTest {
 
     private LocationBuilder locationBuilder;
     private RegisterPatientUseCase registerPatientUseCase;
+    private ImportPatientUseCase importPatientUseCase;
     private PatientController controller;
     private PatientACL patientACL;
 
@@ -34,7 +36,8 @@ public class PatientControllerTest {
         registerPatientUseCase = mock(RegisterPatientUseCase.class);
         locationBuilder = mock(LocationBuilder.class);
         patientACL = mock(PatientACL.class);
-        controller = new PatientController(locationBuilder, registerPatientUseCase, patientACL);
+        importPatientUseCase = mock(ImportPatientUseCase.class);
+        controller = new PatientController(locationBuilder, registerPatientUseCase, importPatientUseCase, patientACL);
     }
 
     @Test

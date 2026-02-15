@@ -1,4 +1,4 @@
-package fr.cnamts.cpam33.ordonnance.infrastructure.out.dto;
+package fr.cnamts.cpam33.ordonnance.infrastructure.out.dto.patients;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotBlank;
@@ -7,9 +7,10 @@ import jakarta.validation.constraints.Past;
 
 import java.time.LocalDate;
 
-public record ImportPatientDto(
-        @NotNull
+public record PatientDto(
+        String numero,
         String externalId,
+        @NotBlank
         String nom,
         @NotBlank
         String prenom,

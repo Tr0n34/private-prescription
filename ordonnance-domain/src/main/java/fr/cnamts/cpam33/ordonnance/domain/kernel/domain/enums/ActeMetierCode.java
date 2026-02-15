@@ -8,6 +8,7 @@ public enum ActeMetierCode {
     ORD_SIGNER,
     ORD_CREER,
 
-    PATIENT_CREER
+    PATIENT_CREER,
+    PATIENT_IMPORTER
 
 }

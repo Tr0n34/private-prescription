@@ -1,4 +1,4 @@
-package fr.cnamts.cpam33.ordonnance.infrastructure.out.dto;
+package fr.cnamts.cpam33.ordonnance.infrastructure.out.dto.patients;
 
 import java.time.LocalDate;
 

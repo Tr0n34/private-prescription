@@ -2,6 +2,7 @@ package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters;
 
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.ExternalPatientId;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.Patient;
+import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.ImportPatientCandidate;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.persistences.ExternalPatientPersistenceAdapter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,9 +29,9 @@ class ExternalPatientPersistenceAdapterTest {
     @Test
     void should_delegate_fetch_by_id_to_client() {
         ExternalPatientId externalId = new ExternalPatientId("EXT-123");
-        Patient expectedPatient = mock(Patient.class);
+        ImportPatientCandidate expectedPatient = mock(ImportPatientCandidate .class);
         when(importPatientApiClient.fetchById(externalId)).thenReturn(expectedPatient);
-        Patient result = adapter.fetchById(externalId);
+        ImportPatientCandidate result = adapter.fetchById(externalId);
         assertNotNull(result);
         assertEquals(expectedPatient, result);
         verify(importPatientApiClient, times(1)).fetchById(externalId);

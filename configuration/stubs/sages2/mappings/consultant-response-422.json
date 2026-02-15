@@ -2,7 +2,7 @@
   "priority": 5,
   "request": {
     "method": "GET",
-    "urlPathPattern": "/consultants/[0-9A-Za-z_-]{11,}"
+    "urlPathPattern": "/consultants/[0-9A-Za-z_-]{14,}"
   },
   "response": {
     "status": 422,
