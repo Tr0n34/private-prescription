@@ -53,7 +53,7 @@ class GlobalControllerAdviceTest {
         var response = advice.handle(ex);
         assertEquals(BAD_REQUEST, response.getStatusCode());
         assertNotNull(response.getBody());
-        assertEquals(ErrorResponseDto.from(descriptor), response.getBody());
+        assertErrorEqualsIgnoringTimestamp(ErrorResponseDto.from(descriptor), response.getBody());
         verify(domainResolver).resolve(ex.getCode(), placeholders);
         verifyNoInteractions(infraResolver);
     }
@@ -74,7 +74,8 @@ class GlobalControllerAdviceTest {
         when(infraResolver.resolve(ex.getCode())).thenReturn(descriptor);
         var response = advice.handle(ex);
         assertEquals(NOT_FOUND, response.getStatusCode());
-        assertEquals(ErrorResponseDto.from(descriptor), response.getBody());
+        assertNotNull(response.getBody());
+        assertErrorEqualsIgnoringTimestamp(ErrorResponseDto.from(descriptor), response.getBody());
         verify(infraResolver).resolve(ex.getCode());
         verifyNoMoreInteractions(infraResolver);
         verifyNoInteractions(domainResolver);
@@ -97,7 +98,8 @@ class GlobalControllerAdviceTest {
         when(infraResolver.resolve(ex.getCode(), placeholders)).thenReturn(descriptor);
         var response = advice.handle(ex);
         assertEquals(CONFLICT, response.getStatusCode());
-        assertEquals(ErrorResponseDto.from(descriptor), response.getBody());
+        assertNotNull(response.getBody());
+        assertErrorEqualsIgnoringTimestamp(ErrorResponseDto.from(descriptor), response.getBody());
         verify(infraResolver).resolve(ex.getCode(), placeholders);
         verifyNoMoreInteractions(infraResolver);
         verifyNoInteractions(domainResolver);
@@ -155,6 +157,14 @@ class GlobalControllerAdviceTest {
         var response = advice.handleInvalidDate(ex);
         assertEquals(BAD_REQUEST, response.getStatusCode());
         assertEquals("Requête invalide", response.getBody());
+    }
+
+    private void assertErrorEqualsIgnoringTimestamp(ErrorResponseDto expected, ErrorResponseDto actual) {
+        assertEquals(expected.code(), actual.code());
+        assertEquals(expected.message(), actual.message());
+        assertEquals(expected.status(), actual.status());
+        assertEquals(expected.boundedContext(), actual.boundedContext());
+        assertNotNull(actual.timestamp());
     }
 
 }
