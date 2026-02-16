@@ -3,10 +3,10 @@ package fr.cnamts.cpam33.ordonnance.domain.models.tracabilite;
 import com.google.common.base.MoreObjects;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.domain.Document;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.domain.DomainObject;
-import fr.cnamts.cpam33.ordonnance.domain.kernel.ids.UtilisateurId;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.domain.enums.ActeMetierCode;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.DomainException;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.enums.TraceExceptionCode;
-import fr.cnamts.cpam33.ordonnance.domain.kernel.domain.enums.ActeMetierCode;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.ids.UtilisateurId;
 
 import java.time.Clock;
 import java.time.LocalDateTime;

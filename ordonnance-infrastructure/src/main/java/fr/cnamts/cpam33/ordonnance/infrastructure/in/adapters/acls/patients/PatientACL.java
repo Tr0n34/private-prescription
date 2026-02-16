@@ -1,7 +1,7 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.acls.patients;
 
-import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.ExternalPatientId;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.ids.UtilisateurId;
+import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.ExternalPatientId;
 import fr.cnamts.cpam33.ordonnance.domain.models.commands.patients.ImportPatientCmd;
 import fr.cnamts.cpam33.ordonnance.domain.models.commands.patients.RegisterPatientCmd;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identites.Nom;
@@ -14,9 +14,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class PatientACL {
 
-    public PatientACL() {
-    }
-
     public RegisterPatientCmd toDomain(PatientDto dto, String userId) {
         return new RegisterPatientCmd(
                 new ExternalPatientId(dto.externalId()),
@@ -28,10 +25,11 @@ public class PatientACL {
         );
     }
 
-    public ImportPatientCmd toDomain(String externalId) {
+    public ImportPatientCmd toDomain(String externalId, String userId) {
         validate(externalId);
         return new ImportPatientCmd(
-            new ExternalPatientId(externalId)
+            new ExternalPatientId(externalId),
+            new UtilisateurId(userId)
         );
     }
 

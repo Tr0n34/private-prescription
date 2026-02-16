@@ -1,7 +1,6 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters;
 
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.ExternalPatientId;
-import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.Patient;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.ImportPatientCandidate;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.persistences.ExternalPatientPersistenceAdapter;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,8 +9,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 class ExternalPatientPersistenceAdapterTest {

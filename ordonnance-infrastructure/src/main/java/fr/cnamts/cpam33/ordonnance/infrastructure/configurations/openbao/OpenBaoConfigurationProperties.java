@@ -1,6 +1,6 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.configurations.openbao;
 
-import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors.InfrastructureException;
+import fr.cnamts.cpam33.ordonnance.infrastructure.kernel.errors.InfrastructureException;
 import fr.cnamts.cpam33.ordonnance.infrastructure.exceptions.enums.VaultExceptionCode;
 import fr.cnamts.cpam33.ordonnance.infrastructure.technical.urls.PathJoiner;
 import jakarta.validation.constraints.NotNull;

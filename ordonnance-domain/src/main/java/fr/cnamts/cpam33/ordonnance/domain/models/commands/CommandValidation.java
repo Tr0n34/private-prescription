@@ -1,11 +1,11 @@
 package fr.cnamts.cpam33.ordonnance.domain.models.commands;
 
-import fr.cnamts.cpam33.ordonnance.domain.kernel.validation.ValidatableCommand;
-import fr.cnamts.cpam33.ordonnance.domain.kernel.validation.ValidationResult;
-import fr.cnamts.cpam33.ordonnance.domain.kernel.validation.Validator;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.DomainException;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.ErrorPlaceHolders;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.enums.CommandCodeException;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.validation.ValidatableCommand;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.validation.ValidationResult;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.validation.Validator;
 
 import java.util.Map;
 

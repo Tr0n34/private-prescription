@@ -1,6 +1,6 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.out.repositories;
 
-import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.routines.DataBaseRoutineExecutor;
+import fr.cnamts.cpam33.ordonnance.infrastructure.kernel.routines.DataBaseRoutineExecutor;
 import fr.cnamts.cpam33.ordonnance.infrastructure.configurations.databases.ThesorimedDataSourceConfiguration;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;

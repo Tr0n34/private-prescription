@@ -1,11 +1,11 @@
 package fr.cnamts.cpam33.ordonnance.application.services;
 
+import fr.cnamts.cpam33.ordonnance.domain.kernel.domain.enums.ActeMetierCode;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.ids.UtilisateurId;
 import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.ActeMetier;
 import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.Trace;
 import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.TraceContext;
 import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.TraceId;
-import fr.cnamts.cpam33.ordonnance.domain.kernel.domain.enums.ActeMetierCode;
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.traces.ArchiverTracePort;
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.traces.TracePort;
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.traces.TracePublisher;

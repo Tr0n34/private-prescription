@@ -1,6 +1,5 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.technical.mappers;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.lang.reflect.Array;

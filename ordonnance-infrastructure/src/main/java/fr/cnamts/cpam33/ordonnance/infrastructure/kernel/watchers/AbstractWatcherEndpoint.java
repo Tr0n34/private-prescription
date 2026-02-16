@@ -1,4 +1,4 @@
-package fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.watchers;
+package fr.cnamts.cpam33.ordonnance.infrastructure.kernel.watchers;
 
 import fr.cnamts.cpam33.ordonnance.infrastructure.actuators.watchers.WatcherAction;
 import fr.cnamts.cpam33.ordonnance.infrastructure.actuators.watchers.WatcherActionResponse;
