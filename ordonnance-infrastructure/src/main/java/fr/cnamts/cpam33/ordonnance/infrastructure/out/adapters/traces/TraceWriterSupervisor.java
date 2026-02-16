@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Component
 public class TraceWriterSupervisor implements SmartLifecycle {
@@ -53,10 +54,12 @@ public class TraceWriterSupervisor implements SmartLifecycle {
     private final ScheduledExecutorService supervisor;
 
     private final ConcurrentMap<Integer, Future<?>> runningWorkers = new ConcurrentHashMap<>();
-    private final AtomicBoolean started = new AtomicBoolean(NOT_STARTED);
+    private final AtomicBoolean isStarted = new AtomicBoolean(NOT_STARTED);
+    private final AtomicReference<ScheduledFuture<?>> monitorFuture = new AtomicReference<>();
 
     private volatile boolean running = NOT_STARTED;
-    private volatile ScheduledFuture<?> monitorFuture;
+
+
 
     public TraceWriterSupervisor(
             TraceEntityMapper traceEntityMapper,
@@ -92,7 +95,7 @@ public class TraceWriterSupervisor implements SmartLifecycle {
             logger.error("TraceWriterSupervisor not started: acteMetierCache.isReady() = {}", acteMetierCache.isReady());
             throw new IllegalStateException("TraceWriterSupervisor not started: no data in cache");
         }
-        if ( started.compareAndSet(NOT_STARTED, STARTED) ) {
+        if ( isStarted.compareAndSet(NOT_STARTED, STARTED) ) {
             running = true;
             if ( workers > 0 ) {
                 startAllWorkers();
@@ -105,16 +108,15 @@ public class TraceWriterSupervisor implements SmartLifecycle {
     @Override
     public synchronized void stop() {
         running = false;
-        ScheduledFuture<?> monitor = monitorFuture;
-        if ( monitor != null ) {
-            monitor.cancel(true);
-            monitorFuture = null;
-        }
-        for ( Future<?> future : runningWorkers.values() ) {
+        ScheduledFuture<?> future = monitorFuture.getAndSet(null);
+        if ( future != null ) {
             future.cancel(true);
         }
+        for ( Future<?> f : runningWorkers.values() ) {
+            f.cancel(true);
+        }
         runningWorkers.clear();
-        started.set(NOT_STARTED);
+        isStarted.set(NOT_STARTED);
         logger.info("Trace writer supervisor stopped");
     }
 
@@ -155,14 +157,16 @@ public class TraceWriterSupervisor implements SmartLifecycle {
     }
 
     private void startMonitoring() {
-        ScheduledFuture<?> existing = monitorFuture;
-        if ( existing == null || existing.isDone() || existing.isCancelled() ) {
-            monitorFuture = supervisor.scheduleWithFixedDelay(
+        ScheduledFuture<?> existing = monitorFuture.get();
+        boolean shouldStart = existing == null || existing.isDone() || existing.isCancelled();
+        if ( shouldStart ) {
+            ScheduledFuture<?> newFuture = supervisor.scheduleWithFixedDelay(
                     this::monitorWorkers,
                     MONITOR_INITIAL_DELAY_SEC,
                     MONITOR_DELAY_SEC,
                     TimeUnit.SECONDS
             );
+            monitorFuture.set(newFuture);
         }
     }
 
@@ -213,43 +217,40 @@ public class TraceWriterSupervisor implements SmartLifecycle {
                 Thread.currentThread().interrupt();
                 logger.warn("Trace writer {} interrupted", workerId);
                 return;
-            } catch (Throwable t) {
-                logger.error("Trace writer {} crashed", workerId, t);
+            } catch (Exception ex) {
+                logger.error("Trace writer {} crashed", workerId, ex);
                 return; // Future.isDone() => monitor -> restart
             }
         }
     }
 
     private void persistBatch(List<Trace> traces) {
-        EntityManager em = traceEmf.createEntityManager();
-        EntityTransaction tx = null;
-        try {
-            tx = em.getTransaction();
-            tx.begin();
-            int i = 0;
-            for ( Trace trace : traces ) {
-                TraceEntity entity = traceEntityMapper.toEntity(trace, acteMetierJpaRepository, traceObjectMapper);
-                em.persist(entity);
-                i++;
-                if ( i % JPA_ENTITY_BEFORE_FLUSH == 0 ) {
-                    em.flush();
-                    em.clear();
-                }
-            }
-            em.flush();
-            em.clear();
-            tx.commit();
-        } catch (RuntimeException e) {
-            if ( tx != null && tx.isActive() ) {
-                tx.rollback();
-            }
-            throw e;
-        } finally {
+        EntityTransaction transaction = null;
+        try ( EntityManager entityManager = traceEmf.createEntityManager() ) {
             try {
-                em.close();
-            } catch (Exception closeEx) {
-                logger.warn("Failed to close EntityManager", closeEx);
+                transaction = entityManager.getTransaction();
+                transaction.begin();
+                int i = 0;
+                for ( Trace trace : traces ) {
+                    TraceEntity entity = traceEntityMapper.toEntity(trace, acteMetierJpaRepository, traceObjectMapper);
+                    entityManager.persist(entity);
+                    i++;
+                    if ( i % JPA_ENTITY_BEFORE_FLUSH == 0 ) {
+                        entityManager.flush();
+                        entityManager.clear();
+                    }
+                }
+                entityManager.flush();
+                entityManager.clear();
+                transaction.commit();
+            } catch (RuntimeException e) {
+                if ( transaction != null && transaction.isActive() ) {
+                    transaction.rollback();
+                }
+                throw e;
             }
+        } catch (Exception closeEx) {
+            logger.warn("Failed to close EntityManager", closeEx);
         }
     }
 

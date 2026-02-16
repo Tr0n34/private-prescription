@@ -61,7 +61,6 @@ class GlobalControllerAdviceTest {
     @Test
     void should_handle_infrastructure_exception_without_placeholders() {
         InfrastructureException ex = mock(InfrastructureException.class);
-        Object code = new Object();
         when(ex.getCode()).thenReturn(TestInfrastructureExceptionCode.CODE_INFRA_ERREUR);
         when(ex.getPlaceHolders()).thenReturn(null);
         ErrorDescriptor descriptor = new ErrorDescriptor(
@@ -84,7 +83,6 @@ class GlobalControllerAdviceTest {
     @Test
     void should_handle_infrastructure_exception_with_placeholders() {
         InfrastructureException ex = mock(InfrastructureException.class);
-        Object code = new Object();
         Map<String, Object> placeholders = Map.of("a", 1);
         when(ex.getCode()).thenReturn(TestInfrastructureExceptionCode.CODE_INFRA_ERREUR);
         when(ex.getPlaceHolders()).thenReturn(placeholders);
