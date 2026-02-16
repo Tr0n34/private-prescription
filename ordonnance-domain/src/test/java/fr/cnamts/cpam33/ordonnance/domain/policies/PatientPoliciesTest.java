@@ -1,9 +1,9 @@
 package fr.cnamts.cpam33.ordonnance.domain.policies;
 
 import fr.cnamts.cpam33.ordonnance.domain.fixtures.PatientFixtures;
-import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.Patient;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.DomainException;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.enums.PatientExceptionCode;
+import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.Patient;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Constructor;

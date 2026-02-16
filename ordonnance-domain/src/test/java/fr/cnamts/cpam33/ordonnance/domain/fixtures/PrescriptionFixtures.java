@@ -1,8 +1,8 @@
 package fr.cnamts.cpam33.ordonnance.domain.fixtures;
 
-import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.Traitement;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.Posologie;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.PrescriptionId;
+import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.Traitement;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.medicaments.Medicament;
 
 import java.util.List;

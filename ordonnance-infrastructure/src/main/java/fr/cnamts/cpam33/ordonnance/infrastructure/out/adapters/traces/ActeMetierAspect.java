@@ -65,6 +65,7 @@ public class ActeMetierAspect {
                     clock
             );
         }
+        logger.trace("Trace acteMetier : {}, {}", event, hasToBePublish);
         if ( hasToBePublish ) {
             try {
                 publisher.publish(trace);

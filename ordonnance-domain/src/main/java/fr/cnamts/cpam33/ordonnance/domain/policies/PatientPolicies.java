@@ -11,9 +11,9 @@ public final class PatientPolicies {
     private PatientPolicies() { throw new UnsupportedOperationException("Policy factory"); }
 
     public static final Rule<Patient, PatientExceptionCode> PATIENT_NOT_NULL =
-            Policies.rule(PatientExceptionCode.BS_PATIENT_INVALID, (patient, fail) -> {
-                Policies.require(patient != null, () -> fail.of("patient", "null"));
-            });
+            Policies.rule(PatientExceptionCode.BS_PATIENT_INVALID, (patient, fail) ->
+                Policies.require(patient != null, () -> fail.of("patient", "null"))
+            );
 
     public static final Rule<Patient, PatientExceptionCode> EXTERNAL_ID_REQUIRED =
             Policies.rule(PatientExceptionCode.BS_PATIENT_EXTERNAL_ID_MISSING, (patient, fail) -> {
@@ -24,7 +24,7 @@ public final class PatientPolicies {
 
     public static Policy<Patient> forImport() {
         return Policies.forOperation(
-                "Patient",
+                Patient.class.getSimpleName(),
                 "IMPORT",
                 Policies.allOf(PATIENT_NOT_NULL, EXTERNAL_ID_REQUIRED)
         );
@@ -32,7 +32,7 @@ public final class PatientPolicies {
 
     public static Policy<Patient> forCreate() {
         return Policies.forOperation(
-                "Patient",
+                Patient.class.getSimpleName(),
                 "CREATE",
                 Policies.allOf(PATIENT_NOT_NULL)
         );
@@ -40,7 +40,7 @@ public final class PatientPolicies {
 
     public static Policy<Patient> forUpdate() {
         return Policies.forOperation(
-                "Patient",
+                Patient.class.getSimpleName(),
                 "UPDATE",
                 Policies.allOf(PATIENT_NOT_NULL)
         );

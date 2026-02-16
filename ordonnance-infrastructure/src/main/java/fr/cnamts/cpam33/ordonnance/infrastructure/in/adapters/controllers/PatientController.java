@@ -3,7 +3,7 @@ package fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.controllers;
 import fr.cnamts.cpam33.ordonnance.application.usecases.patients.ImportPatientUseCase;
 import fr.cnamts.cpam33.ordonnance.application.usecases.patients.RegisterPatientUseCase;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.Patient;
-import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.Adapter;
+import fr.cnamts.cpam33.ordonnance.infrastructure.kernel.Adapter;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.acls.patients.PatientACL;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.controllers.routes.LocationBuilder;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.controllers.routes.Routes;
@@ -59,8 +59,8 @@ public class PatientController implements Adapter {
     }
 
     @PostMapping(Routes.Patient.IMPORT_BY_EXTERNAL_ID)
-    public ResponseEntity<Void> importFromExternal(@PathVariable("externalId") String externalId) {
-        Patient importedPatient = importPatientUseCase.execute(patientACL.toDomain(externalId));
+    public ResponseEntity<Void> importFromExternal(@PathVariable("externalId") String externalId, @RequestHeader("userId")  String userId) {
+        Patient importedPatient = importPatientUseCase.execute(patientACL.toDomain(externalId, userId));
         URI location = locationBuilder.buildCreatedLocation(importedPatient.patientId().numero());
         return ResponseEntity.created(location).build();
     }

@@ -1,11 +1,11 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.batch.init;
 
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.batch.ActeMetierLoader;
-import jakarta.annotation.PostConstruct;
+import org.springframework.beans.factory.SmartInitializingSingleton;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ActeMetierStartup {
+public class ActeMetierStartup implements SmartInitializingSingleton {
 
     private final ActeMetierLoader acteMetierLoader;
 
@@ -13,8 +13,8 @@ public class ActeMetierStartup {
         this.acteMetierLoader = acteMetierLoader;
     }
 
-    @PostConstruct
-    public void init() {
+    @Override
+    public void afterSingletonsInstantiated() {
         acteMetierLoader.reload();
     }
 

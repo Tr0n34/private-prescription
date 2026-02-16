@@ -1,4 +1,4 @@
-package fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.caches;
+package fr.cnamts.cpam33.ordonnance.infrastructure.kernel.caches;
 
 import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.ActeMetier;
 

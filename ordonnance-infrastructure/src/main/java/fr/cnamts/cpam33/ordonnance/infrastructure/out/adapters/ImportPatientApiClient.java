@@ -4,9 +4,9 @@ import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.Extern
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.ImportPatientCandidate;
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.patients.FetchPatientGateway;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.dto.patients.ExternalPatientResponseDto;
+import fr.cnamts.cpam33.ordonnance.infrastructure.out.dto.patients.ImportPatientDto;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.mappers.patients.ExternalPatientDtoMapper;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.mappers.patients.ImportPatientApiMapper;
-import fr.cnamts.cpam33.ordonnance.infrastructure.out.dto.patients.ImportPatientDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;

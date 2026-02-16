@@ -1,4 +1,4 @@
-package fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.watchers;
+package fr.cnamts.cpam33.ordonnance.infrastructure.kernel.watchers;
 
 import fr.cnamts.cpam33.ordonnance.infrastructure.configurations.batch.Batch;
 import fr.cnamts.cpam33.ordonnance.infrastructure.technical.DebouncedReloadExecutor;

@@ -1,4 +1,4 @@
-package fr.cnamts.cpam33.ordonnance.infrastructure.abstracts;
+package fr.cnamts.cpam33.ordonnance.infrastructure.kernel;
 
 import fr.cnamts.cpam33.ordonnance.domain.kernel.domain.DomainObject;
 

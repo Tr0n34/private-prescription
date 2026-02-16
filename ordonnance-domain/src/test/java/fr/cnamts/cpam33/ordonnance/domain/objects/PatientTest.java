@@ -1,8 +1,8 @@
 package fr.cnamts.cpam33.ordonnance.domain.objects;
 
+import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.DomainException;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.ExternalPatientId;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.PatientId;
-import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.DomainException;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

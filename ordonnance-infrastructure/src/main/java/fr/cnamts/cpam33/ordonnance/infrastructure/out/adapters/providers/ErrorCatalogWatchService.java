@@ -1,6 +1,6 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.providers;
 
-import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.watchers.AbstractFileWatchService;
+import fr.cnamts.cpam33.ordonnance.infrastructure.kernel.watchers.AbstractFileWatchService;
 import fr.cnamts.cpam33.ordonnance.infrastructure.configurations.batch.Batch;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.batch.ErrorCatalogLoader;
 import fr.cnamts.cpam33.ordonnance.infrastructure.technical.DebouncedReloadExecutor;

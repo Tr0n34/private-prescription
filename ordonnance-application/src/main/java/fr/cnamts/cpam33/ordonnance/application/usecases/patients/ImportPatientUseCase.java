@@ -3,12 +3,13 @@ package fr.cnamts.cpam33.ordonnance.application.usecases.patients;
 import fr.cnamts.cpam33.ordonnance.application.abstracts.CommandUseCase;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.domain.enums.ActeMetierCode;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.events.ActeMetierEvent;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.DomainException;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.ids.UtilisateurId;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.ExternalPatientId;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.Patient;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.PatientId;
 import fr.cnamts.cpam33.ordonnance.domain.models.commands.CommandValidation;
 import fr.cnamts.cpam33.ordonnance.domain.models.commands.patients.ImportPatientCmd;
-import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.DomainException;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.ImportPatientCandidate;
 import fr.cnamts.cpam33.ordonnance.domain.policies.PatientPolicies;
 import fr.cnamts.cpam33.ordonnance.domain.ports.in.patients.ImportPatientPort;
@@ -34,8 +35,8 @@ public class ImportPatientUseCase implements ImportPatientPort, CommandUseCase<I
     }
 
     @Override
-    public Patient importerPatient(ExternalPatientId externalPatientId) {
-        return execute(new ImportPatientCmd(externalPatientId));
+    public Patient importerPatient(ExternalPatientId externalPatientId, UtilisateurId utilisateurId) {
+        return execute(new ImportPatientCmd(externalPatientId, utilisateurId));
     }
 
     @Override
