@@ -1,8 +1,12 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.configurations.databases;
 
 import com.zaxxer.hikari.HikariDataSource;
+import jakarta.annotation.PostConstruct;
 import jakarta.persistence.EntityManagerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
@@ -21,6 +25,8 @@ import org.springframework.transaction.PlatformTransactionManager;
         transactionManagerRef = "ordonnanceTransactionManager"
 )
 public class OrdonnanceDataSourceConfiguration {
+
+    private static final Logger logger = LoggerFactory.getLogger(OrdonnanceDataSourceConfiguration.class);
 
     public static class OrdonnanceJpaProperties extends JpaUnitProperties {}
 
@@ -41,10 +47,11 @@ public class OrdonnanceDataSourceConfiguration {
     @Bean("ordonnanceEntityManagerFactory")
     @Primary
     public LocalContainerEntityManagerFactoryBean ordonnanceEntityManagerFactory(
+            @Qualifier("ordonnanceDataSource") HikariDataSource ordonnanceDataSource,
             EntityManagerFactoryBuilder builder,
             OrdonnanceJpaProperties ordonnanceJpaProperties) {
         return builder
-                .dataSource(ordonnanceDataSource())
+                .dataSource(ordonnanceDataSource)
                 .packages(ordonnanceJpaProperties.getPackages())
                 .persistenceUnit(ordonnanceJpaProperties.getPersistenceUnit())
                 .properties(ordonnanceJpaProperties.getProperties())
@@ -55,6 +62,20 @@ public class OrdonnanceDataSourceConfiguration {
     @Primary
     public PlatformTransactionManager ordonnanceTransactionManager(@Qualifier("ordonnanceEntityManagerFactory") EntityManagerFactory emf) {
         return new JpaTransactionManager(emf);
+    }
+
+    @Bean
+    public CommandLineRunner logHikari(@Qualifier("ordonnanceDataSource") HikariDataSource ordonnanceDataSource) {
+        return args -> {
+            logger.info("Hikari jdbcUrl={}", ordonnanceDataSource.getJdbcUrl());
+            logger.info("Hikari driverClassName={}", ordonnanceDataSource.getDriverClassName());
+            logger.info("Hikari minIdle={} maxPool={}", ordonnanceDataSource.getMinimumIdle(), ordonnanceDataSource.getMaximumPoolSize());
+            try ( var connection = ordonnanceDataSource.getConnection()) {
+                var databaseMetaData = connection.getMetaData();
+                logger.info("JDBC driver={} {}", databaseMetaData.getDriverName(), databaseMetaData.getDriverVersion());
+                logger.info("autocommit={} isolation={}", connection.getAutoCommit(), connection.getTransactionIsolation());
+            }
+        };
     }
 
 }

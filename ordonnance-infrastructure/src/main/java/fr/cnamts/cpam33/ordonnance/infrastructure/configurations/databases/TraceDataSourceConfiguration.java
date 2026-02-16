@@ -43,10 +43,10 @@ public class TraceDataSourceConfiguration {
     @Bean("traceEntityManagerFactory")
     public LocalContainerEntityManagerFactoryBean traceEntityManagerFactory(
             EntityManagerFactoryBuilder builder,
-            @Qualifier("traceDataSource") DataSource dataSource,
+            @Qualifier("traceDataSource") HikariDataSource traceDataSource,
             TraceJpaProperties traceJpaProperties) {
         return builder
-                .dataSource(dataSource)
+                .dataSource(traceDataSource)
                 .packages(traceJpaProperties.getPackages())
                 .persistenceUnit(traceJpaProperties.getPersistenceUnit())
                 .properties(new HashMap<>(traceJpaProperties.getProperties()))
