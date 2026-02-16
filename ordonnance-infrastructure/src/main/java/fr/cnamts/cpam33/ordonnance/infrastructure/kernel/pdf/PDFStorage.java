@@ -1,6 +1,6 @@
-package fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.pdf;
+package fr.cnamts.cpam33.ordonnance.infrastructure.kernel.pdf;
 
-import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors.InfrastructureException;
+import fr.cnamts.cpam33.ordonnance.infrastructure.kernel.errors.InfrastructureException;
 
 public interface PDFStorage {
 

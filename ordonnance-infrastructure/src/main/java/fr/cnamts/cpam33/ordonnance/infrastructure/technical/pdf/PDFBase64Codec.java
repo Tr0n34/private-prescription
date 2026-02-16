@@ -1,7 +1,7 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.technical.pdf;
 
-import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors.InfrastructureException;
-import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors.InfrastructureError;
+import fr.cnamts.cpam33.ordonnance.infrastructure.kernel.errors.InfrastructureError;
+import fr.cnamts.cpam33.ordonnance.infrastructure.kernel.errors.InfrastructureException;
 import fr.cnamts.cpam33.ordonnance.infrastructure.exceptions.enums.PdfExceptionCode;
 
 import java.io.IOException;

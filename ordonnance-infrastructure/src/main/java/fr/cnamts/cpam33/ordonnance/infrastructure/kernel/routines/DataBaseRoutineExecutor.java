@@ -1,4 +1,4 @@
-package fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.routines;
+package fr.cnamts.cpam33.ordonnance.infrastructure.kernel.routines;
 
 import org.springframework.jdbc.core.RowMapper;
 

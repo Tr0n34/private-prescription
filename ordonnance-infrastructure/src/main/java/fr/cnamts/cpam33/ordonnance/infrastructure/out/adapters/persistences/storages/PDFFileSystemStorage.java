@@ -1,8 +1,8 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.persistences.storages;
 
-import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors.InfrastructureError;
-import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors.InfrastructureException;
-import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.pdf.PDFStorage;
+import fr.cnamts.cpam33.ordonnance.infrastructure.kernel.errors.InfrastructureError;
+import fr.cnamts.cpam33.ordonnance.infrastructure.kernel.errors.InfrastructureException;
+import fr.cnamts.cpam33.ordonnance.infrastructure.kernel.pdf.PDFStorage;
 import fr.cnamts.cpam33.ordonnance.infrastructure.exceptions.enums.PdfExceptionCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

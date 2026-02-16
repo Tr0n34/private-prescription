@@ -1,4 +1,4 @@
-package fr.cnamts.cpam33.ordonnance.infrastructure.abstracts;
+package fr.cnamts.cpam33.ordonnance.infrastructure.kernel;
 
 import fr.cnamts.cpam33.ordonnance.infrastructure.configurations.GlobalControllerAdvice;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.controllers.OrdonnanceController;

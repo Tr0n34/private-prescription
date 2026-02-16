@@ -9,7 +9,6 @@ import org.objenesis.ObjenesisStd;
 import java.lang.reflect.Field;
 
 import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.lenient;
 
 public final class FlywayServiceHelper {
 

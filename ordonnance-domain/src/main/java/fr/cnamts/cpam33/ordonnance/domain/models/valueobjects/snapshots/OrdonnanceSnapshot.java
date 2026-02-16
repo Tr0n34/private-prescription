@@ -1,9 +1,9 @@
 package fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.snapshots;
 
 import fr.cnamts.cpam33.ordonnance.domain.kernel.domain.Document;
-import fr.cnamts.cpam33.ordonnance.domain.models.aggregates.Ordonnance;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.DomainException;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.enums.OrdonnanceExceptionCode;
+import fr.cnamts.cpam33.ordonnance.domain.models.aggregates.Ordonnance;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identites.Signature;
 
 import java.time.LocalDateTime;

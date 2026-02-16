@@ -2,8 +2,8 @@ package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.traces;
 
 import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.ActeMetier;
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.traces.ActeMetierRepository;
-import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.caches.ActeMetierCache;
-import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors.InfrastructureException;
+import fr.cnamts.cpam33.ordonnance.infrastructure.kernel.caches.ActeMetierCache;
+import fr.cnamts.cpam33.ordonnance.infrastructure.kernel.errors.InfrastructureException;
 import fr.cnamts.cpam33.ordonnance.infrastructure.exceptions.enums.CacheExceptionCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

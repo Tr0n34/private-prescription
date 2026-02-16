@@ -1,6 +1,6 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.exceptions.enums;
 
-import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors.InfraStructureExceptionCode;
+import fr.cnamts.cpam33.ordonnance.infrastructure.kernel.errors.InfraStructureExceptionCode;
 
 public enum CacheExceptionCode implements InfraStructureExceptionCode {
 

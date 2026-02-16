@@ -4,7 +4,6 @@ import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.DomainException;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.ExceptionCode;
 
 import java.util.Map;
-import java.util.logging.Logger;
 
 public record Rule<T, E extends Enum<E> & ExceptionCode>(
         E code,

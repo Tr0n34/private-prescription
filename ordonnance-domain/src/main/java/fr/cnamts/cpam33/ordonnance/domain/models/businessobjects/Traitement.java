@@ -1,9 +1,9 @@
 package fr.cnamts.cpam33.ordonnance.domain.models.businessobjects;
 
 import fr.cnamts.cpam33.ordonnance.domain.kernel.domain.DomainObject;
-import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.medicaments.Medicament;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.DomainException;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.enums.PrescrptionExceptionCode;
+import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.medicaments.Medicament;
 
 import java.util.Collections;
 import java.util.List;
