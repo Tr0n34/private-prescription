@@ -1,15 +1,15 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.controllers.admin;
 
 import fr.cnamts.cpam33.ordonnance.application.services.TraceService;
-import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.TraceAttribute;
-import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.TraceContext;
+import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.*;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.dto.traces.TraceDto;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.dto.traces.WorkerStatusDto;
-import fr.cnamts.cpam33.ordonnance.infrastructure.in.mappers.TraceApiMapper;
+import fr.cnamts.cpam33.ordonnance.infrastructure.in.mappers.TraceDomainMapper;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.traces.DatabaseActeMetierResolver;
-import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.traces.TraceWriterSupervisor;
+import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.traces.internal.TraceWriterSupervisor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,21 +18,22 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/admin/traces")
+@ConditionalOnProperty(name = "ordonnance.traces.mode", havingValue = "INTERNAL_QUEUEING")
 public class TraceController {
 
     private static final Logger logger = LoggerFactory.getLogger(TraceController.class);
 
     private final TraceService traceService;
-    private final TraceApiMapper traceApiMapper;
+    private final TraceDomainMapper traceDomainMapper;
     private final DatabaseActeMetierResolver resolver;
     private final TraceWriterSupervisor traceWriterSupervisor;
 
     public TraceController(TraceService traceService,
-                           TraceApiMapper traceApiMapper,
+                           TraceDomainMapper traceDomainMapper,
                            DatabaseActeMetierResolver resolver,
                            TraceWriterSupervisor traceWriterSupervisor) {
         this.traceService = traceService;
-        this.traceApiMapper = traceApiMapper;
+        this.traceDomainMapper = traceDomainMapper;
         this.resolver = resolver;
         this.traceWriterSupervisor = traceWriterSupervisor;
     }
@@ -41,8 +42,14 @@ public class TraceController {
     public ResponseEntity<?> createTrace(@RequestBody TraceDto trace, @RequestHeader("userId") String userId) {
         logger.debug("trace : {}", trace.toString());
         List<TraceAttribute> traceAttributes = new ArrayList<>();
-        traceService.trace(resolver.resolveByCode(trace.acteMetierCode()),
-                traceApiMapper.mapUtilisateur(userId), new TraceContext(traceAttributes));
+        traceService.trace(
+                resolver.resolveByCode(trace.acteMetierCode()),
+                traceDomainMapper.mapUtilisateur(userId),
+                "TRACE_ADMIN",
+                new TraceContext(
+                        new TraceIn("createTrace", "createTrace", traceAttributes),
+                        new TraceOut(TraceStatus.SUCCESS, List.of(new TraceAttribute("userId", new TraceValue(userId))), null))
+        );
         return ResponseEntity.ok().build();
     }
 

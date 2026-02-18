@@ -1,11 +1,8 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.traces;
 
 import fr.cnamts.cpam33.ordonnance.domain.kernel.events.ActeMetierEvent;
-import fr.cnamts.cpam33.ordonnance.domain.kernel.events.TraceCommand;
-import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.Trace;
-import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.TraceAttribute;
-import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.TraceContext;
-import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.TraceValue;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.traces.Traceable;
+import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.*;
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.traces.TracePublisher;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -16,8 +13,6 @@ import org.springframework.stereotype.Component;
 
 import java.time.Clock;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Aspect
 @Component
@@ -26,11 +21,15 @@ public class ActeMetierAspect {
     private static final Logger logger = LoggerFactory.getLogger(ActeMetierAspect.class);
 
     private final TracePublisher publisher;
-    private final Clock  clock;
+    private final Clock clock;
+    private final TraceContextFactory traceContextFactory;
 
-    public ActeMetierAspect(TracePublisher publisher, Clock clock) {
+    public ActeMetierAspect(TracePublisher publisher,
+                            Clock clock,
+                            TraceContextFactory traceContextFactory) {
         this.publisher = publisher;
         this.clock = clock;
+        this.traceContextFactory = traceContextFactory;
     }
 
     @Around("@within(acteMetier)")
@@ -39,62 +38,48 @@ public class ActeMetierAspect {
         Throwable error = null;
         try {
             result = pjp.proceed();
+            return result;
         } catch (Throwable t) {
             error = t;
+            throw t;
+        } finally {
+            publishTrace(pjp, result, error, acteMetier);
         }
-        publishTrace(pjp.getArgs(), result, error, acteMetier);
-        if ( error != null ) {
-            throw error;
-        }
-        return result;
     }
 
-    private void publishTrace(Object[] arguments, Object result, Throwable error, ActeMetierEvent event) {
-        boolean hasToBePublish = true;
-        Trace trace = null;
-        if ( arguments == null || arguments.length == 0) {
-            hasToBePublish = false;
-        } else if ( !(arguments[0] instanceof TraceCommand traceCommand )) {
-            hasToBePublish = false;
-        } else {
-            trace = Trace.of(
+    private void publishTrace(ProceedingJoinPoint pjp, Object result, Throwable error, ActeMetierEvent event) {
+        Traceable traceCommand = findTraceCommand(pjp.getArgs());
+        boolean hasToBePublish = (traceCommand != null);
+        logger.trace("Trace acteMetier={}, hasToBePublish={}", event, hasToBePublish);
+        if ( hasToBePublish ) {
+            TraceContext traceContext = traceContextFactory.build(pjp, traceCommand, result, error);
+            Trace trace = Trace.of(
                     event.value(),
                     traceCommand.utilisateurId(),
-                    buildTraceContext(arguments, result, error),
+                    result != null ? result.getClass().getSimpleName() : "UNKNOWN_ERROR",
+                    traceContext,
                     LocalDateTime.now(clock),
                     clock
             );
-        }
-        logger.trace("Trace acteMetier : {}, {}", event, hasToBePublish);
-        if ( hasToBePublish ) {
+            logger.trace("OUT status={}, attrs={}", traceContext.out().status(), traceContext.out().traceAttributes().size());
             try {
                 publisher.publish(trace);
             } catch (Exception ex) {
-                // volontairement ignoré : la traçabilité ne doit jamais casser le métier
                 logger.warn("Unable to publish trace", ex);
             }
         }
     }
 
-    private TraceContext buildTraceContext(Object[] arguments, Object result, Throwable error) {
-        List<TraceAttribute> attributes = new ArrayList<>();
-        for ( Object argument : arguments ) {
-            if ( argument != null ) {
-                attributes.add(new TraceAttribute(argument.getClass().getSimpleName(), new TraceValue(argument)));
+    private Traceable findTraceCommand(Object[] arguments) {
+        Traceable traceCommand = null;
+        if ( arguments != null ) {
+            for ( int i = 0; i < arguments.length && traceCommand == null; i++ ) {
+                if ( arguments[i] instanceof Traceable foundTraceCommand ) {
+                    traceCommand = foundTraceCommand;
+                }
             }
         }
-        if ( result != null ) {
-            attributes.add(new TraceAttribute("result", new TraceValue(result)));
-        }
-        if ( error != null ) {
-            attributes.add(new TraceAttribute("status", new TraceValue("ERROR")));
-            attributes.add(new TraceAttribute("errorType", new TraceValue(error.getClass().getName())));
-            attributes.add(new TraceAttribute("errorMessage", new TraceValue(String.valueOf(error.getMessage()))));
-        } else {
-            attributes.add(new TraceAttribute("status", new TraceValue("SUCCESS")));
-        }
-        logger.trace("TraceContext build complete");
-        return new TraceContext(attributes);
+        return traceCommand;
     }
 
 }

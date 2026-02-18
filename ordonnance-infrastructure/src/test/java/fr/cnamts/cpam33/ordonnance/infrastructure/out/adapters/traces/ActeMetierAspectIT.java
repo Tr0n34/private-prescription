@@ -2,7 +2,7 @@ package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.traces;
 
 import fr.cnamts.cpam33.ordonnance.domain.kernel.domain.enums.ActeMetierCode;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.events.ActeMetierEvent;
-import fr.cnamts.cpam33.ordonnance.domain.kernel.events.TraceCommand;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.traces.Traceable;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.ids.UtilisateurId;
 import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.Trace;
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.traces.TracePublisher;
@@ -39,7 +39,7 @@ public class ActeMetierAspectIT {
 
     @Test
     void should_publish_trace_with_context() throws Throwable {
-        TraceCommand command = mock(TraceCommand.class);
+        Traceable command = mock(Traceable.class);
         when(command.utilisateurId()).thenReturn(new UtilisateurId("123456789"));
         ProceedingJoinPoint pjp = mock(ProceedingJoinPoint.class);
         when(pjp.proceed()).thenReturn("RESULT_OK");
@@ -55,7 +55,7 @@ public class ActeMetierAspectIT {
         assertEquals("123456789", captured.utilisateurId().numero());
         assertNotNull(captured.context());
         assertTrue(captured.context().attributes().stream()
-                .anyMatch(attr -> attr.name().contains("TraceCommand") && attr.value().value() instanceof TraceCommand)
+                .anyMatch(attr -> attr.name().contains("TraceCommand") && attr.value().value() instanceof Traceable)
         );
         assertTrue(captured.context().attributes().stream()
                 .anyMatch(attr -> attr.name().equals("result") && "RESULT_OK".equals(attr.value().value()))

@@ -7,8 +7,8 @@ import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.TraceContext;
 
 public interface TracePort {
 
-    void trace(ActeMetierCode acteMetierCode, UtilisateurId utilisateurId, TraceContext traceContext);
+    void trace(ActeMetierCode acteMetierCode, UtilisateurId utilisateurId, String bounedContext, TraceContext traceContext);
 
-    void trace(ActeMetier acteMetier, UtilisateurId utilisateurId, TraceContext traceContext);
+    void trace(ActeMetier acteMetier, UtilisateurId utilisateurId, String bounedContext, TraceContext traceContext);
 
 }

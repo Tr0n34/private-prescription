@@ -1,6 +1,5 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.out.mappers.traces;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.ids.UtilisateurId;
 import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.*;
@@ -15,75 +14,92 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import org.springframework.beans.factory.annotation.Qualifier;
 
-import java.util.LinkedHashMap;
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 
 @Mapper(componentModel = "spring", uses = {
         ActeMetierEntityMapper.class, MedecinEntityMapper.class
 })
 public interface TraceEntityMapper {
 
-    TypeReference<List<java.util.Map<String, Object>>> TYPE_REF_SAFE =
-            new TypeReference<>() {};
-
     @Mapping(target = "acteMetier", source = "acteMetierId", qualifiedByName = "mapActeMetier")
     @Mapping(target = "utilisateurId", source = "utilisateurId.numero")
     @Mapping(target = "createdOn", source = "timestamp")
-    @Mapping(target = "traceContext", source = "trace", qualifiedByName = "mapTraceContext")
+    @Mapping(target = "traceIn", source = "trace", qualifiedByName = "mapTraceIn")
+    @Mapping(target = "traceOut", source = "trace", qualifiedByName = "mapTraceOut")
     TraceEntity toEntity(Trace trace,
                          @Context ActeMetierJpaRepository acteMetierJpaRepository,
                          @Context @Qualifier("traceObjectMapper") ObjectMapper traceObjectMapper);
 
     @Named("mapActeMetier")
-    default ActeMetierEntity mapActeMetier(ActeMetierId acteMetierId, @Context ActeMetierJpaRepository acteMetierJpaRepository) {
-        if ( acteMetierId == null ) return null;
-        return acteMetierJpaRepository.findByCode(acteMetierId.code()).orElseThrow();
+    default ActeMetierEntity mapActeMetier(ActeMetierId acteMetierId,
+                                           @Context ActeMetierJpaRepository acteMetierJpaRepository) {
+        return acteMetierId != null
+                ? acteMetierJpaRepository.findByCode(acteMetierId.code()).orElseThrow()
+                : null;
     }
 
-    @Named("mapTraceContext")
-    default String mapTraceContext(Trace trace, @Context ObjectMapper traceObjectMapper) {
+    @Named("mapTraceIn")
+    default String mapTraceIn(Trace trace, @Context ObjectMapper traceObjectMapper) {
         try {
-            var safeAttrs = trace.context().attributes().stream()
-                    .map(traceAttribute -> toTraceAttributeMap(traceAttribute, traceObjectMapper))
-                    .toList();
-            return traceObjectMapper.writeValueAsString(safeAttrs);
+            TraceIn safeIn = new TraceIn(
+                    trace.context().in().method(),
+                    trace.context().in().signature(),
+                    safeAttributes(trace.context().in().params(), traceObjectMapper)
+            );
+            return traceObjectMapper.writeValueAsString(safeIn);
         } catch (Exception e) {
-            throw new IllegalStateException("Impossible de sérialiser le TraceContext", e);
+            throw new IllegalStateException("Impossible de sérialiser TraceIn", e);
+        }
+    }
+
+    @Named("mapTraceOut")
+    default String mapTraceOut(Trace trace, @Context ObjectMapper traceObjectMapper) {
+        try {
+            TraceOut out = trace.context().out();
+            List<TraceAttribute> safeAttrs = safeAttributes(out.traceAttributes(), traceObjectMapper);
+            TraceFailure err = out.error();
+            TraceOut safeOut = ( out.status() == TraceStatus.FAILURE )
+                    ? new TraceOut(TraceStatus.FAILURE, safeAttrs, err)
+                    : new TraceOut(TraceStatus.SUCCESS, safeAttrs, null);
+            return traceObjectMapper.writeValueAsString(safeOut);
+        } catch (Exception e) {
+            throw new IllegalStateException("Impossible de sérialiser TraceOut", e);
         }
     }
 
     default Trace toDomain(TraceEntity entity, @Qualifier("traceObjectMapper") ObjectMapper traceObjectMapper) {
-        if (entity == null) return null;
-        List<Map<String, Object>> safe;
+        if ( entity == null ) return null;
         try {
-            safe = traceObjectMapper.readValue(entity.traceContext(), TYPE_REF_SAFE);
+            TraceIn in = traceObjectMapper.readValue(entity.traceIn(), TraceIn.class);
+            TraceOut out = traceObjectMapper.readValue(entity.traceOut(), TraceOut.class);
+            return new Trace(
+                    new ActeMetierId(entity.acteMetier().getCode()),
+                    new UtilisateurId(entity.utilisateurId()),
+                    entity.boundedContext(),
+                    LocalDateTime.parse(entity.createdOn()),
+                    new TraceContext(in, out)
+            );
         } catch (Exception ex) {
-            throw new IllegalArgumentException("Impossible de désérialiser le contexte de trace", ex);
+            throw new IllegalArgumentException("Impossible de désérialiser TraceIn/TraceOut", ex);
         }
-        List<TraceAttribute> attributes = safe.stream()
-                .map(m -> new TraceAttribute(
-                        (String) m.get("name"),
-                        new TraceValue(m.get("value"))
-                ))
-                .toList();
-
-        return new Trace(
-                new ActeMetierId(entity.acteMetier().getCode()),
-                new UtilisateurId(entity.utilisateurId()),
-                entity.createdOn(),
-                new TraceContext(attributes)
-        );
     }
 
-    private Map<String, Object> toTraceAttributeMap(TraceAttribute traceAttribute, ObjectMapper traceObjectMapper) {
-        Map<String, Object> map = new LinkedHashMap<>();
-        map.put("name", traceAttribute.name());
-        map.put("value", TraceValueNormalizer.normalize(
-                traceAttribute.value() == null ? null : traceAttribute.value().value(),
-                traceObjectMapper));
-        return map;
+    private List<TraceAttribute> safeAttributes(List<TraceAttribute> attrs,
+                                                ObjectMapper traceObjectMapper) {
+        return ( attrs == null || attrs.isEmpty() )
+                ? List.of()
+                : attrs.stream()
+                .map(a -> new TraceAttribute(
+                        a.name(),
+                        new TraceValue(
+                                TraceValueNormalizer.normalize(
+                                        a.value().value(),
+                                        traceObjectMapper
+                                )
+                        )
+                ))
+                .toList();
     }
 
 }
-

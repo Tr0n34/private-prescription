@@ -29,6 +29,4 @@ public class CacheSelectorConfiguration {
         return new InMemoryActeMetierCache(acteMetierRepository);
     }
 
-
-
 }

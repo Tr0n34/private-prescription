@@ -1,4 +1,4 @@
-package fr.cnamts.cpam33.ordonnance.application.abstracts;
+package fr.cnamts.cpam33.ordonnance.application.kernel;
 
 import fr.cnamts.cpam33.ordonnance.domain.kernel.cqrs.Command;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.domain.DomainObject;

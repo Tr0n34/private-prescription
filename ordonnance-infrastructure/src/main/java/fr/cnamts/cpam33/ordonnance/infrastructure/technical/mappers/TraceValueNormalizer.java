@@ -25,11 +25,9 @@ public final class TraceValueNormalizer {
     }
 
     private static Object normalize(Object value, ObjectMapper mapper, int depth, IdentityHashMap<Object, Boolean> seen) {
-        Object result = null;
-        if ( value != null ) {
-            result = normalizeNonNull(value, mapper, depth, seen);
-        }
-        return result;
+        return value != null
+                ? normalizeNonNull(value, mapper, depth, seen)
+                : null;
     }
 
     private static Object normalizeNonNull(Object value, ObjectMapper mapper, int depth, IdentityHashMap<Object, Boolean> seen) {
@@ -55,19 +53,15 @@ public final class TraceValueNormalizer {
     }
 
     private static Object stepDepth(Object value, ObjectMapper mapper, int depth, IdentityHashMap<Object, Boolean> seen) {
-        Object out = NO_MATCH;
-        if ( isDepthExceeded(depth) ) {
-            out = summary(value, "maxDepth");
-        }
-        return out;
+        return isDepthExceeded(depth)
+                ? summary(value, "maxDepth")
+                : NO_MATCH;
     }
 
     private static Object stepCycle(Object value, ObjectMapper mapper, int depth, IdentityHashMap<Object, Boolean> seen) {
-        Object out = NO_MATCH;
-        if ( isCycle(value, seen) ) {
-            out = summary(value, "cycle");
-        }
-        return out;
+        return isCycle(value, seen)
+                ? summary(value, "cycle")
+                : NO_MATCH;
     }
 
     private static Object stepSimple(Object value, ObjectMapper mapper, int depth, IdentityHashMap<Object, Boolean> seen) {
@@ -75,11 +69,9 @@ public final class TraceValueNormalizer {
     }
 
     private static Object stepArray(Object value, ObjectMapper mapper, int depth, IdentityHashMap<Object, Boolean> seen) {
-        Object out = NO_MATCH;
-        if ( isArray(value) ) {
-            out = normalizeArray(value, mapper, depth, seen);
-        }
-        return out;
+        return isArray(value)
+                ? normalizeArray(value, mapper, depth, seen)
+                : NO_MATCH;
     }
 
     private static Object stepCollection(Object value, ObjectMapper mapper, int depth, IdentityHashMap<Object, Boolean> seen) {
@@ -92,7 +84,7 @@ public final class TraceValueNormalizer {
 
     private static Object stepMap(Object value, ObjectMapper mapper, int depth, IdentityHashMap<Object, Boolean> seen) {
         Object out = NO_MATCH;
-        if (value instanceof Map<?, ?> map) {
+        if ( value instanceof Map<?, ?> map ) {
             out = normalizeMap(map, mapper, depth, seen);
         }
         return out;
@@ -115,11 +107,7 @@ public final class TraceValueNormalizer {
     }
 
     private static boolean isArray(Object value) {
-        boolean array = false;
-        if ( value != null ) {
-            array = value.getClass().isArray();
-        }
-        return array;
+        return value != null && value.getClass().isArray();
     }
 
     private static Object asSimpleValue(Object value) {

@@ -1,6 +1,6 @@
 package fr.cnamts.cpam33.ordonnance.application.usecases.patients;
 
-import fr.cnamts.cpam33.ordonnance.application.abstracts.CommandUseCase;
+import fr.cnamts.cpam33.ordonnance.application.kernel.CommandUseCase;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.domain.enums.ActeMetierCode;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.events.ActeMetierEvent;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.DomainException;

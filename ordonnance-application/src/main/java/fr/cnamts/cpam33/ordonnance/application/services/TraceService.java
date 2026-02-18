@@ -9,6 +9,7 @@ import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.TraceId;
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.traces.ArchiverTracePort;
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.traces.TracePort;
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.traces.TracePublisher;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 
 import java.time.Clock;
@@ -17,6 +18,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
+@ConditionalOnProperty(name = "ordonnance.traces.mode", havingValue = "INTERNAL_QUEUEING")
 public class TraceService implements ArchiverTracePort, TracePort {
 
     private final Clock clock;
@@ -29,13 +31,13 @@ public class TraceService implements ArchiverTracePort, TracePort {
     }
 
     @Override
-    public void trace(ActeMetierCode acteMetierCode, UtilisateurId utilisateurId, TraceContext traceContext) {
-        tracePublisher.publish(Trace.of(acteMetierCode, utilisateurId, traceContext, LocalDateTime.now(clock), clock));
+    public void trace(ActeMetierCode acteMetierCode, UtilisateurId utilisateurId, String boundedContext, TraceContext traceContext) {
+        tracePublisher.publish(Trace.of(acteMetierCode, utilisateurId, boundedContext, traceContext, LocalDateTime.now(clock), clock));
     }
 
     @Override
-    public void trace(ActeMetier acteMetier, UtilisateurId utilisateurId, TraceContext traceContext) {
-        tracePublisher.publish(Trace.of(acteMetier.acteMetierId(), utilisateurId, traceContext, LocalDateTime.now(clock), clock));
+    public void trace(ActeMetier acteMetier, UtilisateurId utilisateurId, String boundedContext, TraceContext traceContext) {
+        tracePublisher.publish(Trace.of(acteMetier.acteMetierId(), utilisateurId, boundedContext, traceContext, LocalDateTime.now(clock), clock));
     }
 
     @Override

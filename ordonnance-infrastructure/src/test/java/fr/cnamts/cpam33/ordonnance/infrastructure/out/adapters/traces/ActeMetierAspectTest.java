@@ -2,7 +2,7 @@ package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.traces;
 
 import fr.cnamts.cpam33.ordonnance.domain.kernel.domain.enums.ActeMetierCode;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.events.ActeMetierEvent;
-import fr.cnamts.cpam33.ordonnance.domain.kernel.events.TraceCommand;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.traces.Traceable;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.ids.UtilisateurId;
 import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.Trace;
 import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.TraceAttribute;
@@ -36,7 +36,7 @@ class ActeMetierAspectTest {
 
     @Test
     void should_publish_trace_with_context() throws Throwable {
-        TraceCommand command = mock(TraceCommand.class);
+        Traceable command = mock(Traceable.class);
         when(command.utilisateurId()).thenReturn(new UtilisateurId("123456789"));
         ProceedingJoinPoint pjp = mock(ProceedingJoinPoint.class);
         when(pjp.proceed()).thenReturn("RESULT_OK");
