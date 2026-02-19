@@ -1,16 +1,13 @@
 package fr.cnamts.cpam33.ordonnance.domain.models.tracabilite;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-
 public record TraceContext(
-    List<TraceAttribute> attributes
+        TraceIn in,
+        TraceOut out
 ) {
 
     public TraceContext {
-        Objects.requireNonNull(attributes, "attributes is null");
-        attributes = Collections.unmodifiableList(attributes);
+        if (in == null) throw new NullPointerException("in is null");
+        if (out == null) throw new NullPointerException("out is null");
     }
 
 }

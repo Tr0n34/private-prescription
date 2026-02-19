@@ -1,4 +1,4 @@
-package fr.cnamts.cpam33.ordonnance.infrastructure;
+package fr.cnamts.cpam33.ordonnance.infrastructure.contexts;
 
 import com.zaxxer.hikari.HikariDataSource;
 import jakarta.persistence.EntityManagerFactory;

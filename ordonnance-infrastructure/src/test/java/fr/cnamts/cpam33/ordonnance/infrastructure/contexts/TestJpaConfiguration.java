@@ -1,4 +1,4 @@
-package fr.cnamts.cpam33.ordonnance.infrastructure;
+package fr.cnamts.cpam33.ordonnance.infrastructure.contexts;
 
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;

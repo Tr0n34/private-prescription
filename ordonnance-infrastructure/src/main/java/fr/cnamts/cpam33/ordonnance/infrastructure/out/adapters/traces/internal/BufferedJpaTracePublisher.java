@@ -1,4 +1,4 @@
-package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.traces;
+package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.traces.internal;
 
 import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.Trace;
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.traces.TracePublisher;
@@ -6,6 +6,7 @@ import fr.cnamts.cpam33.ordonnance.infrastructure.actuators.metrics.TraceMetrics
 import fr.cnamts.cpam33.ordonnance.infrastructure.configurations.traces.TraceBackpressureProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
@@ -13,6 +14,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 
 @Component
+@ConditionalOnProperty(name = "ordonnance.traces.mode", havingValue = "INTERNAL_QUEUEING")
 public class BufferedJpaTracePublisher implements TracePublisher {
 
     private static final Logger logger = LoggerFactory.getLogger(BufferedJpaTracePublisher.class);

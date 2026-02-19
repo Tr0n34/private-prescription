@@ -1,4 +1,4 @@
-package fr.cnamts.cpam33.ordonnance.infrastructure;
+package fr.cnamts.cpam33.ordonnance.infrastructure.contexts;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.cnamts.cpam33.ordonnance.infrastructure.configurations.PdfConfiguration;

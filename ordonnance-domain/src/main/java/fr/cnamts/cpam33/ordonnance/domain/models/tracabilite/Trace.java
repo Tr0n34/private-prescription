@@ -12,8 +12,10 @@ import java.time.Clock;
 import java.time.LocalDateTime;
 
 public record Trace(
+        TraceId traceId,
         ActeMetierId acteMetierId,
         UtilisateurId utilisateurId,
+        String boundedContext,
         LocalDateTime timestamp,
         TraceContext context
 ) implements DomainObject, Document {
@@ -30,16 +32,18 @@ public record Trace(
         }
     }
 
-    public static Trace of(ActeMetierId acteMetierId, UtilisateurId utilisateurId, TraceContext traceContext, LocalDateTime timestamp, Clock clock) {
-        Trace trace = new Trace(acteMetierId, utilisateurId, timestamp, traceContext);
+    public static Trace of(TraceId traceId, ActeMetierId acteMetierId, UtilisateurId utilisateurId, String boundedContext,
+                           TraceContext traceContext, LocalDateTime timestamp, Clock clock) {
+        Trace trace = new Trace(traceId, acteMetierId, utilisateurId, boundedContext, timestamp, traceContext);
         if ( timestamp.isAfter(LocalDateTime.now(clock)) ) {
             throw new DomainException(TraceExceptionCode.BS_TRACE_TIMESTAMP_INVALID);
         }
         return trace;
     }
 
-    public static Trace of(ActeMetierCode acteMetierCode, UtilisateurId utilisateurId, TraceContext traceContext, LocalDateTime timestamp, Clock clock) {
-        Trace trace = new Trace(new ActeMetierId(acteMetierCode.name()), utilisateurId, timestamp, traceContext);
+    public static Trace of(TraceId traceId, ActeMetierCode acteMetierCode, UtilisateurId utilisateurId, String boundedContext,
+                           TraceContext traceContext, LocalDateTime timestamp, Clock clock) {
+        Trace trace = new Trace(traceId, new ActeMetierId(acteMetierCode.name()), utilisateurId, boundedContext, timestamp, traceContext);
         if ( timestamp.isAfter(LocalDateTime.now(clock)) ) {
             throw new DomainException(TraceExceptionCode.BS_TRACE_TIMESTAMP_INVALID);
         }
@@ -51,6 +55,7 @@ public record Trace(
         return MoreObjects.toStringHelper(this)
                 .add("acteMetierId", acteMetierId)
                 .add("utilisateurId", utilisateurId)
+                .add("boundedContext", boundedContext)
                 .add("timestamp", timestamp)
                 .add("context", context)
                 .toString();

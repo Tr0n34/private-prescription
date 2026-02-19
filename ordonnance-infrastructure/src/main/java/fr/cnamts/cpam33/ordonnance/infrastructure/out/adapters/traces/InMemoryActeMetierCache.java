@@ -17,12 +17,12 @@ public class InMemoryActeMetierCache implements ActeMetierCache {
 
     private static final Logger logger = LoggerFactory.getLogger(InMemoryActeMetierCache.class.getName());
 
-    private final ActeMetierRepository repository;
+    private final ActeMetierRepository acteMetierRepository;
     private final Map<String, ActeMetier> cache = new ConcurrentHashMap<>();
     private final AtomicBoolean ready = new AtomicBoolean(false);
 
-    public InMemoryActeMetierCache(ActeMetierRepository repository) {
-        this.repository = repository;
+    public InMemoryActeMetierCache(ActeMetierRepository acteMetierRepository) {
+        this.acteMetierRepository = acteMetierRepository;
     }
 
     @Override
@@ -33,7 +33,7 @@ public class InMemoryActeMetierCache implements ActeMetierCache {
     @Override
     public void refresh() {
         Map<String, ActeMetier> datas = new HashMap<>();
-        repository.findAll().forEach(acteMetier -> {
+        acteMetierRepository.findAll().forEach(acteMetier -> {
             logger.trace("{} has been added in cache", acteMetier.acteMetierId().code());
             datas.put(acteMetier.acteMetierId().code(), acteMetier);
         });
