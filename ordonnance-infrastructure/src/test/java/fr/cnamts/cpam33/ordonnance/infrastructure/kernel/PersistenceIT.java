@@ -1,6 +1,6 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.kernel;
 
-import fr.cnamts.cpam33.ordonnance.infrastructure.TestJpaConfiguration;
+import fr.cnamts.cpam33.ordonnance.infrastructure.contexts.TestJpaConfiguration;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;

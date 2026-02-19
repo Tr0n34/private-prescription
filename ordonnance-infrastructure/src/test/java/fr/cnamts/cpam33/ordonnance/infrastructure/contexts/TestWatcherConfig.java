@@ -1,4 +1,4 @@
-package fr.cnamts.cpam33.ordonnance.infrastructure;
+package fr.cnamts.cpam33.ordonnance.infrastructure.contexts;
 
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.batch.ErrorCatalogLoader;
 import fr.cnamts.cpam33.ordonnance.infrastructure.technical.DebouncedReloadExecutor;

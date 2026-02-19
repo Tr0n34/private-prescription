@@ -1,6 +1,6 @@
 package fr.cnamts.cpam33.ordonnance.application.usecases.ordonnances;
 
-import fr.cnamts.cpam33.ordonnance.application.abstracts.QueryUseCase;
+import fr.cnamts.cpam33.ordonnance.application.kernel.QueryUseCase;
 import fr.cnamts.cpam33.ordonnance.domain.models.aggregates.Ordonnance;
 import fr.cnamts.cpam33.ordonnance.domain.models.queries.ListerOrdonnancesPatientQuery;
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.ordonnances.OrdonnanceRepository;

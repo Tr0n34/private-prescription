@@ -1,6 +1,6 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.out.repositories;
 
-import fr.cnamts.cpam33.ordonnance.infrastructure.TraceJpaTestConfig;
+import fr.cnamts.cpam33.ordonnance.infrastructure.contexts.TraceJpaTestConfig;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.persistences.repositories.traces.TraceOutboxJpaRepository;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.entities.traces.TraceEntity;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.entities.traces.TraceOutboxEntity;

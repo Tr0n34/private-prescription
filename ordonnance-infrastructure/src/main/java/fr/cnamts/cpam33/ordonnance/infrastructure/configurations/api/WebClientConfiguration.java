@@ -1,5 +1,6 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.configurations.api;
 
+import fr.cnamts.cpam33.ordonnance.infrastructure.configurations.traces.TraceApiPublisherProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,8 +28,5 @@ public class WebClientConfiguration {
                 .defaultHeader("Accept", MediaType.APPLICATION_JSON_VALUE)
                 .build();
     }
-
-
-
 
 }

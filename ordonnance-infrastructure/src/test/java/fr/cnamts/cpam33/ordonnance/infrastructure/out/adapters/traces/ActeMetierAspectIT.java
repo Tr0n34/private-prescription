@@ -2,16 +2,26 @@ package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.traces;
 
 import fr.cnamts.cpam33.ordonnance.domain.kernel.domain.enums.ActeMetierCode;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.events.ActeMetierEvent;
-import fr.cnamts.cpam33.ordonnance.domain.kernel.events.TraceCommand;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.traces.Traceable;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.ids.UtilisateurId;
 import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.Trace;
+import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.TraceIn;
+import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.TraceOut;
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.traces.TracePublisher;
+import fr.cnamts.cpam33.ordonnance.infrastructure.contexts.TestAspectConfiguration;
+import fr.cnamts.cpam33.ordonnance.infrastructure.fixtures.stubs.DummyActeMetierService;
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Profile;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.Clock;
@@ -22,44 +32,72 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 
-@Profile("integration")
-@ExtendWith(SpringExtension.class)
-public class ActeMetierAspectIT {
+@SpringBootTest(
+        classes = {
+                ActeMetierAspect.class,
+                TraceContextFactory.class,
+                DummyActeMetierService.class
+        },
+        properties = {
+                // évite surprises sur proxy interface vs class
+                "spring.aop.proxy-target-class=true"
+        }
+)
+@Import(TestAspectConfiguration.class)
+@ActiveProfiles("integration")
+class ActeMetierAspectIT {
 
-    private TracePublisher publisher;
-    private Clock clock;
-    private ActeMetierAspect aspect;
+    @Autowired DummyActeMetierService service;
+    @Autowired TracePublisher publisher;
+    @Autowired TraceInBuilder traceInBuilder;
+    @Autowired TraceOutBuilder traceOutBuilder;
 
-    @BeforeEach
-    void setUp() {
-        publisher = mock(TracePublisher.class);
-        clock = Clock.fixed(Instant.parse("2026-01-10T10:00:00Z"), ZoneId.of("UTC"));
-        aspect = new ActeMetierAspect(publisher, clock);
+    @AfterEach
+    void resetMocks() {
+        clearInvocations(publisher);
     }
 
     @Test
-    void should_publish_trace_with_context() throws Throwable {
-        TraceCommand command = mock(TraceCommand.class);
-        when(command.utilisateurId()).thenReturn(new UtilisateurId("123456789"));
-        ProceedingJoinPoint pjp = mock(ProceedingJoinPoint.class);
-        when(pjp.proceed()).thenReturn("RESULT_OK");
-        when(pjp.getArgs()).thenReturn(new Object[]{command});
-        ActeMetierEvent event = mock(ActeMetierEvent.class);
-        when(event.value()).thenReturn(ActeMetierCode.ORD_CREER);
-        Object result = aspect.around(pjp, event);
+    void should_publish_trace_when_method_called_with_traceable() {
+        Traceable cmd = mock(Traceable.class);
+        when(cmd.utilisateurId()).thenReturn(new UtilisateurId("123456789"));
+        TraceIn in = mock(TraceIn.class);
+        TraceOut out = mock(TraceOut.class);
+        when(traceInBuilder.build(any(), eq(cmd))).thenReturn(in);
+        when(traceOutBuilder.build(eq("RESULT_OK"), isNull())).thenReturn(out);
+        String result = service.ok(cmd);
+
         assertEquals("RESULT_OK", result);
-        ArgumentCaptor<Trace> traceCaptor = ArgumentCaptor.forClass(Trace.class);
-        verify(publisher, times(1)).publish(traceCaptor.capture());
-        var captured = traceCaptor.getValue();
-        assertEquals(ActeMetierCode.ORD_CREER.name(), captured.acteMetierId().code());
-        assertEquals("123456789", captured.utilisateurId().numero());
-        assertNotNull(captured.context());
-        assertTrue(captured.context().attributes().stream()
-                .anyMatch(attr -> attr.name().contains("TraceCommand") && attr.value().value() instanceof TraceCommand)
-        );
-        assertTrue(captured.context().attributes().stream()
-                .anyMatch(attr -> attr.name().equals("result") && "RESULT_OK".equals(attr.value().value()))
-        );
+
+        ArgumentCaptor<Trace> captor = ArgumentCaptor.forClass(Trace.class);
+        verify(publisher).publish(captor.capture());
+
+        Trace trace = captor.getValue();
+        assertNotNull(trace);
+        assertEquals(ActeMetierCode.ORD_CREER.name(), trace.acteMetierId().code());
+        assertEquals("123456789", trace.utilisateurId().numero());
+        assertNotNull(trace.context());
     }
+
+    @Test
+    void should_publish_trace_even_when_exception_thrown() {
+        Traceable cmd = mock(Traceable.class);
+        when(cmd.utilisateurId()).thenReturn(new UtilisateurId("123456789"));
+        TraceIn in = mock(TraceIn.class);
+        TraceOut out = mock(TraceOut.class);
+        when(traceInBuilder.build(any(), eq(cmd))).thenReturn(in);
+        when(traceOutBuilder.build(isNull(), any(Throwable.class))).thenReturn(out);
+        assertThrows(IllegalStateException.class, () -> service.ko(cmd));
+        verify(publisher).publish(any(Trace.class));
+    }
+
+    @Test
+    void should_not_publish_when_no_traceable_argument() {
+        String result = service.withoutTrace();
+        assertEquals("NO_TRACE", result);
+        verify(publisher, never()).publish(any());
+    }
+
+
 
 }

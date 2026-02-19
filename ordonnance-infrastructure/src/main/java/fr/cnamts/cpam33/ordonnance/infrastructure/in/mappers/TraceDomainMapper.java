@@ -11,7 +11,7 @@ import org.mapstruct.Named;
 import java.time.Clock;
 
 @Mapper(componentModel = "spring")
-public interface TraceApiMapper {
+public interface TraceDomainMapper {
 
     @Mapping(target = "acteMetierId", source = "dto.acteMetierCode")
     @Mapping(target = "utilisateurId", source = "utilisateurId", qualifiedByName = "toUtilisateurId")

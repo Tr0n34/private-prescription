@@ -40,7 +40,7 @@ public class ActeMetierPersistanceAdapter implements ActeMetierRepository {
 
     @Override
     public List<ActeMetier> findAll() {
-        return List.of();
+        return acteMetierJpaRepository.findAll().stream().map(acteMetierEntityMapper::toDomain).toList();
     }
 
     @Transactional
@@ -49,7 +49,7 @@ public class ActeMetierPersistanceAdapter implements ActeMetierRepository {
         FonctionEntity fonctionEntity = fonctionJpaRepository
                 .findByCode(entity.getFonction().getCode())
                 .map(f -> {
-                    if (!f.getDescription().equals(entity.getFonction().getDescription())) {
+                    if ( !f.getDescription().equals(entity.getFonction().getDescription()) ) {
                         f.setDescription(entity.getFonction().getDescription());
                     }
                     return f;
