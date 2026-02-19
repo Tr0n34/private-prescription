@@ -3,6 +3,7 @@ package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.traces;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.events.ActeMetierEvent;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.traces.Traceable;
 import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.*;
+import fr.cnamts.cpam33.ordonnance.domain.ports.out.traces.TraceNumGenerator;
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.traces.TracePublisher;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -23,13 +24,16 @@ public class ActeMetierAspect {
     private final TracePublisher publisher;
     private final Clock clock;
     private final TraceContextFactory traceContextFactory;
+    private final TraceNumGenerator traceNumGenerator;
 
     public ActeMetierAspect(TracePublisher publisher,
-                            Clock clock,
-                            TraceContextFactory traceContextFactory) {
+                            TraceContextFactory traceContextFactory,
+                            TraceNumGenerator traceNumGenerator,
+                            Clock clock) {
         this.publisher = publisher;
         this.clock = clock;
         this.traceContextFactory = traceContextFactory;
+        this.traceNumGenerator = traceNumGenerator;
     }
 
     @Around("@within(acteMetier)")
@@ -48,14 +52,15 @@ public class ActeMetierAspect {
     }
 
     private void publishTrace(ProceedingJoinPoint pjp, Object result, Throwable error, ActeMetierEvent event) {
-        Traceable traceCommand = findTraceCommand(pjp.getArgs());
-        boolean hasToBePublish = (traceCommand != null);
+        Traceable trace = findTraceCommand(pjp.getArgs());
+        boolean hasToBePublish = (trace != null);
         logger.trace("Trace acteMetier={}, hasToBePublish={}", event, hasToBePublish);
         if ( hasToBePublish ) {
-            TraceContext traceContext = traceContextFactory.build(pjp, traceCommand, result, error);
-            Trace trace = Trace.of(
+            TraceContext traceContext = traceContextFactory.build(pjp, trace, result, error);
+            Trace publishedTrace = Trace.of(
+                    new TraceId(traceNumGenerator.generate()),
                     event.value(),
-                    traceCommand.utilisateurId(),
+                    trace.utilisateurId(),
                     result != null ? result.getClass().getSimpleName() : "UNKNOWN_ERROR",
                     traceContext,
                     LocalDateTime.now(clock),
@@ -63,7 +68,7 @@ public class ActeMetierAspect {
             );
             logger.trace("OUT status={}, attrs={}", traceContext.out().status(), traceContext.out().traceAttributes().size());
             try {
-                publisher.publish(trace);
+                publisher.publish(publishedTrace);
             } catch (Exception ex) {
                 logger.warn("Unable to publish trace", ex);
             }

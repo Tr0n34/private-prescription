@@ -22,6 +22,7 @@ import java.util.List;
 })
 public interface TraceEntityMapper {
 
+    @Mapping(target = "traceId", source = "traceId.numero")
     @Mapping(target = "acteMetier", source = "acteMetierId", qualifiedByName = "mapActeMetier")
     @Mapping(target = "utilisateurId", source = "utilisateurId.numero")
     @Mapping(target = "createdOn", source = "timestamp")
@@ -74,6 +75,7 @@ public interface TraceEntityMapper {
             TraceIn in = traceObjectMapper.readValue(entity.traceIn(), TraceIn.class);
             TraceOut out = traceObjectMapper.readValue(entity.traceOut(), TraceOut.class);
             return new Trace(
+                    new TraceId(entity.traceId()),
                     new ActeMetierId(entity.acteMetier().getCode()),
                     new UtilisateurId(entity.utilisateurId()),
                     entity.boundedContext(),

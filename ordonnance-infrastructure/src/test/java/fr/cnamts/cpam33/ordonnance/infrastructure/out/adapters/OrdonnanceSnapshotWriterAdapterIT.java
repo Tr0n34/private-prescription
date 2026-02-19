@@ -8,7 +8,7 @@ import fr.cnamts.cpam33.ordonnance.domain.models.aggregates.Ordonnance;
 import fr.cnamts.cpam33.ordonnance.domain.models.aggregates.OrdonnanceId;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identites.Signature;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.snapshots.OrdonnanceSnapshot;
-import fr.cnamts.cpam33.ordonnance.infrastructure.TestPdfConfig;
+import fr.cnamts.cpam33.ordonnance.infrastructure.contexts.TestPdfConfig;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.mappers.ordonnances.OrdonnancePdfViewMapper;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.views.OrdonnancePdfView;
 import org.apache.pdfbox.Loader;

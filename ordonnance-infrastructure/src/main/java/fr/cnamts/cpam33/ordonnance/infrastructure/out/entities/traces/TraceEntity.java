@@ -14,6 +14,9 @@ public class TraceEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "trace_id", nullable = false)
+    private String traceId;
+
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "acte_metier_id", nullable = false)
     private ActeMetierEntity acteMetier;
@@ -53,6 +56,15 @@ public class TraceEntity {
 
     public TraceEntity setId(Long id) {
         this.id = id;
+        return this;
+    }
+
+    public String traceId() {
+        return traceId;
+    }
+
+    public TraceEntity setTraceId(String traceId) {
+        this.traceId = traceId;
         return this;
     }
 

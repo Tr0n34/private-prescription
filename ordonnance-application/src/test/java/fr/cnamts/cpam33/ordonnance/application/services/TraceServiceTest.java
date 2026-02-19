@@ -1,11 +1,13 @@
 package fr.cnamts.cpam33.ordonnance.application.services;
 
+import fr.cnamts.cpam33.ordonnance.application.fixtures.stubs.TraceIdNumGeneratorStub;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.domain.enums.ActeMetierCode;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.ids.UtilisateurId;
 import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.ActeMetier;
 import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.ActeMetierId;
 import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.TraceContext;
 import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.TraceId;
+import fr.cnamts.cpam33.ordonnance.domain.ports.out.traces.TraceNumGenerator;
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.traces.TracePublisher;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,13 +29,15 @@ class TraceServiceTest {
     @Mock
     private TracePublisher tracePublisher;
 
+    private TraceNumGenerator traceNumGenerator;
     private TraceService service;
     private Clock clock;
 
     @BeforeEach
     void setUp() {
+        traceNumGenerator = new TraceIdNumGeneratorStub();
         clock = Clock.fixed(Instant.parse("2026-02-13T09:00:00Z"), ZoneOffset.UTC);
-        service = new TraceService(clock, tracePublisher);
+        service = new TraceService(clock, tracePublisher, traceNumGenerator);
     }
 
     @Test
@@ -41,7 +45,7 @@ class TraceServiceTest {
         ActeMetierCode code = ActeMetierCode.ORD_CREER;
         UtilisateurId utilisateurId = new UtilisateurId("u-123");
         TraceContext context = mock(TraceContext.class);
-        service.trace(code, utilisateurId, context);
+        service.trace(code, utilisateurId, "boundedContext", context);
         ActeMetierId expectedId = new ActeMetierId(code.name());
         verify(tracePublisher).publish(argThat(trace ->
                 trace != null
@@ -60,7 +64,7 @@ class TraceServiceTest {
         when(acteMetier.acteMetierId()).thenReturn(expectedId);
         UtilisateurId utilisateurId = new UtilisateurId("u-999");
         TraceContext context = mock(TraceContext.class);
-        service.trace(acteMetier, utilisateurId, context);
+        service.trace(acteMetier, utilisateurId, "boundedContext", context);
         verify(tracePublisher).publish(argThat(t -> t != null
                 && t.acteMetierId().equals(expectedId)
                 && t.utilisateurId().equals(utilisateurId)

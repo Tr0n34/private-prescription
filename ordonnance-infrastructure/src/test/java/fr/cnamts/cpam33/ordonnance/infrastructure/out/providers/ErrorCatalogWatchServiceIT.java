@@ -1,6 +1,6 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.out.providers;
 
-import fr.cnamts.cpam33.ordonnance.infrastructure.TestWatcherConfig;
+import fr.cnamts.cpam33.ordonnance.infrastructure.contexts.TestWatcherConfig;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.batch.ErrorCatalogLoader;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.providers.ErrorCatalogWatchService;
 import org.junit.jupiter.api.Test;

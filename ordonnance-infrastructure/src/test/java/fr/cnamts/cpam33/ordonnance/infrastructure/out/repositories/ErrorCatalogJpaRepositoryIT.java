@@ -1,6 +1,6 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.out.repositories;
 
-import fr.cnamts.cpam33.ordonnance.infrastructure.TestJpaConfiguration;
+import fr.cnamts.cpam33.ordonnance.infrastructure.contexts.TestJpaConfiguration;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.persistences.repositories.ordonnances.ErrorCatalogJpaRepository;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.entities.ordonnances.ErrorCatalogEntity;
 import org.junit.jupiter.api.Test;

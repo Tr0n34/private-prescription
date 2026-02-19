@@ -15,6 +15,7 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface TraceApiMapper {
 
+    @Mapping(target = "traceId", source="traceId.numero")
     @Mapping(target = "schemaVersion", constant = "1.0")
     @Mapping(target = "boundedContext", source = "boundedContext")
     @Mapping(target = "acteMetierCode", source = "acteMetierId.code")
@@ -44,26 +45,22 @@ public interface TraceApiMapper {
     default List<TraceAttributeDto> mapAttributes(List<TraceAttribute> attrs,
                                                   @Context ObjectMapper traceObjectMapper) {
         List<TraceAttributeDto> result = List.of();
-
-        if (attrs != null && !attrs.isEmpty()) {
+        if ( attrs != null && !attrs.isEmpty() ) {
             result = attrs.stream()
                     .map(a -> toAttributeDto(a, traceObjectMapper))
                     .toList();
         }
-
         return result;
     }
 
     default TraceAttributeDto toAttributeDto(TraceAttribute attr,
                                              @Context ObjectMapper traceObjectMapper) {
         TraceAttributeDto dto = null;
-
-        if (attr != null && attr.value() != null) {
+        if ( attr != null && attr.value() != null ) {
             Object raw = attr.value().value();
             Object safe = TraceValueNormalizer.normalize(raw, traceObjectMapper);
             dto = new TraceAttributeDto(attr.name(), safe);
         }
-
         return dto;
     }
 
