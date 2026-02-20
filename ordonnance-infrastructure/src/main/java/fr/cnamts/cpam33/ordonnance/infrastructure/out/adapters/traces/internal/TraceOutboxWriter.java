@@ -14,7 +14,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Clock;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 
 @Component
 @ConditionalOnProperty(name = "ordonnance.traces.mode", havingValue = "INTERNAL_QUEUEING")
@@ -22,11 +25,14 @@ public class TraceOutboxWriter {
 
     private final EntityManagerFactory traceEmf;
     private final ObjectMapper mapper;
+    private final Clock clock;
 
     public TraceOutboxWriter(@Qualifier("traceEntityManagerFactory") EntityManagerFactory traceEmf,
-                             @Qualifier("traceContextMapper") ObjectMapper mapper) {
+                             @Qualifier("traceContextMapper") ObjectMapper mapper,
+                             Clock clock) {
         this.traceEmf = traceEmf;
         this.mapper = mapper;
+        this.clock = clock;
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
@@ -38,10 +44,8 @@ public class TraceOutboxWriter {
             transaction.begin();
             String payload = mapper.writeValueAsString(trace);
             TraceOutboxEntity traceOutboxEntity = new TraceOutboxEntity()
-                    .setPayloadJson(payload)
-                    .setCreatedAt(LocalDateTime.now())
-                    .setAttempts(0)
-                    .setLastError(null);
+                    .setPayloadJson(mapper.valueToTree(trace))
+                    .setCreatedAt(OffsetDateTime.now(clock));
             em.persist(traceOutboxEntity);
             em.flush();
             transaction.commit();
