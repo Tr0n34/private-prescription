@@ -21,7 +21,8 @@ import java.util.concurrent.BlockingQueue;
         TraceWriterProperties.class,
         TraceBackpressureProperties.class,
         TraceOutboxProperties.class,
-        TraceApiPublisherProperties.class
+        TraceApiPublisherProperties.class,
+        TraceErrorRetryProperties.class
 })
 @EnableAsync
 public class TraceSelectorConfiguration {
