@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 @Component
@@ -27,15 +28,15 @@ public class MedicamentPersistenceAdapter implements MedicamentRepository {
     }
 
     @Override
-    public Optional<Medicament> findByCodeIdAndVarType(String codeId, String varType) {
+    public List<Medicament> findByCodeIdAndVarType(String codeId, String varType) {
         List<Map<String, Object>> rows = executor.functionRefcursor(
                 THESORIMED_GET_THE_SPE_DETAILS,
                 List.of(codeId, new BigDecimal(varType)),
                 new ColumnMapRowMapper()
         );
         return rows.stream()
-                .findFirst()
-                .map(medicamentRowMapper::map);
+                .map(medicamentRowMapper::map)
+                .toList();
     }
 
 }

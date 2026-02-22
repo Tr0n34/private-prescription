@@ -22,7 +22,7 @@ public class MedicamentRowMapper {
         String catcCode = Row.getNullableString(rows, "sp_catc_code_fk");
         String cipUcd = Row.getNullableString(rows, "sp_cipucd");
         Forme forme = new Forme(Row.getString(rows, "forme"));
-        VoieAdministration voieAdministration = new VoieAdministration(Row.getString(rows, "voie"));
+        VoieAdministration voieAdministration = new VoieAdministration(Row.getNullableString(rows, "voie"));
         String atu = Row.getNullableString(rows, "atu");
         String t2a = Row.getNullableString(rows, "t2a");
         List<Posologie> posologies = List.of();
