@@ -1,32 +1,21 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.traces;
 
 import fr.cnamts.cpam33.ordonnance.domain.kernel.domain.enums.ActeMetierCode;
-import fr.cnamts.cpam33.ordonnance.domain.kernel.events.ActeMetierEvent;
-import fr.cnamts.cpam33.ordonnance.domain.kernel.traces.Traceable;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.ids.UtilisateurId;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.traces.Traceable;
 import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.Trace;
 import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.TraceIn;
 import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.TraceOut;
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.traces.TracePublisher;
 import fr.cnamts.cpam33.ordonnance.infrastructure.contexts.TestAspectConfiguration;
 import fr.cnamts.cpam33.ordonnance.infrastructure.fixtures.stubs.DummyActeMetierService;
-import org.aspectj.lang.ProceedingJoinPoint;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
-import org.springframework.context.annotation.Profile;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-
-import java.time.Clock;
-import java.time.Instant;
-import java.time.ZoneId;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;

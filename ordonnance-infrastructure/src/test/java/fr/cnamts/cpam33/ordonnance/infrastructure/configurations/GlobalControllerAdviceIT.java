@@ -1,14 +1,14 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.configurations;
 
 import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.DomainException;
-import fr.cnamts.cpam33.ordonnance.infrastructure.kernel.errors.ErrorMessageDomainResolver;
-import fr.cnamts.cpam33.ordonnance.infrastructure.kernel.errors.ErrorMessageInfrastructureResolver;
-import fr.cnamts.cpam33.ordonnance.infrastructure.kernel.errors.InfrastructureException;
 import fr.cnamts.cpam33.ordonnance.infrastructure.exceptions.ErrorDescriptor;
 import fr.cnamts.cpam33.ordonnance.infrastructure.fixtures.controllers.TestController;
 import fr.cnamts.cpam33.ordonnance.infrastructure.fixtures.controllers.ThrowingService;
 import fr.cnamts.cpam33.ordonnance.infrastructure.fixtures.enums.TestExceptionCode;
 import fr.cnamts.cpam33.ordonnance.infrastructure.fixtures.enums.TestInfrastructureExceptionCode;
+import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.ErrorMessageDomainResolver;
+import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.ErrorMessageInfrastructureResolver;
+import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.InfrastructureException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;

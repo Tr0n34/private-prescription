@@ -1,5 +1,7 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.technical;
 
+import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.InfrastructureException;
+import fr.cnamts.cpam33.ordonnance.infrastructure.exceptions.enums.DebouncerExceptionCode;
 import jakarta.annotation.PreDestroy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -76,17 +78,19 @@ public class DebouncedReloadExecutor {
         return future != null && !future.isDone();
     }
 
+    /**
+     * Eteint l'ordonnanceur et l'ensemble des tâches
+     */
     @PreDestroy
     public void shutdown() {
         logger.info("Shutting down DebouncedReloadExecutor...");
         cancelAll();
         scheduler.shutdown();
         try {
-            if (!scheduler.awaitTermination(SHUTDOWN_TIMEOUT_SECONDS, TimeUnit.SECONDS)) {
+            if ( !scheduler.awaitTermination(SHUTDOWN_TIMEOUT_SECONDS, TimeUnit.SECONDS) ) {
                 logger.warn("Executor did not terminate in time, forcing shutdown");
                 scheduler.shutdownNow();
-
-                if (!scheduler.awaitTermination(SHUTDOWN_TIMEOUT_SECONDS, TimeUnit.SECONDS)) {
+                if ( !scheduler.awaitTermination(SHUTDOWN_TIMEOUT_SECONDS, TimeUnit.SECONDS) ) {
                     logger.error("Executor did not terminate after forced shutdown");
                 }
             }
@@ -100,13 +104,13 @@ public class DebouncedReloadExecutor {
 
     private void validateParameters(String key, Runnable action, long delay) {
         if ( key == null || key.isBlank() ) {
-            throw new IllegalArgumentException("Key must not be null or blank");
+            throw new InfrastructureException(DebouncerExceptionCode.TECH_PENDING_TASK_KEY_NOT_NULL);
         }
         if ( action == null ) {
-            throw new IllegalArgumentException("Action must not be null");
+            throw new InfrastructureException(DebouncerExceptionCode.TECH_PENDING_TASK_ACTION_NOT_NULL);
         }
-        if ( delay < 0)  {
-            throw new IllegalArgumentException("Delay must be positive, got: " + delay);
+        if ( delay < 0 )  {
+            throw new InfrastructureException(DebouncerExceptionCode.TECH_PENDING_TASK_DELAY_POSITIVE, Map.of("delay", delay));
         }
     }
 

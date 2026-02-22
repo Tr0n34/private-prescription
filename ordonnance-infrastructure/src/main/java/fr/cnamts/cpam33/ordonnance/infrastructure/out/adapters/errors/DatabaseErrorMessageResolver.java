@@ -1,11 +1,12 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.errors;
 
 import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.ExceptionCode;
-import fr.cnamts.cpam33.ordonnance.infrastructure.kernel.Adapter;
-import fr.cnamts.cpam33.ordonnance.infrastructure.kernel.errors.ErrorMessageDomainResolver;
-import fr.cnamts.cpam33.ordonnance.infrastructure.kernel.errors.ErrorMessageInfrastructureResolver;
-import fr.cnamts.cpam33.ordonnance.infrastructure.kernel.errors.InfraStructureExceptionCode;
 import fr.cnamts.cpam33.ordonnance.infrastructure.exceptions.ErrorDescriptor;
+import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.Adapter;
+import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.ErrorMessageDomainResolver;
+import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.ErrorMessageInfrastructureResolver;
+import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.InfraStructureExceptionCode;
+import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.caches.ErrorCatalogCache;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.persistences.repositories.ordonnances.ErrorCatalogJpaRepository;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.entities.ordonnances.ErrorCatalogEntity;
 import org.slf4j.Logger;
@@ -30,9 +31,12 @@ public class DatabaseErrorMessageResolver implements ErrorMessageDomainResolver,
     public static final char OPEN_PARENTHESIS = '{';
     public static final char CLOSED_PARENTHESIS = '}';
 
+    private final ErrorCatalogCache errorCatalogCache;
     private final ErrorCatalogJpaRepository errorCatalogJpaRepository;
 
-    public DatabaseErrorMessageResolver(ErrorCatalogJpaRepository errorCatalogJpaRepository) {
+    public DatabaseErrorMessageResolver(ErrorCatalogCache errorCatalogCache,
+                                        ErrorCatalogJpaRepository errorCatalogJpaRepository) {
+        this.errorCatalogCache = errorCatalogCache;
         this.errorCatalogJpaRepository = errorCatalogJpaRepository;
     }
 
@@ -52,9 +56,13 @@ public class DatabaseErrorMessageResolver implements ErrorMessageDomainResolver,
     }
 
     public ErrorDescriptor resolveByCode(String exceptionCode, Map<String, ?> placeHolders) {
-        ErrorCatalogEntity entity = errorCatalogJpaRepository.findByCodeAndActiveTrue(exceptionCode).orElseThrow(
-                () -> new IllegalStateException(String.format(UNRESOLVED_ERROR_MESSAGE, exceptionCode))
-        );
+        ErrorCatalogEntity entity = errorCatalogCache.getRequired(exceptionCode);
+        if ( entity == null ) {
+            logger.trace("error code {} not found", exceptionCode);
+            entity = errorCatalogJpaRepository.findByCodeAndActiveTrue(exceptionCode).orElseThrow(
+                    () -> new IllegalStateException(String.format(UNRESOLVED_ERROR_MESSAGE, exceptionCode))
+            );
+        }
         String rendered = renderTemplate(entity.getMessage(), placeHolders == null ? Map.of() : placeHolders);
         logger.debug("{} : {}", exceptionCode, rendered);
         return ErrorDescriptor.of(

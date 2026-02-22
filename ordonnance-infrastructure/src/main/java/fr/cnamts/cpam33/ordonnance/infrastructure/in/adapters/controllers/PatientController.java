@@ -3,10 +3,11 @@ package fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.controllers;
 import fr.cnamts.cpam33.ordonnance.application.usecases.patients.ImportPatientUseCase;
 import fr.cnamts.cpam33.ordonnance.application.usecases.patients.RegisterPatientUseCase;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.Patient;
-import fr.cnamts.cpam33.ordonnance.infrastructure.kernel.Adapter;
+import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.BoundedContextHint;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.acls.patients.PatientACL;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.controllers.routes.LocationBuilder;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.controllers.routes.Routes;
+import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.Adapter;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.dto.patients.PatientDto;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.util.List;
 
+@BoundedContextHint("PATIENT")
 @RestController
 @RequestMapping("/patients")
 public class PatientController implements Adapter {

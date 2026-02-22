@@ -1,6 +1,6 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.out.entities.ordonnances;
 
-import fr.cnamts.cpam33.ordonnance.infrastructure.kernel.IEntity;
+import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.IEntity;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;

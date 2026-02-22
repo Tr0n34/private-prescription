@@ -1,33 +1,34 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.persistences.repositories.traces;
 
+import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.traces.rabbit.TraceOutboxStatus;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.entities.traces.TraceOutboxEntity;
+import jakarta.persistence.LockModeType;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.time.OffsetDateTime;
 import java.util.List;
 
 public interface TraceOutboxJpaRepository extends JpaRepository<TraceOutboxEntity, Long> {
 
-    @Query(value = """
-        SELECT * from trace_outbox
-        WHERE attempts < :maxAttempts
-        ORDER BY created_at ASC
-        FOR UPDATE skip locked
-        LIMIT :limit
-        """, nativeQuery = true)
-    List<TraceOutboxEntity> reserveBatch(@Param("limit") int limit, @Param("maxAttempts") int maxAttempts);
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    @Query("""
+        select t
+        from TraceOutboxEntity t
+        where t.status = :status
+          and (t.nextRetryAt is null or t.nextRetryAt <= :now)
+        order by t.createdAt asc
+        """)
+    List<TraceOutboxEntity> findRetryableLocked(
+            @Param("status") TraceOutboxStatus status,
+            @Param("now") OffsetDateTime now,
+            org.springframework.data.domain.Pageable pageable
+    );
 
-    @Query(value = """
-        SELECT count(*) 
-        FROM trace_outbox
-        """, nativeQuery = true)
-    long outboxCount();
-
-    @Query(value = """
-        SELECT extract(epoch from (now() - min(created_at)))
-        FROM trace_outbox
-    """, nativeQuery = true)
-    Double oldestAgeSeconds();
+    default List<TraceOutboxEntity> findRetryable(OffsetDateTime now, int limit) {
+        return findRetryableLocked(TraceOutboxStatus.RETRYING, now, org.springframework.data.domain.PageRequest.of(0, limit));
+    }
 
 }

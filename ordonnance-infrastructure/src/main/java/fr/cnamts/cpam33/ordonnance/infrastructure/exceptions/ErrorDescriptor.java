@@ -1,6 +1,7 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.exceptions;
 
 import fr.cnamts.cpam33.ordonnance.application.exceptions.InvalidErrorDescriptorException;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.domain.DomainObject;
 
 import java.time.LocalDateTime;
 
@@ -10,7 +11,7 @@ public record ErrorDescriptor(
         int httpStatus,
         LocalDateTime timestamp,
         String boundedContext
-) {
+) implements DomainObject {
 
     public ErrorDescriptor {
         if ( code == null || code.isEmpty() ) {
