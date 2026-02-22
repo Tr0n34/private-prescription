@@ -4,8 +4,9 @@ import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.ActeMetier;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.entities.traces.ActeMetierEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingConstants;
 
-@Mapper(componentModel = "spring", uses = {
+@Mapper(componentModel = MappingConstants.ComponentModel.SPRING, uses = {
         ActeMetierIdMapper.class,
         FonctionEntityMapper.class
 })

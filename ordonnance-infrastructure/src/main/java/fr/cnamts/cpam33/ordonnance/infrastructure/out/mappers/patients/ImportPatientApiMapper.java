@@ -5,8 +5,9 @@ import fr.cnamts.cpam33.ordonnance.infrastructure.out.dto.patients.ImportPatient
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.mappers.identites.NomPrenomMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingConstants;
 
-@Mapper(componentModel = "spring", uses = {
+@Mapper(componentModel = MappingConstants.ComponentModel.SPRING, uses = {
         PatientIdMapper.class,
         ExternalIdPatientMapper.class,
         NomPrenomMapper.class

@@ -8,16 +8,13 @@ import fr.cnamts.cpam33.ordonnance.infrastructure.out.entities.traces.ActeMetier
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.entities.traces.TraceEntity;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.mappers.medecins.MedecinEntityMapper;
 import fr.cnamts.cpam33.ordonnance.infrastructure.technical.mappers.TraceValueNormalizer;
-import org.mapstruct.Context;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.Named;
+import org.mapstruct.*;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Mapper(componentModel = "spring", uses = {
+@Mapper(componentModel = MappingConstants.ComponentModel.SPRING, uses = {
         ActeMetierEntityMapper.class, MedecinEntityMapper.class
 })
 public interface TraceEntityMapper {

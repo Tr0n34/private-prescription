@@ -8,8 +8,9 @@ import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identites.Prenom;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.dto.patients.PatientDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingConstants;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface PatientApiMapper {
 
     @Mapping(target = "patientId", source = "numero")

@@ -37,7 +37,7 @@ public class TraceSelectorConfiguration {
     @ConditionalOnProperty(name = "ordonnance.traces.mode", havingValue = "RABBIT_MQ_QUEUEING")
     public RestClient restClientTrace(RestClient.Builder restClientBuilder, TraceApiPublisherProperties traceApiPublisherProperties) {
         return restClientBuilder
-                .baseUrl(traceApiPublisherProperties.url())
+                .baseUrl(traceApiPublisherProperties.url() + traceApiPublisherProperties.resource())
                 .defaultHeader("Accept", MediaType.APPLICATION_JSON_VALUE)
                 .build();
     }

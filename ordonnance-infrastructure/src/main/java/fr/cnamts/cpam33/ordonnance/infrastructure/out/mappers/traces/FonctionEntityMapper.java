@@ -5,8 +5,9 @@ import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.FonctionId;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.entities.traces.FonctionEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingConstants;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface FonctionEntityMapper {
 
     @Mapping(target = "code", source = "fonctionId.code")

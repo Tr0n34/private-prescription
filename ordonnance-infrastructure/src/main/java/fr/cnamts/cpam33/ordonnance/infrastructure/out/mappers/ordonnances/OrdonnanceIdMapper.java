@@ -3,8 +3,9 @@ package fr.cnamts.cpam33.ordonnance.infrastructure.out.mappers.ordonnances;
 import fr.cnamts.cpam33.ordonnance.domain.models.aggregates.OrdonnanceId;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.entities.ordonnances.OrdonnanceIdEntity;
 import org.mapstruct.Mapper;
+import org.mapstruct.MappingConstants;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface OrdonnanceIdMapper {
 
     default OrdonnanceIdEntity toEntity(OrdonnanceId id) {

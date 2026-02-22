@@ -6,11 +6,12 @@ import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.Trace;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.dto.traces.TraceDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingConstants;
 import org.mapstruct.Named;
 
 import java.time.Clock;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface TraceDomainMapper {
 
     @Mapping(target = "acteMetierId", source = "dto.acteMetierCode")

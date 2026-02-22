@@ -12,6 +12,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.sql.*;
 import java.util.*;
 
+/**
+ * Implémentation pour Thesorimed d'un <class>DataBaseRoutineExecutor</class><br/>
+ * Cette classe permet l'exécution d'une fonction PGPLP avec un refCursor
+ */
 public class ThesorimedRoutineExecutor implements DataBaseRoutineExecutor {
 
     private static final Logger logger = LoggerFactory.getLogger(ThesorimedRoutineExecutor.class);
@@ -57,10 +61,10 @@ public class ThesorimedRoutineExecutor implements DataBaseRoutineExecutor {
         });
     }
 
-    private String openRefcursor(Connection con, String qualifiedName, List<?> inParams) throws SQLException {
+    private String openRefcursor(Connection connection, String qualifiedName, List<?> inParams) throws SQLException {
         String sql = buildCallSql(qualifiedName, inParams.size());
         logger.debug("Executing refcursor open SQL: {}", sql);
-        try ( PreparedStatement ps = con.prepareStatement(sql) ) {
+        try ( PreparedStatement ps = connection.prepareStatement(sql) ) {
             bind(ps, inParams);
             try ( ResultSet rs = ps.executeQuery() ) {
                 if ( !rs.next() ) {

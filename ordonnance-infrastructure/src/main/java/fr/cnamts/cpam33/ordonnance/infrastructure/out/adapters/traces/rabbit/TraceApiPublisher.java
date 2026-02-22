@@ -56,7 +56,6 @@ public class TraceApiPublisher implements TracePublisher {
         TraceDto traceDto = traceApiMapper.toDto(trace, objectMapperTrace);
         try {
             restClientTrace.post()
-                    .uri("/traces")
                     .contentType(MediaType.APPLICATION_JSON)
                     .accept(MediaType.APPLICATION_JSON)
                     .body(traceDto)
@@ -79,7 +78,6 @@ public class TraceApiPublisher implements TracePublisher {
             );
             TraceOutboxEntity traceOutboxEntity = traceOutboxMapper.toEntityForInsert(failed);
             TraceOutboxJpaRepository.save(traceOutboxEntity);
-
         }
     }
 

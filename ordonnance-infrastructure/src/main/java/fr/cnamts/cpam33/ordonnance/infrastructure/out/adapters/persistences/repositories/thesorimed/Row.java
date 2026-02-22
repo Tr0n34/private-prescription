@@ -1,5 +1,8 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.persistences.repositories.thesorimed;
 
+import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.InfrastructureException;
+import fr.cnamts.cpam33.ordonnance.infrastructure.exceptions.enums.ThesorimedExceptionCode;
+
 import java.math.BigDecimal;
 import java.util.Locale;
 import java.util.Map;
@@ -10,56 +13,83 @@ import java.util.Map;
  */
 public final class Row {
 
+    public static final String EMPTY_VALUE_COLUMN = "";
+
     private Row() {}
 
-
     public static String getString(Map<String, Object> row, String key) {
-        Object v = get(row, key);
-        if (v == null) {
-            throw new IllegalStateException("Null value for column: " + key);
+        Object value = get(row, key);
+        if ( value == null ) {
+            throw new InfrastructureException(
+                    ThesorimedExceptionCode.TECH_THESO_ROW_MAPPER_NULL_COLUMN,
+                    Map.of("key", key));
         }
-        return String.valueOf(v);
+        return String.valueOf(value);
     }
 
     public static String getNullableString(Map<String, Object> row, String key) {
-        Object v = get(row, key);
-        return (v == null) ? null : String.valueOf(v);
+        Object value = get(row, key);
+        return ( value == null ) ? null : String.valueOf(value);
     }
 
     static Long getLong(Map<String, Object> row, String key) {
-        Object v = get(row, key);
-        if (v == null) throw new IllegalStateException("Null value for column: " + key);
-
-        if (v instanceof Long l) return l;
-        if (v instanceof Integer i) return i.longValue();
-        if (v instanceof BigDecimal bd) return bd.longValue();
-        if (v instanceof String s) return Long.parseLong(s);
-
-        throw new IllegalStateException("Unsupported numeric type for " + key + ": " + v.getClass());
+        Object value = get(row, key);
+        if ( value == null ) {
+            throw new InfrastructureException(
+                    ThesorimedExceptionCode.TECH_THESO_ROW_MAPPER_NULL_COLUMN,
+                    Map.of("key", key));
+        }
+        return switch (value) {
+            case Long l       -> l;
+            case Integer i    -> i.longValue();
+            case BigDecimal bd-> bd.longValue();
+            case String s     -> Long.parseLong(s);
+            case Number n     -> n.longValue();
+            default -> throw new InfrastructureException(
+                    ThesorimedExceptionCode.TECH_THESO_ROW_MAPPER_NUMERIC_TYPE_UNSUPPORTED,
+                    Map.of("type", value));
+        };
     }
 
     private static Object get(Map<String, Object> row, String key) {
-        if (row == null) throw new IllegalStateException("Row is null");
-        if (key == null) throw new IllegalStateException("Key is null");
-
-        // 1) accès direct
-        if (row.containsKey(key)) {
-            return row.get(key);
+        if ( row == null ) {
+            throw new InfrastructureException(ThesorimedExceptionCode.TECH_THESO_ROW_MAPPER_ROW_NULL);
         }
+        if ( key == null ) {
+            throw new InfrastructureException(ThesorimedExceptionCode.TECH_THESO_ROW_MAPPER_KEY_NULL);
+        }
+        Object result = null;
+        boolean found = false;
+        if ( row.containsKey(key) ) {
+            result = row.get(key);
+            found = true;
+        } else {
+            var wanted = normalize(key);
+            result = check(row, wanted);
+            found = result != null;
+        }
+        if  ( !found ) {
+            throw new InfrastructureException(
+                    ThesorimedExceptionCode.TECH_THESO_ROW_MAPPER_COLUMN_MISSING,
+                    Map.of("key", key)
+            );
+        }
+        return result;
+    }
 
-        // 2) fallback insensible à la casse + trim
-        String wanted = normalize(key);
-        for (String k : row.keySet()) {
-            if (normalize(k).equals(wanted)) {
-                return row.get(k);
+    private static Object check(Map<String, Object> row, String wanted) {
+        Object result = null;
+        for ( var entry : row.entrySet()) {
+            if ( normalize(entry.getKey()).equals(wanted) ) {
+                result = entry.getValue();
+                break;
             }
         }
-
-        throw new IllegalStateException("Missing column: " + key);
+        return result;
     }
 
     private static String normalize(String s) {
-        return s == null ? "" : s.trim().toLowerCase(Locale.ROOT);
+        return s == null ? EMPTY_VALUE_COLUMN : s.trim().toLowerCase(Locale.ROOT);
     }
 
 }

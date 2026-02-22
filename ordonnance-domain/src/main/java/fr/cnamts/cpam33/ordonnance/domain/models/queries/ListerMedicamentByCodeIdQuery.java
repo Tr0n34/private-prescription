@@ -5,7 +5,7 @@ import fr.cnamts.cpam33.ordonnance.domain.kernel.ids.UtilisateurId;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.traces.Traceable;
 
 public record ListerMedicamentByCodeIdQuery(
-    String codeId,
+    String codeSp,
     String varType,
     UtilisateurId utilisateurId
 ) implements Query, Traceable {

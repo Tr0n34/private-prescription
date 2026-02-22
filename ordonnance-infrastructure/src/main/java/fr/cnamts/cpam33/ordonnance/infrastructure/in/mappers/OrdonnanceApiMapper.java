@@ -9,9 +9,10 @@ import fr.cnamts.cpam33.ordonnance.infrastructure.in.dto.medecins.MedecinIdDto;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.dto.patients.PatientIdDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingConstants;
 import org.mapstruct.Named;
 
-@Mapper(componentModel = "spring", uses = {
+@Mapper(componentModel = MappingConstants.ComponentModel.SPRING, uses = {
 })
 public interface OrdonnanceApiMapper {
 

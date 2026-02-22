@@ -6,11 +6,12 @@ import fr.cnamts.cpam33.ordonnance.infrastructure.out.entities.ordonnances.Ordon
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.mappers.medecins.MedecinEntityMapper;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.mappers.patients.PatientEntityMapper;
 import org.mapstruct.Mapper;
+import org.mapstruct.MappingConstants;
 
 import java.util.Optional;
 
 
-@Mapper(componentModel = "spring", uses = {
+@Mapper(componentModel = MappingConstants.ComponentModel.SPRING, uses = {
         PatientEntityMapper.class,
         MedecinEntityMapper.class,
         PrescriptionEntityMapper.class,

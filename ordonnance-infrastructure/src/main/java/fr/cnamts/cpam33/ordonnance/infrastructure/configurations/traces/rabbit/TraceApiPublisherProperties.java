@@ -4,6 +4,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @ConfigurationProperties(prefix = "ordonnance.microservices.traces.publisher")
 public record TraceApiPublisherProperties(
-        String url
+        String url,
+        String resource
 ) {
 }
