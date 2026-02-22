@@ -1,6 +1,6 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.out.mappers.traces;
 
-import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.ActeMetierId;
+import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.tracabilite.ActeMetierId;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 

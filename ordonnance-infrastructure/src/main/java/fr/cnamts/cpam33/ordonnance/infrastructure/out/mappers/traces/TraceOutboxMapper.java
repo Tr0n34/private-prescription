@@ -2,8 +2,8 @@ package fr.cnamts.cpam33.ordonnance.infrastructure.out.mappers.traces;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.Trace;
-import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.TraceId;
+import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.tracabilite.Trace;
+import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.tracabilite.TraceId;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.traces.rabbit.TraceOutbox;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.traces.rabbit.TraceOutboxStatus;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.entities.traces.TraceOutboxEntity;

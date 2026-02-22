@@ -58,38 +58,28 @@ public final class Row {
         if ( key == null ) {
             throw new InfrastructureException(ThesorimedExceptionCode.TECH_THESO_ROW_MAPPER_KEY_NULL);
         }
-        Object result = null;
-        boolean found = false;
-        if ( row.containsKey(key) ) {
-            result = row.get(key);
-            found = true;
-        } else {
-            var wanted = normalize(key);
-            result = check(row, wanted);
-            found = result != null;
+        if (row.containsKey(key)) {
+            return row.get(key);
         }
-        if  ( !found ) {
-            throw new InfrastructureException(
-                    ThesorimedExceptionCode.TECH_THESO_ROW_MAPPER_COLUMN_MISSING,
-                    Map.of("key", key)
-            );
-        }
-        return result;
-    }
-
-    private static Object check(Map<String, Object> row, String wanted) {
-        Object result = null;
-        for ( var entry : row.entrySet()) {
-            if ( normalize(entry.getKey()).equals(wanted) ) {
-                result = entry.getValue();
-                break;
-            }
-        }
-        return result;
+        var wanted = normalize(key);
+        var entry = row.entrySet().stream()
+                .filter(e -> normalize(e.getKey()).equals(wanted))
+                .findFirst()
+                .orElseThrow(() -> new InfrastructureException(
+                        ThesorimedExceptionCode.TECH_THESO_ROW_MAPPER_COLUMN_MISSING,
+                        Map.of("key", key)
+                ));
+        return entry.getValue();
     }
 
     private static String normalize(String s) {
-        return s == null ? EMPTY_VALUE_COLUMN : s.trim().toLowerCase(Locale.ROOT);
+        return s == null
+                ? EMPTY_VALUE_COLUMN
+                : s.trim()
+                .toLowerCase(Locale.ROOT)
+                .replace("_", "")
+                .replace("-", "")
+                .replace(" ", "");
     }
 
 }

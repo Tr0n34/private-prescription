@@ -2,10 +2,10 @@ package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.traces;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.DomainException;
-import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.TraceAttribute;
-import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.TraceFailure;
-import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.TraceOut;
-import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.TraceValue;
+import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.tracabilite.TraceAttribute;
+import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.tracabilite.TraceFailure;
+import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.tracabilite.TraceOut;
+import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.tracabilite.TraceValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;

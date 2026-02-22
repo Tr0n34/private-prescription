@@ -1,4 +1,4 @@
-package fr.cnamts.cpam33.ordonnance.domain.models.tracabilite;
+package fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.tracabilite;
 
 public record TraceContext(
         TraceIn in,

@@ -1,9 +1,9 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.traces;
 
 import fr.cnamts.cpam33.ordonnance.domain.kernel.traces.Traceable;
-import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.TraceAttribute;
-import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.TraceIn;
-import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.TraceValue;
+import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.tracabilite.TraceAttribute;
+import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.tracabilite.TraceIn;
+import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.tracabilite.TraceValue;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

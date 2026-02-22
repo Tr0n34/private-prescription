@@ -1,6 +1,6 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.out.providers;
 
-import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.PatientId;
+import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identifiants.PatientId;
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.patients.PatientNumGenerator;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.providers.UuidPatientNumGenerator;
 import org.junit.jupiter.api.Test;

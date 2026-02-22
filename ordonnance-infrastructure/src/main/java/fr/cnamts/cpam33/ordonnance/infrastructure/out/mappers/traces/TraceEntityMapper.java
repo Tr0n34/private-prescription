@@ -2,7 +2,7 @@ package fr.cnamts.cpam33.ordonnance.infrastructure.out.mappers.traces;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.ids.UtilisateurId;
-import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.*;
+import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.tracabilite.*;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.persistences.repositories.traces.ActeMetierJpaRepository;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.entities.traces.ActeMetierEntity;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.entities.traces.TraceEntity;

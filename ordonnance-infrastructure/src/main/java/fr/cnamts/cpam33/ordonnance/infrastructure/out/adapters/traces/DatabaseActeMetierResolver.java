@@ -1,10 +1,10 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.traces;
 
 import fr.cnamts.cpam33.ordonnance.domain.kernel.domain.enums.ActeMetierCode;
-import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.ActeMetier;
-import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.ActeMetierId;
-import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.Fonction;
-import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.FonctionId;
+import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.tracabilite.ActeMetier;
+import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.tracabilite.ActeMetierId;
+import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.tracabilite.Fonction;
+import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.tracabilite.FonctionId;
 import fr.cnamts.cpam33.ordonnance.infrastructure.exceptions.enums.ErrorResolvingExceptionCode;
 import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.InfrastructureException;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.persistences.repositories.traces.ActeMetierJpaRepository;

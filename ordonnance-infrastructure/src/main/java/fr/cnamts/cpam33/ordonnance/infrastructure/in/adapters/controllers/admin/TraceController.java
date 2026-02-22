@@ -1,7 +1,7 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.controllers.admin;
 
 import fr.cnamts.cpam33.ordonnance.application.services.TraceService;
-import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.*;
+import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.tracabilite.*;
 import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.BoundedContextHint;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.dto.traces.TraceDto;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.dto.traces.WorkerStatusDto;

@@ -1,7 +1,7 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.out.mappers.traces;
 
-import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.Fonction;
-import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.FonctionId;
+import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.tracabilite.Fonction;
+import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.tracabilite.FonctionId;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.entities.traces.FonctionEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

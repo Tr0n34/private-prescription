@@ -1,7 +1,7 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.out.mappers.traces;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.*;
+import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.tracabilite.*;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.dto.traces.*;
 import fr.cnamts.cpam33.ordonnance.infrastructure.technical.mappers.TraceValueNormalizer;
 import org.mapstruct.*;

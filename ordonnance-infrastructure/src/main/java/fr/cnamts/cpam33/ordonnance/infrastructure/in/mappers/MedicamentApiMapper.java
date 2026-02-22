@@ -1,7 +1,7 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.in.mappers;
 
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.medicaments.Medicament;
-import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.medicaments.MedicamentId;
+import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identifiants.MedicamentId;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.dto.medicaments.MedicamentDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

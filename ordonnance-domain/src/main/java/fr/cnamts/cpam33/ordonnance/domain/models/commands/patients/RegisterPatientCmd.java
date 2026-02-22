@@ -9,7 +9,7 @@ import fr.cnamts.cpam33.ordonnance.domain.kernel.traces.Traceable;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.validation.ValidatableCommand;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.validation.ValidationResult;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.validation.Validator;
-import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.ExternalPatientId;
+import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identifiants.ExternalPatientId;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identites.Nom;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identites.Prenom;
 

@@ -1,7 +1,7 @@
 package fr.cnamts.cpam33.ordonnance.domain.models.queries;
 
 import fr.cnamts.cpam33.ordonnance.domain.kernel.cqrs.Query;
-import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.PatientId;
+import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identifiants.PatientId;
 
 import java.time.LocalDate;
 

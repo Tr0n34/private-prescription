@@ -1,8 +1,11 @@
 package fr.cnamts.cpam33.ordonnance.application.usecases.ordonnances;
 
 import fr.cnamts.cpam33.ordonnance.application.kernel.QueryUseCase;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.DomainException;
 import fr.cnamts.cpam33.ordonnance.domain.models.aggregates.Ordonnance;
 import fr.cnamts.cpam33.ordonnance.domain.models.queries.ListerOrdonnancesPatientQuery;
+import fr.cnamts.cpam33.ordonnance.domain.models.queries.PageRequest;
+import fr.cnamts.cpam33.ordonnance.domain.models.queries.PageResult;
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.ordonnances.OrdonnanceRepository;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +33,11 @@ public class ListOrdonnancesPatientUseCase implements QueryUseCase<ListerOrdonna
                     .toList();
         }
         return ordonnances;
+    }
+
+    @Override
+    public PageResult<Ordonnance> execute(ListerOrdonnancesPatientQuery query, PageRequest pageRequest) throws DomainException {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
 }

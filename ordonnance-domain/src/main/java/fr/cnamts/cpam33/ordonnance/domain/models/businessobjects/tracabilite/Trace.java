@@ -1,4 +1,4 @@
-package fr.cnamts.cpam33.ordonnance.domain.models.tracabilite;
+package fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.tracabilite;
 
 import com.google.common.base.MoreObjects;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.domain.Document;

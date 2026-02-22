@@ -2,7 +2,7 @@ package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.traces.rabbit;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.Trace;
+import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.tracabilite.Trace;
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.traces.TracePublisher;
 import fr.cnamts.cpam33.ordonnance.infrastructure.configurations.traces.rabbit.TraceErrorRetryProperties;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.persistences.repositories.traces.TraceOutboxJpaRepository;

@@ -2,7 +2,7 @@ package fr.cnamts.cpam33.ordonnance.infrastructure.configurations.traces;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
-import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.Trace;
+import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.tracabilite.Trace;
 import fr.cnamts.cpam33.ordonnance.infrastructure.configurations.traces.internal.TraceBackpressureProperties;
 import fr.cnamts.cpam33.ordonnance.infrastructure.configurations.traces.internal.TraceEnqueueExecutorProperties;
 import fr.cnamts.cpam33.ordonnance.infrastructure.configurations.traces.internal.TraceWriterProperties;

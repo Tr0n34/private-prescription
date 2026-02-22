@@ -2,7 +2,7 @@ package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.traces.internal;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.Trace;
+import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.tracabilite.Trace;
 import fr.cnamts.cpam33.ordonnance.infrastructure.exceptions.enums.TraceExceptionCode;
 import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.InfrastructureException;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.entities.traces.ActeMetierEntity;
