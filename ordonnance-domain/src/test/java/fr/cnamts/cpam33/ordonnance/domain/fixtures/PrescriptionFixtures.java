@@ -12,26 +12,17 @@ public class PrescriptionFixtures {
     public static Traitement onePrescription() {
         return new Traitement(
                 new PrescriptionId("123456"),
-                List.of(
-                        new Medicament("Ventoline", List.of(
-                                new Posologie("2 fois par jour matin et soir"))
-                        )));
+                List.of());
     }
 
     public static List<Traitement> twoPrescription() {
         return List.of(
                 new Traitement(
                         new PrescriptionId("123456"),
-                        List.of(
-                                new Medicament("Ventoline", List.of(
-                                        new Posologie("2 fois par jour matin et soir"))
-                                ))),
+                        List.of()),
                 new Traitement(
                         new PrescriptionId("1234567"),
-                        List.of(
-                                new Medicament("Doliprane", List.of(
-                                        new Posologie("2 grammes maximum toutes les 24 h"))
-                                )))
+                        List.of())
                 );
     }
 

@@ -16,10 +16,12 @@ public final class PathJoiner {
         if ( parts != null ) {
             StringBuilder sb = new StringBuilder(DEFAULT_CAPACITY);
             for ( String part : parts ) {
-                Optional<String> opt = sanitizeSegment(part);
-                if ( opt.isEmpty() ) continue;
-                if ( !sb.isEmpty() ) sb.append(SLASH);
-                sb.append(opt.get());
+                sanitizeSegment(part).ifPresent(segment -> {
+                    if ( !sb.isEmpty() ) {
+                        sb.append(SLASH);
+                    }
+                    sb.append(segment);
+                });
             }
             result = Optional.of(sb.toString());
         }
@@ -31,13 +33,8 @@ public final class PathJoiner {
                 .map(String::trim)
                 .filter(s -> !s.isEmpty())
                 .map(s -> s.replace('\\', SLASH))
-                .map(s -> {
-                    int start = 0;
-                    int end = s.length();
-                    while (start < end && s.charAt(start) == SLASH) start++;
-                    while (end > start && s.charAt(end - 1) == SLASH) end--;
-                    return start < end ? s.substring(start, end) : null;
-                });
+                .map(s -> s.replaceAll("^/+", "").replaceAll("/+$", ""))
+                .filter(s -> !s.isEmpty());
     }
 
 }

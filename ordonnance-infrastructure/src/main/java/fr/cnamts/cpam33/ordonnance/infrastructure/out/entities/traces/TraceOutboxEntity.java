@@ -1,14 +1,16 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.out.entities.traces;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.traces.TraceOutboxStatus;
+import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.traces.rabbit.TraceOutboxStatus;
 import jakarta.persistence.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
-import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 
+/**
+ * Entité de sauvegarde des anomalies de publication sur le microservice de Traces
+ */
 @Entity
 @Table(name = "trace_outbox",
         uniqueConstraints = @UniqueConstraint(

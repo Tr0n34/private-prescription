@@ -3,9 +3,7 @@ package fr.cnamts.cpam33.ordonnance.infrastructure.out.repositories;
 import fr.cnamts.cpam33.ordonnance.infrastructure.contexts.TraceJpaTestConfig;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.persistences.repositories.traces.TraceOutboxJpaRepository;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.entities.traces.TraceEntity;
-import fr.cnamts.cpam33.ordonnance.infrastructure.out.entities.traces.TraceOutboxEntity;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -18,18 +16,12 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.support.TransactionTemplate;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.concurrent.*;
-import java.util.concurrent.atomic.AtomicReference;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @ActiveProfiles("integration")
 @Testcontainers
@@ -69,6 +61,18 @@ public class TraceJpaRepositoryIT {
         jdbc.execute("TRUNCATE TABLE trace_outbox RESTART IDENTITY CASCADE");
     }
 
+    private void insertOutboxRow(long id, int attempts, LocalDateTime createdAt) {
+        jdbc.update("""
+        INSERT INTO trace_outbox (id, attempts, created_at, payload_json)
+        VALUES (?, ?, ?, CAST(? AS jsonb))
+        """,
+                id, attempts, createdAt, "{}"
+        );
+    }
+
+    private TransactionTemplate txTemplate() {
+        return new TransactionTemplate(txManager);
+    }
 
 
 }

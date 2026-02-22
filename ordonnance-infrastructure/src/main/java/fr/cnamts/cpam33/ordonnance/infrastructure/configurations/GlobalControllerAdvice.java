@@ -2,11 +2,13 @@ package fr.cnamts.cpam33.ordonnance.infrastructure.configurations;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.DomainException;
-import fr.cnamts.cpam33.ordonnance.infrastructure.kernel.errors.ErrorMessageDomainResolver;
-import fr.cnamts.cpam33.ordonnance.infrastructure.kernel.errors.ErrorMessageInfrastructureResolver;
-import fr.cnamts.cpam33.ordonnance.infrastructure.kernel.errors.InfrastructureException;
+import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.BoundedContextHint;
 import fr.cnamts.cpam33.ordonnance.infrastructure.exceptions.ErrorDescriptor;
+import fr.cnamts.cpam33.ordonnance.infrastructure.exceptions.enums.ValidationDtoExceptionCode;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.dto.errors.ErrorResponseDto;
+import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.ErrorMessageDomainResolver;
+import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.ErrorMessageInfrastructureResolver;
+import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.InfrastructureException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -15,10 +17,14 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.HandlerMethod;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
+
+import static fr.cnamts.cpam33.ordonnance.infrastructure.configurations.DtoValidationExceptionHandler.concat;
 
 @RestControllerAdvice
 public class GlobalControllerAdvice {
@@ -62,14 +68,21 @@ public class GlobalControllerAdvice {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ErrorResponseDto> handle(MethodArgumentNotValidException ex) {
-        ErrorDescriptor descriptor = new ErrorDescriptor(
-                "BAD_REQUEST",
-                "Requête invalide",
-                HttpStatus.BAD_REQUEST.value(),
-                LocalDateTime.now(),
-                "VALIDATION"
-        );
+    public ResponseEntity<ErrorResponseDto> handle(MethodArgumentNotValidException ex, HandlerMethod handlerMethod) {
+        String boundedContext = "API_ERROR";
+        if ( handlerMethod != null ) {
+            BoundedContextHint annotation = handlerMethod.getBeanType().getAnnotation(BoundedContextHint.class);
+            if ( annotation != null && !annotation.value().isBlank() ) {
+                boundedContext = annotation.value();
+            }
+        }
+        String violations = buildViolationsMessage(ex);
+        ErrorDescriptor descriptor = errorMessageInfrastructureResolver.resolve(
+                ValidationDtoExceptionCode.TECH_API_VALIDATION_FAILED,
+                Map.of(
+                        "violations", violations,
+                        "violationsCount", ex.getBindingResult().getErrorCount()
+                ));
         return ResponseEntity.status(descriptor.httpStatus()).body(ErrorResponseDto.from(descriptor));
     }
 
@@ -82,6 +95,7 @@ public class GlobalControllerAdvice {
                 LocalDateTime.now(),
                 ex.getClass().getSimpleName()
         );
+        logger.error("{} : {}", ex, descriptor);
         return ResponseEntity.status(descriptor.httpStatus()).body(ErrorResponseDto.from(descriptor));
     }
 
@@ -93,5 +107,21 @@ public class GlobalControllerAdvice {
         }
         return response;
     }
+
+    private static String buildViolationsMessage(MethodArgumentNotValidException ex) {
+        List<String> fieldParts = ex.getBindingResult()
+                .getFieldErrors()
+                .stream()
+                .map(DtoValidationExceptionHandler::formatFieldError)
+                .toList();
+        List<String> globalParts = ex.getBindingResult()
+                .getGlobalErrors()
+                .stream()
+                .map(DtoValidationExceptionHandler::formatGlobalError)
+                .toList();
+
+        return concat(fieldParts, globalParts);
+    }
+
 
 }

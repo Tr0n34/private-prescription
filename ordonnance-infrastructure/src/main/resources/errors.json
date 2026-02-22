@@ -55,5 +55,12 @@
   { "code": "TECH_TRACE_OUTBOX_WRITE_CRASH", "boundedContext": "TRACE", "httpStatus": 400, "message": "Erreur d'enregistrement en trace outbox" },
 
   { "code": "TECH_CACHE_ACTE_METIER_INEXISTANT", "boundedContext": "ACTE_METIER", "httpStatus": 400, "message": "Acte métier inexistant : {acteMetier}" },
-  { "code": "TECH_RESOLVER_ACTE_METIER_CODE_INEXISTANT", "boundedContext": "ACTE_METIER", "httpStatus":  400, "message":  "Code d'erreur non trouvé : {acteMetier}"}
+  { "code": "TECH_CACHE_ERROR_INEXISTANTE", "boundedContext": "ERROR_CATALOG", "httpStatus":  400, "message":  "Code d'erreur non trouvé : {errorCatalogEntity}"},
+  { "code": "TECH_RESOLVER_ACTE_METIER_CODE_INEXISTANT", "boundedContext": "ACTE_METIER", "httpStatus":  400, "message":  "Code d'erreur non trouvé : {acteMetier}"},
+  { "code": "TECH_API_VALIDATION_FAILED", "boundedContext":  "API", "httpStatus":  400, "message":  "Les champs ne sont pas corrects : {violations}"},
+
+  { "code": "TECH_PENDING_TASK_KEY_NOT_NULL", "boundedContext":  "TRACE_DEBOUNCER", "httpStatus":  400, "message":  "La clef ne peut pas être null ou vide"},
+  { "code": "TECH_PENDING_TASK_ACTION_NOT_NULL", "boundedContext":  "TRACE_DEBOUNCER", "httpStatus":  400, "message":  "L'action ne peut pas être null"},
+  { "code": "TECH_PENDING_TASK_DELAY_POSITIVE", "boundedContext":  "TRACE_DEBOUNCER", "httpStatus":  400, "message":  "Le délai de debounce ne doit pas être négatif : {delay}"}
+
 ]

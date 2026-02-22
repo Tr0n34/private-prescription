@@ -1,7 +1,6 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.traces.rabbit;
 
 import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.TraceId;
-import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.traces.TraceOutboxStatus;
 
 import java.time.OffsetDateTime;
 

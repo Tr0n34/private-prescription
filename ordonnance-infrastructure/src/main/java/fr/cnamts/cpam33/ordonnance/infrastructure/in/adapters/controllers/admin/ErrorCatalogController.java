@@ -1,5 +1,6 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.controllers.admin;
 
+import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.BoundedContextHint;
 import fr.cnamts.cpam33.ordonnance.infrastructure.exceptions.ErrorDescriptor;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.errors.ErrorCatalogPersistanceAdapter;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.mappers.errors.ErrorEntityMapper;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+@BoundedContextHint("ERROR_CATALOG")
 @RestController
 @RequestMapping("/admin/errors")
 public class ErrorCatalogController {

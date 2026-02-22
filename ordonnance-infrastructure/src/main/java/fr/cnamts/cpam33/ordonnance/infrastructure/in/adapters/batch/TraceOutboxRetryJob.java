@@ -1,9 +1,8 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.batch;
 
-import fr.cnamts.cpam33.ordonnance.infrastructure.configurations.traces.RetryJobMode;
-import fr.cnamts.cpam33.ordonnance.infrastructure.configurations.traces.TraceErrorRetryProperties;
+import fr.cnamts.cpam33.ordonnance.infrastructure.configurations.traces.rabbit.TraceErrorRetryProperties;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.persistences.repositories.traces.TraceOutboxJpaRepository;
-import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.traces.TraceOutboxStatus;
+import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.traces.rabbit.TraceOutboxStatus;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.entities.traces.TraceOutboxEntity;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.mappers.traces.TraceOutboxMapper;
 import org.slf4j.Logger;

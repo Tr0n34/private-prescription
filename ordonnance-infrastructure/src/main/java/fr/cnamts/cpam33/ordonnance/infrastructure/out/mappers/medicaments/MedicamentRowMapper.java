@@ -1,0 +1,43 @@
+package fr.cnamts.cpam33.ordonnance.infrastructure.out.mappers.medicaments;
+
+import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.Posologie;
+import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.medicaments.Forme;
+import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.medicaments.Medicament;
+import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.medicaments.MedicamentId;
+import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.medicaments.VoieAdministration;
+import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.persistences.repositories.thesorimed.Row;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.Map;
+
+@Component
+public class MedicamentRowMapper {
+
+    public Medicament map(Map<String, Object> rows) {
+        String codeSq = Row.getString(rows, "sp_code_sq_pk");
+        MedicamentId medicamentId = new MedicamentId(codeSq);
+        String nom = Row.getString(rows, "sp_nom");
+        String cdfNom = Row.getNullableString(rows, "cdf_nom");
+        String catcCode = Row.getNullableString(rows, "sp_catc_code_fk");
+        String cipUcd = Row.getNullableString(rows, "sp_cipucd");
+        Forme forme = new Forme(Row.getString(rows, "forme"));
+        VoieAdministration voieAdministration = new VoieAdministration(Row.getString(rows, "voie"));
+        String atu = Row.getNullableString(rows, "atu");
+        String t2a = Row.getNullableString(rows, "t2a");
+        List<Posologie> posologies = List.of();
+        return new Medicament(
+                medicamentId,
+                nom,
+                cdfNom,
+                catcCode,
+                cipUcd,
+                forme,
+                atu,
+                t2a,
+                voieAdministration,
+                posologies
+        );
+    }
+
+}
