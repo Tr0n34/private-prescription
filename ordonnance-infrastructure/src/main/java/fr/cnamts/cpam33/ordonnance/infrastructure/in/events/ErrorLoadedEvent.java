@@ -1,0 +1,13 @@
+package fr.cnamts.cpam33.ordonnance.infrastructure.in.events;
+
+import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.Event;
+
+import java.time.Instant;
+import java.util.UUID;
+
+public record ErrorLoadedEvent(
+        UUID eventId,
+        Instant occuredAt
+) implements Event {
+
+}

@@ -3,6 +3,12 @@ package fr.cnamts.cpam33.ordonnance.infrastructure.configurations.traces;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.Trace;
+import fr.cnamts.cpam33.ordonnance.infrastructure.configurations.traces.internal.TraceBackpressureProperties;
+import fr.cnamts.cpam33.ordonnance.infrastructure.configurations.traces.internal.TraceEnqueueExecutorProperties;
+import fr.cnamts.cpam33.ordonnance.infrastructure.configurations.traces.internal.TraceWriterProperties;
+import fr.cnamts.cpam33.ordonnance.infrastructure.configurations.traces.rabbit.TraceApiPublisherProperties;
+import fr.cnamts.cpam33.ordonnance.infrastructure.configurations.traces.rabbit.TraceErrorRetryProperties;
+import fr.cnamts.cpam33.ordonnance.infrastructure.configurations.traces.rabbit.TraceOutboxProperties;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -21,7 +27,8 @@ import java.util.concurrent.BlockingQueue;
         TraceWriterProperties.class,
         TraceBackpressureProperties.class,
         TraceOutboxProperties.class,
-        TraceApiPublisherProperties.class
+        TraceApiPublisherProperties.class,
+        TraceErrorRetryProperties.class
 })
 @EnableAsync
 public class TraceSelectorConfiguration {

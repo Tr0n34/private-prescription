@@ -1,7 +1,6 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.out.dto.traces;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 public record TraceDto(
         String traceId,

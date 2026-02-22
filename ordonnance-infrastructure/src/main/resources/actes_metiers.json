@@ -5,7 +5,10 @@
   { "code": "ORD_SUPPRIMER", "objetMetierName" : "Ordonnance", "fonction": { "code" : "SUPPRIMER-004", "description" : "Supprimer" } },
   { "code": "ORD_CREER", "objetMetierName" : "Ordonnance", "fonction": { "code" : "CREER-003", "description" : "Créer" } },
   { "code": "ORD_LISTER_PAR_PATIENT", "objetMetierName" : "Ordonnance", "fonction": { "code" : "LISTER-002", "description" : "Lister" } },
+
   { "code": "PATIENT_CREER", "objetMetierName" : "Patient", "fonction": { "code" : "CREER-003", "description" : "Créer" } },
   { "code": "PATIENT_IMPORTER", "objetMetierName" : "Patient", "fonction": { "code" : "IMPORTER-001", "description" : "Importer" } },
-  { "code": "PATIENT_SUPPRIMER", "objetMetierName" : "Patient", "fonction": { "code" : "SUPPRIMER-004", "description" : "Supprimer" } }
+  { "code": "PATIENT_SUPPRIMER", "objetMetierName" : "Patient", "fonction": { "code" : "SUPPRIMER-004", "description" : "Supprimer" } },
+
+  { "code": "MEDICAMENT_LISTER", "objetMetierName" : "Medicament", "fonction": { "code" : "LISTER-002", "description" : "Lister" } }
 ]

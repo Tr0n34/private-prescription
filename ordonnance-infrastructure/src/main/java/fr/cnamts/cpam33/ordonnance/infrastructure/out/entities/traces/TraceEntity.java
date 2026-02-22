@@ -4,8 +4,10 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
-import java.time.LocalDateTime;
-
+/**
+ * Entité représentant une Trace enregistrée dans le domaine (avec la file d'attente
+ * InMemory.
+ */
 @Entity
 @Table(name = "trace")
 public class TraceEntity {

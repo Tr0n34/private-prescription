@@ -1,6 +1,6 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.in.events;
 
-import fr.cnamts.cpam33.ordonnance.infrastructure.kernel.Event;
+import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.Event;
 
 import java.time.Instant;
 import java.util.UUID;

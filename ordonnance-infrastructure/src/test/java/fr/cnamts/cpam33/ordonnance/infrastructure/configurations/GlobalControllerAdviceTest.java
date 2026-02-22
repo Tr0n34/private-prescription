@@ -2,18 +2,24 @@ package fr.cnamts.cpam33.ordonnance.infrastructure.configurations;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.DomainException;
-import fr.cnamts.cpam33.ordonnance.infrastructure.kernel.errors.ErrorMessageDomainResolver;
-import fr.cnamts.cpam33.ordonnance.infrastructure.kernel.errors.ErrorMessageInfrastructureResolver;
-import fr.cnamts.cpam33.ordonnance.infrastructure.kernel.errors.InfrastructureException;
+import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.ErrorMessageDomainResolver;
+import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.ErrorMessageInfrastructureResolver;
+import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.InfrastructureException;
 import fr.cnamts.cpam33.ordonnance.infrastructure.exceptions.ErrorDescriptor;
+import fr.cnamts.cpam33.ordonnance.infrastructure.exceptions.enums.ValidationDtoExceptionCode;
 import fr.cnamts.cpam33.ordonnance.infrastructure.fixtures.enums.TestExceptionCode;
 import fr.cnamts.cpam33.ordonnance.infrastructure.fixtures.enums.TestInfrastructureExceptionCode;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.dto.errors.ErrorResponseDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.core.MethodParameter;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.validation.BeanPropertyBindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 
+import java.lang.reflect.Method;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Map;
@@ -104,17 +110,39 @@ class GlobalControllerAdviceTest {
     }
 
     @Test
-    void should_handle_method_argument_not_valid() {
-        MethodArgumentNotValidException ex = mock(MethodArgumentNotValidException.class);
-        var response = advice.handle(ex);
-        assertEquals(BAD_REQUEST, response.getStatusCode());
+    void should_handle_method_argument_not_valid() throws Exception {
+        BeanPropertyBindingResult br = new BeanPropertyBindingResult(new Object(), "createPatientRequestDto");
+        br.addError(new FieldError("createPatientRequestDto", "externalId", "", false, null, null, "must not be blank"));
+
+        Method m = DummyController.class.getDeclaredMethod("create", DummyDto.class);
+        MethodParameter mp = new MethodParameter(m, 0);
+        MethodArgumentNotValidException ex = new MethodArgumentNotValidException(mp, br);
+        ErrorDescriptor expected = new ErrorDescriptor(
+                "BAD_REQUEST",
+                "Requête invalide",
+                HttpStatus.BAD_REQUEST.value(),
+                LocalDateTime.now(),
+                "API"
+        );
+        when(infraResolver.resolve(
+                eq(ValidationDtoExceptionCode.TECH_API_VALIDATION_FAILED),
+                anyMap()
+        )).thenReturn(expected);
+        var response = advice.handle(ex, null);
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         assertNotNull(response.getBody());
-        ErrorResponseDto body = response.getBody();
+        var body = response.getBody();
         assertEquals("BAD_REQUEST", body.code());
         assertEquals("Requête invalide", body.message());
-        assertEquals(BAD_REQUEST.value(), body.status());
-        assertEquals("VALIDATION", body.boundedContext());
+        assertEquals(HttpStatus.BAD_REQUEST.value(), body.status());
+        assertEquals("API", body.boundedContext());
     }
+
+    static class DummyController {
+        @SuppressWarnings("unused")
+        public void create(DummyDto dto) {}
+    }
+    static class DummyDto {}
 
     @Test
     void should_handle_generic_exception_as_internal() {

@@ -2,6 +2,7 @@ package fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.controllers.admin
 
 import fr.cnamts.cpam33.ordonnance.application.services.TraceService;
 import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.*;
+import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.BoundedContextHint;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.dto.traces.TraceDto;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.dto.traces.WorkerStatusDto;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.mappers.TraceDomainMapper;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@BoundedContextHint("TRACE")
 @RestController
 @RequestMapping("/admin/traces")
 @ConditionalOnProperty(name = "ordonnance.traces.mode", havingValue = "INTERNAL_QUEUEING")

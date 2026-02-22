@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/admin/actes_metiers/watcher")
+@RequestMapping("/admin/actesMetiers/watcher")
 public class ActeMetierWatcherController {
 
     private static final Logger logger = LoggerFactory.getLogger(ActeMetierWatcherController.class);

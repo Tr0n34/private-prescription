@@ -28,8 +28,8 @@ public class PatientACL {
     public ImportPatientCmd toDomain(String externalId, String userId) {
         validate(externalId);
         return new ImportPatientCmd(
-            new ExternalPatientId(externalId),
-            new UtilisateurId(userId)
+                new ExternalPatientId(externalId),
+                new UtilisateurId(userId)
         );
     }
 

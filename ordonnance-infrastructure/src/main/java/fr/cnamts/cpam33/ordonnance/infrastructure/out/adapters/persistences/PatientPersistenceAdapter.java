@@ -6,7 +6,7 @@ import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.Extern
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.Patient;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.PatientId;
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.patients.PatientRepository;
-import fr.cnamts.cpam33.ordonnance.infrastructure.kernel.Adapter;
+import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.Adapter;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.persistences.repositories.ordonnances.PatientJpaRepository;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.mappers.patients.PatientEntityMapper;
 import org.springframework.stereotype.Component;

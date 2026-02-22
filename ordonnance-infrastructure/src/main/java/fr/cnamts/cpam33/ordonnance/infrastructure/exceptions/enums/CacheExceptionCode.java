@@ -1,9 +1,10 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.exceptions.enums;
 
-import fr.cnamts.cpam33.ordonnance.infrastructure.kernel.errors.InfraStructureExceptionCode;
+import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.InfraStructureExceptionCode;
 
 public enum CacheExceptionCode implements InfraStructureExceptionCode {
 
-    TECH_CACHE_ACTE_METIER_INEXISTANT
+    TECH_CACHE_ACTE_METIER_INEXISTANT,
+    TECH_CACHE_ERROR_INEXISTANTE
 
 }
