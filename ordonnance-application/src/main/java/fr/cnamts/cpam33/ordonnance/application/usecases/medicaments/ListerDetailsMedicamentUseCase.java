@@ -5,23 +5,33 @@ import fr.cnamts.cpam33.ordonnance.domain.kernel.domain.enums.ActeMetierCode;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.events.ActeMetierEvent;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.DomainException;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.NotFound;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.filters.SortProvider;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.medicaments.Medicament;
 import fr.cnamts.cpam33.ordonnance.domain.models.queries.ListerMedicamentByCodeIdQuery;
 import fr.cnamts.cpam33.ordonnance.domain.models.queries.PageRequest;
 import fr.cnamts.cpam33.ordonnance.domain.models.queries.PageResult;
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.medicaments.MedicamentRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @Service
 @ActeMetierEvent(ActeMetierCode.MEDICAMENT_LISTER)
 public class ListerDetailsMedicamentUseCase implements QueryUseCase<ListerMedicamentByCodeIdQuery, Medicament> {
 
+    private static final Logger logger = LoggerFactory.getLogger(ListerDetailsMedicamentUseCase.class);
+
+    private final SortProvider<Medicament> medicamentSortProvider;
     private final MedicamentRepository medicamentRepository;
 
-    public ListerDetailsMedicamentUseCase(MedicamentRepository medicamentRepository) {
+    public ListerDetailsMedicamentUseCase(SortProvider<Medicament> medicamentSortProvider,
+                                          MedicamentRepository medicamentRepository) {
+        this.medicamentSortProvider = medicamentSortProvider;
         this.medicamentRepository = medicamentRepository;
     }
 
@@ -41,35 +51,15 @@ public class ListerDetailsMedicamentUseCase implements QueryUseCase<ListerMedica
     }
 
     private List<Medicament> applySort(List<Medicament> list, List<PageRequest.SortField> sortFields) {
-        if (sortFields == null || sortFields.isEmpty()) return list;
-        Comparator<Medicament> comparator = null;
-        for (var field : sortFields) {
-            Comparator<Medicament> c = comparatorFor(field.field());
-            if (c == null) continue;
-            if (field.direction() == PageRequest.Direction.DESC) {
-                c = c.reversed();
-            }
-            comparator = comparator == null ? c : comparator.thenComparing(c);
-        }
+        var effectiveSort = (sortFields == null || sortFields.isEmpty())
+                ? medicamentSortProvider.defaultSort()
+                : sortFields;
+        Comparator<Medicament> comparator = effectiveSort.stream()
+                .map(medicamentSortProvider::comparatorFor)
+                .filter(Objects::nonNull)
+                .reduce(Comparator::thenComparing)
+                .orElse(null);
         return comparator == null ? list : list.stream().sorted(comparator).toList();
-    }
-
-    private Comparator<Medicament> comparatorFor(String field) {
-        return switch (field) {
-            case "nom" -> Comparator.comparing(
-                    Medicament::nom,
-                    Comparator.nullsLast(String::compareToIgnoreCase)
-            );
-            case "cipUcd" -> Comparator.comparing(
-                    Medicament::cipUcd,
-                    Comparator.nullsLast(String::compareToIgnoreCase)
-            );
-            case "catcCode" -> Comparator.comparing(
-                    Medicament::catcCode,
-                    Comparator.nullsLast(String::compareToIgnoreCase)
-            );
-            default -> null;
-        };
     }
 
 }
