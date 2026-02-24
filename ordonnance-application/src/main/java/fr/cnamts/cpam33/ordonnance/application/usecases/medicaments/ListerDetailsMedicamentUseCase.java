@@ -4,27 +4,21 @@ import fr.cnamts.cpam33.ordonnance.application.kernel.QueryUseCase;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.domain.enums.ActeMetierCode;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.events.ActeMetierEvent;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.DomainException;
-import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.NotFound;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.filters.SortProvider;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.medicaments.Medicament;
 import fr.cnamts.cpam33.ordonnance.domain.models.queries.ListerMedicamentByCodeIdQuery;
-import fr.cnamts.cpam33.ordonnance.domain.models.queries.PageRequest;
-import fr.cnamts.cpam33.ordonnance.domain.models.queries.PageResult;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.filters.PageRequest;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.filters.PageResult;
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.medicaments.MedicamentRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 @Service
 @ActeMetierEvent(ActeMetierCode.MEDICAMENT_LISTER)
 public class ListerDetailsMedicamentUseCase implements QueryUseCase<ListerMedicamentByCodeIdQuery, Medicament> {
-
-    private static final Logger logger = LoggerFactory.getLogger(ListerDetailsMedicamentUseCase.class);
 
     private final SortProvider<Medicament> medicamentSortProvider;
     private final MedicamentRepository medicamentRepository;

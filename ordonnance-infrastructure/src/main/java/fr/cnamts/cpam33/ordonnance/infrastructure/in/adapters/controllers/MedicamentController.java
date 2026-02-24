@@ -2,10 +2,7 @@ package fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.controllers;
 
 import fr.cnamts.cpam33.ordonnance.application.usecases.medicaments.ListerDetailsMedicamentUseCase;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.ids.UtilisateurId;
-import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.medicaments.Medicament;
 import fr.cnamts.cpam33.ordonnance.domain.models.queries.ListerMedicamentByCodeIdQuery;
-import fr.cnamts.cpam33.ordonnance.domain.models.queries.PageRequest;
-import fr.cnamts.cpam33.ordonnance.domain.models.queries.PageResult;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.controllers.filters.MedicamentFilter;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.dto.medicaments.MedicamentDto;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.mappers.MedicamentApiMapper;
@@ -17,8 +14,6 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.SortDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/medicaments")
