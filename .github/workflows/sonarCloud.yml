@@ -37,6 +37,13 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-m2-
 
+      - name: Checkout contract-trace
+        uses: actions/checkout@v3
+        with:
+          repository: Tr0n34/traces
+          token: ${{ secrets.TRACE_SECRET }}
+          path: trace-contract
+
       # 4. Build + tests + JaCoCo
       - name: Build with Maven
         run: mvn clean verify
