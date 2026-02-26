@@ -1,7 +1,7 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.persistences.repositories.thesorimed;
 
 import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.InfrastructureException;
-import fr.cnamts.cpam33.ordonnance.infrastructure.exceptions.enums.ThesorimedExceptionCode;
+import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.enums.ThesorimedExceptionCode;
 
 import java.math.BigDecimal;
 import java.util.Locale;

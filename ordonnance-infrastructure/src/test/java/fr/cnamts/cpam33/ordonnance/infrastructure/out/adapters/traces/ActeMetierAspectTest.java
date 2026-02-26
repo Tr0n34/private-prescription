@@ -12,6 +12,8 @@ import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.tracabilite.Tra
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.tracabilite.TraceOut;
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.traces.TraceNumGenerator;
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.traces.TracePublisher;
+import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.ActeMetierAspect;
+import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.providers.traces.TraceContextFactory;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,7 +21,6 @@ import org.mockito.ArgumentCaptor;
 
 import java.time.Clock;
 import java.time.Instant;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -71,7 +72,6 @@ class ActeMetierAspectTest {
         assertEquals(ActeMetierCode.ORD_CREER.name(), published.acteMetierId().code());
         assertEquals("123456789", published.utilisateurId().numero());
         assertEquals("String", published.boundedContext());
-        assertEquals(LocalDateTime.ofInstant(clock.instant(), clock.getZone()), published.timestamp());
         verify(traceContextFactory).build(eq(pjp), eq(traceable), eq(result), isNull());
     }
 

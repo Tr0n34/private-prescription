@@ -4,19 +4,23 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.cnamts.cpam33.ordonnance.application.usecases.ordonnances.CreateOrdonnanceUseCase;
 import fr.cnamts.cpam33.ordonnance.domain.models.aggregates.Ordonnance;
 import fr.cnamts.cpam33.ordonnance.domain.models.commands.ordonnances.CreateOrdonnanceCmd;
+import fr.cnamts.cpam33.ordonnance.infrastructure.configurations.traces.OrdonnanceWebTraceConfiguration;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.controllers.OrdonnanceController;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.dto.OrdonnanceDto;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.dto.PrescriptionDto;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.dto.medecins.MedecinIdDto;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.dto.patients.PatientIdDto;
-import fr.cnamts.cpam33.ordonnance.infrastructure.in.mappers.OrdonnanceApiMapper;
-import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.ErrorMessageDomainResolver;
-import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.ErrorMessageInfrastructureResolver;
+import fr.cnamts.cpam33.ordonnance.infrastructure.in.interceptors.TraceHeaderInterceptor;
+import fr.cnamts.cpam33.ordonnance.infrastructure.in.mappers.OrdonnanceDtoDomainMapper;
+import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.resolvers.ErrorMessageDomainResolver;
+import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.resolvers.ErrorMessageInfrastructureResolver;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
@@ -27,7 +31,16 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(OrdonnanceController.class)
+@WebMvcTest(
+        controllers = OrdonnanceController.class,
+        excludeFilters = @ComponentScan.Filter(
+                type = FilterType.ASSIGNABLE_TYPE,
+                classes = {
+                        TraceHeaderInterceptor.class,
+                        OrdonnanceWebTraceConfiguration.class
+                }
+        )
+)
 @ActiveProfiles("integration")
 public class OrdonnanceControllerIT {
 
@@ -38,7 +51,7 @@ public class OrdonnanceControllerIT {
     private CreateOrdonnanceUseCase createOrdonnanceUseCase;
 
     @MockBean
-    private OrdonnanceApiMapper ordonnanceApiMapper;
+    private OrdonnanceDtoDomainMapper ordonnanceDtoDomainMapper;
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -57,7 +70,7 @@ public class OrdonnanceControllerIT {
                 List.of(new PrescriptionDto("test")));
         CreateOrdonnanceCmd cmd = Mockito.mock(CreateOrdonnanceCmd.class);
         Ordonnance ordonnance = Mockito.mock(Ordonnance.class);
-        when(ordonnanceApiMapper.toCommand(Mockito.any(OrdonnanceDto.class))).thenReturn(cmd);
+        when(ordonnanceDtoDomainMapper.toCommand(Mockito.any(OrdonnanceDto.class))).thenReturn(cmd);
         when(createOrdonnanceUseCase.execute(cmd)).thenReturn(ordonnance);
 
         mockMvc.perform(post("/ordonnances")

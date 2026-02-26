@@ -9,6 +9,10 @@ import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.tracabilite.Tra
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.traces.TracePublisher;
 import fr.cnamts.cpam33.ordonnance.infrastructure.contexts.TestAspectConfiguration;
 import fr.cnamts.cpam33.ordonnance.infrastructure.fixtures.stubs.DummyActeMetierService;
+import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.ActeMetierAspect;
+import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.providers.traces.TraceContextFactory;
+import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.providers.traces.TraceInBuilder;
+import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.providers.traces.TraceOutBuilder;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -38,8 +42,10 @@ class ActeMetierAspectIT {
 
     @Autowired DummyActeMetierService service;
     @Autowired TracePublisher publisher;
-    @Autowired TraceInBuilder traceInBuilder;
-    @Autowired TraceOutBuilder traceOutBuilder;
+    @Autowired
+    TraceInBuilder traceInBuilder;
+    @Autowired
+    TraceOutBuilder traceOutBuilder;
 
     @AfterEach
     void resetMocks() {

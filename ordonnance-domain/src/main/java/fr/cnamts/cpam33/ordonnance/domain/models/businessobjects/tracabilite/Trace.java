@@ -1,6 +1,5 @@
 package fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.tracabilite;
 
-import com.google.common.base.MoreObjects;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.domain.Document;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.domain.DomainObject;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.domain.enums.ActeMetierCode;
@@ -9,14 +8,17 @@ import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.enums.TraceException
 import fr.cnamts.cpam33.ordonnance.domain.kernel.ids.UtilisateurId;
 
 import java.time.Clock;
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 public record Trace(
         TraceId traceId,
+        CorrelationId correlationId,
         ActeMetierId acteMetierId,
+        FonctionId fonctionId,
         UtilisateurId utilisateurId,
         String boundedContext,
-        LocalDateTime timestamp,
+        Ecran ecran,
+        Instant createdOn,
         TraceContext context
 ) implements DomainObject, Document {
 
@@ -27,24 +29,62 @@ public record Trace(
         if ( utilisateurId == null ) {
             throw new DomainException(TraceExceptionCode.BS_TRACE_MEDECIN_MISSING);
         }
-        if ( timestamp == null ) {
+        if ( createdOn == null ) {
             throw new DomainException(TraceExceptionCode.BS_TRACE_TIMESTAMP_MISSING);
         }
     }
 
-    public static Trace of(TraceId traceId, ActeMetierId acteMetierId, UtilisateurId utilisateurId, String boundedContext,
-                           TraceContext traceContext, LocalDateTime timestamp, Clock clock) {
-        Trace trace = new Trace(traceId, acteMetierId, utilisateurId, boundedContext, timestamp, traceContext);
-        if ( timestamp.isAfter(LocalDateTime.now(clock)) ) {
+    public static Trace of(
+            TraceId traceId,
+            CorrelationId correlationId,
+            ActeMetierId acteMetierId,
+            FonctionId fonctionId,
+            UtilisateurId utilisateurId,
+            String boundedContext,
+            Ecran ecran,
+            TraceContext traceContext,
+            Instant createdOn,
+            Clock clock) {
+        Trace trace = new Trace(
+                traceId,
+                correlationId,
+                acteMetierId,
+                fonctionId,
+                utilisateurId,
+                boundedContext,
+                ecran,
+                createdOn,
+                traceContext);
+        if ( createdOn.isAfter(Instant.now(clock)) ) {
             throw new DomainException(TraceExceptionCode.BS_TRACE_TIMESTAMP_INVALID);
         }
         return trace;
     }
 
-    public static Trace of(TraceId traceId, ActeMetierCode acteMetierCode, UtilisateurId utilisateurId, String boundedContext,
-                           TraceContext traceContext, LocalDateTime timestamp, Clock clock) {
-        Trace trace = new Trace(traceId, new ActeMetierId(acteMetierCode.name()), utilisateurId, boundedContext, timestamp, traceContext);
-        if ( timestamp.isAfter(LocalDateTime.now(clock)) ) {
+    public static Trace of(
+            TraceId traceId,
+            CorrelationId correlationId,
+            ActeMetierCode acteMetierCode,
+            FonctionId fonctionId,
+            UtilisateurId utilisateurId,
+            String boundedContext,
+            Ecran ecran,
+            TraceContext traceContext,
+            Instant createdOn,
+            Clock clock
+    ) {
+        Trace trace = new Trace(
+                traceId,
+                correlationId,
+                new ActeMetierId(acteMetierCode.name()),
+                fonctionId,
+                utilisateurId,
+                boundedContext,
+                ecran,
+                createdOn,
+                traceContext
+        );
+        if ( createdOn.isAfter(Instant.now(clock)) ) {
             throw new DomainException(TraceExceptionCode.BS_TRACE_TIMESTAMP_INVALID);
         }
         return trace;
@@ -52,13 +92,17 @@ public record Trace(
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(this)
-                .add("acteMetierId", acteMetierId)
-                .add("utilisateurId", utilisateurId)
-                .add("boundedContext", boundedContext)
-                .add("timestamp", timestamp)
-                .add("context", context)
-                .toString();
+        return "Trace{" +
+                "traceId=" + traceId +
+                ", correlationId=" + correlationId +
+                ", acteMetierId=" + acteMetierId +
+                ", fonctionId=" + fonctionId +
+                ", utilisateurId=" + utilisateurId +
+                ", boundedContext=" + boundedContext +
+                ", ecran=" + ecran +
+                ", createdOn=" + createdOn +
+                ", context=" + context +
+                '}';
     }
 
 }

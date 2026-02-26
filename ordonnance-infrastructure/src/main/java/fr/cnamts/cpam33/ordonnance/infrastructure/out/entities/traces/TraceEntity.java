@@ -4,30 +4,53 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
+import java.time.Instant;
+
 /**
  * Entité représentant une Trace enregistrée dans le domaine (avec la file d'attente
  * InMemory.
  */
 @Entity
-@Table(name = "trace")
+@Table(name = "internal_trace")
 public class TraceEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
-    @Column(name = "trace_id", nullable = false)
+    @Column(name = "trace_id", nullable = false, length = 80)
     private String traceId;
 
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "acte_metier_id", nullable = false)
-    private ActeMetierEntity acteMetier;
+    @Column(name = "application_id", nullable = false, length = 120)
+    private String applicationId;
 
     @Column(name = "utilisateur_id", nullable = false)
     private String utilisateurId;
 
+    @Column(name = "utilisateur-ip", nullable = false)
+    private String utilisateurIp;
+
+    @Column(name = "correlation_id", nullable = false)
+    private String correlationId;
+
+    @Column(name = "ecran", nullable = false)
+    private String frontPage;
+
     @Column(name = "bounded_context", nullable = false, length = 80)
     private String boundedContext;
+
+    @Column(name = "fonction", nullable = false)
+    private String fonction;
+
+    @Column(name = "acte_metier", nullable = false, length = 120)
+    private String acteMetier;
+
+    @Column(name = "received_at", nullable = false)
+    private Instant receivedAt;
+
+    @Column(name = "created_on")
+    private Instant createdOn;
 
     @Column(name = "trace_in", columnDefinition = "jsonb", nullable = false)
     @JdbcTypeCode(SqlTypes.JSON)
@@ -37,19 +60,35 @@ public class TraceEntity {
     @JdbcTypeCode(SqlTypes.JSON)
     private String traceOut;
 
-    @Column(name = "created_on", nullable = false)
-    private String createdOn;
+    public TraceEntity() {}
 
-    protected TraceEntity() {}
-
-    public TraceEntity(Long id, ActeMetierEntity acteMetier, String utilisateurId,
-                       String traceIn, String traceOut, String createdOn) {
-        this.id = id;
-        this.acteMetier = acteMetier;
+    public TraceEntity(
+            String traceId,
+            String applicationId,
+            String utilisateurId,
+            String utilisateurIp,
+            String correlationId,
+            String frontPage,
+            String boundedContext,
+            String fonction,
+            String acteMetier,
+            Instant receivedAt,
+            Instant createdOn,
+            String traceIn,
+            String traceOut) {
+        this.traceId = traceId;
+        this.applicationId = applicationId;
         this.utilisateurId = utilisateurId;
+        this.utilisateurIp = utilisateurIp;
+        this.correlationId = correlationId;
+        this.frontPage = frontPage;
+        this.boundedContext = boundedContext;
+        this.fonction = fonction;
+        this.acteMetier = acteMetier;
+        this.receivedAt = receivedAt;
+        this.createdOn = createdOn;
         this.traceIn = traceIn;
         this.traceOut = traceOut;
-        this.createdOn = createdOn;
     }
 
     public Long id() {
@@ -70,12 +109,12 @@ public class TraceEntity {
         return this;
     }
 
-    public ActeMetierEntity acteMetier() {
-        return acteMetier;
+    public String applicationId() {
+        return applicationId;
     }
 
-    public TraceEntity setActeMetier(ActeMetierEntity acteMetier) {
-        this.acteMetier = acteMetier;
+    public TraceEntity setApplicationId(String applicationId) {
+        this.applicationId = applicationId;
         return this;
     }
 
@@ -88,12 +127,75 @@ public class TraceEntity {
         return this;
     }
 
+    public String utilisateurIp() {
+        return utilisateurIp;
+    }
+
+    public TraceEntity setUtilisateurIp(String utilisateurIp) {
+        this.utilisateurIp = utilisateurIp;
+        return this;
+    }
+
+    public String correlationId() {
+        return correlationId;
+    }
+
+    public TraceEntity setCorrelationId(String correlationId) {
+        this.correlationId = correlationId;
+        return this;
+    }
+
+    public String frontPage() {
+        return frontPage;
+    }
+
+    public TraceEntity setFrontPage(String frontPage) {
+        this.frontPage = frontPage;
+        return this;
+    }
+
     public String boundedContext() {
         return boundedContext;
     }
 
     public TraceEntity setBoundedContext(String boundedContext) {
         this.boundedContext = boundedContext;
+        return this;
+    }
+
+    public String fonction() {
+        return fonction;
+    }
+
+    public TraceEntity setFonction(String fonction) {
+        this.fonction = fonction;
+        return this;
+    }
+
+    public String acteMetier() {
+        return acteMetier;
+    }
+
+    public TraceEntity setActeMetier(String acteMetier) {
+        this.acteMetier = acteMetier;
+        return this;
+    }
+
+    public Instant receivedAt() {
+        return receivedAt;
+    }
+
+    public TraceEntity setReceivedAt(Instant receivedAt) {
+        this.receivedAt = receivedAt;
+        return this;
+    }
+
+    public Instant createdOn() {
+        return createdOn;
+    }
+
+    public TraceEntity setCreatedOn(Instant createdOn) {
+        this.createdOn = createdOn;
         return this;
     }
 
@@ -115,12 +217,4 @@ public class TraceEntity {
         return this;
     }
 
-    public String createdOn() {
-        return createdOn;
-    }
-
-    public TraceEntity setCreatedOn(String createdOn) {
-        this.createdOn = createdOn;
-        return this;
-    }
 }
