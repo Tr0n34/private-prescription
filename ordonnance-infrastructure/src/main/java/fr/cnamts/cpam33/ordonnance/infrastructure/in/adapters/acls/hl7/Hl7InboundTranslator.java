@@ -3,7 +3,7 @@ package fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.acls.hl7;
 import ca.uhn.hl7v2.model.v25.message.ORM_O01;
 import ca.uhn.hl7v2.model.v25.segment.ORC;
 import ca.uhn.hl7v2.model.v25.segment.PID;
-import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.PatientId;
+import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identifiants.PatientId;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.utilisateurs.MedecinId;
 import fr.cnamts.cpam33.ordonnance.domain.models.commands.ordonnances.CreateOrdonnanceCmd;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identites.Rpps;

@@ -6,7 +6,7 @@ import fr.cnamts.cpam33.ordonnance.domain.fixtures.PrescriptionFixtures;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.DomainException;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.enums.CommandCodeException;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.Traitement;
-import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.PatientId;
+import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identifiants.PatientId;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.utilisateurs.MedecinId;
 import fr.cnamts.cpam33.ordonnance.domain.models.commands.ordonnances.CreateOrdonnanceCmd;
 import org.junit.jupiter.api.Test;

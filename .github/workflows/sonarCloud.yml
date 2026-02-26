@@ -37,9 +37,29 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-m2-
 
+      - name: Checkout contract-trace
+        uses: actions/checkout@v3
+        with:
+          repository: Tr0n34/traces
+          token: ${{ secrets.TRACE_SECRET }}
+          path: traces
+
+      - name: Install traces parent + trace-contract
+        run: mvn -f traces/pom.xml -DskipTests -pl :trace-contract -am clean install
+
+      - name: Verify contract installed
+        run: |
+          mvn -f traces/trace-contract/pom.xml -q -DskipTests -pl :trace-contract help:evaluate -Dexpression=project.groupId -DforceStdout
+          mvn -f traces/trace-contract/pom.xml -q -DskipTests -pl :trace-contract help:evaluate -Dexpression=project.version -DforceStdout
+          find ~/.m2/repository -name "*trace-contract*.jar" | head
+
+      - name: Show installed contract
+        run: |
+          ls -la ~/.m2/repository/fr/cnamts/cpam33/trace-contract/1.0-SNAPSHOT || true
+
       # 4. Build + tests + JaCoCo
       - name: Build with Maven
-        run: mvn clean verify
+        run: mvn -U -e -DskipTests=false clean verify
 
       - name: Debug all binaries
         run: find . -type d -path "*target/classes"

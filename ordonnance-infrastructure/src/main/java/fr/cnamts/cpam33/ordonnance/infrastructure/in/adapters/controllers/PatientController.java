@@ -23,7 +23,7 @@ import java.util.List;
 @RequestMapping("/patients")
 public class PatientController implements Adapter {
 
-    private static final Logger logger = LoggerFactory.getLogger(PatientController.class.getName());
+    private static final Logger logger = LoggerFactory.getLogger(PatientController.class);
 
     private final LocationBuilder locationBuilder;
     private final RegisterPatientUseCase registerPatientUseCase;

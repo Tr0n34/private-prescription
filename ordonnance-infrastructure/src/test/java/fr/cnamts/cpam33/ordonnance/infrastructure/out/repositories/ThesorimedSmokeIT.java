@@ -39,7 +39,7 @@ public class ThesorimedSmokeIT {
     void should_load_sql_and_call_refcursor_function() throws Exception {
         List<Map<String, Object>> rows = executor.functionRefcursor(
                 "thesorimed.get_the_spe_details",
-                List.of("3", new java.math.BigDecimal("1")),
+                List.of("DOLIPRANE%", new java.math.BigDecimal("0")),
                 new ColumnMapRowMapper()
         );
         assertThat(rows).isNotNull();

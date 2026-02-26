@@ -1,5 +1,7 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors;
 
+import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.enums.InfraStructureExceptionCode;
+
 import java.util.Map;
 import java.util.Objects;
 

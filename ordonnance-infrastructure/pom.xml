@@ -11,12 +11,6 @@
 
     <artifactId>ordonnance-infrastructure</artifactId>
 
-    <properties>
-        <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
-
     <dependencies>
 
         <dependency>
@@ -36,6 +30,11 @@
             <type>test-jar</type>
             <classifier>domain-test-jar</classifier>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>fr.cnamts.cpam33</groupId>
+            <artifactId>trace-contract</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
 
         <!-- Springboot CORE -->

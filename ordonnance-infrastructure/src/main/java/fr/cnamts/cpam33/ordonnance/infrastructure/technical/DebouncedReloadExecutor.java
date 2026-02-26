@@ -1,7 +1,7 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.technical;
 
 import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.InfrastructureException;
-import fr.cnamts.cpam33.ordonnance.infrastructure.exceptions.enums.DebouncerExceptionCode;
+import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.enums.DebouncerExceptionCode;
 import jakarta.annotation.PreDestroy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

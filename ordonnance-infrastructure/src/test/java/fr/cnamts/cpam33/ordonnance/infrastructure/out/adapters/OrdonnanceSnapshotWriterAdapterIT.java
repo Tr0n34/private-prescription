@@ -5,7 +5,7 @@ import fr.cnamts.cpam33.ordonnance.domain.fixtures.MedecinFixtures;
 import fr.cnamts.cpam33.ordonnance.domain.fixtures.PatientFixtures;
 import fr.cnamts.cpam33.ordonnance.domain.fixtures.PrescriptionFixtures;
 import fr.cnamts.cpam33.ordonnance.domain.models.aggregates.Ordonnance;
-import fr.cnamts.cpam33.ordonnance.domain.models.aggregates.OrdonnanceId;
+import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identifiants.OrdonnanceId;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identites.Signature;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.snapshots.OrdonnanceSnapshot;
 import fr.cnamts.cpam33.ordonnance.infrastructure.contexts.TestPdfConfig;

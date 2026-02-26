@@ -1,9 +1,10 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.out.mappers.patients;
 
-import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.ExternalPatientId;
+import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identifiants.ExternalPatientId;
 import org.mapstruct.Mapper;
+import org.mapstruct.MappingConstants;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface ExternalIdPatientMapper {
 
     default String mapExternalPatientId(ExternalPatientId externalPatientId) {

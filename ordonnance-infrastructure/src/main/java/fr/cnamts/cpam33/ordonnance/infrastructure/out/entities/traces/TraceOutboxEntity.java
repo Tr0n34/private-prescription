@@ -1,7 +1,7 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.out.entities.traces;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.traces.rabbit.TraceOutboxStatus;
+import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.providers.traces.TraceOutboxStatus;
 import jakarta.persistence.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
