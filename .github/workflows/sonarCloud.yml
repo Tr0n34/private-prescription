@@ -44,6 +44,9 @@ jobs:
           token: ${{ secrets.TRACE_SECRET }}
           path: trace-contract
 
+      - name: Install trace-contract in local Maven repo
+        run: mvn -f trace-contract/pom.xml -DskipTests clean install
+
       # 4. Build + tests + JaCoCo
       - name: Build with Maven
         run: mvn clean verify
