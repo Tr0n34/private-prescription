@@ -42,10 +42,16 @@ jobs:
         with:
           repository: Tr0n34/traces
           token: ${{ secrets.TRACE_SECRET }}
-          path: trace-contract
+          path: traces
 
       - name: Install trace-contract in local Maven repo
-        run: mvn -f trace-contract/pom.xml -DskipTests clean install
+        run: mvn -f traces/trace-contract/pom.xml -DskipTests clean install
+
+      - name: Verify contract installed
+        run: |
+          mvn -f traces/trace-contract/pom.xml -q -DskipTests -pl :trace-contract help:evaluate -Dexpression=project.groupId -DforceStdout
+          mvn -f traces/trace-contract/pom.xml -q -DskipTests -pl :trace-contract help:evaluate -Dexpression=project.version -DforceStdout
+          find ~/.m2/repository -name "*trace-contract*.jar" | head
 
       # 4. Build + tests + JaCoCo
       - name: Build with Maven

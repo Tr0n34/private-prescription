@@ -6,10 +6,8 @@ import fr.cnamts.cpam33.ordonnance.domain.kernel.domain.enums.ActeMetierCode;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.events.ActeMetierEvent;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.ids.UtilisateurId;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.traces.Traceable;
-import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.tracabilite.Trace;
-import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.tracabilite.TraceContext;
-import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.tracabilite.TraceIn;
-import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.tracabilite.TraceOut;
+import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.tracabilite.*;
+import fr.cnamts.cpam33.ordonnance.domain.ports.out.traces.ActeMetierRepository;
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.traces.TraceNumGenerator;
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.traces.TracePublisher;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.ActeMetierAspect;
@@ -30,6 +28,7 @@ import static org.mockito.Mockito.*;
 
 class ActeMetierAspectTest {
 
+    private ActeMetierRepository acteMetierRepository;
     private TracePublisher publisher;
     private TraceContextFactory traceContextFactory;
     private ProceedingJoinPoint pjp;
@@ -42,6 +41,9 @@ class ActeMetierAspectTest {
     void setUp() {
         publisher = mock(TracePublisher.class);
         traceContextFactory = mock(TraceContextFactory.class);
+        acteMetierRepository = mock(ActeMetierRepository.class);
+        when(acteMetierRepository.findFonctionByActeMetierId(any()))
+                .thenReturn(new Fonction(new FonctionId("FONC"), "test"));
         pjp = mock(ProceedingJoinPoint.class);
         traceNumGenerator = new TraceNumGenerator() {
             @Override
@@ -50,7 +52,7 @@ class ActeMetierAspectTest {
             }
         };
         clock = Clock.fixed(Instant.parse("2026-01-10T09:00:00Z"), ZoneId.of("Europe/Paris"));
-        aspect = new ActeMetierAspect(publisher, traceContextFactory, traceNumGenerator, clock);
+        aspect = new ActeMetierAspect(acteMetierRepository, publisher, traceContextFactory, traceNumGenerator, clock);
     }
 
     @Test
