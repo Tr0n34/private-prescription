@@ -3,8 +3,8 @@ package fr.cnamts.cpam33.ordonnance.application.kernel;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.cqrs.Query;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.domain.DomainObject;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.DomainException;
-import fr.cnamts.cpam33.ordonnance.domain.models.queries.PageRequest;
-import fr.cnamts.cpam33.ordonnance.domain.models.queries.PageResult;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.filters.PageRequest;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.filters.PageResult;
 
 import java.util.List;
 

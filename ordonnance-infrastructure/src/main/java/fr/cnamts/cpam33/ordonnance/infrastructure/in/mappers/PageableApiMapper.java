@@ -1,6 +1,6 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.in.mappers;
 
-import fr.cnamts.cpam33.ordonnance.domain.models.queries.PageRequest;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.filters.PageRequest;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
