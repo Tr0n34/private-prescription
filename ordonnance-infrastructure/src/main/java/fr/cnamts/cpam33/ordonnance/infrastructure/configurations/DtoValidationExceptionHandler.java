@@ -1,12 +1,17 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.configurations;
 
+import org.apache.commons.lang3.NotImplementedException;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class DtoValidationExceptionHandler {
+public final class DtoValidationExceptionHandler {
+
+    private DtoValidationExceptionHandler() {
+        throw new NotImplementedException("Utility class");
+    }
 
     public static String formatFieldError(FieldError fe) {
         // ex: "externalId: must not be blank"

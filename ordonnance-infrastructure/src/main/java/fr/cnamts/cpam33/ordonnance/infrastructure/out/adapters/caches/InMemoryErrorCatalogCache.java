@@ -1,8 +1,8 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.caches;
 
 import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.caches.ErrorCatalogCache;
-import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.enums.CacheExceptionCode;
 import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.InfrastructureException;
+import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.enums.CacheExceptionCode;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.persistences.repositories.ordonnances.ErrorCatalogJpaRepository;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.entities.ordonnances.ErrorCatalogEntity;
 import org.slf4j.Logger;

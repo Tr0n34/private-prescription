@@ -5,9 +5,9 @@ import fr.cnamts.cpam33.ordonnance.domain.kernel.validation.ValidatableCommand;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.validation.ValidationResult;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.validation.Validator;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.Traitement;
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identifiants.PatientId;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.utilisateurs.MedecinId;
 import fr.cnamts.cpam33.ordonnance.domain.models.commands.CommandValidation;
+import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identifiants.PatientId;
 
 import java.util.List;
 

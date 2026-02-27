@@ -1,7 +1,7 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.configurations;
 
-import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.enums.PdfExceptionCode;
 import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.InfrastructureException;
+import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.enums.PdfExceptionCode;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

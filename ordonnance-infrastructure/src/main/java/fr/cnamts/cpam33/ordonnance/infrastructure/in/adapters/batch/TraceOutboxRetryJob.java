@@ -102,7 +102,7 @@ public class TraceOutboxRetryJob {
 
     private Duration computeDelay(int retryCount, TraceErrorRetryProperties traceErrorRetryProperties) {
         int attempt = Math.max(1, retryCount);
-        double factor = Math.pow(traceErrorRetryProperties.backoffMultiplier(), attempt - 1);
+        double factor = Math.pow(traceErrorRetryProperties.backoffMultiplier(), attempt - 1.0d);
         long delayMillis = (long) (traceErrorRetryProperties.initialDelay().toMillis() * factor);
         long capped = Math.min(delayMillis, traceErrorRetryProperties.maxDelay().toMillis());
         return Duration.ofMillis(capped);
