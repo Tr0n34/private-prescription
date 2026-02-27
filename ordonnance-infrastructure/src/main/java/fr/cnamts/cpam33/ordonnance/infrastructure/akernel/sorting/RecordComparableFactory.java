@@ -28,11 +28,20 @@ public class RecordComparableFactory {
             Map<String, String> canonicalByAlias,
             Map<String, Method> accessorByField
     ) {
-        return Optional.ofNullable(sortField)
+        String canonical = resolveCanonical(sortField.field(), cfgByCanonicalField, canonicalByAlias);
+
+        System.out.println("---- SORT DEBUG ----");
+        System.out.println("requested      = " + sortField.field());
+        System.out.println("canonical      = " + canonical);
+        System.out.println("cfgKeys        = " + cfgByCanonicalField.keySet());
+        System.out.println("aliasKeys      = " + canonicalByAlias.keySet());
+        System.out.println("accessorKeys   = " + accessorByField.keySet());
+        System.out.println("---------------------");
+        return Optional.of(sortField)
                 .map(PageRequest.SortField::field)
                 .map(requested -> resolveCanonical(requested, cfgByCanonicalField, canonicalByAlias))
-                .filter(canonical -> {
-                    var cfg = cfgByCanonicalField.get(canonical);
+                .filter(c -> {
+                    var cfg = cfgByCanonicalField.get(c);
                     return cfg != null && cfg.enabled();
                 })
                 .map(accessorByField::get)
@@ -43,7 +52,10 @@ public class RecordComparableFactory {
                     );
                     return sortField.direction() == PageRequest.Direction.DESC ? c.reversed() : c;
                 })
-                .orElse(null);
+                .orElseGet(() -> {
+                    System.out.println("SORT IGNORED: " + sortField);
+                    return null;
+                });
     }
 
     private static String resolveCanonical(
@@ -51,9 +63,12 @@ public class RecordComparableFactory {
             Map<String, ?> cfgByCanonicalField,
             Map<String, String> canonicalByAlias
     ) {
-        return cfgByCanonicalField.containsKey(requested)
-                ? requested
-                : canonicalByAlias.get(requested.toLowerCase());
+        String canonical = null;
+        if ( requested != null ) {
+            String key = requested.toLowerCase();
+            canonical = cfgByCanonicalField.containsKey(key) ? key : canonicalByAlias.get(key);
+        }
+        return canonical;
     }
 
 }
