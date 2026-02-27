@@ -6,7 +6,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import java.util.List;
 import java.util.Map;
 
-@ConfigurationProperties(prefix = "ordonnances.medicaments.sort")
+@ConfigurationProperties(prefix = "ordonnance.medicaments.sort")
 public record MedicamentSortProperties (
         List<PageRequest.SortField> defaultSort,
         Map<String, FieldConfiguration> fields

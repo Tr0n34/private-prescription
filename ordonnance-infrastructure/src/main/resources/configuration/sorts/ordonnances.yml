@@ -1,7 +1,7 @@
 ordonnance:
   medicaments:
     sort:
-      default:
+      default-sort:
         - field: nom
           direction: ASC
       fields:
