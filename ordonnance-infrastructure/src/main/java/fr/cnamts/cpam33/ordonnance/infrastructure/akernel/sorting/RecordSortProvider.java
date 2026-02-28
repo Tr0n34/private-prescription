@@ -1,7 +1,7 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.akernel.sorting;
 
-import fr.cnamts.cpam33.ordonnance.domain.kernel.filters.SortProvider;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.filters.PageRequest;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.filters.SortProvider;
 
 import java.lang.reflect.Method;
 import java.util.Comparator;

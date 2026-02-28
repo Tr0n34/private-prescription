@@ -1,12 +1,12 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.providers;
 
 import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.ExceptionCode;
-import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.ErrorDescriptor;
 import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.Adapter;
+import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.caches.ErrorCatalogCache;
+import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.ErrorDescriptor;
+import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.enums.InfraStructureExceptionCode;
 import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.resolvers.ErrorMessageDomainResolver;
 import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.resolvers.ErrorMessageInfrastructureResolver;
-import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.enums.InfraStructureExceptionCode;
-import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.caches.ErrorCatalogCache;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.persistences.repositories.ordonnances.ErrorCatalogJpaRepository;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.entities.ordonnances.ErrorCatalogEntity;
 import org.slf4j.Logger;
@@ -55,22 +55,25 @@ public class DatabaseErrorMessageResolver implements ErrorMessageDomainResolver,
         return resolveByCode(code.toString(), null);
     }
 
-    public ErrorDescriptor resolveByCode(String exceptionCode, Map<String, ?> placeHolders) {
+    public ErrorDescriptor resolveByCode(String exceptionCode, Map<String, Object> placeHolders) {
         ErrorCatalogEntity entity = errorCatalogCache.getRequired(exceptionCode);
-        if ( entity == null ) {
+        if (entity == null) {
             logger.trace("error code {} not found", exceptionCode);
             entity = errorCatalogJpaRepository.findByCodeAndActiveTrue(exceptionCode).orElseThrow(
                     () -> new IllegalStateException(String.format(UNRESOLVED_ERROR_MESSAGE, exceptionCode))
             );
         }
-        String rendered = renderTemplate(entity.getMessage(), placeHolders == null ? Map.of() : placeHolders);
-        logger.debug("{} : {}", exceptionCode, rendered);
+        Map<String, Object> safe = (placeHolders == null) ? Map.of() : placeHolders;
+        String renderedMessage = renderTemplate(entity.getMessage(), safe);
+        String renderedBoundedContext = renderTemplate(entity.getBoundedContext(), safe);
+        logger.debug("{} : {}", exceptionCode, renderedMessage);
         return ErrorDescriptor.of(
                 entity.getCode(),
-                rendered,
+                renderedMessage,
                 entity.getHttpStatus(),
                 LocalDateTime.now(),
-                entity.getBoundedContext());
+                renderedBoundedContext
+        );
     }
 
     private String renderTemplate(String template, Map<String, ?> placeHolders) {

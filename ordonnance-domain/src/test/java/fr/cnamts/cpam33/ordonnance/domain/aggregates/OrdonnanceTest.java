@@ -6,10 +6,10 @@ import fr.cnamts.cpam33.ordonnance.domain.fixtures.PatientFixtures;
 import fr.cnamts.cpam33.ordonnance.domain.fixtures.PrescriptionFixtures;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.DomainException;
 import fr.cnamts.cpam33.ordonnance.domain.models.aggregates.Ordonnance;
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identifiants.OrdonnanceId;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.Traitement;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.Patient;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.utilisateurs.Medecin;
+import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identifiants.OrdonnanceId;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

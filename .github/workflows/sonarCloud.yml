@@ -189,5 +189,5 @@ jobs:
             -Dsonar.projectKey=Tr0n34_private-prescription
             -Dsonar.organization=tr0n34
             -Dsonar.host.url=https://sonarcloud.io
-            -Dsonar.java.binaries=**/target/classes
+            -Dsonar.java.binaries=ordonnance-application/target/classes,ordonnance-domain/target/classes,ordonnance-infrastructure/target/classes
             -Dsonar.coverage.jacoco.xmlReportPaths=**/target/site/jacoco/jacoco.xml,**/target/site/jacoco-aggregate/jacoco.xml

@@ -1,15 +1,15 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.configurations;
 
 import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.DomainException;
-import fr.cnamts.cpam33.ordonnance.infrastructure.configurations.traces.OrdonnanceWebTraceConfiguration;
 import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.ErrorDescriptor;
+import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.InfrastructureException;
+import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.resolvers.ErrorMessageDomainResolver;
+import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.resolvers.ErrorMessageInfrastructureResolver;
+import fr.cnamts.cpam33.ordonnance.infrastructure.configurations.traces.OrdonnanceWebTraceConfiguration;
 import fr.cnamts.cpam33.ordonnance.infrastructure.fixtures.controllers.TestController;
 import fr.cnamts.cpam33.ordonnance.infrastructure.fixtures.controllers.ThrowingService;
 import fr.cnamts.cpam33.ordonnance.infrastructure.fixtures.enums.TestExceptionCode;
 import fr.cnamts.cpam33.ordonnance.infrastructure.fixtures.enums.TestInfrastructureExceptionCode;
-import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.resolvers.ErrorMessageDomainResolver;
-import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.resolvers.ErrorMessageInfrastructureResolver;
-import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.InfrastructureException;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.interceptors.TraceHeaderInterceptor;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

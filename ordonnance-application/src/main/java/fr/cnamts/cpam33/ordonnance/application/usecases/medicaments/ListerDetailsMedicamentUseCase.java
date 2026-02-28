@@ -4,11 +4,11 @@ import fr.cnamts.cpam33.ordonnance.application.kernel.QueryUseCase;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.domain.enums.ActeMetierCode;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.events.ActeMetierEvent;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.DomainException;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.filters.PageRequest;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.filters.PageResult;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.filters.SortProvider;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.medicaments.Medicament;
 import fr.cnamts.cpam33.ordonnance.domain.models.queries.ListerMedicamentByCodeIdQuery;
-import fr.cnamts.cpam33.ordonnance.domain.kernel.filters.PageRequest;
-import fr.cnamts.cpam33.ordonnance.domain.kernel.filters.PageResult;
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.medicaments.MedicamentRepository;
 import org.springframework.stereotype.Service;
 
