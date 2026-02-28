@@ -4,7 +4,7 @@ import fr.cnamts.cpam33.ordonnance.application.usecases.ordonnances.CreateOrdonn
 import fr.cnamts.cpam33.ordonnance.domain.models.commands.ordonnances.CreateOrdonnanceCmd;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.dto.OrdonnanceDto;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.dto.PrescriptionDto;
-import fr.cnamts.cpam33.ordonnance.infrastructure.in.mappers.OrdonnanceApiMapper;
+import fr.cnamts.cpam33.ordonnance.infrastructure.in.mappers.OrdonnanceDtoDomainMapper;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,16 +17,16 @@ import java.util.List;
 public class OrdonnanceController {
 
     private CreateOrdonnanceUseCase createOrdonnanceUseCase;
-    private OrdonnanceApiMapper ordonnanceApiMapper;
+    private OrdonnanceDtoDomainMapper ordonnanceDtoDomainMapper;
 
-    public OrdonnanceController(CreateOrdonnanceUseCase createOrdonnanceUseCase, OrdonnanceApiMapper ordonnanceApiMapper) {
+    public OrdonnanceController(CreateOrdonnanceUseCase createOrdonnanceUseCase, OrdonnanceDtoDomainMapper ordonnanceDtoDomainMapper) {
         this.createOrdonnanceUseCase = createOrdonnanceUseCase;
-        this.ordonnanceApiMapper = ordonnanceApiMapper;
+        this.ordonnanceDtoDomainMapper = ordonnanceDtoDomainMapper;
     }
 
     @PostMapping
     public ResponseEntity<Void> createEmptyOrdonnance(@Valid @RequestBody OrdonnanceDto ordonnanceDto) {
-        CreateOrdonnanceCmd cmd = ordonnanceApiMapper.toCommand(ordonnanceDto);
+        CreateOrdonnanceCmd cmd = ordonnanceDtoDomainMapper.toCommand(ordonnanceDto);
         createOrdonnanceUseCase.execute(cmd);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }

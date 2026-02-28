@@ -4,8 +4,9 @@ import fr.cnamts.cpam33.ordonnance.infrastructure.out.dto.patients.ExternalPatie
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.dto.patients.ImportPatientDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingConstants;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface ExternalPatientDtoMapper {
 
     @Mapping(target = "externalId", source = "conIdExterne")

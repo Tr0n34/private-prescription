@@ -1,9 +1,8 @@
 package fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.medicaments;
 
 import fr.cnamts.cpam33.ordonnance.domain.kernel.domain.DomainObject;
-import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.DomainException;
-import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.enums.MedecinExceptionCode;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.Posologie;
+import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identifiants.MedicamentId;
 
 import java.util.Collections;
 import java.util.List;
@@ -11,6 +10,7 @@ import java.util.List;
 public record Medicament(
         MedicamentId medicamentId,
         String nom,
+        String nomLong,
         String cdfNom,
         String catcCode,
         String cipUcd,
@@ -22,9 +22,6 @@ public record Medicament(
 ) implements DomainObject {
 
     public Medicament {
-        if ( posologies == null ) {
-            throw new DomainException(MedecinExceptionCode.BS_POSOLOGIE_PHRASE_MISSING);
-        }
         posologies =  Collections.unmodifiableList(posologies);
     }
 

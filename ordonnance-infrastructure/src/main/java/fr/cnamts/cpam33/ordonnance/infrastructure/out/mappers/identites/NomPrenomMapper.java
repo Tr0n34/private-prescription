@@ -3,8 +3,9 @@ package fr.cnamts.cpam33.ordonnance.infrastructure.out.mappers.identites;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identites.Nom;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identites.Prenom;
 import org.mapstruct.Mapper;
+import org.mapstruct.MappingConstants;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface NomPrenomMapper {
 
     default String mapPrenom(Nom nom) {

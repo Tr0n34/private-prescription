@@ -1,6 +1,6 @@
 package fr.cnamts.cpam33.ordonnance.domain.ports.out.traces;
 
-import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.TraceId;
+import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.tracabilite.TraceId;
 
 import java.time.LocalDate;
 import java.util.List;

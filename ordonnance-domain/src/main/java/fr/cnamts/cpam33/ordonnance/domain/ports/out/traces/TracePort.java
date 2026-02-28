@@ -2,13 +2,22 @@ package fr.cnamts.cpam33.ordonnance.domain.ports.out.traces;
 
 import fr.cnamts.cpam33.ordonnance.domain.kernel.domain.enums.ActeMetierCode;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.ids.UtilisateurId;
-import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.ActeMetier;
-import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.TraceContext;
+import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.tracabilite.*;
+
+import java.time.Clock;
+import java.time.Instant;
 
 public interface TracePort {
 
-    void trace(ActeMetierCode acteMetierCode, UtilisateurId utilisateurId, String bounedContext, TraceContext traceContext);
-
-    void trace(ActeMetier acteMetier, UtilisateurId utilisateurId, String bounedContext, TraceContext traceContext);
+    void trace(
+            CorrelationId correlationId,
+            ActeMetierId acteMetierId,
+            FonctionId fonctionId,
+            UtilisateurId utilisateurId,
+            String boundedContext,
+            Ecran ecran,
+            TraceContext traceContext,
+            Instant createdOn
+    );
 
 }

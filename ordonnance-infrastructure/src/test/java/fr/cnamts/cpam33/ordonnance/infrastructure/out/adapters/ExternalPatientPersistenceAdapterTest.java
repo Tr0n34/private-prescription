@@ -1,6 +1,6 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters;
 
-import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.ExternalPatientId;
+import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identifiants.ExternalPatientId;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.ImportPatientCandidate;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.persistences.ExternalPatientPersistenceAdapter;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,25 +17,25 @@ import static org.mockito.Mockito.*;
 class ExternalPatientPersistenceAdapterTest {
 
     @Mock
-    private ImportPatientApiClient importPatientApiClient;
+    private ImportPatientAdapter importPatientAdapter;
 
     private ExternalPatientPersistenceAdapter adapter;
 
     @BeforeEach
     void setUp() {
-        adapter = new ExternalPatientPersistenceAdapter(importPatientApiClient);
+        adapter = new ExternalPatientPersistenceAdapter(importPatientAdapter);
     }
 
     @Test
     void should_delegate_fetch_by_id_to_client() {
         ExternalPatientId externalId = new ExternalPatientId("EXT-123");
         ImportPatientCandidate expectedPatient = mock(ImportPatientCandidate .class);
-        when(importPatientApiClient.fetchById(externalId)).thenReturn(expectedPatient);
+        when(importPatientAdapter.fetchById(externalId)).thenReturn(expectedPatient);
         ImportPatientCandidate result = adapter.fetchById(externalId);
         assertNotNull(result);
         assertEquals(expectedPatient, result);
-        verify(importPatientApiClient, times(1)).fetchById(externalId);
-        verifyNoMoreInteractions(importPatientApiClient);
+        verify(importPatientAdapter, times(1)).fetchById(externalId);
+        verifyNoMoreInteractions(importPatientAdapter);
     }
 
 }

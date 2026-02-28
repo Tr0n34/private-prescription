@@ -1,7 +1,7 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.configurations.caches;
 
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.traces.ActeMetierRepository;
-import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.traces.InMemoryActeMetierCache;
+import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.caches.InMemoryActeMetierCache;
 import org.apache.commons.lang3.NotImplementedException;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;

@@ -1,0 +1,17 @@
+ordonnance:
+  medicaments:
+    sort:
+      default-sort:
+        - field: nom
+          direction: ASC
+      fields:
+        nom:
+          enabled: true
+          aliases: [name, libelle]
+        nomLong:
+          enabled: true
+          aliases: [nom_long]
+        catcCode:
+          enabled: true
+        cipUcd:
+          enabled: true

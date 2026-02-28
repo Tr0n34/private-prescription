@@ -1,7 +1,5 @@
 package fr.cnamts.cpam33.ordonnance.domain.kernel.domain;
 
-import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.ActeMetier;
-
 import java.util.Map;
 
 public interface Cache<T extends DomainObject> {

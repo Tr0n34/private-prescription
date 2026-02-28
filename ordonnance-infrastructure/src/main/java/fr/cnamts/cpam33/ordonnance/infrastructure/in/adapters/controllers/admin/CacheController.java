@@ -1,9 +1,9 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.controllers.admin;
 
-import fr.cnamts.cpam33.ordonnance.domain.models.tracabilite.ActeMetier;
+import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.tracabilite.ActeMetier;
 import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.BoundedContextHint;
-import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.caches.ActeMetierCache;
-import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.caches.ErrorCatalogCache;
+import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.caches.ActeMetierCache;
+import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.caches.ErrorCatalogCache;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.entities.ordonnances.ErrorCatalogEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
