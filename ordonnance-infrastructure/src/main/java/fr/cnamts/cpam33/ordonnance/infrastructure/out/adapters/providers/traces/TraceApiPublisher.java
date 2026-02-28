@@ -101,9 +101,13 @@ public class TraceApiPublisher implements TracePublisher {
     }
 
     private String safeMessage(String message) {
-        return message != null
-                ? message.length() > 800 ? message.substring(0, 800) : message
-                : "";
+        String safeMessage = "";
+        if ( message != null && message.length() > 800 ) {
+            safeMessage = message.substring(0, 800);
+        } else {
+            safeMessage = message;
+        }
+        return safeMessage;
     }
 
 }
