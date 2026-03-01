@@ -5,14 +5,23 @@ import java.util.Comparator;
 
 public final class ComparableReader {
 
-    @SuppressWarnings("rawtypes")
-    public static Comparable<?> readComparable(Method accessor, Object target) {
-        Object v = readRaw(accessor, target);
-        return v == null ? null :
-                v instanceof String s ? s :
-                        v instanceof Enum<?> e ? e.name() :
-                                v instanceof Comparable<?> c ? c :
-                                        v.toString();
+    private ComparableReader() {
+        // prevent instantiation
+    }
+
+    @SuppressWarnings({"rawtypes","unchecked"})
+    public static Comparable<Object> readComparable(Method accessor, Object target) {
+        Object raw = readRaw(accessor, target);
+        Comparable<Object> comparable = null;
+        if ( raw != null ) {
+            comparable = switch (raw) {
+                case String s -> (Comparable<Object>) (Comparable) s;
+                case Enum e -> (Comparable<Object>) (Comparable) e.name();
+                case Comparable c -> (Comparable<Object>) c;
+                default -> (Comparable<Object>) (Comparable) raw.toString();
+            };
+        }
+        return comparable;
     }
 
     private static Object readRaw(Method accessor, Object target) {
