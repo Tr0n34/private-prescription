@@ -94,7 +94,8 @@ public class TraceOutboxRetryJob {
                 entity.setLastFailureAt(now);
                 entity.setRetryCount(entity.retryCount() + 1);
                 entity.setReason(shortReason(ex));
-                entity.setNextRetryAt(computeNextRetryAt(now, entity.retryCount()));
+                Duration delay = computeDelay(entity.retryCount(), traceErrorRetryProperties);
+                entity.setNextRetryAt(now.plus(delay));
                 traceOutboxJpaRepository.save(entity);
             }
         }
@@ -102,17 +103,10 @@ public class TraceOutboxRetryJob {
 
     private Duration computeDelay(int retryCount, TraceErrorRetryProperties traceErrorRetryProperties) {
         int attempt = Math.max(1, retryCount);
-        double factor = Math.pow(traceErrorRetryProperties.backoffMultiplier(), attempt - 1);
+        double factor = Math.pow(traceErrorRetryProperties.backoffMultiplier(), attempt - 1.0d);
         long delayMillis = (long) (traceErrorRetryProperties.initialDelay().toMillis() * factor);
         long capped = Math.min(delayMillis, traceErrorRetryProperties.maxDelay().toMillis());
         return Duration.ofMillis(capped);
-    }
-
-    private OffsetDateTime computeNextRetryAt(OffsetDateTime now, int retryCount) {
-        long baseSeconds = 10L;
-        long delaySeconds = baseSeconds * (1L << Math.min(retryCount - 1, 6));
-        delaySeconds = Math.min(delaySeconds, 600L);
-        return now.plusSeconds(delaySeconds);
     }
 
     private String shortReason(Exception ex) {

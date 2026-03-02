@@ -10,7 +10,11 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class RecordComparableFactory {
+public final class RecordComparableFactory {
+
+    private RecordComparableFactory() {
+        // prevent instantiation
+    }
 
     public static Map<String, Method> buildAccessorMap(Class<?> recordClass) {
         return recordClass.isRecord()
@@ -29,14 +33,6 @@ public class RecordComparableFactory {
             Map<String, Method> accessorByField
     ) {
         String canonical = resolveCanonical(sortField.field(), cfgByCanonicalField, canonicalByAlias);
-
-        System.out.println("---- SORT DEBUG ----");
-        System.out.println("requested      = " + sortField.field());
-        System.out.println("canonical      = " + canonical);
-        System.out.println("cfgKeys        = " + cfgByCanonicalField.keySet());
-        System.out.println("aliasKeys      = " + canonicalByAlias.keySet());
-        System.out.println("accessorKeys   = " + accessorByField.keySet());
-        System.out.println("---------------------");
         return Optional.of(sortField)
                 .map(PageRequest.SortField::field)
                 .map(requested -> resolveCanonical(requested, cfgByCanonicalField, canonicalByAlias))
@@ -52,10 +48,7 @@ public class RecordComparableFactory {
                     );
                     return sortField.direction() == PageRequest.Direction.DESC ? c.reversed() : c;
                 })
-                .orElseGet(() -> {
-                    System.out.println("SORT IGNORED: " + sortField);
-                    return null;
-                });
+                .orElse(null);
     }
 
     private static String resolveCanonical(

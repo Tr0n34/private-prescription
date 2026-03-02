@@ -57,7 +57,7 @@
   { "code": "TECH_CACHE_ACTE_METIER_INEXISTANT", "boundedContext": "ACTE_METIER", "httpStatus": 400, "message": "Acte métier inexistant : {acteMetier}" },
   { "code": "TECH_CACHE_ERROR_INEXISTANTE", "boundedContext": "ERROR_CATALOG", "httpStatus":  400, "message":  "Code d'erreur non trouvé : {errorCatalogEntity}"},
   { "code": "TECH_RESOLVER_ACTE_METIER_CODE_INEXISTANT", "boundedContext": "ACTE_METIER", "httpStatus":  400, "message":  "Code d'erreur non trouvé : {acteMetier}"},
-  { "code": "TECH_API_VALIDATION_FAILED", "boundedContext":  "API", "httpStatus":  400, "message":  "Les champs ne sont pas corrects : {violations}"},
+  { "code": "TECH_API_VALIDATION_FAILED", "boundedContext":  "{boundedContext}", "httpStatus":  400, "message":  "Les champs ne sont pas corrects : {violations}"},
 
   { "code": "TECH_PENDING_TASK_KEY_NOT_NULL", "boundedContext":  "TRACE_DEBOUNCER", "httpStatus":  400, "message":  "La clef ne peut pas être null ou vide"},
   { "code": "TECH_PENDING_TASK_ACTION_NOT_NULL", "boundedContext":  "TRACE_DEBOUNCER", "httpStatus":  400, "message":  "L'action ne peut pas être null"},

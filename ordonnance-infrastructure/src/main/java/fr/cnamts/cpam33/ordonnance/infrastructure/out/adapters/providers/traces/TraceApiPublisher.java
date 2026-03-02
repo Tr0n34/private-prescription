@@ -9,8 +9,8 @@ import fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.acls.traces.TraceP
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.persistences.repositories.traces.TraceOutboxJpaRepository;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.dto.traces.TracePublicationContext;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.entities.traces.TraceOutboxEntity;
-import fr.cnamts.cpam33.ordonnance.infrastructure.out.mappers.traces.TraceContractDomainMapper;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.mappers.traces.TraceContextAssembler;
+import fr.cnamts.cpam33.ordonnance.infrastructure.out.mappers.traces.TraceContractDomainMapper;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.mappers.traces.TraceOutboxMapper;
 import fr.cnamts.cpam33.traces.contract.dto.TraceDto;
 import org.slf4j.Logger;
@@ -101,9 +101,13 @@ public class TraceApiPublisher implements TracePublisher {
     }
 
     private String safeMessage(String message) {
-        return message != null
-                ? message.length() > 800 ? message.substring(0, 800) : message
-                : "";
+        String safeMessage = "";
+        if ( message != null && message.length() > 800 ) {
+            safeMessage = message.substring(0, 800);
+        } else {
+            safeMessage = message;
+        }
+        return safeMessage;
     }
 
 }

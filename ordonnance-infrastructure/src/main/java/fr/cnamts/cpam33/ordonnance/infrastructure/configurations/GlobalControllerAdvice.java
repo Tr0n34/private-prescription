@@ -4,11 +4,11 @@ import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.DomainException;
 import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.BoundedContextHint;
 import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.ErrorDescriptor;
+import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.InfrastructureException;
 import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.enums.ValidationDtoExceptionCode;
-import fr.cnamts.cpam33.ordonnance.infrastructure.in.dto.errors.ErrorResponseDto;
 import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.resolvers.ErrorMessageDomainResolver;
 import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.resolvers.ErrorMessageInfrastructureResolver;
-import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.InfrastructureException;
+import fr.cnamts.cpam33.ordonnance.infrastructure.in.dto.errors.ErrorResponseDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -32,6 +32,8 @@ public class GlobalControllerAdvice {
     private static final Logger logger = LoggerFactory.getLogger(GlobalControllerAdvice.class);
 
     public static final String INTERNAL_EXCEPTION = "INTERNAL_EXCEPTION";
+    public static final String ERROR_STANDARD_LOG = "{} : {}";
+    public static final String BOUNDED_CONTEXT_FROM_API_ERROR = "API_ERROR";
 
     private final ErrorMessageDomainResolver errorMessageResolver;
     private final ErrorMessageInfrastructureResolver errorMessageInfrastructureResolver;
@@ -50,7 +52,7 @@ public class GlobalControllerAdvice {
     @ExceptionHandler(DomainException.class)
     public ResponseEntity<ErrorResponseDto> handle(DomainException ex) {
         ErrorDescriptor descriptor = errorMessageResolver.resolve(ex.getCode(), ex.getPlaceHolders());
-        logger.error("{} : {}", ex, descriptor);
+        logger.error(ERROR_STANDARD_LOG, ex, descriptor);
         return ResponseEntity
                 .status(descriptor.httpStatus())
                 .body(ErrorResponseDto.from(descriptor));
@@ -61,7 +63,7 @@ public class GlobalControllerAdvice {
         ErrorDescriptor descriptor = ex.getPlaceHolders() == null
                 ? errorMessageInfrastructureResolver.resolve(ex.getCode())
                 : errorMessageInfrastructureResolver.resolve(ex.getCode(), ex.getPlaceHolders());
-        logger.error("{} : {}", ex, descriptor);
+        logger.error(ERROR_STANDARD_LOG, ex, descriptor);
         return ResponseEntity
                 .status(descriptor.httpStatus())
                 .body(ErrorResponseDto.from(descriptor));
@@ -69,7 +71,7 @@ public class GlobalControllerAdvice {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponseDto> handle(MethodArgumentNotValidException ex, HandlerMethod handlerMethod) {
-        String boundedContext = "API_ERROR";
+        String boundedContext = BOUNDED_CONTEXT_FROM_API_ERROR;
         if ( handlerMethod != null ) {
             BoundedContextHint annotation = handlerMethod.getBeanType().getAnnotation(BoundedContextHint.class);
             if ( annotation != null && !annotation.value().isBlank() ) {
@@ -81,7 +83,8 @@ public class GlobalControllerAdvice {
                 ValidationDtoExceptionCode.TECH_API_VALIDATION_FAILED,
                 Map.of(
                         "violations", violations,
-                        "violationsCount", ex.getBindingResult().getErrorCount()
+                        "violationsCount", ex.getBindingResult().getErrorCount(),
+                        "boundedContext", boundedContext
                 ));
         return ResponseEntity.status(descriptor.httpStatus()).body(ErrorResponseDto.from(descriptor));
     }
@@ -95,7 +98,7 @@ public class GlobalControllerAdvice {
                 LocalDateTime.now(),
                 ex.getClass().getSimpleName()
         );
-        logger.error("{} : {}", ex, descriptor);
+        logger.error(ERROR_STANDARD_LOG, ex, descriptor);
         return ResponseEntity.status(descriptor.httpStatus()).body(ErrorResponseDto.from(descriptor));
     }
 

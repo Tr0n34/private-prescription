@@ -7,11 +7,16 @@ import org.springframework.web.context.annotation.RequestScope;
 @Component
 public class TraceRequestContext {
 
+    public static final String NOT_INITITIALIZED = "";
+
     private String utilisateurIp;
     private String correlationId;
     private String frontPage;
 
     public TraceRequestContext() {
+        utilisateurIp = NOT_INITITIALIZED;
+        correlationId = NOT_INITITIALIZED;
+        frontPage = NOT_INITITIALIZED;
     }
 
     public static TraceRequestContext empty() {

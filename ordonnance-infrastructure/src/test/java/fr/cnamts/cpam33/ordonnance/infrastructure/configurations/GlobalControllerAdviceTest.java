@@ -2,11 +2,11 @@ package fr.cnamts.cpam33.ordonnance.infrastructure.configurations;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.DomainException;
+import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.ErrorDescriptor;
+import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.InfrastructureException;
+import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.enums.ValidationDtoExceptionCode;
 import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.resolvers.ErrorMessageDomainResolver;
 import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.resolvers.ErrorMessageInfrastructureResolver;
-import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.InfrastructureException;
-import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.ErrorDescriptor;
-import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.enums.ValidationDtoExceptionCode;
 import fr.cnamts.cpam33.ordonnance.infrastructure.fixtures.enums.TestExceptionCode;
 import fr.cnamts.cpam33.ordonnance.infrastructure.fixtures.enums.TestInfrastructureExceptionCode;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.dto.errors.ErrorResponseDto;
@@ -140,7 +140,9 @@ class GlobalControllerAdviceTest {
 
     static class DummyController {
         @SuppressWarnings("unused")
-        public void create(DummyDto dto) {}
+        public void create(DummyDto dto) {
+            /* Dummy for stubing */
+        }
     }
     static class DummyDto {}
 
