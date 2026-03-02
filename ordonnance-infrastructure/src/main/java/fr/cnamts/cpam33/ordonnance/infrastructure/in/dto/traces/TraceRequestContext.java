@@ -11,7 +11,8 @@ public class TraceRequestContext {
     private String correlationId;
     private String frontPage;
 
-    public TraceRequestContext() {
+    private TraceRequestContext() {
+        throw new UnsupportedOperationException("utility class");
     }
 
     public static TraceRequestContext empty() {

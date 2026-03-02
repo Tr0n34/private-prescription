@@ -67,7 +67,6 @@ public class GlobalControllerAdviceIT {
     @Test
     void should_handle_domain_exception_in_web_layer() throws Exception {
         DomainException ex = mock(DomainException.class);
-        Object code = new Object();
         Map<String, Object> ph = Map.of("k", "v");
         when(ex.getCode()).thenReturn(TestExceptionCode.CODE_ERREUR);
         when(ex.getPlaceHolders()).thenReturn(ph);
@@ -90,7 +89,6 @@ public class GlobalControllerAdviceIT {
     @Test
     void should_handle_infrastructure_exception_in_web_layer_without_placeholders() throws Exception {
         InfrastructureException ex = mock(InfrastructureException.class);
-        Object code = new Object();
         when(ex.getCode()).thenReturn(TestInfrastructureExceptionCode.CODE_INFRA_ERREUR);
         when(ex.getPlaceHolders()).thenReturn(null);
         ErrorDescriptor descriptor = new ErrorDescriptor(

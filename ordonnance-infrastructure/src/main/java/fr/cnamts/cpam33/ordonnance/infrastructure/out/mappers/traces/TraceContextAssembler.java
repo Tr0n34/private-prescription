@@ -5,6 +5,10 @@ import fr.cnamts.cpam33.traces.contract.dto.TraceDto;
 
 public final class TraceContextAssembler {
 
+    private TraceContextAssembler() {
+        // prevent instantiation
+    }
+
     public static TraceDto enrich(TraceDto partial, TracePublicationContext ctx) {
         return new TraceDto(
                 partial.traceId(),

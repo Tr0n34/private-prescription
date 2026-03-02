@@ -8,7 +8,7 @@ public final class PathJoiner {
     public static final int DEFAULT_CAPACITY = 64;
 
     private PathJoiner() {
-        throw new UnsupportedOperationException("utility class");
+        // prevent instantiation
     }
 
     public static Optional<String> join(String... parts) {
@@ -33,8 +33,20 @@ public final class PathJoiner {
                 .map(String::trim)
                 .filter(s -> !s.isEmpty())
                 .map(s -> s.replace('\\', SLASH))
-                .map(s -> s.replaceAll("^/+", "").replaceAll("/+$", ""))
+                .map(PathJoiner::trimSlashes)
                 .filter(s -> !s.isEmpty());
+    }
+
+    private static String trimSlashes(String s) {
+        int start = 0;
+        int end = s.length();
+        while ( start < end && s.charAt(start) == SLASH ) {
+            start++;
+        }
+        while ( end > start && s.charAt(end - 1) == SLASH ) {
+            end--;
+        }
+        return s.substring(start, end);
     }
 
 }
