@@ -33,7 +33,7 @@ public class TraceApiPublisher implements TracePublisher {
     private final RestClient restClientTrace;
     private final TraceContractDomainMapper traceContractDomainMapper;
     private final ObjectMapper objectMapperTrace;
-    private final TraceOutboxJpaRepository TraceOutboxJpaRepository;
+    private final TraceOutboxJpaRepository traceOutboxJpaRepository;
     private final TraceOutboxMapper traceOutboxMapper;
     private final TraceErrorRetryProperties traceErrorRetryProperties;
     private final TracePublicationContextACL tracePublicationContextACL;
@@ -42,7 +42,7 @@ public class TraceApiPublisher implements TracePublisher {
     public TraceApiPublisher(@Qualifier("restClientTrace") RestClient restClientTrace,
                              @Qualifier("traceContextMapper")  ObjectMapper objectMapperTrace,
                              TraceContractDomainMapper traceContractDomainMapper,
-                             TraceOutboxJpaRepository TraceOutboxJpaRepository,
+                             TraceOutboxJpaRepository traceOutboxJpaRepository,
                              TraceOutboxMapper traceOutboxMapper,
                              TraceErrorRetryProperties traceErrorRetryProperties,
                              TracePublicationContextACL tracePublicationContextACL,
@@ -50,7 +50,7 @@ public class TraceApiPublisher implements TracePublisher {
         this.restClientTrace = restClientTrace;
         this.traceContractDomainMapper = traceContractDomainMapper;
         this.objectMapperTrace = objectMapperTrace;
-        this.TraceOutboxJpaRepository = TraceOutboxJpaRepository;
+        this.traceOutboxJpaRepository = traceOutboxJpaRepository;
         this.traceOutboxMapper = traceOutboxMapper;
         this.traceErrorRetryProperties = traceErrorRetryProperties;
         this.tracePublicationContextACL = tracePublicationContextACL;
@@ -88,7 +88,7 @@ public class TraceApiPublisher implements TracePublisher {
                     ex.getClass().getSimpleName() + ": " + safeMessage(ex.getMessage())
             );
             TraceOutboxEntity traceOutboxEntity = traceOutboxMapper.toEntityForInsert(failed);
-            TraceOutboxJpaRepository.save(traceOutboxEntity);
+            traceOutboxJpaRepository.save(traceOutboxEntity);
         }
     }
 

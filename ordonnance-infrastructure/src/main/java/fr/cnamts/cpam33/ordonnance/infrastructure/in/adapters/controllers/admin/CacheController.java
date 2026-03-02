@@ -35,6 +35,7 @@ public class CacheController {
 
     @GetMapping("/acteMetiers/{code}")
     public ResponseEntity<ActeMetier> getActeMetier(@PathVariable("code") String code) {
+        logger.trace("Getting acteMEtier for code  code={}", code);
         return ResponseEntity.ok().body(acteMetierCache.getRequired(code));
     }
 
@@ -45,6 +46,7 @@ public class CacheController {
 
     @GetMapping("/errors/{code}")
     public ResponseEntity<ErrorCatalogEntity> getError(@PathVariable("code") String code) {
+        logger.trace("Getting error catalog for code {}", code);
         return ResponseEntity.ok().body(errorCatalogCache.getRequired(code));
     }
 

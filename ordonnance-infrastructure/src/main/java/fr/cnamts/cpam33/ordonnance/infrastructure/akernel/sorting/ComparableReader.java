@@ -9,16 +9,16 @@ public final class ComparableReader {
         // prevent instantiation
     }
 
-    @SuppressWarnings({"rawtypes","unchecked"})
+    @SuppressWarnings({"rawtypes"})
     public static Comparable<Object> readComparable(Method accessor, Object target) {
         Object raw = readRaw(accessor, target);
         Comparable<Object> comparable = null;
         if ( raw != null ) {
             comparable = switch (raw) {
-                case String s -> (Comparable<Object>) (Comparable) s;
-                case Enum e -> (Comparable<Object>) (Comparable) e.name();
-                case Comparable c -> (Comparable<Object>) c;
-                default -> (Comparable<Object>) (Comparable) raw.toString();
+                case String s -> (Comparable) s;
+                case Enum e -> (Comparable) e.name();
+                case Comparable c -> c;
+                default -> (Comparable) raw.toString();
             };
         }
         return comparable;

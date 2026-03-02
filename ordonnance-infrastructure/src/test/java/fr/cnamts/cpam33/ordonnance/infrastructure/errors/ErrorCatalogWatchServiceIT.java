@@ -18,6 +18,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.awaitility.Awaitility.await;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
@@ -133,7 +134,7 @@ public class ErrorCatalogWatchServiceIT {
         Thread watchThread = new Thread(service);
         service.startWatching();
         watchThread.start();
-        Thread.sleep(500);
+        await().atMost(500, TimeUnit.MILLISECONDS).until(watchThread::isAlive);
         Files.writeString(errorFile, "{\"updated\": true}");
         boolean triggered = latch.await(5, TimeUnit.SECONDS);
         service.stopWatching();
