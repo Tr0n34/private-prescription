@@ -74,7 +74,6 @@ public class TraceOutboxRetryJob {
             try {
                 logger.trace("retry batch traceId={}, lastFailureAt={}, status={}",
                         entity.traceId(), entity.lastFailureAt(), entity.status());
-                Duration delay = computeDelay(entity.retryCount(), traceErrorRetryProperties);
                 entity.setStatus(TraceOutboxStatus.PENDING);
                 traceOutboxJpaRepository.save(entity);
                 String payload = mapper.jsonNodeToString(entity.payloadJson());

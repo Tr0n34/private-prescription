@@ -80,7 +80,9 @@ jobs:
         with:
           name: maven-binaries
           path: |
-            **/target/classes
+            ordonnance-application/target/classes
+            ordonnance-domain/target/classes
+            ordonnance-infrastructure/target/classes
           if-no-files-found: error
 
   tests:
@@ -129,8 +131,10 @@ jobs:
         with:
           name: jacoco-reports
           path: |
-            **/target/site/jacoco/jacoco.xml
-            **/target/site/jacoco-aggregate/jacoco.xml
+            ordonnance-application/target/site/jacoco/jacoco.xml
+            ordonnance-domain/target/site/jacoco/jacoco.xml
+            ordonnance-infrastructure/target/site/jacoco/jacoco.xml
+            ordonnance/target/site/jacoco-aggregate/jacoco.xml
           if-no-files-found: warn
 
   sonar:
