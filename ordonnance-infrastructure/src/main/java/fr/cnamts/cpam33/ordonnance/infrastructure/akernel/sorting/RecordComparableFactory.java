@@ -32,7 +32,6 @@ public final class RecordComparableFactory {
             Map<String, String> canonicalByAlias,
             Map<String, Method> accessorByField
     ) {
-        String canonical = resolveCanonical(sortField.field(), cfgByCanonicalField, canonicalByAlias);
         return Optional.of(sortField)
                 .map(PageRequest.SortField::field)
                 .map(requested -> resolveCanonical(requested, cfgByCanonicalField, canonicalByAlias))
