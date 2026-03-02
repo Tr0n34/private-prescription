@@ -2,7 +2,7 @@ package fr.cnamts.cpam33.ordonnance.domain.fixtures;
 
 import fr.cnamts.cpam33.ordonnance.domain.fixtures.stubs.OrdonnanceNumGeneratorStub;
 import fr.cnamts.cpam33.ordonnance.domain.models.aggregates.Ordonnance;
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identifiants.OrdonnanceId;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.identifiants.OrdonnanceId;
 
 import java.util.List;
 

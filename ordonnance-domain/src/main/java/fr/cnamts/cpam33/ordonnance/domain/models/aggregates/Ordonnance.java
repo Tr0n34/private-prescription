@@ -7,7 +7,7 @@ import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.PrescriptionId;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.Traitement;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.Patient;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.utilisateurs.Medecin;
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identifiants.OrdonnanceId;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.identifiants.OrdonnanceId;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

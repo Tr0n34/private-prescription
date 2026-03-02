@@ -3,7 +3,7 @@ package fr.cnamts.cpam33.ordonnance.infrastructure.in.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.cnamts.cpam33.ordonnance.application.usecases.ordonnances.CreateOrdonnanceUseCase;
 import fr.cnamts.cpam33.ordonnance.domain.models.aggregates.Ordonnance;
-import fr.cnamts.cpam33.ordonnance.domain.models.commands.ordonnances.CreateOrdonnanceCmd;
+import fr.cnamts.cpam33.ordonnance.application.commands.ordonnances.CreateOrdonnanceCmd;
 import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.resolvers.ErrorMessageDomainResolver;
 import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.resolvers.ErrorMessageInfrastructureResolver;
 import fr.cnamts.cpam33.ordonnance.infrastructure.configurations.traces.OrdonnanceWebTraceConfiguration;

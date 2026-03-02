@@ -1,7 +1,7 @@
 package fr.cnamts.cpam33.ordonnance.domain.aggregates;
 
 import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.DomainException;
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identifiants.OrdonnanceId;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.identifiants.OrdonnanceId;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;

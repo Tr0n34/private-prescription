@@ -1,8 +1,8 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.in.mappers;
 
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.utilisateurs.MedecinId;
-import fr.cnamts.cpam33.ordonnance.domain.models.commands.ordonnances.CreateOrdonnanceCmd;
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identifiants.PatientId;
+import fr.cnamts.cpam33.ordonnance.application.commands.ordonnances.CreateOrdonnanceCmd;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.identifiants.PatientId;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identites.Rpps;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.dto.OrdonnanceDto;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.dto.medecins.MedecinIdDto;

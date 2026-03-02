@@ -1,7 +1,7 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.persistences;
 
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.ImportPatientCandidate;
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identifiants.ExternalPatientId;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.identifiants.ExternalPatientId;
 import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.Adapter;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.ImportPatientAdapter;
 import org.springframework.stereotype.Component;

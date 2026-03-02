@@ -2,7 +2,7 @@ package fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions;
 
 import fr.cnamts.cpam33.ordonnance.domain.kernel.domain.DomainObject;
 
-import java.io.Serial;
+import java.io.*;
 import java.util.Map;
 import java.util.Objects;
 
@@ -12,7 +12,7 @@ public class DomainException extends RuntimeException implements DomainObject {
     private static final long serialVersionUID = 1L;
 
     private final transient ExceptionCode code;
-    private final transient Map<String, Object> placeHolders;
+    private transient Map<String, Object> placeHolders;
 
     public DomainException(ExceptionCode code) {
         this.code = Objects.requireNonNull(code);
@@ -35,6 +35,17 @@ public class DomainException extends RuntimeException implements DomainObject {
 
     public Map<String, Object> getPlaceHolders() {
         return placeHolders;
+    }
+
+    @Serial
+    private void writeObject(ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+    }
+
+    @Serial
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        this.placeHolders = null;
     }
 
 }

@@ -1,6 +1,6 @@
 package fr.cnamts.cpam33.ordonnance.domain.ports.out.ordonnances;
 
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identifiants.OrdonnanceId;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.identifiants.OrdonnanceId;
 
 public class OrdonnanceIdFactory {
 

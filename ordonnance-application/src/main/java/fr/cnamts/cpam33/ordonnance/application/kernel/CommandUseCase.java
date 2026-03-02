@@ -4,8 +4,8 @@ import fr.cnamts.cpam33.ordonnance.domain.kernel.cqrs.Command;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.domain.DomainObject;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.DomainException;
 
-public interface CommandUseCase<C extends Command, D extends DomainObject> {
+public interface CommandUseCase<C extends Command, R> {
 
-    D execute(C command) throws DomainException;
+    R execute(C command) throws DomainException;
 
 }

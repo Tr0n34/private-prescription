@@ -4,7 +4,7 @@ package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.traces;
 import com.github.f4b6a3.uuid.UuidCreator;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.domain.enums.ActeMetierCode;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.events.ActeMetierEvent;
-import fr.cnamts.cpam33.ordonnance.domain.kernel.ids.UtilisateurId;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.identifiants.UtilisateurId;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.traces.Traceable;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.tracabilite.*;
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.traces.ActeMetierRepository;

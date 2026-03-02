@@ -46,27 +46,33 @@ public class InfrastructureRules {
 
     }
 
-    public static ArchRule controllersShouldOnlyUseUseCases() {
+    public static ArchRule controllersShouldOnlyUseUseCasesAndReadModel() {
         return classes()
                 .that().haveSimpleNameEndingWith(SUFFIX_CONTROLLER)
+                .and().resideOutsideOfPackages(Module.INFRASTRUCTURE_ADMIN.getArchPackage())
                 .should().onlyDependOnClassesThat(
                         resideInAPackage(Module.APPLICATION_USE_CASES.getArchPackage())
                                 .or(resideInAPackage(Module.APPLICATION_SERVICES.getArchPackage()))
+                                .or(resideInAPackage(Module.APPLICATION_COMMANDS.getArchPackage()))
+                                .or(resideInAPackage(Module.APPLICATION_FILTERS.getArchPackage()))
+                                .or(resideInAPackage(Module.APPLICATION_VIEWS.getArchPackage()))
+                                .or(resideInAPackage(Module.APPLICATION_QUERIES.getArchPackage()))
                                 .or(resideInAPackage(Module.INFRASTRUCTURE.getArchPackage()))
                                 .or(resideInAPackage(TechPackage.JDK.getPackage()))               // JDK
                                 .or(resideInAPackage(TechPackage.SPRING.getPackage()))            // Spring annotations/utilitaires
                                 .or(resideInAPackage(TechPackage.SLF_4J.getPackage()))            // logging
                                 .or(resideInAPackage(TechPackage.JAKARTA.getPackage()))           // validations, annotations
                 )
-                .as("Les controllers doivent uniquement utiliser les use cases ou services de l'application (et des packages d'infrastructure)");
+                .as("Les controllers hors admin doivent uniquement utiliser les usecases, services et readmodels de l'application (et des packages d'infrastructure)");
     }
 
     public static ArchRule controllersShouldNotAccessDomainDirectly() {
         return noClasses()
                 .that().haveSimpleNameEndingWith(ClassSuffix.CONTROLLER.getSuffix())
+                .and().resideOutsideOfPackages(Module.INFRASTRUCTURE_ADMIN.getArchPackage())
                 .should().dependOnClassesThat()
                 .resideInAPackage(Module.DOMAIN_MODELS.getArchPackage())
-                .as("Les controllers ne doivent pas accéder directement au domaine (utiliser les use cases)");
+                .as("Les controllers hors ceux administratifs ne doivent pas accéder directement au domaine (utiliser les use cases)");
     }
 
     public static ArchRule controllersShouldBeInInfrastructure() {

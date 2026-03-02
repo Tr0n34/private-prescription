@@ -5,7 +5,7 @@ import fr.cnamts.cpam33.ordonnance.domain.fixtures.MedecinFixtures;
 import fr.cnamts.cpam33.ordonnance.domain.fixtures.PatientFixtures;
 import fr.cnamts.cpam33.ordonnance.domain.fixtures.PrescriptionFixtures;
 import fr.cnamts.cpam33.ordonnance.domain.models.aggregates.Ordonnance;
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identifiants.OrdonnanceId;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.identifiants.OrdonnanceId;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identites.Signature;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.snapshots.OrdonnanceSnapshot;
 import fr.cnamts.cpam33.ordonnance.infrastructure.contexts.TestPdfConfig;
@@ -50,7 +50,7 @@ class OrdonnanceSnapshotWriterAdapterIT {
         OrdonnanceSnapshot snapshot = fakeSnapshot();
         OrdonnanceSnapshotWriterAdapter writer = new OrdonnanceSnapshotWriterAdapter(templateEngine);
         byte[] pdf = generatePdf(writer, snapshot);
-        Path pdfFile = writePdf(pdf, "ordonnance-snapshot-valide");
+        writePdf(pdf, "ordonnance-snapshot-valide");
         assertThat(pdf).isNotNull();
         assertThat(pdf.length).isGreaterThan(100);
         assertThat(new String(pdf, 0, 4)).isEqualTo("%PDF");

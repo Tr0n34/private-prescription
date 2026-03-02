@@ -1,6 +1,6 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.akernel.sorting;
 
-import fr.cnamts.cpam33.ordonnance.domain.kernel.filters.PageRequest;
+import fr.cnamts.cpam33.ordonnance.application.filters.PageRequest;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.RecordComponent;
@@ -52,13 +52,13 @@ public final class RecordComparableFactory {
 
     private static String resolveCanonical(
             String requested,
-            Map<String, ?> cfgByCanonicalField,
+            Map<String, ?> fieldConfiguration,
             Map<String, String> canonicalByAlias
     ) {
         String canonical = null;
         if ( requested != null ) {
             String key = requested.toLowerCase();
-            canonical = cfgByCanonicalField.containsKey(key) ? key : canonicalByAlias.get(key);
+            canonical = fieldConfiguration.containsKey(key) ? key : canonicalByAlias.get(key);
         }
         return canonical;
     }

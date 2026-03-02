@@ -2,8 +2,8 @@ package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.persistences;
 
 import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.DomainException;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.Patient;
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identifiants.ExternalPatientId;
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identifiants.PatientId;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.identifiants.ExternalPatientId;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.identifiants.PatientId;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.persistences.repositories.ordonnances.PatientJpaRepository;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.entities.ordonnances.PatientEntity;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.mappers.patients.PatientEntityMapper;

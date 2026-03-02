@@ -1,6 +1,6 @@
 package fr.cnamts.cpam33.ordonnance.domain.ports.out.traces;
 
-import fr.cnamts.cpam33.ordonnance.domain.kernel.ids.UtilisateurId;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.identifiants.UtilisateurId;
 import fr.cnamts.cpam33.ordonnance.domain.kernel.ports.RepositoryPort;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.tracabilite.ActeMetierId;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.tracabilite.Trace;

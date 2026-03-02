@@ -1,12 +1,10 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.controllers;
 
 import fr.cnamts.cpam33.ordonnance.application.usecases.medicaments.ListerDetailsMedicamentUseCase;
-import fr.cnamts.cpam33.ordonnance.domain.kernel.ids.UtilisateurId;
-import fr.cnamts.cpam33.ordonnance.domain.models.queries.ListerMedicamentByCodeIdQuery;
+import fr.cnamts.cpam33.ordonnance.application.views.medicaments.MedicamentView;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.controllers.filters.MedicamentFilter;
-import fr.cnamts.cpam33.ordonnance.infrastructure.in.dto.medicaments.MedicamentDto;
-import fr.cnamts.cpam33.ordonnance.infrastructure.in.mappers.MedicamentDtoDomainMapper;
-import fr.cnamts.cpam33.ordonnance.infrastructure.in.mappers.PageableApiMapper;
+import fr.cnamts.cpam33.ordonnance.infrastructure.in.mappers.MedicamentApiMapper;
+import fr.cnamts.cpam33.ordonnance.infrastructure.in.mappers.PageableQueryMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -23,35 +21,31 @@ import org.springframework.web.bind.annotation.RestController;
 public class MedicamentController {
 
     private final ListerDetailsMedicamentUseCase listerDetailsMedicamentUseCase;
-    private final MedicamentDtoDomainMapper medicamentDtoDomainMapper;
-    private final PageableApiMapper pageableApiMapper;
+    private final MedicamentApiMapper medicamentApiMapper;
+    private final PageableQueryMapper pageableQueryMapper;
+
 
     public MedicamentController(ListerDetailsMedicamentUseCase listerDetailsMedicamentUseCase,
-                                MedicamentDtoDomainMapper medicamentDtoDomainMapper,
-                                PageableApiMapper pageableApiMapper) {
+                                MedicamentApiMapper medicamentApiMapper,
+                                PageableQueryMapper pageableQueryMapper) {
         this.listerDetailsMedicamentUseCase = listerDetailsMedicamentUseCase;
-        this.medicamentDtoDomainMapper = medicamentDtoDomainMapper;
-        this.pageableApiMapper = pageableApiMapper;
+        this.medicamentApiMapper = medicamentApiMapper;
+        this.pageableQueryMapper = pageableQueryMapper;
     }
 
     @GetMapping
-    public ResponseEntity<Page<MedicamentDto>> getSpeTheDetail(
+    public ResponseEntity<Page<MedicamentView>> getSpeTheDetail(
             MedicamentFilter medicamentFilter,
             @RequestHeader("userId") String userId,
             @PageableDefault(size = 10) @SortDefault(sort = "nom") Pageable pageable
     ) {
-        var query = new ListerMedicamentByCodeIdQuery(
-                medicamentFilter.codeSp(),
-                medicamentFilter.varType(),
-                new UtilisateurId(userId)
-        );
-        var pageRequest = pageableApiMapper.toDomain(pageable);
+        var query = medicamentApiMapper.toQuery(medicamentFilter, userId);
+        var pageRequest = pageableQueryMapper.toQuery(pageable);
         var result = listerDetailsMedicamentUseCase.execute(query, pageRequest);
-        var dtoResult = result.map(medicamentDtoDomainMapper::toDto);
         return ResponseEntity.ok(new PageImpl<>(
-                dtoResult.content(),
+                result.content(),
                 pageable,
-                dtoResult.totalElements()
+                result.totalElements()
         ));
     }
 

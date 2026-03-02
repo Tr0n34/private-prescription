@@ -1,9 +1,9 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.acls.patients;
 
-import fr.cnamts.cpam33.ordonnance.domain.kernel.ids.UtilisateurId;
-import fr.cnamts.cpam33.ordonnance.domain.models.commands.patients.ImportPatientCmd;
-import fr.cnamts.cpam33.ordonnance.domain.models.commands.patients.RegisterPatientCmd;
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identifiants.ExternalPatientId;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.identifiants.UtilisateurId;
+import fr.cnamts.cpam33.ordonnance.application.commands.patients.ImportPatientCmd;
+import fr.cnamts.cpam33.ordonnance.application.commands.patients.RegisterPatientCmd;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.identifiants.ExternalPatientId;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identites.Nom;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identites.Prenom;
 import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.CesPatientInvalidException;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class PatientACL {
 
-    public RegisterPatientCmd toDomain(PatientDto dto, String userId) {
+    public RegisterPatientCmd toCommand(PatientDto dto, String userId) {
         return new RegisterPatientCmd(
                 new ExternalPatientId(dto.externalId()),
                 new Nom(dto.nom()),
@@ -25,7 +25,7 @@ public class PatientACL {
         );
     }
 
-    public ImportPatientCmd toDomain(String externalId, String userId) {
+    public ImportPatientCmd toCommand(String externalId, String userId) {
         validate(externalId);
         return new ImportPatientCmd(
                 new ExternalPatientId(externalId),

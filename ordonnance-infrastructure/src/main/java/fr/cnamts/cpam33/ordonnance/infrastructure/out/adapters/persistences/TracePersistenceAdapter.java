@@ -1,6 +1,6 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.persistences;
 
-import fr.cnamts.cpam33.ordonnance.domain.kernel.ids.UtilisateurId;
+import fr.cnamts.cpam33.ordonnance.domain.kernel.identifiants.UtilisateurId;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.tracabilite.ActeMetierId;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.tracabilite.Trace;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.tracabilite.TraceId;

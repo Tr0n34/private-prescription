@@ -1,7 +1,7 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.controllers;
 
 import fr.cnamts.cpam33.ordonnance.application.usecases.ordonnances.CreateOrdonnanceUseCase;
-import fr.cnamts.cpam33.ordonnance.domain.models.commands.ordonnances.CreateOrdonnanceCmd;
+import fr.cnamts.cpam33.ordonnance.application.commands.ordonnances.CreateOrdonnanceCmd;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.dto.OrdonnanceDto;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.dto.PrescriptionDto;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.mappers.OrdonnanceDtoDomainMapper;

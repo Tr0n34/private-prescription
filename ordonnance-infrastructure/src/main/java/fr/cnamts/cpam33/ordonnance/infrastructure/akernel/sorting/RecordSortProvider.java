@@ -1,7 +1,7 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.akernel.sorting;
 
-import fr.cnamts.cpam33.ordonnance.domain.kernel.filters.PageRequest;
-import fr.cnamts.cpam33.ordonnance.domain.kernel.filters.SortProvider;
+import fr.cnamts.cpam33.ordonnance.application.filters.PageRequest;
+import fr.cnamts.cpam33.ordonnance.application.filters.SortProvider;
 
 import java.lang.reflect.Method;
 import java.util.Comparator;
@@ -9,6 +9,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * Cette classe est l'implémentation d'un provider de tri des records fournis généralement
+ * dans un objet métier. Ils sont pilotés par le fichier resources/configuration/sorts/ordonnances.yml
+ * @param <T> L'objet métier a trier
+ * @param <C> Le champ à trier
+ */
 public class RecordSortProvider<T, C extends HasEnabled> implements SortProvider<T> {
 
     private final List<PageRequest.SortField> defaultSort;
