@@ -34,6 +34,7 @@ public class ApplicationRules {
                         "java..", // classes JDK autorisées
                         "org.springframework.stereotype..", // @Service
                         "org.springframework.transaction.annotation..", // @Transactional
+                        "org.springframework.beans.factory.annotation..", // @Qualifier
                         "jakarta.annotation.." // @Resource
                 )
                 .as("Les use cases ne doivent dépendre que du domain, de l'application et du JDK");

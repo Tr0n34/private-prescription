@@ -2,7 +2,7 @@ package fr.cnamts.cpam33.ordonnance.infrastructure.in.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.cnamts.cpam33.ordonnance.application.usecases.ordonnances.CreateOrdonnanceUseCase;
-import fr.cnamts.cpam33.ordonnance.domain.models.aggregates.Ordonnance;
+import fr.cnamts.cpam33.ordonnance.application.views.OrdonnanceView;
 import fr.cnamts.cpam33.ordonnance.application.commands.ordonnances.CreateOrdonnanceCmd;
 import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.resolvers.ErrorMessageDomainResolver;
 import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.resolvers.ErrorMessageInfrastructureResolver;
@@ -69,7 +69,7 @@ public class OrdonnanceControllerIT {
                 new MedecinIdDto("1234567893214", "12365478936"),
                 List.of(new PrescriptionDto("test")));
         CreateOrdonnanceCmd cmd = Mockito.mock(CreateOrdonnanceCmd.class);
-        Ordonnance ordonnance = Mockito.mock(Ordonnance.class);
+        OrdonnanceView ordonnance = Mockito.mock(OrdonnanceView.class);
         when(ordonnanceDtoDomainMapper.toCommand(Mockito.any(OrdonnanceDto.class))).thenReturn(cmd);
         when(createOrdonnanceUseCase.execute(cmd)).thenReturn(ordonnance);
 
