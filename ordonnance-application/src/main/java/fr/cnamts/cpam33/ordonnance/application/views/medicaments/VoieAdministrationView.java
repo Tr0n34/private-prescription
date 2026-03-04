@@ -1,4 +1,6 @@
 package fr.cnamts.cpam33.ordonnance.application.views.medicaments;
 
-public class VoieAdministrationView {
+public record VoieAdministrationView(
+        String type
+) {
 }
