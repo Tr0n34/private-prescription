@@ -1,6 +1,6 @@
 package fr.cnamts.cpam33.ordonnance.domain.ports.out.traces;
 
-import fr.cnamts.cpam33.ordonnance.domain.kernel.identifiants.UtilisateurId;
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.identifiants.UtilisateurId;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.tracabilite.*;
 
 import java.time.Instant;

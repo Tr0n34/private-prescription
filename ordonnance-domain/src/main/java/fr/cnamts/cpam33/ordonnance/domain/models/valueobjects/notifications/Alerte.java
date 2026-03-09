@@ -1,7 +1,7 @@
 package fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.notifications;
 
-import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.DomainException;
-import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.enums.AlerteExceptionCode;
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.exceptions.DomainException;
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.exceptions.enums.AlerteExceptionCode;
 
 import java.time.Instant;
 

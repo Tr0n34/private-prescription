@@ -1,11 +1,11 @@
 package fr.cnamts.cpam33.ordonnance.application.usecases.medicaments;
 
-import fr.cnamts.cpam33.ordonnance.application.kernel.QueryUseCase;
+import fr.cnamts.cpam33.ordonnance.application.abstracts.QueryUseCase;
 import fr.cnamts.cpam33.ordonnance.application.views.mappers.MedicamentViewMapper;
 import fr.cnamts.cpam33.ordonnance.application.views.medicaments.MedicamentView;
-import fr.cnamts.cpam33.ordonnance.domain.kernel.domain.enums.ActeMetierCode;
-import fr.cnamts.cpam33.ordonnance.domain.kernel.events.ActeMetierEvent;
-import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.DomainException;
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.domain.enums.ActeMetierCode;
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.events.ActeMetierEvent;
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.exceptions.DomainException;
 import fr.cnamts.cpam33.ordonnance.application.filters.PageRequest;
 import fr.cnamts.cpam33.ordonnance.application.filters.PageResult;
 import fr.cnamts.cpam33.ordonnance.application.filters.SortProvider;

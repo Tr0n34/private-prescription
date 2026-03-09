@@ -1,9 +1,9 @@
 package fr.cnamts.cpam33.ordonnance.domain.policies;
 
-import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.enums.PatientExceptionCode;
-import fr.cnamts.cpam33.ordonnance.domain.kernel.policies.Policies;
-import fr.cnamts.cpam33.ordonnance.domain.kernel.policies.Policy;
-import fr.cnamts.cpam33.ordonnance.domain.kernel.policies.Rule;
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.exceptions.enums.PatientExceptionCode;
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.policies.Policies;
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.policies.Policy;
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.policies.Rule;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.Patient;
 
 public final class PatientPolicies {

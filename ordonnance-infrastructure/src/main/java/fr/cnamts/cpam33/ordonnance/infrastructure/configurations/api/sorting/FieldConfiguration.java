@@ -1,7 +1,7 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.configurations.api.sorting;
 
-import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.sorting.HasAliases;
-import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.sorting.HasEnabled;
+import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.sorting.HasAliases;
+import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.sorting.HasEnabled;
 
 import java.util.List;
 

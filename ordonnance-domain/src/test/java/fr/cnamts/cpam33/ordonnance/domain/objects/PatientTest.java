@@ -1,8 +1,8 @@
 package fr.cnamts.cpam33.ordonnance.domain.objects;
 
-import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.DomainException;
-import fr.cnamts.cpam33.ordonnance.domain.kernel.identifiants.ExternalPatientId;
-import fr.cnamts.cpam33.ordonnance.domain.kernel.identifiants.PatientId;
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.exceptions.DomainException;
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.identifiants.ExternalPatientId;
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.identifiants.PatientId;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

@@ -1,7 +1,7 @@
 package fr.cnamts.cpam33.ordonnance.application.queries;
 
-import fr.cnamts.cpam33.ordonnance.domain.kernel.cqrs.Query;
-import fr.cnamts.cpam33.ordonnance.domain.kernel.identifiants.PatientId;
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.cqrs.Query;
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.identifiants.PatientId;
 
 import java.time.LocalDate;
 

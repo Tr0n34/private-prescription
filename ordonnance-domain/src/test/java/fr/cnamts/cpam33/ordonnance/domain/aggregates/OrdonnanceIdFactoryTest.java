@@ -1,7 +1,7 @@
 package fr.cnamts.cpam33.ordonnance.domain.aggregates;
 
 import fr.cnamts.cpam33.ordonnance.domain.fixtures.stubs.OrdonnanceNumGeneratorStub;
-import fr.cnamts.cpam33.ordonnance.domain.kernel.identifiants.OrdonnanceId;
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.identifiants.OrdonnanceId;
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.ordonnances.OrdonnanceIdFactory;
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.ordonnances.OrdonnanceNumGenerator;
 import org.junit.jupiter.api.Test;

@@ -1,8 +1,8 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.technical.pdf;
 
-import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.InfrastructureError;
-import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.InfrastructureException;
-import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.enums.PdfExceptionCode;
+import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors.InfrastructureError;
+import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors.InfrastructureException;
+import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors.enums.PdfExceptionCode;
 
 import java.io.IOException;
 import java.nio.file.Files;

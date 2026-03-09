@@ -1,6 +1,6 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.out.mappers.patients;
 
-import fr.cnamts.cpam33.ordonnance.domain.kernel.identifiants.PatientId;
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.identifiants.PatientId;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 

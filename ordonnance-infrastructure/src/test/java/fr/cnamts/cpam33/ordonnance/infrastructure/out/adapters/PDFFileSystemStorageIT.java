@@ -1,6 +1,6 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters;
 
-import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.pdf.PDFStorage;
+import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.pdf.PDFStorage;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.persistences.storages.PDFFileSystemStorage;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;

@@ -1,9 +1,9 @@
 package fr.cnamts.cpam33.ordonnance.domain.ports.out.patients;
 
-import fr.cnamts.cpam33.ordonnance.domain.kernel.ports.RepositoryPort;
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.ports.RepositoryPort;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.Patient;
-import fr.cnamts.cpam33.ordonnance.domain.kernel.identifiants.ExternalPatientId;
-import fr.cnamts.cpam33.ordonnance.domain.kernel.identifiants.PatientId;
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.identifiants.ExternalPatientId;
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.identifiants.PatientId;
 
 import java.util.Optional;
 

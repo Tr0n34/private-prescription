@@ -1,6 +1,6 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.in.mappers;
 
-import fr.cnamts.cpam33.ordonnance.domain.kernel.identifiants.UtilisateurId;
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.identifiants.UtilisateurId;
 import fr.cnamts.cpam33.ordonnance.application.queries.ListerMedicamentByCodeIdQuery;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.controllers.filters.MedicamentFilter;
 import org.mapstruct.Mapper;

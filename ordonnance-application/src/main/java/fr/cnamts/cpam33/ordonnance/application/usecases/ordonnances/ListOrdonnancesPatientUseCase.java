@@ -1,7 +1,7 @@
 package fr.cnamts.cpam33.ordonnance.application.usecases.ordonnances;
 
-import fr.cnamts.cpam33.ordonnance.application.kernel.QueryUseCase;
-import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.DomainException;
+import fr.cnamts.cpam33.ordonnance.application.abstracts.QueryUseCase;
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.exceptions.DomainException;
 import fr.cnamts.cpam33.ordonnance.application.filters.PageRequest;
 import fr.cnamts.cpam33.ordonnance.application.filters.PageResult;
 import fr.cnamts.cpam33.ordonnance.domain.models.aggregates.Ordonnance;

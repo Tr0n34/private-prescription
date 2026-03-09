@@ -1,7 +1,7 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.out.entities.ordonnances;
 
-import fr.cnamts.cpam33.ordonnance.domain.kernel.domain.DomainObject;
-import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.IEntity;
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.domain.DomainObject;
+import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.IEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 

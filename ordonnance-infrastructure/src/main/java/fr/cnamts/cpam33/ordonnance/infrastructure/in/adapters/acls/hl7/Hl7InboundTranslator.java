@@ -5,7 +5,7 @@ import ca.uhn.hl7v2.model.v25.segment.ORC;
 import ca.uhn.hl7v2.model.v25.segment.PID;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.utilisateurs.MedecinId;
 import fr.cnamts.cpam33.ordonnance.application.commands.ordonnances.CreateOrdonnanceCmd;
-import fr.cnamts.cpam33.ordonnance.domain.kernel.identifiants.PatientId;
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.identifiants.PatientId;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identites.Rpps;
 import org.apache.camel.Message;
 import org.springframework.stereotype.Component;

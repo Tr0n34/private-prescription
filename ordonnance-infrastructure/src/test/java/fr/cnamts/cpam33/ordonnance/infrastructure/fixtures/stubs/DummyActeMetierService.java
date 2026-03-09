@@ -1,8 +1,8 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.fixtures.stubs;
 
-import fr.cnamts.cpam33.ordonnance.domain.kernel.domain.enums.ActeMetierCode;
-import fr.cnamts.cpam33.ordonnance.domain.kernel.events.ActeMetierEvent;
-import fr.cnamts.cpam33.ordonnance.domain.kernel.traces.Traceable;
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.domain.enums.ActeMetierCode;
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.events.ActeMetierEvent;
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.traces.Traceable;
 import org.springframework.stereotype.Service;
 
 @ActeMetierEvent(ActeMetierCode.ORD_CREER)

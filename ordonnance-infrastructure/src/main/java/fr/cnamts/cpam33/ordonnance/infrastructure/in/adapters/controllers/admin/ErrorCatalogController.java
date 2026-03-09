@@ -1,7 +1,7 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.controllers.admin;
 
-import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.BoundedContextHint;
-import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.ErrorDescriptor;
+import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors.BoundedContextHint;
+import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors.ErrorDescriptor;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.persistences.ErrorCatalogPersistanceAdapter;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.mappers.errors.ErrorEntityMapper;
 import org.springframework.http.ResponseEntity;

@@ -1,12 +1,12 @@
 package fr.cnamts.cpam33.ordonnance.application.commands.patients;
 
-import fr.cnamts.cpam33.ordonnance.domain.kernel.cqrs.Command;
-import fr.cnamts.cpam33.ordonnance.domain.kernel.identifiants.UtilisateurId;
-import fr.cnamts.cpam33.ordonnance.domain.kernel.traces.Traceable;
-import fr.cnamts.cpam33.ordonnance.domain.kernel.validation.ValidatableCommand;
-import fr.cnamts.cpam33.ordonnance.domain.kernel.validation.ValidationResult;
-import fr.cnamts.cpam33.ordonnance.domain.kernel.validation.Validator;
-import fr.cnamts.cpam33.ordonnance.domain.kernel.identifiants.ExternalPatientId;
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.cqrs.Command;
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.identifiants.UtilisateurId;
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.traces.Traceable;
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.validation.ValidatableCommand;
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.validation.ValidationResult;
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.validation.Validator;
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.identifiants.ExternalPatientId;
 
 public record ImportPatientCmd(
         ExternalPatientId externalPatientId,
