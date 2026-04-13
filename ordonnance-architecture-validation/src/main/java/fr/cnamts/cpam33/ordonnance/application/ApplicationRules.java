@@ -6,7 +6,7 @@ import com.tngtech.archunit.lang.ArchRule;
 import com.tngtech.archunit.lang.ConditionEvents;
 import com.tngtech.archunit.lang.SimpleConditionEvent;
 import fr.cnamts.cpam33.ordonnance.Module;
-import fr.cnamts.cpam33.ordonnance.domain.kernel.events.ActeMetierEvent;
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.events.ActeMetierEvent;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,6 +34,7 @@ public class ApplicationRules {
                         "java..", // classes JDK autorisées
                         "org.springframework.stereotype..", // @Service
                         "org.springframework.transaction.annotation..", // @Transactional
+                        "org.springframework.beans.factory.annotation..", // @Qualifier
                         "jakarta.annotation.." // @Resource
                 )
                 .as("Les use cases ne doivent dépendre que du domain, de l'application et du JDK");

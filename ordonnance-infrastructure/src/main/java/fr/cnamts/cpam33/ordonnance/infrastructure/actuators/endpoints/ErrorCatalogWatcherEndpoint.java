@@ -1,6 +1,6 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.actuators.endpoints;
 
-import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.watchers.AbstractWatcherEndpoint;
+import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.watchers.AbstractWatcherEndpoint;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.providers.ErrorCatalogWatchService;
 import org.springframework.boot.actuate.endpoint.web.annotation.WebEndpoint;
 import org.springframework.stereotype.Component;

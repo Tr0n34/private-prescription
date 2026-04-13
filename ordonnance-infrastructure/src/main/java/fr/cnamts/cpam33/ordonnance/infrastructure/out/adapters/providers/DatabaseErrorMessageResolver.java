@@ -1,12 +1,12 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.providers;
 
-import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.ExceptionCode;
-import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.Adapter;
-import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.caches.ErrorCatalogCache;
-import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.ErrorDescriptor;
-import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.enums.InfraStructureExceptionCode;
-import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.resolvers.ErrorMessageDomainResolver;
-import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.resolvers.ErrorMessageInfrastructureResolver;
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.exceptions.ExceptionCode;
+import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.Adapter;
+import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.caches.ErrorCatalogCache;
+import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors.ErrorDescriptor;
+import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors.enums.InfraStructureExceptionCode;
+import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors.resolvers.ErrorMessageDomainResolver;
+import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors.resolvers.ErrorMessageInfrastructureResolver;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.persistences.repositories.ordonnances.ErrorCatalogJpaRepository;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.entities.ordonnances.ErrorCatalogEntity;
 import org.slf4j.Logger;

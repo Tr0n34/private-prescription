@@ -2,9 +2,9 @@ package fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.controllers;
 
 import fr.cnamts.cpam33.ordonnance.application.usecases.patients.ImportPatientUseCase;
 import fr.cnamts.cpam33.ordonnance.application.usecases.patients.RegisterPatientUseCase;
-import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.Patient;
-import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.Adapter;
-import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.BoundedContextHint;
+import fr.cnamts.cpam33.ordonnance.application.views.PatientView;
+import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.Adapter;
+import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors.BoundedContextHint;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.acls.patients.PatientACL;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.controllers.routes.LocationBuilder;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.controllers.routes.Routes;
@@ -44,8 +44,8 @@ public class PatientController implements Adapter {
     public ResponseEntity<Void> createPatient(
             @Valid @RequestBody PatientDto patientDto,
             @RequestHeader("userId")  String userId) {
-        Patient patient = registerPatientUseCase.registerPatient(patientACL.toDomain(patientDto, userId));
-        URI location = locationBuilder.buildCreatedLocation(patient.patientId().numero());
+        PatientView patient = registerPatientUseCase.registerPatient(patientACL.toCommand(patientDto, userId));
+        URI location = locationBuilder.buildCreatedLocation(patient.patientId());
         return ResponseEntity.created(location).build();
     }
 
@@ -55,15 +55,18 @@ public class PatientController implements Adapter {
             @RequestHeader("userId")  String userId) {
         logger.trace("createPatients mode Batch");
         patientDtos.forEach(
-                patientDto -> registerPatientUseCase.registerPatient(patientACL.toDomain(patientDto, userId))
+                patientDto -> registerPatientUseCase.registerPatient(patientACL.toCommand(patientDto, userId))
         );
         return ResponseEntity.ok().build();
     }
 
     @PostMapping(Routes.Patient.IMPORT_BY_EXTERNAL_ID)
-    public ResponseEntity<Void> importFromExternal(@PathVariable("externalId") String externalId, @RequestHeader("userId")  String userId) {
-        Patient importedPatient = importPatientUseCase.execute(patientACL.toDomain(externalId, userId));
-        URI location = locationBuilder.buildCreatedLocation(importedPatient.patientId().numero());
+    public ResponseEntity<Void> importFromExternal(
+            @PathVariable("externalId") String externalId,
+            @RequestHeader("userId")  String userId
+    ) {
+        PatientView importedPatientView = importPatientUseCase.execute(patientACL.toCommand(externalId, userId));
+        URI location = locationBuilder.buildCreatedLocation(importedPatientView.patientId());
         return ResponseEntity.created(location).build();
     }
 

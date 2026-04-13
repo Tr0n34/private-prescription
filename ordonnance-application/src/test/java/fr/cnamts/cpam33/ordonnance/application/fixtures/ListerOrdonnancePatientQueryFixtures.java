@@ -1,7 +1,7 @@
 package fr.cnamts.cpam33.ordonnance.application.fixtures;
 
 import fr.cnamts.cpam33.ordonnance.domain.fixtures.PatientFixtures;
-import fr.cnamts.cpam33.ordonnance.domain.models.queries.ListerOrdonnancesPatientQuery;
+import fr.cnamts.cpam33.ordonnance.application.queries.ListerOrdonnancesPatientQuery;
 
 import java.time.LocalDate;
 

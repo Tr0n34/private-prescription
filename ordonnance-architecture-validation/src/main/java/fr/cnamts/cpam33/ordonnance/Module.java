@@ -22,6 +22,26 @@ public enum Module {
     DOMAIN_MODELS(
             "fr.cnamts.cpam33.ordonnance.domain.models",
             "..domain.models.."
+    ),
+    APPLICATION_VIEWS(
+            "fr.cnamts.cpam33.ordonnance.application.views",
+            "..application.views.."
+    ),
+    APPLICATION_COMMANDS(
+            "fr.cnamts.cpam33.ordonnance.application.commands",
+            "..application.commands.."
+    ),
+    APPLICATION_QUERIES(
+            "fr.cnamts.cpam33.ordonnance.application.queries",
+            "..application.queries.."
+    ),
+    APPLICATION_FILTERS(
+                "fr.cnamts.cpam33.ordonnance.application.filters",
+                "..application.filters.."
+    ),
+    INFRASTRUCTURE_ADMIN(
+            "fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.controllers.admin",
+            "..in.adapters.controllers.admin.."
     );
 
     private String packageName;

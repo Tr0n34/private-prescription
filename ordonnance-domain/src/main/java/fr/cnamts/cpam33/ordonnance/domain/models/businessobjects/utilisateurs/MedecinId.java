@@ -1,6 +1,6 @@
 package fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.utilisateurs;
 
-import fr.cnamts.cpam33.ordonnance.domain.kernel.domain.DomainObjectId;
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.domain.DomainObjectId;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identites.Rpps;
 
 public record MedecinId(

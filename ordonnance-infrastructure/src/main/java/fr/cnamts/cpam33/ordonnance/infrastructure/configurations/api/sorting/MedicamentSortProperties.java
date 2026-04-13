@@ -1,6 +1,6 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.configurations.api.sorting;
 
-import fr.cnamts.cpam33.ordonnance.domain.kernel.filters.PageRequest;
+import fr.cnamts.cpam33.ordonnance.application.filters.PageRequest;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.util.List;

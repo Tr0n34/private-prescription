@@ -1,8 +1,8 @@
 package fr.cnamts.cpam33.ordonnance.domain.fixtures;
 
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.Patient;
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identifiants.ExternalPatientId;
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identifiants.PatientId;
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.identifiants.ExternalPatientId;
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.identifiants.PatientId;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identites.Nom;
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identites.Prenom;
 

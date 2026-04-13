@@ -1,10 +1,10 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.configurations;
 
-import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.DomainException;
-import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.ErrorDescriptor;
-import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.InfrastructureException;
-import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.resolvers.ErrorMessageDomainResolver;
-import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.resolvers.ErrorMessageInfrastructureResolver;
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.exceptions.DomainException;
+import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors.ErrorDescriptor;
+import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors.InfrastructureException;
+import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors.resolvers.ErrorMessageDomainResolver;
+import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors.resolvers.ErrorMessageInfrastructureResolver;
 import fr.cnamts.cpam33.ordonnance.infrastructure.configurations.traces.OrdonnanceWebTraceConfiguration;
 import fr.cnamts.cpam33.ordonnance.infrastructure.fixtures.controllers.TestController;
 import fr.cnamts.cpam33.ordonnance.infrastructure.fixtures.controllers.ThrowingService;

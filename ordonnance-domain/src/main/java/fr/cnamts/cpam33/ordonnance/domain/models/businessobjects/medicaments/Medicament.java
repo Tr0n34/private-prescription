@@ -1,8 +1,8 @@
 package fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.medicaments;
 
-import fr.cnamts.cpam33.ordonnance.domain.kernel.domain.DomainObject;
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.domain.DomainObject;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.Posologie;
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identifiants.MedicamentId;
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.identifiants.MedicamentId;
 
 import java.util.Collections;
 import java.util.List;

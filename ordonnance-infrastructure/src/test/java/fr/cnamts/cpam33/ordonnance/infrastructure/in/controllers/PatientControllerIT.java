@@ -3,12 +3,14 @@ package fr.cnamts.cpam33.ordonnance.infrastructure.in.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.cnamts.cpam33.ordonnance.application.usecases.patients.ImportPatientUseCase;
 import fr.cnamts.cpam33.ordonnance.application.usecases.patients.RegisterPatientUseCase;
-import fr.cnamts.cpam33.ordonnance.domain.fixtures.PatientFixtures;
-import fr.cnamts.cpam33.ordonnance.domain.kernel.ids.UtilisateurId;
-import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.patients.Patient;
-import fr.cnamts.cpam33.ordonnance.domain.models.commands.patients.RegisterPatientCmd;
-import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.resolvers.ErrorMessageDomainResolver;
-import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.resolvers.ErrorMessageInfrastructureResolver;
+import fr.cnamts.cpam33.ordonnance.application.views.PatientView;
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.identifiants.ExternalPatientId;
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.identifiants.UtilisateurId;
+import fr.cnamts.cpam33.ordonnance.application.commands.patients.RegisterPatientCmd;
+import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identites.Nom;
+import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identites.Prenom;
+import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors.resolvers.ErrorMessageDomainResolver;
+import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors.resolvers.ErrorMessageInfrastructureResolver;
 import fr.cnamts.cpam33.ordonnance.infrastructure.configurations.GlobalControllerAdvice;
 import fr.cnamts.cpam33.ordonnance.infrastructure.configurations.traces.OrdonnanceWebTraceConfiguration;
 import fr.cnamts.cpam33.ordonnance.infrastructure.fixtures.ExternalPatientDtoFixtures;
@@ -29,6 +31,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.net.URI;
+import java.time.LocalDate;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
@@ -78,21 +81,26 @@ class PatientControllerIT {
     @Test
     void should_create_patient_when_payload_is_valid() throws Exception {
         PatientDto patientDto = ExternalPatientDtoFixtures.patientValide1();
-        Patient patientDomain = PatientFixtures.patientValide();
-        String patientNumero = patientDomain.patientId().numero();
+        PatientView patientView = new PatientView(
+                "123456789",
+                "987654321",
+                "Dupont",
+                "Jean",
+                LocalDate.of(1985, 9, 5)
+        );
         RegisterPatientCmd registerPatientCmd = new RegisterPatientCmd(
-                patientDomain.externalPatientId(),
-                patientDomain.nom(),
-                patientDomain.prenom(),
-                patientDomain.dateNaissance(),
+                new ExternalPatientId("987654321"),
+                new Nom("Dupont"),
+                new Prenom("Jean"),
+                LocalDate.of(1985, 9, 5),
                 new UtilisateurId("123456")
         );
 
-        when(patientACL.toDomain(any(PatientDto.class), anyString())).thenReturn(registerPatientCmd);
-        when(registerPatientUseCase.registerPatient(registerPatientCmd)).thenReturn(patientDomain);
+        when(patientACL.toCommand(any(PatientDto.class), anyString())).thenReturn(registerPatientCmd);
+        when(registerPatientUseCase.registerPatient(registerPatientCmd)).thenReturn(patientView);
 
-        URI location = URI.create("/patients/" + patientNumero);
-        when(locationBuilder.buildCreatedLocation(eq(patientNumero))).thenReturn(location);
+        URI location = URI.create("/patients/" + patientView.patientId());
+        when(locationBuilder.buildCreatedLocation(eq(patientView.patientId()))).thenReturn(location);
 
         mockMvc.perform(post("/patients")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -101,9 +109,9 @@ class PatientControllerIT {
                 .andExpect(status().isCreated())
                 .andExpect(header().string("Location", location.toString()));
 
-        verify(patientACL).toDomain(any(PatientDto.class), anyString());
+        verify(patientACL).toCommand(any(PatientDto.class), anyString());
         verify(registerPatientUseCase).registerPatient(registerPatientCmd);
-        verify(locationBuilder).buildCreatedLocation(eq(patientNumero));
+        verify(locationBuilder).buildCreatedLocation(eq(patientView.patientId()));
         verifyNoMoreInteractions(patientACL, registerPatientUseCase, locationBuilder);
     }
 

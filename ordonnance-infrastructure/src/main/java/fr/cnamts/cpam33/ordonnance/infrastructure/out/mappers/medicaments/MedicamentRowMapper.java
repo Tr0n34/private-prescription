@@ -4,7 +4,7 @@ import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.Posologie;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.medicaments.Forme;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.medicaments.Medicament;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.medicaments.VoieAdministration;
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identifiants.MedicamentId;
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.identifiants.MedicamentId;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.persistences.repositories.thesorimed.Row;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
