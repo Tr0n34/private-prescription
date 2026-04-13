@@ -1,6 +1,6 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.fixtures.enums;
 
-import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.enums.InfraStructureExceptionCode;
+import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors.enums.InfraStructureExceptionCode;
 
 public enum TestInfrastructureExceptionCode implements InfraStructureExceptionCode {
 

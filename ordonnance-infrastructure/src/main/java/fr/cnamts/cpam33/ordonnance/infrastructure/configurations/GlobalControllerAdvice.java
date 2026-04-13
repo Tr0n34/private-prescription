@@ -1,13 +1,13 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.configurations;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
-import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.DomainException;
-import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.BoundedContextHint;
-import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.ErrorDescriptor;
-import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.InfrastructureException;
-import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.enums.ValidationDtoExceptionCode;
-import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.resolvers.ErrorMessageDomainResolver;
-import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.resolvers.ErrorMessageInfrastructureResolver;
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.exceptions.DomainException;
+import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors.BoundedContextHint;
+import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors.ErrorDescriptor;
+import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors.InfrastructureException;
+import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors.enums.ValidationDtoExceptionCode;
+import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors.resolvers.ErrorMessageDomainResolver;
+import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors.resolvers.ErrorMessageInfrastructureResolver;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.dto.errors.ErrorResponseDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

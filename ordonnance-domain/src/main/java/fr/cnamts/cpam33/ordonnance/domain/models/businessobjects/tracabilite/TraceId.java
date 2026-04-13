@@ -1,8 +1,8 @@
 package fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.tracabilite;
 
-import fr.cnamts.cpam33.ordonnance.domain.kernel.domain.DomainObjectId;
-import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.DomainException;
-import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.enums.TraceExceptionCode;
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.domain.DomainObjectId;
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.exceptions.DomainException;
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.exceptions.enums.TraceExceptionCode;
 
 public record TraceId(
         String numero

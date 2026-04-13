@@ -61,18 +61,4 @@ public class TraceJpaRepositoryIT {
         jdbc.execute("TRUNCATE TABLE trace_outbox RESTART IDENTITY CASCADE");
     }
 
-    private void insertOutboxRow(long id, int attempts, LocalDateTime createdAt) {
-        jdbc.update("""
-        INSERT INTO trace_outbox (id, attempts, created_at, payload_json)
-        VALUES (?, ?, ?, CAST(? AS jsonb))
-        """,
-                id, attempts, createdAt, "{}"
-        );
-    }
-
-    private TransactionTemplate txTemplate() {
-        return new TransactionTemplate(txManager);
-    }
-
-
 }

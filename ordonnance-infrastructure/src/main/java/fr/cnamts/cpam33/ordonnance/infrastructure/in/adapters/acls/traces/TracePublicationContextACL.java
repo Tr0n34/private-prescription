@@ -1,6 +1,6 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.in.adapters.acls.traces;
 
-import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.traces.TracePublicationContextProvider;
+import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.traces.TracePublicationContextProvider;
 import fr.cnamts.cpam33.ordonnance.infrastructure.in.dto.traces.TraceRequestContext;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.dto.traces.TracePublicationContext;
 import org.slf4j.Logger;

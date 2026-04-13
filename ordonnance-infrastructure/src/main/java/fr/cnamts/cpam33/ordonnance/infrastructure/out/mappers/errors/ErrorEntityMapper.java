@@ -1,6 +1,6 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.out.mappers.errors;
 
-import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.ErrorDescriptor;
+import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors.ErrorDescriptor;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.entities.ordonnances.ErrorCatalogEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

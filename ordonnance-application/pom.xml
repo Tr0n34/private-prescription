@@ -38,6 +38,19 @@
             <artifactId>spring-tx</artifactId>
         </dependency>
 
+        <!-- Mapping des Views -->
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
+            <version>${mapstruct.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct-processor</artifactId>
+            <version>${mapstruct.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
         <!-- Validation (optionnel) -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

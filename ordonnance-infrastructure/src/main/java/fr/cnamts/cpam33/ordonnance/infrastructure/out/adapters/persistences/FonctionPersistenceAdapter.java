@@ -1,7 +1,7 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.persistences;
 
-import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.DomainException;
-import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.enums.OrdonnanceExceptionCode;
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.exceptions.DomainException;
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.exceptions.enums.OrdonnanceExceptionCode;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.tracabilite.Fonction;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.tracabilite.FonctionId;
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.traces.FonctionRepository;

@@ -1,7 +1,7 @@
 package fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identites;
 
-import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.DomainException;
-import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.enums.IdentiteExceptionCode;
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.exceptions.DomainException;
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.exceptions.enums.IdentiteExceptionCode;
 
 import java.time.LocalDate;
 import java.util.Collections;

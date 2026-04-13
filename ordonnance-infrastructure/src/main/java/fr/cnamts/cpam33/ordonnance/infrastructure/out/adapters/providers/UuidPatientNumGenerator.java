@@ -1,6 +1,6 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.providers;
 
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identifiants.PatientId;
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.identifiants.PatientId;
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.patients.PatientNumGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

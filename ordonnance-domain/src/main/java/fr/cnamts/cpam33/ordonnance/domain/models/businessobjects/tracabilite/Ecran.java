@@ -1,6 +1,6 @@
 package fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.tracabilite;
 
-import fr.cnamts.cpam33.ordonnance.domain.kernel.domain.DomainObject;
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.domain.DomainObject;
 
 public record Ecran(
         String nom

@@ -1,6 +1,6 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.providers.traces;
 
-import fr.cnamts.cpam33.ordonnance.domain.kernel.traces.Traceable;
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.traces.Traceable;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.tracabilite.TraceAttribute;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.tracabilite.TraceIn;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.tracabilite.TraceValue;

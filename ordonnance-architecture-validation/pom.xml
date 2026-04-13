@@ -12,7 +12,7 @@
     </parent>
 
     <artifactId>ordonnance-architecture-validation</artifactId>
-    <name>Ordonnance - Architecture Tests</name>
+    <name>ordonnance-architecture</name>
 
     <dependencies>
 

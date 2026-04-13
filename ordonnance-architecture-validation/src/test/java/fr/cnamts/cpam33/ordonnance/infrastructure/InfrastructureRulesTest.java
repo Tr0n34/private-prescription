@@ -18,13 +18,12 @@ public class InfrastructureRulesTest {
 
     @ArchTest
     static final ArchRule repository_implementations_should_be_in_infrastructure = InfrastructureRules.repositoryImplementationShouldBeInInfrastructure();
-    /*
+
     @ArchTest
-    static final ArchRule controllers_should_only_use_use_cases = InfrastructureRules.controllersShouldOnlyUseUseCases();
+    static final ArchRule controllers_should_only_use_use_cases = InfrastructureRules.controllersShouldOnlyUseUseCasesAndReadModel();
 
     @ArchTest
     static final ArchRule controllers_should_not_access_domain_directly = InfrastructureRules.controllersShouldNotAccessDomainDirectly();
-    */
 
     @ArchTest
     static final ArchRule controllers_should_be_in_infrastructure = InfrastructureRules.controllersShouldBeInInfrastructure();

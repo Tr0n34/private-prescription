@@ -8,7 +8,7 @@ import com.tngtech.archunit.lang.ConditionEvents;
 import com.tngtech.archunit.lang.SimpleConditionEvent;
 import fr.cnamts.cpam33.ordonnance.ClassSuffix;
 import fr.cnamts.cpam33.ordonnance.Module;
-import fr.cnamts.cpam33.ordonnance.domain.kernel.domain.DomainObject;
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.domain.DomainObject;
 
 import java.util.Map;
 

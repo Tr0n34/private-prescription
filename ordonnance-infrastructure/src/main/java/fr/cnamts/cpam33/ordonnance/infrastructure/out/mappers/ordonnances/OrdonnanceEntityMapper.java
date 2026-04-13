@@ -1,7 +1,7 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.out.mappers.ordonnances;
 
 import fr.cnamts.cpam33.ordonnance.domain.models.aggregates.Ordonnance;
-import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.EntityMapper;
+import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.EntityMapper;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.entities.ordonnances.OrdonnanceEntity;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.mappers.medecins.MedecinEntityMapper;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.mappers.patients.PatientEntityMapper;

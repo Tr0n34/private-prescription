@@ -2,7 +2,7 @@ package fr.cnamts.cpam33.ordonnance.infrastructure.in.dto.errors;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import fr.cnamts.cpam33.ordonnance.infrastructure.akernel.errors.ErrorDescriptor;
+import fr.cnamts.cpam33.ordonnance.infrastructure.abstracts.errors.ErrorDescriptor;
 
 import java.time.LocalDateTime;
 

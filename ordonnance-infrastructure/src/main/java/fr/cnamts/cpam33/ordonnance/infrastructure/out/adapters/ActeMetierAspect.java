@@ -1,7 +1,7 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters;
 
-import fr.cnamts.cpam33.ordonnance.domain.kernel.events.ActeMetierEvent;
-import fr.cnamts.cpam33.ordonnance.domain.kernel.traces.Traceable;
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.events.ActeMetierEvent;
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.traces.Traceable;
 import fr.cnamts.cpam33.ordonnance.domain.models.businessobjects.tracabilite.*;
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.traces.ActeMetierRepository;
 import fr.cnamts.cpam33.ordonnance.domain.ports.out.traces.TraceNumGenerator;

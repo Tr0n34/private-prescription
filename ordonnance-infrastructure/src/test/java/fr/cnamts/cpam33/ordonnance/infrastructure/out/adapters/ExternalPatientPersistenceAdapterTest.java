@@ -1,7 +1,7 @@
 package fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters;
 
 import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.ImportPatientCandidate;
-import fr.cnamts.cpam33.ordonnance.domain.models.valueobjects.identifiants.ExternalPatientId;
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.identifiants.ExternalPatientId;
 import fr.cnamts.cpam33.ordonnance.infrastructure.out.adapters.persistences.ExternalPatientPersistenceAdapter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

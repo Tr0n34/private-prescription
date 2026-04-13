@@ -1,8 +1,8 @@
 package fr.cnamts.cpam33.ordonnance.domain.models.businessobjects;
 
-import fr.cnamts.cpam33.ordonnance.domain.kernel.domain.DomainObject;
-import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.DomainException;
-import fr.cnamts.cpam33.ordonnance.domain.kernel.exceptions.enums.MedecinExceptionCode;
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.domain.DomainObject;
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.exceptions.DomainException;
+import fr.cnamts.cpam33.ordonnance.domain.abstracts.exceptions.enums.MedecinExceptionCode;
 
 public record Posologie(
         String phrase

@@ -13,6 +13,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.Duration;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
@@ -163,7 +164,7 @@ public class ErrorCatalogWatchServiceIT {
         Thread watchThread = new Thread(service);
         service.startWatching();
         watchThread.start();
-        Thread.sleep(500);
+        await().atMost(1, TimeUnit.SECONDS).until(watchThread::isAlive);
         assertThat(service.getWatchedFilePath()).isNotNull();
         assertThat(service.getWatchedFilePath()).isEqualTo(errorFile);
         service.stopWatching();
@@ -178,9 +179,9 @@ public class ErrorCatalogWatchServiceIT {
         ReflectionTestUtils.setField(service, ERROR_FILE, "file:" + tempFile);
         ReflectionTestUtils.setField(service, WATCHED_FILE_PATH_REF, new AtomicReference<>(null));
         service.startWatching();
-        Thread.sleep(100); // Attendre que le watcher démarre
+        await().atMost(200, TimeUnit.MILLISECONDS).until(service::isRunning);
         Files.writeString(tempFile, "{\"updated\": true}");
-        Thread.sleep(100);
+        await().atMost(200, TimeUnit.MILLISECONDS).until(service::isRunning);
         service.stopWatching();
         assertFalse(service.hasPendingReload());
     }
